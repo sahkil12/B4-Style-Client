@@ -3,6 +3,15 @@
 @import "tailwindcss";
 @plugin "daisyui";
 
-body{
-    font-family: "Bebas Neue", sans-serif;
+@plugin "daisyui/theme" {
+  name: "light";
+  default: true;
+  --color-primary: #E60000;
+  --color-secondary: #0F0F0F;
+  --color-accent: #ffffff;
+  --color-base-100: #000000;
+}
+
+body {
+  font-family: "Bebas Neue", sans-serif;
 }

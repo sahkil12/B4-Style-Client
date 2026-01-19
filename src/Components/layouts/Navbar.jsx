@@ -1,9 +1,8 @@
-import React from 'react';
 
 const Navbar = () => {
      return (
-          <div>
-               
+          <div className="text-center ">
+               <h2>hey i am navbar</h2>
           </div>
      );
 };
