@@ -23,11 +23,10 @@ const Footer = () => {
      </>
 
      return (
-          <footer className="bg-secondary text-neutral-400 py-14 px-8 md:px-20 border-t border-neutral-700/90">
+          <footer className="bg-secondary text-neutral-400 py-14 px-8 border-t border-neutral-700/90">
                <div className="max-w-10/12 mx-auto">
                     {/* Main Footer Content */}
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
-
                          {/* Column 1: Logo & Info */}
                          <div className="flex flex-col gap-5">
                               <div className="w-16 h-16 bg-accent flex items-center justify-center mb-2">
