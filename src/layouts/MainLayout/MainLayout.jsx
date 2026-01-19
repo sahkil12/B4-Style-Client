@@ -4,11 +4,11 @@ import Footer from "../../Components/layouts/Footer";
 
 const MainLayout = () => {
      return (
-          <div className="bg-primary text-accent min-h-screen">
+          <div className="bg-base-100 text-accent ">
                <header>
                     <Navbar></Navbar>
                </header>
-               <section>
+               <section className="min-h-[calc(100vh-680px)]">
                     <Outlet></Outlet>
                </section>
                <Footer></Footer>
