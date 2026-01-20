@@ -1,8 +1,8 @@
-import { FaInstagram, FaFacebookF, FaPhoneAlt, FaMapMarkerAlt } from "react-icons/fa";
+import { FaInstagram, FaFacebookF, FaPhoneAlt, FaMapMarkerAlt, FaTiktok } from "react-icons/fa";
 import { IoMailOutline } from "react-icons/io5";
+import { NavLink } from "react-router-dom";
 
 const Footer = () => {
-
      const linkStyle ='hover:text-primary transition-all duration-300 hover:ml-1'
 
      const links = <>
@@ -29,9 +29,9 @@ const Footer = () => {
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
                          {/* Column 1: Logo & Info */}
                          <div className="flex flex-col gap-5">
-                              <div className="w-16 h-16 bg-accent flex items-center justify-center mb-2">
+                              <NavLink to={'/'} className="w-16 h-16 bg-accent flex items-center justify-center mb-2">
                                    <img src="/src/assets/b4-style-logo.png" alt="" />
-                              </div>
+                              </NavLink>
                               <p className="text-sm/relaxed  max-w-xs">
                                    Born for Style. Premium streetwear for the bold and fashion-forward young generation of Bangladesh. Elevate your wardrobe with our curated collection.
                               </p>
@@ -39,11 +39,14 @@ const Footer = () => {
                                    <span className="text-primary font-semibold">Owner:</span> Mustafa Tazwer Shakil
                               </p>
                               <div className="flex gap-5 mt-4 text-accent/90">
-                                   <a href="#" className="p-2.5 rounded-full hover:bg-primary bg-neutral-800 transition-all duration-300 hover:scale-105 hover:-translate-y-1">
+                                   <a href="https://www.facebook.com/" target="_blank" className="p-2.5 rounded-full hover:bg-primary bg-neutral-800 transition-all duration-300 hover:scale-105 hover:-translate-y-1">
+                                        <FaFacebookF size={20} />
+                                   </a>
+                                   <a href="https://www.instagram.com/" target="_blank" className="p-2.5 rounded-full hover:bg-primary bg-neutral-800 transition-all duration-300 hover:scale-105 hover:-translate-y-1">
                                         <FaInstagram size={20} />
                                    </a>
-                                   <a href="#" className="p-2.5 rounded-full hover:bg-primary bg-neutral-800 transition-all duration-300 hover:scale-105 hover:-translate-y-1">
-                                        <FaFacebookF size={20} />
+                                   <a href="https://www.tiktok.com/" target="_blank" className="p-2.5 rounded-full hover:bg-primary bg-neutral-800 transition-all duration-300 hover:scale-105 hover:-translate-y-1">
+                                        <FaTiktok size={20} />
                                    </a>
                               </div>
                          </div>
@@ -76,7 +79,6 @@ const Footer = () => {
                                    <IoMailOutline className="text-primary" size={18} />
                                    <p>b4style@gmail.com</p>
                               </div>
-
                               {/* Delivery Box */}
                               <div className="mt-4 p-4 bg-base-200 rounded-lg ">
                                    <p className="text-primary font-medium text-xs mb-3 uppercase tracking-tight">
@@ -87,9 +89,7 @@ const Footer = () => {
                                    </p>
                               </div>
                          </div>
-
                     </div>
-
                     {/* Footer Bottom */}
                     <div className="mt-14 pt-8 border-t border-zinc-700 flex flex-col text-sm md:flex-row justify-between items-center gap-4 font-normal">
                          <p className="">© 2026 B4 Style. All rights reserved.</p>
