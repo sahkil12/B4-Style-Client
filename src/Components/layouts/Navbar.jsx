@@ -66,10 +66,10 @@ const Navbar = () => {
      }, [])
 
      return (
-          <div className={`fixed top-0 left-0 w-full z-50
+          <div className={`fixed top-0 py-2 left-0 border-b w-full z-50 transition-all duration-300
                      ${scrolled
-                    ? "bg-black/70 backdrop-blur-md border-b border-neutral-700"
-                    : "bg-transparent"
+                    ? "bg-black/40 backdrop-blur-xl border-neutral-800"
+                    : "bg-transparent border-transparent"
                }`}>
                <div className="navbar max-w-10/12 mx-auto">
                     <div className="navbar-start">
