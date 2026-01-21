@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FiSearch, FiHeart, FiShoppingBag } from "react-icons/fi";
 import { RiMenuUnfold2Fill } from "react-icons/ri";
 import { RxCross2 } from "react-icons/rx";
@@ -52,10 +52,26 @@ const itemVariants = {
 
 const Navbar = () => {
      const [open, setOpen] = useState(false)
+     const [scrolled, setScrolled] = useState(false)
+
+     useEffect(() => {
+          const handleScrolled = () => {
+               setScrolled(window.scrollY > 50);
+          };
+
+          window.addEventListener("scroll", handleScrolled);
+          return () => {
+               window.removeEventListener("scroll", handleScrolled);
+          };
+     }, [])
 
      return (
-          <div className="bg-secondary border-b border-neutral-700 shadow-sm py-2 relative">
-               <div className="navbar  max-w-10/12 mx-auto">
+          <div className={`fixed top-0 left-0 w-full z-50
+                     ${scrolled
+                    ? "bg-black/70 backdrop-blur-md border-b border-neutral-700"
+                    : "bg-transparent"
+               }`}>
+               <div className="navbar max-w-10/12 mx-auto">
                     <div className="navbar-start">
                          <NavLink to={'/'}>
                               <img src="/src/assets/b4-style-logo.png" className="h-12" alt="" />
@@ -96,26 +112,26 @@ const Navbar = () => {
                     </div>
                </div>
                {/*Menu Box */}
-               { <motion.div
-                         variants={menuVariants}
-                         initial="closed"
-                         animate={open ? "open" : "closed"}
-                         className="lg:hidden overflow-hidden absolute top-20 w-full border-b border-neutral-700 bg-base-100"
-                    >
-                         <motion.ul className="py-10 px-6 flex flex-col gap-8 text-xl font-medium">
-                              {links?.map((item, index) => (
-                                   <motion.li
-                                        key={index}
-                                        variants={itemVariants}
-                                        className="flex items-center gap-3 hover:text-primary cursor-pointer"
-                                        onClick={() => setOpen(false)}
-                                   >
-                                        {item.icon && item.icon}
-                                        {item.name}
-                                   </motion.li>
-                              ))}
-                         </motion.ul>
-                    </motion.div>
+               {<motion.div
+                    variants={menuVariants}
+                    initial="closed"
+                    animate={open ? "open" : "closed"}
+                    className="lg:hidden overflow-hidden absolute top-20 w-full border-b border-neutral-700 bg-base-100"
+               >
+                    <motion.ul className="py-10 px-6 flex flex-col gap-8 text-xl font-medium">
+                         {links?.map((item, index) => (
+                              <motion.li
+                                   key={index}
+                                   variants={itemVariants}
+                                   className="flex items-center gap-3 hover:text-primary cursor-pointer"
+                                   onClick={() => setOpen(false)}
+                              >
+                                   {item.icon && item.icon}
+                                   {item.name}
+                              </motion.li>
+                         ))}
+                    </motion.ul>
+               </motion.div>
                }
           </div>
      );
