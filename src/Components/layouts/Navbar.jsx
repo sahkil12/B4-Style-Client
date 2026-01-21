@@ -66,12 +66,16 @@ const Navbar = () => {
      }, [])
 
      return (
-          <div className={`fixed top-0 py-2 left-0 border-b w-full z-50 transition-all duration-300
+          <motion.div
+               initial={{ opacity: 0, y: -15 }}
+               animate={{ opacity: 1, y: 0 }}
+               transition={{ duration: 0.5,  ease: "easeIn", }}
+               className={`fixed top-0 py-2 left-0 border-b w-full z-50 transition-all duration-300
                      ${scrolled
-                    ? "bg-black/40 backdrop-blur-xl border-neutral-800"
-                    : "bg-transparent border-transparent"
-               }`}>
-               <div className="navbar md:max-w-[75%] mx-auto">
+                         ? "bg-black/40 backdrop-blur-xl border-neutral-800"
+                         : "bg-transparent border-transparent"
+                    }`}>
+               <div className="navbar md:max-w-[75%] mx-auto px-5">
                     <div className="navbar-start">
                          <NavLink to={'/'}>
                               <img src="/src/assets/b4-style-logo.png" className="h-12" alt="" />
@@ -97,7 +101,7 @@ const Navbar = () => {
                          <button className="hover:text-primary hidden lg:inline">
                               <FiHeart size={22}></FiHeart>
                          </button>
-                         <button className="hover:text-primary">
+                         <button className="hover:text-primary active:text-primary">
                               <FiShoppingBag size={22}></FiShoppingBag>
                          </button>
                          {/* menu open close button */}
@@ -123,7 +127,7 @@ const Navbar = () => {
                               <motion.li
                                    key={index}
                                    variants={itemVariants}
-                                   className="flex items-center gap-3 hover:text-primary cursor-pointer"
+                                   className="flex items-center gap-3 hover:text-primary active:text-primary cursor-pointer"
                                    onClick={() => setOpen(false)}
                               >
                                    {item.icon && item.icon}
@@ -133,7 +137,7 @@ const Navbar = () => {
                     </motion.ul>
                </motion.div>
                }
-          </div>
+          </motion.div>
      );
 };
 

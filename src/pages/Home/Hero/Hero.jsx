@@ -1,19 +1,19 @@
 import { IoArrowForward } from "react-icons/io5";
+import { motion } from 'motion/react';
 
 const Hero = () => {
 
      return (
-          <section
-               className="relative h-screen w-full bg-cover bg-center"
+          <motion.section className="relative h-screen w-full bg-cover bg-center"
                style={{
                     backgroundImage:
                          "url('/src/assets/b4-style-hero-1.jpg')",
                }}>
                {/* Overlay */}
                <div className="absolute inset-0 bg-black/75 md:bg-black/70"></div>
-
+               {/* <img src="/src/assets/" alt="" /> */}
                {/* Content */}
-               <div className="relative z-10 h-full mx-auto px-4 pt-10 flex items-center">
+               <div className="relative z-10 h-full mx-auto px-4 pt-14 flex items-center">
                     <div className="max-w-md text-white space-y-6">
                          <p className="text-sm font-semibold tracking-[0.25em] text-primary">
                               NEW COLLECTION 2026
@@ -30,10 +30,10 @@ const Hero = () => {
                          </p>
                          {/* button */}
                          <div className="flex gap-4 pt-2 flex-wrap">
-                              <button className="bg-primary px-6 sm:px-7 py-2.5 font-semibold hover:bg-primary flex items-center justify-center cursor-pointer gap-2 transition-all duration-200 hover:scale-105">
+                              <button className="bg-primary px-6 sm:px-7 py-2.5 font-semibold hover:bg-primary flex items-center justify-center cursor-pointer gap-2 transition-all duration-200 hover:scale-105 active:scale-105">
                                    SHOP NOW <IoArrowForward size={20} />
                               </button>
-                              <button className="border cursor-pointer border-accent px-6 py-2.5 font-semibold transition-all duration-200 hover:scale-105 hover:bg-accent hover:text-s">
+                              <button className="border cursor-pointer border-accent px-6 py-2.5 font-semibold transition-all duration-200 hover:scale-105 hover:bg-accent hover:text-secondary active:scale-105 active:bg-accent active:text-secondary">
                                    OUR STORY
                               </button>
                          </div>
@@ -45,7 +45,7 @@ const Hero = () => {
                          </div>
                     </div>
                </div>
-          </section>
+          </motion.section>
      );
 };
 const Stat = ({ title, label }) => (
