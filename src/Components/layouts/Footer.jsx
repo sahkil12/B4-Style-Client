@@ -3,7 +3,7 @@ import { IoMailOutline } from "react-icons/io5";
 import { NavLink } from "react-router-dom";
 
 const Footer = () => {
-     const linkStyle = 'hover:text-primary transition-all duration-300 hover:ml-1'
+     const linkStyle = 'hover:text-primary active:text-primary transition-all duration-300 hover:ml-1 active:ml-1'
 
      const links = <>
           <li><a href="#" className={linkStyle}>Shop All</a></li>
@@ -37,7 +37,7 @@ const Footer = () => {
                               <NavLink to={'/'} className="w-16 h-16 bg-accent flex items-center justify-center mb-2">
                                    <img src="/src/assets/b4-style-logo.png" alt="" />
                               </NavLink>
-                              <p className="text-sm/relaxed  max-w-xs">
+                              <p className="text-sm/relaxed max-w-xs">
                                    Born for Style. Premium streetwear for the bold and fashion-forward young generation of Bangladesh. Elevate your wardrobe with our curated collection.
                               </p>
                               <p className="text-sm">
@@ -45,7 +45,7 @@ const Footer = () => {
                               </p>
                               <div className="flex gap-5 mt-4 text-accent/90">
                                    {socials?.map((social, ind) => (
-                                        <a key={ind} href={social.link} target="_blank" className="p-2.5 rounded-full hover:bg-primary bg-neutral-800 transition-all duration-300 hover:scale-105 hover:-translate-y-1">
+                                        <a key={ind} href={social.link} target="_blank" className="p-2.5 rounded-full hover:bg-primary active:bg-primary bg-neutral-800 transition-all duration-300 hover:scale-105 hover:-translate-y-1 active:scale-105 active:-translate-y-1">
                                              {social.icon}
                                         </a>
                                    ))}
@@ -95,9 +95,9 @@ const Footer = () => {
                     <div className="mt-14 pt-8 border-t border-zinc-700 flex flex-col text-sm md:flex-row justify-between items-center gap-4 font-normal">
                          <p className="">© 2026 B4 Style. All rights reserved.</p>
                          <div className="flex gap-6">
-                              <a href="#" className="hover:text-primary duration-200 transition-colors">Privacy Policy</a>
-                              <a href="#" className="hover:text-primary duration-200 transition-colors">Terms of Service</a>
-                              <a href="#" className="hover:text-primary duration-200 transition-colors">Shipping Info</a>
+                              <a href="#" className="hover:text-primary active:text-primary duration-200 transition-colors">Privacy Policy</a>
+                              <a href="#" className="hover:text-primary active:text-primary duration-200 transition-colors">Terms of Service</a>
+                              <a href="#" className="hover:text-primary active:text-primary duration-200 transition-colors">Shipping Info</a>
                          </div>
                     </div>
                </div>
