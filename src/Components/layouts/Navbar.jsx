@@ -71,7 +71,7 @@ const Navbar = () => {
                     ? "bg-black/40 backdrop-blur-xl border-neutral-800"
                     : "bg-transparent border-transparent"
                }`}>
-               <div className="navbar max-w-10/12 mx-auto">
+               <div className="navbar md:max-w-[75%] mx-auto">
                     <div className="navbar-start">
                          <NavLink to={'/'}>
                               <img src="/src/assets/b4-style-logo.png" className="h-12" alt="" />
