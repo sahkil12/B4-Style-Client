@@ -24,7 +24,7 @@ const Hero = () => {
                initial={{ scale: 1.1, opacity: 0.5 }}
                animate={{ scale: 1, opacity: 1 }}
                transition={{ duration: 1.5 }}
-               className="relative h-screen w-full bg-cover bg-center"
+               className="relative h-screen w-full bg-cover bg-center "
                style={{
                     backgroundImage:
                          "url('/src/assets/b4-style-hero-1.jpg')",
