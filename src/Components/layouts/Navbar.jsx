@@ -6,12 +6,12 @@ import { motion } from "motion/react"
 import { NavLink } from "react-router-dom";
 
 const links = [
-     { name: "Home" },
-     { name: "Shop" },
-     { name: "About" },
-     { name: "Contact" },
-     { name: "Search", icon: <FiSearch /> },
-     { name: "Wishlist", icon: <FiHeart /> },
+     { name: "HOME" },
+     { name: "SHOP" },
+     { name: "ABOUT" },
+     { name: "CONTACT" },
+     { name: "SEARCH", icon: <FiSearch /> },
+     { name: "WISHLIST", icon: <FiHeart /> },
 ];
 
 const menuVariants = {
@@ -82,12 +82,12 @@ const Navbar = () => {
                          </NavLink>
                     </div>
                     <div className="navbar-center hidden lg:flex">
-                         <ul className="menu menu-horizontal px-1 gap-4 text-base font-medium">
+                         <ul className="flex gap-10 text-sm">
                               {links
                                    .filter(item => !item.icon)
                                    .map((item, index) => (
                                         <li key={index}>
-                                             <a className="hover:text-primary">
+                                             <a className="hover:text-primary cursor-pointer">
                                                   {item.name}
                                              </a>
                                         </li>
