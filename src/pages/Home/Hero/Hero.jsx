@@ -64,7 +64,7 @@ const Hero = () => {
                               </button>
                          </motion.div>
                          {/*  */}
-                         <motion.div variants={childVariants} className="flex gap-10 pt-10">
+                         <motion.div variants={childVariants} className="flex gap-8 sm:gap-10 pt-10">
                               <Stat title="10K+" label="HAPPY CUSTOMERS" />
                               <Stat title="100+" label="UNIQUE STYLES" />
                               <Stat title="64+" label="DISTRICTS" />
