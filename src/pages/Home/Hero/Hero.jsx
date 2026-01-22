@@ -74,7 +74,7 @@ const Hero = () => {
                <motion.div
                     animate={{ y: [0, -12, 0] }}
                     transition={{ duration: 2, repeat: Infinity }}
-                    className="absolute text-primary/80 bottom-6 flex justify-self-center">
+                    className="absolute text-primary/80 bottom-0 sm:bottom-4 flex justify-self-center">
                     <PiMouseSimple size={35}></PiMouseSimple>
                </motion.div>
           </motion.section>
