@@ -7,14 +7,14 @@ const containerVariants = {
      show: {
           transition: {
                staggerChildren: 0.2,
-               delayChildren: 1
+               delayChildren: .7
           },
      }
 }
 
 const childVariants = {
      hidden: { opacity: 0, y: 30 },
-     show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
+     show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } },
 };
 
 const Hero = () => {
@@ -23,7 +23,7 @@ const Hero = () => {
           <motion.section
                initial={{ scale: 1.1, opacity: 0.5 }}
                animate={{ scale: 1, opacity: 1 }}
-               transition={{ duration: 1.5 }}
+               transition={{ duration: 1.3 }}
                className="relative h-screen w-full bg-cover bg-center "
                style={{
                     backgroundImage:

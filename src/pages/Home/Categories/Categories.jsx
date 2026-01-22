@@ -1,4 +1,5 @@
 
+import { motion } from 'motion/react';
 const Categories = () => {
 
      const categories = [
@@ -12,16 +13,6 @@ const Categories = () => {
                items: 18,
                image: "/src/assets/category/Hoodies.webp",
           },
-          // {
-          //      title: "Drop Shoulder",
-          //      items: 30,
-          //      image: "/src/assets/categories/drop.jpg",
-          // },
-          // {
-          //      title: "Sweatshirts",
-          //      items: 14,
-          //      image: "/src/assets/categories/sweatshirt.jpg",
-          // },
           {
                title: "Pants",
                items: 21,
@@ -34,19 +25,45 @@ const Categories = () => {
           },
      ];
 
+     const containerVariants = {
+          hidden: {},
+          show: {
+               transition: {
+                    staggerChildren: 0.18,
+               },
+          },
+     };
+
+     const cardVariants = {
+          hidden: { opacity: 0, y: 30 },
+          show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } },
+     };
+
+
      return (
           <div className='py-10'>
                {/* title */}
-               <section className='flex flex-col text-center gap-6'>
+               <motion.section
+                    initial={{ opacity: 0, y: 40 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 1.3 }}
+                    className='flex flex-col text-center gap-6'>
                     <h4 className='text-primary font-medium uppercase tracking-[6px]'>Browse By</h4>
                     <h2 className='text-4xl md:text-6xl bebas tracking-wider'>Shop Categories</h2>
-               </section>
+               </motion.section>
                {/* category card */}
-               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mt-16 px-6 mx-auto">
+               <motion.div
+                    variants={containerVariants}
+                    initial='hidden'
+                    whileInView='show'
+                    viewport={{ once: false }}
+                    className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mt-16 px-6 mx-auto">
                     {categories.map((cat, index) => (
-                         <div
-                              key={index}
-                              className="group relative h-[420px] rounded-xl overflow-hidden cursor-pointer"
+                         <motion.div
+                         key={index}
+                         className="group relative h-[420px] rounded-xl overflow-hidden cursor-pointer"
+                         variants={cardVariants}
                          >
                               {/* image */}
                               <img
@@ -68,9 +85,9 @@ const Categories = () => {
                                         {cat.items} Items
                                    </p>
                               </div>
-                         </div>
+                         </motion.div>
                     ))}
-               </div>
+               </motion.div>
           </div>
      );
 };
