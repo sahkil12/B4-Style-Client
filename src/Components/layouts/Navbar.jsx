@@ -71,7 +71,7 @@ const Navbar = () => {
                transition={{ duration: 0.5, ease: "easeIn", }}
                className={`fixed top-0 py-2 left-0 border-b w-full z-50 transition-all duration-300
                      ${scrolled
-                         ? "bg-black/40 backdrop-blur-xl border-neutral-800"
+                         ? "bg-black/85 backdrop-blur-xl border-neutral-800"
                          : "bg-transparent border-transparent"
                     }`}>
                <div className="navbar md:max-w-[75%] mx-auto px-5">
