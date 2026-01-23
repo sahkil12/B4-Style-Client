@@ -50,7 +50,7 @@ const WhyB4Style = () => {
                     viewport={{ once: true }}
                     transition={{ duration: 1.3 }}
                     className='flex flex-col md:max-w-[75%] mx-auto text-center mb-14 gap-6'>
-                    <h4 className='text-primary font-medium uppercase tracking-[6px]'>Why B4 Style</h4>
+                    <h4 className='text-primary text-sm sm:text-base font-medium uppercase tracking-[5px]'>Why B4 Style</h4>
                     <h2 className='text-4xl md:text-6xl bebas tracking-wider'>Why Choose Us</h2>
                </motion.section>
                <motion.div
@@ -63,7 +63,9 @@ const WhyB4Style = () => {
                          <motion.div
                               key={index}
                               variants={cardVariants}
-                              className="bg-secondary p-8 rounded-2xl shadow-lg flex flex-col items-center text-center gap-4 cursor-pointer transition-all duration-300"
+                              className="bg-secondary p-8 rounded-2xl flex flex-col items-center text-center gap-4 cursor-pointer transition-all duration-300 
+                              drop-shadow-xl drop-shadow-primary/5 hover:drop-shadow-primary/30 active:drop-shadow-primary/30 hover:-translate-y-2 active:-translate-y-2
+                              "
                          >
                               <span className="p-4 rounded-lg bg-primary/10">{feature.icon}</span>
                               <h3 className="font-semibold text-xl">{feature.title}</h3>

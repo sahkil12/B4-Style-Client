@@ -1,59 +1,7 @@
 import { FaArrowRightLong } from "react-icons/fa6";
-import { motion, AnimatePresence } from "motion/react";
-import { FiHeart, FiShoppingBag } from "react-icons/fi";
+import { motion } from "motion/react";
 import { NavLink } from "react-router-dom";
 import ProductCard from "../../../utils/ProductCard";
-
-// const products = [
-//      {
-//           id: 1,
-//           title: "Black T-Shirt",
-//           price: "1200 BDT",
-//           image: "/src/assets/category/black-tshirt.webp",
-//      },
-//      {
-//           id: 2,
-//           title: "Red Hoodie",
-//           price: "2500 BDT",
-//           image: "/src/assets/category/Hoodies.webp",
-//      },
-//      {
-//           id: 3,
-//           title: "Blue Jeans",
-//           price: "1800 BDT",
-//           image: "/src/assets/category/pants.webp",
-//      },
-//      {
-//           id: 4,
-//           title: "White Sweatshirt",
-//           price: "2000 BDT",
-//           image: "/src/assets/category/winter.webp",
-//      },
-//      {
-//           id: 5,
-//           title: "Grey Hoodie",
-//           price: "2400 BDT",
-//           image: "/src/assets/category/grey-hoodie.webp",
-//      },
-//      {
-//           id: 6,
-//           title: "Black Joggers",
-//           price: "1500 BDT",
-//           image: "/src/assets/category/black-joggers.webp",
-//      },
-//      {
-//           id: 7,
-//           title: "Green T-Shirt",
-//           price: "1300 BDT",
-//           image: "/src/assets/category/green-tshirt.webp",
-//      },
-//      {
-//           id: 8,
-//           title: "Brown Jacket",
-//           price: "3500 BDT",
-//           image: "/src/assets/category/brown-jacket.webp",
-//      },
-// ];
 
 const products = [
      {

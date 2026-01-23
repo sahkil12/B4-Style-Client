@@ -49,7 +49,7 @@ const Categories = () => {
                     viewport={{ once: true }}
                     transition={{ duration: 1.3 }}
                     className='flex flex-col text-center gap-6'>
-                    <h4 className='text-primary font-medium uppercase tracking-[6px]'>Browse By</h4>
+                    <h4 className='text-primary text-sm sm:text-base font-medium uppercase tracking-[6px]'>Browse By</h4>
                     <h2 className='text-4xl md:text-6xl bebas tracking-wider'>Shop Categories</h2>
                </motion.section>
                {/* category card */}
