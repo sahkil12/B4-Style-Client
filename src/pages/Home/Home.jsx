@@ -3,6 +3,7 @@ import Categories from "./Categories/Categories";
 import Hero from "./Hero/Hero";
 import NewArrivals from "./NewArrivals/NewArrivals";
 import PromoBanner from "./PromoBanner/PromoBanner";
+import WhyB4Style from "./WhyB4Style/WhyB4Style";
 
 const Home = () => {
      return (
@@ -12,6 +13,7 @@ const Home = () => {
                <NewArrivals></NewArrivals>
                <section className=""> <PromoBanner ></PromoBanner></section>
                <BestSellers></BestSellers>
+               <WhyB4Style></WhyB4Style>
           </div>
      );
 };
