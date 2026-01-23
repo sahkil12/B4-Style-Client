@@ -1,13 +1,13 @@
 import { motion } from 'motion/react';
 import { FiHeart, FiShoppingBag } from 'react-icons/fi';
 
-const ProductCard = ({product, animation}) => {
+const ProductCard = ({ product, animation, top }) => {
      return (
           <motion.div
                variants={animation}
                className="group cursor-pointer">
                {/* Image Container */}
-               <div className="relative aspect-[3/4] overflow-hidden bg-[#1a1a1a] rounded-sm">
+               <div className="relative aspect-[3/4] overflow-hidden bg-[#1a1a1a] rounded-sm hover:-translate-y-2 transition-all duration-200 ease-in-out">
                     <img
                          src={product.image}
                          alt={product.title}
@@ -29,8 +29,15 @@ const ProductCard = ({product, animation}) => {
                               </span>
                          </div>
                     )}
+                    {
+                         product.badge && (
+                              < span className="absolute top-3 left-3 bg-primary/90 backdrop-blur-xl text-accent text-[11px] font-bold px-3 py-1.5 uppercase tracking-wider rounded-sm">
+                                   {product.badge}
+                              </span>
+                         )
+                    }
                     {/* Wishlist Icon */}
-                    <button className="absolute top-12 right-3 p-2 bg-secondary/85 backdrop-blur-lg rounded-full text-accent opacity-0 group-hover:opacity-100 group-active:opacity-100 transition-all duration-300 hover:bg-primary/90 hover:text-accent active:bg-primary/90 active:text-accent hover:scale-115 active:scale-115">
+                    <button className={`absolute ${top} right-3 p-2 bg-secondary/85 backdrop-blur-lg rounded-full text-accent opacity-0 group-hover:opacity-100 group-active:opacity-100 transition-all duration-300 hover:bg-primary/90 hover:text-accent active:bg-primary/90 active:text-accent hover:scale-115 active:scale-115`}>
                          <FiHeart size={16} />
                     </button>
                     {/* Quick Add Button */}
@@ -59,7 +66,7 @@ const ProductCard = ({product, animation}) => {
                          )}
                     </div>
                </div>
-          </motion.div>
+          </motion.div >
      );
 };
 

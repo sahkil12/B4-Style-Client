@@ -41,7 +41,7 @@ const Categories = () => {
 
 
      return (
-          <div className='py-14 xl:max-w-[75%] mx-auto'>
+          <div className='py-20 md:py-28 xl:max-w-[75%] mx-auto'>
                {/* title */}
                <motion.section
                     initial={{ opacity: 0, y: 40 }}

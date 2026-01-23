@@ -121,7 +121,7 @@ const NewArrivals = () => {
                          transition={{ duration: 0.8 }}
                          className="flex flex-col gap-6 md:flex-row md:justify-between md:items-end mb-16">
                          <section className="space-y-4 md:space-y-6">
-                              <h4 className="text-primary font-medium uppercase tracking-[6px]">Just Dropped</h4>
+                              <h4 className="text-primary font-medium uppercase tracking-[5px]">Just Dropped</h4>
                               <h2 className="text-4xl md:text-6xl bebas tracking-wider">
                                    New Arrivals
                               </h2>
@@ -142,7 +142,7 @@ const NewArrivals = () => {
                          viewport={{ once: false }}
                          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
                          {products?.map((product) => (
-                             <ProductCard key={product.id} product={product} animation={cardVariants}></ProductCard>
+                             <ProductCard key={product.id} product={product} animation={cardVariants} top={'top-12'}></ProductCard>
                          ))}
                     </motion.div >
                </motion.div>
