@@ -31,7 +31,7 @@ const Newsletter = () => {
           />
           <button 
             type="submit"
-            className="bg-primary hover:bg-primary/85 active:bg-primary/85 text-accent font-semibold px-8 py-3.5 rounded-md flex items-center justify-center gap-2 uppercase tracking-widest text-sm transition-all duration-300"
+            className="bg-primary hover:bg-primary/85 cursor-pointer active:bg-primary/85 text-accent font-semibold px-8 py-3.5 rounded-md flex items-center justify-center gap-2 uppercase tracking-widest text-sm transition-all duration-300"
           >
             Subscribe <FiSend className="text-lg" />
           </button>
