@@ -98,7 +98,7 @@ const About = () => {
                                    />
                               </div>
                               {/* BD Badge */}
-                              <div className="absolute -bottom-8 -left-10 bg-primary p-7 rounded-md shadow-2xl">
+                              <div className="absolute -bottom-6 -left-4 md:-left-12 bg-primary p-7 rounded-md shadow-2xl">
                                    <h3 className="text-3xl font-black mb-1.5 italic">BD</h3>
                                    <p className="text-xs uppercase font-bold tracking-widest opacity-75">Made in Bangladesh</p>
                               </div>
@@ -106,41 +106,39 @@ const About = () => {
                     </div>
                </section>
                {/* 4. Small Info Bar */}
-               <div className="bg-zinc-900/50 border-y border-zinc-800 py-6">
-                    <div className="max-w-7xl mx-auto px-6 flex flex-wrap justify-center gap-10 md:gap-20 text-[10px] md:text-xs font-bold uppercase tracking-[0.3em]">
-                         <div className="flex items-center gap-3 text-zinc-400">
-                              <LuMapPin size={16} className="text-[#ff0000]" />
-                              Based in: <span className="text-white">Patiya, Chittagong</span>
+               <div className="bg-base-200 border-t border-accent/15 py-14 md:py-20">
+                    <div className="max-w-7xl mx-auto px-6 flex flex-wrap justify-start md:justify-center gap-8 md:gap-20 text-xs md:text-sm font-bold uppercase tracking-[0.16em]">
+                         <div className="flex items-center gap-3 text-accent">
+                              <LuMapPin size={22} className="text-primary" />
+                              Based in: <span className="text-neutral-300/85">Patiya, Chittagong</span>
                          </div>
-                         <div className="flex items-center gap-3 text-zinc-400">
-                              <LuTruck size={16} className="text-[#ff0000]" />
-                              Delivering to: <span className="text-white">All 64 Districts</span>
+                         <div className="flex items-center gap-3  text-accent">
+                              <LuTruck size={22} className="text-primary" />
+                              Delivering to: <span className="text-neutral-300/85">All 64 Districts</span>
                          </div>
                     </div>
                </div>
-
                {/* 5. Stats Section */}
-               <section className="bg-[#ff0000] py-16">
+               <section className="bg-primary py-20">
                     <div className="max-w-7xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-12 text-center">
-                         <div className="space-y-1">
+                         <div className="space-y-2">
                               <h2 className="text-4xl md:text-5xl font-black">10K+</h2>
-                              <p className="text-[10px] uppercase font-bold tracking-widest opacity-80">Happy Customers</p>
+                              <p className="text-xs uppercase font-bold tracking-widest opacity-80">Happy Customers</p>
                          </div>
-                         <div className="space-y-1">
+                         <div className="space-y-2">
                               <h2 className="text-4xl md:text-5xl font-black">200+</h2>
-                              <p className="text-[10px] uppercase font-bold tracking-widest opacity-80">Unique Styles</p>
+                              <p className="text-xs uppercase font-bold tracking-widest opacity-80">Unique Styles</p>
                          </div>
-                         <div className="space-y-1">
+                         <div className="space-y-2">
                               <h2 className="text-4xl md:text-5xl font-black">64</h2>
-                              <p className="text-[10px] uppercase font-bold tracking-widest opacity-80">Districts Served</p>
+                              <p className="text-xs uppercase font-bold tracking-widest opacity-80">Districts Served</p>
                          </div>
-                         <div className="space-y-1">
+                         <div className="space-y-2">
                               <h2 className="text-4xl md:text-5xl font-black">4.9</h2>
-                              <p className="text-[10px] uppercase font-bold tracking-widest opacity-80">Customer Rating</p>
+                              <p className="text-xs uppercase font-bold tracking-widest opacity-80">Customer Rating</p>
                          </div>
                     </div>
                </section>
-
           </div>
      );
 };
