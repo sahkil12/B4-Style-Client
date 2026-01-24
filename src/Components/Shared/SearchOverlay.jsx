@@ -12,8 +12,8 @@ const SearchOverlay = ({ isOpen, onClose }) => {
                     <motion.div
                          initial={{ opacity: 0, y: -40 }}
                          animate={{ opacity: 1, y: 0 }}
-                         exit={{ opacity: 0, y: -35 }}
-                         transition={{ duration: .35, ease: "easeInOut" }}
+                         exit={{ opacity: 0, y: -35, filter: "blur(4px)" }}
+                         transition={{ duration: .35, ease: "easeInOut", }}
                          className="fixed inset-0 z-[100] bg-base-100/95 backdrop-blur-md flex flex-col items-center pt-24 px-6 min-h-screen"
                     >
                          {/* Close Button */}
@@ -24,7 +24,7 @@ const SearchOverlay = ({ isOpen, onClose }) => {
                               <FiX size={32} />
                          </button>
                          {/* Search Input Area */}
-                         <div className="w-full max-w-5xl">
+                         <div className="w-full max-w-6xl">
                               <div className="flex items-center gap-4 mb-5">
                                    <FiSearch size={26} className="text-accent" />
                                    <input
