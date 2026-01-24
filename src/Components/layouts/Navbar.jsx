@@ -4,6 +4,7 @@ import { RiMenuFill } from "react-icons/ri";
 import { RxCross2 } from "react-icons/rx";
 import { motion } from "motion/react"
 import { NavLink } from "react-router-dom";
+import SearchOverlay from "../Shared/SearchOverlay";
 
 const links = [
      { name: "HOME", to: '/' },
@@ -52,6 +53,7 @@ const itemVariants = {
 const Navbar = () => {
      const [open, setOpen] = useState(false)
      const [scrolled, setScrolled] = useState(false)
+     const [isSearchOpen, setIsSearchOpen] = useState(false);
 
      useEffect(() => {
           const handleScrolled = () => {
@@ -69,12 +71,12 @@ const Navbar = () => {
                initial={{ opacity: 0, y: -15 }}
                animate={{ opacity: 1, y: 0 }}
                transition={{ duration: 0.5, ease: "easeIn", }}
-               className={`fixed top-0 py-2  left-0 border-b w-full z-50 transition-all duration-300
+               className={`fixed top-0 py-2 left-0 border-b w-full z-50 transition-all duration-300
                      ${scrolled
                          ? "bg-black/85 backdrop-blur-xl border-neutral-800"
                          : "bg-transparent border-transparent "
                     }`}>
-               <div className="navbar md:max-w-[75%] mx-auto px-5">
+               <div className="navbar md:max-w-[75%] mx-auto px-3">
                     <div className="navbar-start">
                          <NavLink to={'/'}>
                               <img src="/src/assets/b4-style-logo.png" className="h-12" alt="" />
@@ -98,9 +100,12 @@ const Navbar = () => {
                                    ))}
                          </ul>
                     </div>
-                    <div className="navbar-end gap-7">
-                         <button className="hover:text-primary active:text-primary">
-                              <FiSearch size={22}></FiSearch>
+                    <div className="navbar-end gap-6">
+                         <button
+                              onClick={() => setIsSearchOpen(true)}
+                              className="hover:text-red-600 transition-colors"
+                         >
+                              <FiSearch size={22} />
                          </button>
                          <button className="hover:text-primary hidden lg:inline">
                               <FiHeart size={22}></FiHeart>
@@ -117,7 +122,12 @@ const Navbar = () => {
                                    {open ? <RxCross2 /> : <RiMenuFill />}
                               </button>
                          </div>
+                         <SearchOverlay
+                              isOpen={isSearchOpen}
+                              onClose={() => setIsSearchOpen(false)}
+                         />
                     </div>
+
                </div>
                {/*Menu Box */}
                {<motion.div
@@ -128,23 +138,23 @@ const Navbar = () => {
                >
                     <motion.ul className="py-10 px-6 flex flex-col gap-8 text-lg font-medium">
                          {links.map((item, index) => (
-                                   <motion.li
-                                        key={index}
-                                        variants={itemVariants}
-                                        onClick={() => setOpen(false)}
-                                   >
-                                        <NavLink
-                                             to={item.to}
-                                             className={({ isActive }) =>
-                                                  `flex items-center gap-3 tracking-widest transition-colors duration-200 hover:text-white
+                              <motion.li
+                                   key={index}
+                                   variants={itemVariants}
+                                   onClick={() => setOpen(false)}
+                              >
+                                   <NavLink
+                                        to={item.to}
+                                        className={({ isActive }) =>
+                                             `flex items-center gap-3 tracking-widest transition-colors duration-200 hover:text-white
                                                   ${isActive ? "text-primary" : "text-white/80"}`
-                                             }
-                                        >
-                                             {item.icon && item.icon}
-                                             {item.name}
-                                        </NavLink>
-                                   </motion.li>
-                              ))}
+                                        }
+                                   >
+                                        {item.icon && item.icon}
+                                        {item.name}
+                                   </NavLink>
+                              </motion.li>
+                         ))}
                     </motion.ul>
 
                </motion.div>
