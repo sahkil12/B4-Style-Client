@@ -5,7 +5,26 @@ import {
      LuMapPin,
      LuTruck
 } from "react-icons/lu";
+import { IoArrowForward } from "react-icons/io5";
+import { Link } from "react-router-dom";
 
+const Missions = [
+     {
+          icon: <LuTarget size={28} />,
+          title: 'Our Mission',
+          subtitle: "To redefine streetwear in Bangladesh by creating bold, premium pieces that empower the young generation to express their authentic selves."
+     },
+     {
+          icon: <LuEye size={28} />,
+          title: 'Our Vision',
+          subtitle: "To become Bangladesh's leading streetwear brand, inspiring the youth to embrace boldness and individuality in fashion."
+     },
+     {
+          icon: <LuZap size={28} />,
+          title: 'Our Values',
+          subtitle: "Quality, authenticity, and innovation drive everything we do. We craft each piece with precision and passion for the style-conscious youth."
+     },
+]
 
 const About = () => {
      return (
@@ -27,54 +46,34 @@ const About = () => {
                     </div>
                </section>
                {/* 2. Mission, Vision, Values */}
-               <section className="py-20 px-6 md:px-12 max-w-7xl mx-auto border-t border-zinc-900">
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
-                         {/* Mission */}
-                         <div className="space-y-4">
-                              <div className="w-12 h-12 flex items-center justify-center rounded-full bg-zinc-900 text-[#ff0000]">
-                                   <LuTarget size={24} />
-                              </div>
-                              <h3 className="text-xl font-bold uppercase tracking-wider">Our Mission</h3>
-                              <p className="text-zinc-500 text-sm leading-relaxed">
-                                   To redefine streetwear in Bangladesh by creating bold, premium pieces that empower the young generation to express their authentic selves.
-                              </p>
+               <div className="w-full bg-secondary">
+                    <section className="py-20 md:py-28 px-6 md:px-12 max-w-7xl mx-auto w-full">
+                         <div className="grid grid-cols-1 md:grid-cols-3 gap-16">
+                              {Missions?.map((mission, ind) => (
+                                   <div key={ind} className="space-y-5">
+                                        <div className="w-16 h-16 flex items-center justify-center rounded-full bg-primary/10 text-primary">
+                                             {mission.icon}
+                                        </div>
+                                        <h3 className="text-2xl font-medium bebas tracking-[2.5px]">{mission.title}</h3>
+                                        <p className="text-neutral-400 text-[15px] font-medium leading-relaxed">
+                                             {mission.subtitle}
+                                        </p>
+                                   </div>
+                              ))}
                          </div>
-
-                         {/* Vision */}
-                         <div className="space-y-4">
-                              <div className="w-12 h-12 flex items-center justify-center rounded-full bg-zinc-900 text-[#ff0000]">
-                                   <LuEye size={24} />
-                              </div>
-                              <h3 className="text-xl font-bold uppercase tracking-wider">Our Vision</h3>
-                              <p className="text-zinc-500 text-sm leading-relaxed">
-                                   To become Bangladesh's leading streetwear brand, inspiring the youth to embrace boldness and individuality in fashion.
-                              </p>
-                         </div>
-
-                         {/* Values */}
-                         <div className="space-y-4">
-                              <div className="w-12 h-12 flex items-center justify-center rounded-full bg-zinc-900 text-[#ff0000]">
-                                   <LuZap size={24} />
-                              </div>
-                              <h3 className="text-xl font-bold uppercase tracking-wider">Our Values</h3>
-                              <p className="text-zinc-500 text-sm leading-relaxed">
-                                   Quality, authenticity, and innovation drive everything we do. We craft each piece with precision and passion for the style-conscious youth.
-                              </p>
-                         </div>
-                    </div>
-               </section>
-
+                    </section>
+               </div>
                {/* 3. From Vision to Reality Section */}
-               <section className="py-24 bg-[#050505]">
+               <section className="py-24 ">
                     <div className="max-w-7xl mx-auto px-6 md:px-12 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
                          <div className="order-2 lg:order-1">
-                              <h4 className="text-[#ff0000] text-sm font-bold tracking-[0.3em] uppercase mb-4">
+                              <h4 className="text-primary text-sm font-semibold tracking-[0.3em] uppercase mb-6">
                                    The Beginning
                               </h4>
-                              <h2 className="text-4xl md:text-5xl font-bold uppercase tracking-tight mb-8">
+                              <h2 className="text-4xl md:text-5xl font-medium bebas tracking-wider mb-6">
                                    From Vision To Reality
                               </h2>
-                              <div className="space-y-6 text-zinc-400 text-sm leading-relaxed">
+                              <div className="space-y-6 text-neutral-400 text-base leading-relaxed">
                                    <p>
                                         B4 Style was born from a simple idea: create clothing that speaks louder than words for the young generation of Bangladesh. Founded by Mustafa Tazwer Shakil, we set out to challenge the norms of conventional fashion in our country.
                                    </p>
@@ -85,29 +84,27 @@ const About = () => {
                                         Every piece in our collection tells a story of craftsmanship and attention to detail. We source premium materials and ensure quality that lasts, all while keeping our prices accessible for the youth.
                                    </p>
                               </div>
-                              <button className="mt-10 bg-[#ff0000] hover:bg-white hover:text-black text-white font-bold py-4 px-10 text-xs uppercase tracking-[0.2em] transition-all duration-300">
-                                   Explore Our Collection →
-                              </button>
+                              <Link to={'/shop'}>
+                                   <button className="mt-10 bg-primary hover:bg-primary/85 hover:scale-105 active:bg-primary/85 active:scale-105 text-accent font-bold py-4 px-8 text-sm uppercase tracking-[0.2em] transition-all duration-300 flex items-center gap-2">  Explore Our Collection <IoArrowForward size={20}/></button>
+                              </Link>
                          </div>
-
                          {/* Image Side with Badge */}
                          <div className="relative order-1 lg:order-2">
                               <div className="aspect-[4/5] overflow-hidden rounded-2xl">
                                    <img
-                                        src="https://images.unsplash.com/photo-1552374196-1ab2a1c593e8?q=80&w=1000&auto=format&fit=crop"
+                                        src="/src/assets/about-display-pic.png"
                                         alt="B4 Style Fashion"
-                                        className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700"
+                                        className="w-full h-full object-cover grayscale hover:grayscale-0 active:grayscale-0 transition-all duration-600"
                                    />
                               </div>
                               {/* BD Badge */}
-                              <div className="absolute -bottom-6 -left-6 bg-[#ff0000] p-6 rounded-xl shadow-2xl">
-                                   <h3 className="text-3xl font-black italic">BD</h3>
-                                   <p className="text-[10px] uppercase font-bold tracking-widest opacity-80">Made in Bangladesh</p>
+                              <div className="absolute -bottom-8 -left-10 bg-primary p-7 rounded-md shadow-2xl">
+                                   <h3 className="text-3xl font-black mb-1.5 italic">BD</h3>
+                                   <p className="text-xs uppercase font-bold tracking-widest opacity-75">Made in Bangladesh</p>
                               </div>
                          </div>
                     </div>
                </section>
-
                {/* 4. Small Info Bar */}
                <div className="bg-zinc-900/50 border-y border-zinc-800 py-6">
                     <div className="max-w-7xl mx-auto px-6 flex flex-wrap justify-center gap-10 md:gap-20 text-[10px] md:text-xs font-bold uppercase tracking-[0.3em]">
