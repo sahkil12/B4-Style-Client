@@ -2,7 +2,7 @@ import { FiSend } from "react-icons/fi";
 
 const Newsletter = () => {
   return (
-    <section className="bg-base-100 py-24 px-5">
+    <section className="bg-base-100 py-10 md:py-24 px-3">
       {/* Card Container */}
       <div className="max-w-4xl mx-auto bg-secondary border border-zinc-700 rounded-[18px] py-12 px-6 md:px-16 flex flex-col items-center text-center">
         {/* Subtitle */}

@@ -2,7 +2,7 @@ import React from 'react';
 import { FiSend, FiMapPin, FiPhone, FiMail } from "react-icons/fi";
 import { FaInstagram, FaFacebookF, FaTiktok } from "react-icons/fa";
 
-const inputStyles = "w-full bg-[#232323e4] border border-neutral-700 p-4 rounded-lg focus:outline-none focus:border-primary transition-colors"
+const inputStyles = "w-full bg-[#232323e4] border border-neutral-700 p-3 md:p-4 rounded-lg focus:outline-none focus:border-primary transition-colors"
 
 const socials = [
      { icon: <FaFacebookF size={20} />, link: "https://www.facebook.com/" },
@@ -35,7 +35,7 @@ const Contact = () => {
                     </section>
                </section>
                {/* 2. Main Content Section (Form & Info) */}
-               <section className="max-w-7xl mx-auto px-6 md:px-12 py-16">
+               <section className="max-w-7xl mx-auto px-4 md:px-12 py-16">
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
                          {/* Left Side: Contact Form */}
                          <div className="space-y-8">
@@ -83,7 +83,7 @@ const Contact = () => {
                               <div className="space-y-4">
                                    {
                                         contactInfo?.map((info, ind) => (
-                                             <div key={ind} className="flex items-start gap-5 bg-base-200/50 border border-accent/10 p-7 rounded-xl hover:border-accent/15 transition-all duration-300 hover:translate-x-2 active:translate-x-2 group">
+                                             <div key={ind} className="flex items-start gap-5 bg-base-200/50 border border-accent/10 p-5 md:p-7 rounded-xl hover:border-accent/15 transition-all duration-300 hover:translate-x-2 active:translate-x-2 group">
                                                   <div className="p-3.5 bg-primary/10 rounded-lg text-primary group-hover:scale-115 transition-all duration-300 group-active:scale-110">
                                                        {info.icon}
                                                   </div>
@@ -109,7 +109,7 @@ const Contact = () => {
                                    <div className="flex gap-4">
                                         {
                                              socials?.map((social, ind) => (
-                                                  <a key={ind} href={social.link} className="p-3 bg-secondary border border-accent/10 rounded-lg hover:bg-primary transition-all duration-300 hover:-translate-y-1.5 hover:scale-105 active:-translate-y-1.5 active:scale-105">
+                                                  <a key={ind} target='_blank' href={social.link} className="p-3 bg-secondary border border-accent/10 rounded-lg hover:bg-primary active:bg-primary transition-all duration-300 hover:-translate-y-1.5 hover:scale-105 active:-translate-y-1.5 active:scale-105">
                                                        {social.icon}
                                                   </a>
                                              ))
