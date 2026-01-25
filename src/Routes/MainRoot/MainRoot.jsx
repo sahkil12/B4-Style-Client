@@ -1,11 +1,11 @@
 import { createBrowserRouter } from "react-router-dom";
-import MainLayout from "../../layouts/Mainlayout/Mainlayout";
 import Home from "../../pages/Home/Home";
 import Shop from "../../pages/Shop/Shop";
 import About from "../../pages/About/About";
 import Contact from "../../pages/Contact/Contact";
 import Wishlist from "../../pages/Wishlist/Wishlist";
 import AddCart from "../../pages/AddCart/AddCart";
+import MainLayout from "../../layouts/MainLayout/MainLayout";
 
 export const router = createBrowserRouter([
      {
