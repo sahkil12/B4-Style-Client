@@ -1,6 +1,7 @@
 import { IoArrowForward } from "react-icons/io5";
 import { PiMouseSimple } from "react-icons/pi";
 import { motion } from 'motion/react';
+import { Link } from "react-router-dom";
 
 const containerVariants = {
      hidden: {},
@@ -34,13 +35,13 @@ const Hero = () => {
                {/* Content */}
                <div className="relative z-10 h-full mx-auto px-4 pt-14 flex items-center">
                     <motion.div
-                    variants={containerVariants}
-                    initial="hidden"
-                    animate="show"
-                    className="max-w-md text-white space-y-6">
+                         variants={containerVariants}
+                         initial="hidden"
+                         animate="show"
+                         className="max-w-md text-white space-y-6">
                          <motion.p
-                         variants={childVariants}
-                         className="text-sm font-semibold tracking-[0.25em] text-primary">
+                              variants={childVariants}
+                              className="text-sm font-semibold tracking-[0.25em] text-primary">
                               NEW COLLECTION 2026
                          </motion.p>
                          {/* headline */}
@@ -54,13 +55,13 @@ const Hero = () => {
                               fashion-forward generation in Bangladesh.
                          </motion.p>
                          {/* button */}
-                         <motion.div variants={childVariants} className="flex gap-4 pt-2 flex-wrap">
-                              <button className="bg-primary px-6 sm:px-7 py-2.5 font-medium hover:bg-primary flex items-center justify-center cursor-pointer gap-2 transition-all duration-200 hover:scale-105 active:scale-105 group">
+                         <motion.div variants={childVariants} className="flex flex-col sm:flex-row gap-4 pt-2 flex-wrap">
+                              <Link to={'/shop'} className="bg-primary px-6 sm:px-8 py-2.5 font-semibold hover:bg-primary flex items-center justify-center cursor-pointer gap-2 transition-all duration-200 hover:scale-105 active:scale-105 group w-fit">
                                    SHOP NOW <IoArrowForward className="group-hover:ml-0.5" size={20} />
-                              </button>
-                              <button className="border cursor-pointer border-accent px-6 py-2.5 font-medium transition-all duration-200 hover:scale-105 hover:bg-accent hover:text-secondary active:scale-105 active:bg-accent active:text-secondary">
+                              </Link>
+                              <Link to={'/about'} className="border cursor-pointer border-accent/90 px-6 w-fit py-2.5 font-semibold transition-all duration-200 hover:scale-105 hover:bg-accent hover:text-secondary active:scale-105 active:bg-accent active:text-secondary">
                                    OUR STORY
-                              </button>
+                              </Link>
                          </motion.div>
                          {/*  */}
                          <motion.div variants={childVariants} className="flex gap-8 sm:gap-10 pt-10">

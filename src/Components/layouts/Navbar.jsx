@@ -4,7 +4,7 @@ import { RiMenuFill } from "react-icons/ri";
 import { RxCross2 } from "react-icons/rx";
 import { motion } from "motion/react"
 import { Link, NavLink } from "react-router-dom";
-import SearchOverlay from "../Shared/SearchOverlay";
+import SearchOverlay from "../Shared/SearchBar/SearchOverlay";
 import logo from '../../../public/assets/Others/b4-style-logo.png'
 
 const links = [

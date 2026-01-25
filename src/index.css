@@ -13,6 +13,9 @@
   --color-base-100: #000000;
   --color-base-200: #161616;
 }
+html{
+  scroll-behavior: smooth;
+}
 
 body {
   font-family: "Inter", sans-serif;
