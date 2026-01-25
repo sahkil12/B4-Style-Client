@@ -37,12 +37,12 @@ const ProductCard = ({ product, animation, top }) => {
                          )
                     }
                     {/* Wishlist Icon */}
-                    <button className={`absolute ${top} right-3 p-2 bg-secondary/85 backdrop-blur-lg rounded-full text-accent opacity-0 group-hover:opacity-100 group-active:opacity-100 transition-all duration-300 hover:bg-primary/90 hover:text-accent active:bg-primary/90 active:text-accent hover:scale-115 active:scale-115`}>
+                    <button className={`absolute ${top} right-3 p-2 bg-secondary/85 backdrop-blur-lg rounded-full text-accent sm:opacity-0 group-hover:opacity-100 transition-all duration-300 hover:bg-primary/90 hover:text-accent active:bg-primary/90 active:text-accent hover:scale-115 active:scale-115`}>
                          <FiHeart size={16} />
                     </button>
                     {/* Quick Add Button */}
-                    <div className="absolute bottom-0 left-0 w-full p-4 translate-y-full group-hover:translate-y-0 group-active:translate-y-0 transition-transform duration-400 ease-out">
-                         <button className="w-full bg-primary hover:bg-primary/85 active:bg-primary/85 cursor-pointer text-accent font-semibold py-3 flex items-center justify-center gap-2 text-sm uppercase tracking-widest transition-all">
+                    <div className="absolute bottom-0 left-0 w-full p-2.5 sm:p-4 translate-y-0 sm:translate-y-full group-hover:translate-y-0 transition-transform duration-400 ease-out">
+                         <button className="w-full bg-primary hover:bg-primary/90 active:bg-primary/90 cursor-pointer text-accent font-semibold py-3 flex items-center justify-center gap-2 text-sm uppercase tracking-widest transition-all">
                               <FiShoppingBag /> Quick Add
                          </button>
                     </div>
