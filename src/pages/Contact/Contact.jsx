@@ -68,7 +68,7 @@ const Contact = () => {
                                         className={`${inputStyles} resize-none`}
                                    ></textarea>
                                    {/* button */}
-                                   <button className="bg-primary hover:bg-primary/85 text-accent font-bold py-4 px-10 rounded-sm flex items-center gap-3 uppercase tracking-widest text-sm transition-all duration-300">
+                                   <button className="bg-primary hover:bg-primary/85 text-accent font-semibold py-4 px-10 rounded-sm flex items-center gap-3 uppercase tracking-widest text-sm transition-all duration-300">
                                         Send Message <FiSend size={16} />
                                    </button>
                               </form>

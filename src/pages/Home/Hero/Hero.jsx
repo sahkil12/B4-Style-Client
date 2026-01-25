@@ -38,14 +38,14 @@ const Hero = () => {
                          variants={containerVariants}
                          initial="hidden"
                          animate="show"
-                         className="max-w-md text-white space-y-6">
+                         className="max-w-md text-accent space-y-5">
                          <motion.p
                               variants={childVariants}
                               className="text-sm font-semibold tracking-[0.25em] text-primary">
                               NEW COLLECTION 2026
                          </motion.p>
                          {/* headline */}
-                         <motion.h1 variants={childVariants} className="text-7xl sm:text-8xl tracking-[0.07em] bebas font-medium leading-20 sm:leading-[100px]">
+                         <motion.h1 variants={childVariants} className="text-6xl sm:text-8xl tracking-[0.07em] bebas font-medium leading-20 sm:leading-[100px]">
                               BORN FOR <br />
                               <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent via-accent to-primary">STYLE</span>
                          </motion.h1>
@@ -64,7 +64,7 @@ const Hero = () => {
                               </Link>
                          </motion.div>
                          {/*  */}
-                         <motion.div variants={childVariants} className="flex gap-8 sm:gap-10 pt-10">
+                         <motion.div variants={childVariants} className="flex gap-8 sm:gap-10 pt-8 sm:pt-10">
                               <Stat title="10K+" label="HAPPY CUSTOMERS" />
                               <Stat title="100+" label="UNIQUE STYLES" />
                               <Stat title="64+" label="DISTRICTS" />

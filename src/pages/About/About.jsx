@@ -9,6 +9,13 @@ import { IoArrowForward } from "react-icons/io5";
 import { Link } from "react-router-dom";
 import displayImage from '../../../public/assets/Others/about-display-pic.png'
 
+const stats = [
+     { title: "10K+", subtitle: "Happy Customers" },
+     { title: "200+", subtitle: "Unique Styles" },
+     { title: 64, subtitle: "Districts Served" },
+     { title: 4.9, subtitle: "    Customer Rating" },
+]
+
 const Missions = [
      {
           icon: <LuTarget size={28} />,
@@ -86,7 +93,7 @@ const About = () => {
                                    </p>
                               </div>
                               <Link to={'/shop'}>
-                                   <button className="mt-10 bg-primary hover:bg-primary/85 hover:scale-105 active:bg-primary/85 active:scale-105 text-accent font-bold py-4 px-8 text-sm uppercase tracking-[0.2em] transition-all duration-300 flex items-center gap-2">  Explore Our Collection <IoArrowForward size={20}/></button>
+                                   <button className="mt-10 bg-primary hover:bg-primary/85 hover:scale-105 active:bg-primary/85 active:scale-105 text-accent font-bold py-3 sm:py-4 px-5 sm:px-7 text-[11px] sm:text-sm uppercase tracking-[0.2em] transition-all duration-300 flex items-center gap-2">Explore Our Collection<IoArrowForward size={20} /></button>
                               </Link>
                          </div>
                          {/* Image Side with Badge */}
@@ -108,7 +115,7 @@ const About = () => {
                </section>
                {/* 4. Small Info Bar */}
                <div className="bg-base-200 border-t border-accent/15 py-14 md:py-20">
-                    <div className="max-w-7xl mx-auto px-6 flex flex-wrap justify-start md:justify-center gap-8 md:gap-20 text-xs md:text-sm font-bold uppercase tracking-[0.16em]">
+                    <div className="max-w-7xl mx-auto px-4 flex flex-wrap justify-start md:justify-center gap-8 md:gap-20 text-[11px] md:text-sm font-bold uppercase tracking-[0.16em]">
                          <div className="flex items-center gap-3 text-accent">
                               <LuMapPin size={22} className="text-primary" />
                               Based in: <span className="text-neutral-300/85">Patiya, Chittagong</span>
@@ -122,22 +129,12 @@ const About = () => {
                {/* 5. Stats Section */}
                <section className="bg-primary py-20">
                     <div className="max-w-7xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-12 text-center">
-                         <div className="space-y-2">
-                              <h2 className="text-4xl md:text-5xl font-black">10K+</h2>
-                              <p className="text-xs uppercase font-bold tracking-widest opacity-80">Happy Customers</p>
-                         </div>
-                         <div className="space-y-2">
-                              <h2 className="text-4xl md:text-5xl font-black">200+</h2>
-                              <p className="text-xs uppercase font-bold tracking-widest opacity-80">Unique Styles</p>
-                         </div>
-                         <div className="space-y-2">
-                              <h2 className="text-4xl md:text-5xl font-black">64</h2>
-                              <p className="text-xs uppercase font-bold tracking-widest opacity-80">Districts Served</p>
-                         </div>
-                         <div className="space-y-2">
-                              <h2 className="text-4xl md:text-5xl font-black">4.9</h2>
-                              <p className="text-xs uppercase font-bold tracking-widest opacity-80">Customer Rating</p>
-                         </div>
+                         {stats?.map((stat, ind) => (
+                              <div key={ind} className="space-y-2">
+                                   <h2 className="text-3xl sm:text-5xl font-black">{stat.title}</h2>
+                                   <p className="text-xs uppercase font-bold tracking-widest opacity-80">{stat.subtitle}</p>
+                              </div>
+                         ))}
                     </div>
                </section>
           </div>
