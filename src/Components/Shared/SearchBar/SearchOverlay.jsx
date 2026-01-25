@@ -4,7 +4,7 @@ import { FiSearch, FiX } from "react-icons/fi";
 import SearchCard from "./SearchCard";
 
 const SearchOverlay = ({ isOpen, onClose }) => {
-     const categories = ["T-Shirts", "Hoodies", "Pants", "Winter"];
+     // const categories = ["T-Shirts", "Hoodies", "Pants", "Winter"];
      // const [searchCategory, setSearchCategory] = useState('')
      const [searchText, setSearchText] = useState('')
 
@@ -42,34 +42,48 @@ const SearchOverlay = ({ isOpen, onClose }) => {
                category: "T-SHIRTS",
                title: "ESSENTIAL OVERSIZED TEE",
                price: 850,
-               image: "/assets/category/OVERSIZED-TEE.webp.jpg",
+               image: "/assets/category/black-tshirt.webp",
           },
           {
                id: 2301,
                category: "HOODIES",
                title: "STEALTH HOODIE",
                price: 2200,
-               image: "/assets/category/stealth-hoodie.webp.jpg",
+               image: "/assets/category/Hoodies.webp",
           },
           {
                id: 3123,
                category: "PANTS",
                title: "Blue Jeans",
                price: 1600,
-               image: "/assets/category/blue-jeans.webp",
+               image: "/assets/category/pants.webp",
           },
           {
                id: 412,
                category: "HOODIES",
-               title: "MIDNIGHT HOODIE",
+               title: "Black Hoodie",
                price: 2400,
-               image: "/assets/category/winter.webp",
-          }
+               image: "/assets/category/Hoodies.webp",
+          },
+          {
+               id: 3139,
+               category: "T-SHIRTS",
+               title: "Black Comfort T-Shirt",
+               price: 850,
+               image: "/assets/category/black-tshirt.webp",
+          },
+          {
+               id: 123123,
+               category: "PANTS",
+               title: "Formal Pants",
+               price: 1600,
+               image: "/assets/category/pants.webp",
+          },
      ];
 
-     const filteredProducts = products.filter((product) =>(
-          product.title.toLowerCase().includes(searchText.toLowerCase()),
-           product.category.toLowerCase().includes(searchText.toLowerCase())
+     const filteredProducts = products.filter((product) => (
+          product.title.toLowerCase().includes(searchText.toLowerCase())
+          // product.category.toLowerCase().includes(searchText.toLowerCase())
      )
      );
 
@@ -96,7 +110,7 @@ const SearchOverlay = ({ isOpen, onClose }) => {
                                    <FiSearch size={26} className="text-accent" />
                                    <input
                                         autoFocus
-                                        Value={searchText} 
+                                        defaultValue={searchText}
                                         onChange={(e) => { setSearchText(e.target.value) }}
                                         type="text"
                                         placeholder="SEARCH PRODUCTS..."
@@ -107,7 +121,7 @@ const SearchOverlay = ({ isOpen, onClose }) => {
                               <div className="w-full h-[2px] bg-primary"></div>
                               {/* Results */}
                               <div className="mt-14 max-h-[75vh] overflow-y-auto">
-                                   {searchText && (
+                                   {searchText?  (
                                         filteredProducts.length > 0 ? (
                                              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
                                                   {filteredProducts?.map((product) => (
@@ -119,23 +133,24 @@ const SearchOverlay = ({ isOpen, onClose }) => {
                                              </div>
                                         ) : (
                                              <p className="text-center text-neutral-500 mt-20">
-                                                 No products found for "{searchText}"
+                                                  No products found for "{searchText}"
                                              </p>
                                         )
-                                   )}
+                                   ) : <p className="text-center text-xl sm:text-2xl mt-16 text-neutral-400">Search To Find Your Products...</p> }
                               </div>
 
                               {/* Middle Content */}
-                              <div className="mt-14 text-center">
+                              {/* <div className="hidden mt-14 text-center">
                                    <p className="text-neutral-400 text-sm uppercase tracking-widest mb-8">
                                         Start typing to search for products...
                                    </p>
-                                   {/* Suggestion Tags */}
+                                 
                                    <div className="flex flex-wrap justify-center gap-3">
                                         {categories.map((item, index) => (
                                              <button
                                                   key={index}
                                                   onClick={() => (
+                                                       setSearchText(''),
                                                        setSearchText(item)
                                                   )}
                                                   className="px-6 py-3 bg-base-200 text-accent text-xs font-bold rounded-full hover:bg-primary transition-all duration-300 cursor-pointer"
@@ -144,7 +159,7 @@ const SearchOverlay = ({ isOpen, onClose }) => {
                                              </button>
                                         ))}
                                    </div>
-                              </div>
+                              </div> */}
                          </div>
                     </motion.div>
                )}

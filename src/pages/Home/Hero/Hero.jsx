@@ -31,7 +31,7 @@ const Hero = () => {
                          "url('/assets/Others/b4-style-hero-1.jpg')",
                }}>
                {/* Overlay */}
-               <div className="absolute inset-0 bg-base-100/75 md:bg-base-100/65"></div>
+               <div className="absolute inset-0 bg-base-100/70 md:bg-base-100/65"></div>
                {/* Content */}
                <div className="relative z-10 h-full mx-auto px-4 pt-14 flex items-center">
                     <motion.div
