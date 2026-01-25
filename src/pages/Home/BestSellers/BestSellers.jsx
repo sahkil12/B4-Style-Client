@@ -13,7 +13,7 @@ const bestSellers = [
           title: "STREET FIT DENIM",
           price: 1700,
           oldPrice: 2100,
-          image: "/src/assets/category/blue-jeans.webp",
+          image: "/assets/category/blue-jeans.webp",
           badge: "Hot",
      },
      {
@@ -22,7 +22,7 @@ const bestSellers = [
           title: "SIGNATURE OVERSIZED TEE",
           price: 950,
           oldPrice: 1300,
-          image: "/src/assets/category/OVERSIZED-TEE.webp.jpg",
+          image: "/assets/category/OVERSIZED-TEE.webp.jpg",
           badge: "Best Seller",
      },
      {
@@ -30,7 +30,7 @@ const bestSellers = [
           category: "HOODIES",
           title: "ESSENTIAL WINTER HOODIE",
           price: 2400,
-          image: "/src/assets/category/winter.webp",
+          image: "/assets/category/winter.webp",
           badge: "Popular",
      },
      {
@@ -38,7 +38,7 @@ const bestSellers = [
           category: "HOODIES",
           title: "URBAN CORE HOODIE",
           price: 2600,
-          image: "/src/assets/category/stealth-hoodie.webp.jpg",
+          image: "/assets/category/stealth-hoodie.webp.jpg",
           badge: "Trending",
      },
 ];

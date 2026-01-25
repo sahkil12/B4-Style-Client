@@ -27,11 +27,10 @@ const Hero = () => {
                className="relative h-screen w-full bg-cover bg-center xl:max-w-[75%] mx-auto"
                style={{
                     backgroundImage:
-                         "url('/src/assets/b4-style-hero-1.jpg')",
+                         "url('/assets/Others/b4-style-hero-1.jpg')",
                }}>
                {/* Overlay */}
-               <div className="absolute inset-0 bg-black/75 md:bg-black/65"></div>
-               {/* <img src="/src/assets/" alt="" /> */}
+               <div className="absolute inset-0 bg-base-100/75 md:bg-base-100/65"></div>
                {/* Content */}
                <div className="relative z-10 h-full mx-auto px-4 pt-14 flex items-center">
                     <motion.div

@@ -6,22 +6,22 @@ const Categories = () => {
           {
                title: "T-Shirts",
                items: 23,
-               image: "/src/assets/category/black-tshirt.webp",
+               image: "/assets/category/black-tshirt.webp",
           },
           {
                title: "Hoodies",
                items: 18,
-               image: "/src/assets/category/Hoodies.webp",
+               image: "/assets/category/Hoodies.webp",
           },
           {
                title: "Pants",
                items: 21,
-               image: "/src/assets/category/pants.webp",
+               image: "/assets/category/pants.webp",
           },
           {
                title: "Winter Wear",
                items: 12,
-               image: "/src/assets/category/winter.webp",
+               image: "/assets/category/winter.webp",
           },
      ];
 

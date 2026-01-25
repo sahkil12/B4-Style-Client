@@ -7,6 +7,7 @@ import {
 } from "react-icons/lu";
 import { IoArrowForward } from "react-icons/io5";
 import { Link } from "react-router-dom";
+import displayImage from '../../../public/assets/Others/about-display-pic.png'
 
 const Missions = [
      {
@@ -92,7 +93,7 @@ const About = () => {
                          <div className="relative order-1 lg:order-2">
                               <div className="aspect-[4/5] overflow-hidden rounded-2xl">
                                    <img
-                                        src="/src/assets/about-display-pic.png"
+                                        src={displayImage}
                                         alt="B4 Style Fashion"
                                         className="w-full h-full object-cover grayscale hover:grayscale-0 active:grayscale-0 transition-all duration-600"
                                    />

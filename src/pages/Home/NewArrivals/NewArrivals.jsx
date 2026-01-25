@@ -11,7 +11,7 @@ const products = [
           price: 850,
           oldPrice: 1200,
           discount: "-29%",
-          image: "/src/assets/category/OVERSIZED-TEE.webp.jpg",
+          image: "/assets/category/OVERSIZED-TEE.webp.jpg",
           isNew: true,
      },
      {
@@ -21,7 +21,7 @@ const products = [
           price: 2200,
           oldPrice: 2800,
           discount: "-21%",
-          image: "/src/assets/category/stealth-hoodie.webp.jpg",
+          image: "/assets/category/stealth-hoodie.webp.jpg",
           isNew: true,
      },
      {
@@ -29,7 +29,7 @@ const products = [
           category: "PANTS",
           title: "Blue Jeans",
           price: 1600,
-          image: "/src/assets/category/blue-jeans.webp",
+          image: "/assets/category/blue-jeans.webp",
           isNew: true,
      },
      {
@@ -37,7 +37,7 @@ const products = [
           category: "HOODIES",
           title: "MIDNIGHT HOODIE",
           price: 2400,
-          image: "/src/assets/category/winter.webp",
+          image: "/assets/category/winter.webp",
           isNew: true,
      },
 ];
