@@ -5,23 +5,23 @@ import logo from '../../../public/assets/Others/b4-style-logo.png'
 
 const Footer = () => {
      const linkStyle = 'hover:text-primary active:text-primary transition-all duration-300 hover:ml-1 active:ml-1'
-
-     const links = <>
-          <li><a href="#" className={linkStyle}>Shop All</a></li>
-          <li><a href="#" className={linkStyle}>New Arrivals</a></li>
-          <li><a href="#" className={linkStyle}>Best Sellers</a></li>
-          <li><a href="#" className={linkStyle}>Sale</a></li>
-          <li><a href="#" className={linkStyle}>About Us</a></li>
-          <li><a href="#" className={linkStyle}>Contact</a></li>
-     </>
-     const links2 = <>
-          <li><a href="#" className={linkStyle}>T-Shirts</a></li>
-          <li><a href="#" className={linkStyle}>Hoodies</a></li>
-          <li><a href="#" className={linkStyle}>Pants</a></li>
-          <li><a href="#" className={linkStyle}>Sweatshirts</a></li>
-          <li><a href="#" className={linkStyle}>Winter Wear</a></li>
-          <li><a href="#" className={linkStyle}>Drop Shoulder</a></li>
-     </>
+     
+     const links = [
+          { name: 'Shop All', to: '/shop' },
+          { name: 'New Arrivals', to: '/shop' },
+          { name: 'Best Sellers', to: '/shop' },
+          { name: 'Sale', to: '/shop' },
+          { name: 'About Us', to: '/about' },
+          { name: 'Contact', to: '/contact' },
+     ]
+     const links2 = [
+          { name: 'T-Shirts', to: '/shop' },
+          { name: 'Hoodies', to: '/shop' },
+          { name: 'Pants', to: '/shop' },
+          { name: 'Sweatshirts', to: '/shop' },
+          { name: 'Winter Wear', to: '/shop' },
+          { name: 'Drop Shoulder', to: '/shop' },
+     ]
      const socials = [
           { icon: <FaFacebookF size={20} />, link: "https://www.facebook.com/" },
           { icon: <FaInstagram size={20} />, link: "https://www.instagram.com/" },
@@ -44,7 +44,7 @@ const Footer = () => {
                               <p className="text-sm">
                                    <span className="text-primary font-semibold">Owner:</span> Mustafa Tazwer Shakil
                               </p>
-                              <div className="flex gap-5 mt-4 text-accent/90">
+                              <div className="flex gap-4 mt-4 text-accent/90">
                                    {socials?.map((social, ind) => (
                                         <a key={ind} href={social.link} target="_blank" className="p-2.5 rounded-full hover:bg-primary active:bg-primary bg-neutral-800 transition-all duration-300 hover:scale-105 hover:-translate-y-1 active:scale-105 active:-translate-y-1">
                                              {social.icon}
@@ -56,14 +56,26 @@ const Footer = () => {
                          <div>
                               <h3 className="text-accent md:text-xl bebas mb-5 tracking-wider">Quick Links</h3>
                               <ul className="flex flex-col gap-4 text-sm ">
-                                   {links}
+                                   {
+                                        links?.map((link, ind) => (
+                                             <li key={ind}>
+                                                  <NavLink to={link.to} className={linkStyle}>{link.name}</NavLink>
+                                             </li>
+                                        ))
+                                   }
                               </ul>
                          </div>
                          {/* Column 3: Categories */}
                          <div>
                               <h3 className="text-accent md:text-xl bebas mb-5 tracking-wider">Categories</h3>
                               <ul className="flex flex-col gap-4 text-sm">
-                                   {links2}
+                                   {
+                                        links2?.map((link, ind) => (
+                                             <li key={ind}>
+                                                  <NavLink to={link.to} className={linkStyle}>{link.name}</NavLink>
+                                             </li>
+                                        ))
+                                   }
                               </ul>
                          </div>
                          {/* Column 4: Contact Us */}

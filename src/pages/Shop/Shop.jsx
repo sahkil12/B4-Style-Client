@@ -151,7 +151,7 @@ const Shop = () => {
      };
 
      const cardVariants = {
-          hidden: { opacity: 0, y: 20 },
+          hidden: { opacity: 0, y: 25 },
           show: { opacity: 1, y: 0, transition: { duration: 0.4 } }
      };
 
@@ -164,7 +164,7 @@ const Shop = () => {
                .sort((a, b) => {
                     if (sortBy === "Price: Low to High") return a.price - b.price;
                     if (sortBy === "Price: High to Low") return b.price - a.price;
-                    return b.id - a.id; // Newest (based on ID)
+                    return b.id - a.id;
                });
      }, [selectedCategory, selectedSize, searchQuery, sortBy]);
 
@@ -218,7 +218,7 @@ const Shop = () => {
                                                   key={size}
                                                   onClick={() => setSelectedSize(selectedSize === size ? "" : size)}
                                                   className={`h-10 rounded-md border flex items-center justify-center text-sm font-bold transition-all
-                                            ${selectedSize === size ? 'bg-primary border-primary text-accent' : 'border-white/15 hover:border-primary'}`}
+                                                   ${selectedSize === size ? 'bg-primary border-primary text-accent' : 'border-white/15 hover:border-primary'}`}
                                              >
                                                   {size}
                                              </button>
@@ -291,7 +291,7 @@ const Shop = () => {
                                                   setSelectedSize("");
                                                   setSearchQuery("");
                                              }}
-                                             className="text-primary tracking-wide underline"
+                                             className="text-primary cursor-pointer tracking-wide underline"
                                         >
                                              Clear all filters
                                         </button>
