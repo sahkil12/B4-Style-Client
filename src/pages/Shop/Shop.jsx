@@ -1,9 +1,10 @@
-import { useState, useMemo } from 'react';
+import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FiSearch, FiFilter, FiX, FiChevronDown } from 'react-icons/fi';
 import ProductCard from '../../utils/ProductCard';
+import useProductFilter from '../../Hooks/useProductFilter';
 
-// Demo Data (Extended with Sizes for filtering)
+// Demo Data
 const demoProducts = [
      {
           id: 1,
@@ -138,36 +139,26 @@ const categories = ["All Products", "T-Shirts", "Hoodies", "Pants", "Shirts", "W
 const sizes = ["S", "M", "L", "XL", "XXL"];
 
 const Shop = () => {
-     const [selectedCategory, setSelectedCategory] = useState("All Products");
-     const [selectedSize, setSelectedSize] = useState("");
-     const [searchQuery, setSearchQuery] = useState("");
-     const [sortBy, setSortBy] = useState("Newest");
      const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
+     // use hooks to reuseable filter
+     const [filters, setFilters] = useState({
+          category: "All Products",
+          size: "",
+          search: "",
+          sort: "Newest"
+     })
+     const filteredProducts = useProductFilter(demoProducts, filters);
 
      // Animation Variants
      const containerVariants = {
           hidden: { opacity: 0 },
           show: { opacity: 1, transition: { staggerChildren: 0.1 } }
      };
-
+     // 
      const cardVariants = {
           hidden: { opacity: 0, y: 25 },
           show: { opacity: 1, y: 0, transition: { duration: 0.4 } }
      };
-
-     // Filter Logic
-     const filteredProducts = useMemo(() => {
-          return demoProducts
-               .filter(p => selectedCategory === "All Products" || p.category.toLowerCase() === selectedCategory.toLowerCase())
-               .filter(p => !selectedSize || p.sizes.includes(selectedSize))
-               .filter(p => p.title.toLowerCase().includes(searchQuery.toLowerCase()))
-               .sort((a, b) => {
-                    if (sortBy === "Price: Low to High") return a.price - b.price;
-                    if (sortBy === "Price: High to Low") return b.price - a.price;
-                    return b.id - a.id;
-               });
-     }, [selectedCategory, selectedSize, searchQuery, sortBy]);
-
      return (
           <div className="min-h-screen text-accent pb-20">
                <div className="">
@@ -201,8 +192,11 @@ const Shop = () => {
                                         {categories?.map(cat => (
                                              <li
                                                   key={cat}
-                                                  onClick={() => setSelectedCategory(cat)}
-                                                  className={`cursor-pointer transition-all duration-300 hover:pl-2 p-2 rounded-md font-semibold ${selectedCategory === cat ? 'bg-primary/90 font-bold' : 'text-neutral-300 hover:bg-accent/10'}`}
+                                                  onClick={() => setFilters(prev => ({
+                                                       ...prev,
+                                                       category: cat
+                                                  }))}
+                                                  className={`cursor-pointer transition-all duration-300 hover:pl-2 p-2 rounded-md font-semibold ${filters.category === cat ? 'bg-primary/90 font-bold' : 'text-neutral-300 hover:bg-accent/10'}`}
                                              >
                                                   {cat}
                                              </li>
@@ -216,9 +210,13 @@ const Shop = () => {
                                         {sizes.map(size => (
                                              <button
                                                   key={size}
-                                                  onClick={() => setSelectedSize(selectedSize === size ? "" : size)}
+                                                  onClick={() => setFilters(prev => ({
+                                                       ...prev,
+                                                       size: prev.size === size ? "" : size
+                                                  }))
+                                                  }
                                                   className={`h-10 rounded-md border flex items-center justify-center text-sm font-bold transition-all
-                                                   ${selectedSize === size ? 'bg-primary border-primary text-accent' : 'border-white/15 hover:border-primary'}`}
+                                                   ${filters.size === size ? 'bg-primary border-primary text-accent' : 'border-white/15 hover:border-primary'}`}
                                              >
                                                   {size}
                                              </button>
@@ -235,8 +233,13 @@ const Shop = () => {
                                         <input
                                              type="text"
                                              placeholder="Search products..."
-                                             value={searchQuery}
-                                             onChange={(e) => setSearchQuery(e.target.value)}
+                                             value={filters.search}
+                                             onChange={(e) =>
+                                                  setFilters(prev => ({
+                                                       ...prev,
+                                                       search: e.target.value
+                                                  }))
+                                             }
                                              className="w-full bg-[#1a1a1a] border border-accent/10 rounded-sm py-3 pl-12 pr-4 focus:border-primary outline-none transition-all"
                                         />
                                    </div>
@@ -252,8 +255,13 @@ const Shop = () => {
                                         {/* sort by */}
                                         <div className="relative flex-1 md:flex-none">
                                              <select
-                                                  value={sortBy}
-                                                  onChange={(e) => setSortBy(e.target.value)}
+                                                  value={filters.sort}
+                                                  onChange={(e) =>
+                                                       setFilters(prev => ({
+                                                            ...prev,
+                                                            sort: e.target.value
+                                                       }))
+                                                  }
                                                   className="w-full appearance-none bg-[#1a1a1a] border border-accent/10 py-3 px-6 pr-10 rounded-sm outline-none focus:border-primary cursor-pointer"
                                              >
                                                   <option>Newest</option>
@@ -271,7 +279,7 @@ const Shop = () => {
                                         variants={containerVariants}
                                         initial="hidden"
                                         animate="show"
-                                        key={selectedCategory + selectedSize + searchQuery}
+                                        key={filters.category + filters.size + filters.search}
                                         className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 2xl:grid-cols-4 gap-5"
                                    >
                                         {filteredProducts?.map(product => (
@@ -287,9 +295,12 @@ const Shop = () => {
                                         <h3 className="text-3xl font-medium bebas tracking-wider">No Products Found</h3>
                                         <button
                                              onClick={() => {
-                                                  setSelectedCategory("All Products");
-                                                  setSelectedSize("");
-                                                  setSearchQuery("");
+                                                  setFilters({
+                                                       category: "All Products",
+                                                       size: "",
+                                                       search: "",
+                                                       sort: "Newest"
+                                                  });
                                              }}
                                              className="text-primary cursor-pointer tracking-wide underline"
                                         >
@@ -299,9 +310,9 @@ const Shop = () => {
                               )}
                          </main>
                     </div>
-               </div>
+               </div >
                {/* --- Mobile Filter Drawer --- */}
-               <AnimatePresence>
+               < AnimatePresence >
                     {isMobileFilterOpen && (
                          <>
                               <motion.div
@@ -334,8 +345,11 @@ const Shop = () => {
                                                   {categories?.map(cat => (
                                                        <button
                                                             key={cat}
-                                                            onClick={() => setSelectedCategory(cat)}
-                                                            className={`px-4 py-2 text-xs border rounded-full font-normal duration-100 transition-all ${selectedCategory === cat ? 'bg-primary border-primary' : 'border-accent/10'}`}
+                                                            onClick={() => setFilters(prev => ({
+                                                                 ...prev,
+                                                                 category: cat
+                                                            }))}
+                                                            className={`px-4 py-2 text-xs border rounded-full font-normal duration-100 transition-all ${filters.category === cat ? 'bg-primary border-primary' : 'border-accent/10'}`}
                                                        >
                                                             {cat}
                                                        </button>
@@ -349,8 +363,11 @@ const Shop = () => {
                                                   {sizes.map(size => (
                                                        <button
                                                             key={size}
-                                                            onClick={() => setSelectedSize(selectedSize === size ? "" : size)}
-                                                            className={`h-10 border rounded-md flex items-center justify-center text-xs font-bold ${selectedSize === size ? 'bg-primary border-primary' : 'border-white/10'}`}
+                                                            onClick={() => setFilters(prev => ({
+                                                                 ...prev,
+                                                                 size: prev.size === size ? "" : size
+                                                            }))}
+                                                            className={`h-10 border rounded-md flex items-center justify-center text-xs font-bold ${filters.size === size ? 'bg-primary border-primary' : 'border-white/10'}`}
                                                        >
                                                             {size}
                                                        </button>
@@ -368,8 +385,8 @@ const Shop = () => {
                               </motion.div>
                          </>
                     )}
-               </AnimatePresence>
-          </div>
+               </AnimatePresence >
+          </div >
      );
 };
 
