@@ -1,10 +1,16 @@
 import { FiSend } from "react-icons/fi";
+import { motion } from 'motion/react';
 
 const Newsletter = () => {
   return (
     <section className="bg-base-100 py-10 md:py-24 px-2">
       {/* Card Container */}
-      <div className="max-w-4xl mx-auto bg-secondary border border-zinc-700 rounded-[18px] py-12 px-6 md:px-16 flex flex-col items-center text-center">
+      <motion.div
+        initial={{ opacity: 0, y: 100 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: .7, delay: .1, ease: "easeOut" }}
+        viewport={{ once: false }}
+        className="max-w-4xl mx-auto bg-secondary border border-zinc-700 rounded-[18px] py-12 px-6 md:px-16 flex flex-col items-center text-center">
         {/* Subtitle */}
         <h4 className="text-primary text-xs md:text-sm font-medium tracking-[0.35em] uppercase mb-7">
           Stay Updated
@@ -15,11 +21,11 @@ const Newsletter = () => {
         </h2>
         {/* Description */}
         <p className="text-neutral-400 text-sm md:text-base max-w-lg leading-relaxed mb-8">
-          Subscribe to our newsletter and be the first to know about new arrivals, 
+          Subscribe to our newsletter and be the first to know about new arrivals,
           exclusive offers, and style tips.
         </p>
         {/* Form Area */}
-        <form 
+        <form
           className="w-full max-w-xl flex flex-col md:flex-row gap-4 mb-6"
           onSubmit={(e) => e.preventDefault()}
         >
@@ -29,7 +35,7 @@ const Newsletter = () => {
             className="flex-grow bg-[#1c1c1c] border border-zinc-700 text-accent px-6 py-3.5 rounded-md focus:outline-none focus:border-primary transition-colors placeholder:text-neutral-500"
             required
           />
-          <button 
+          <button
             type="submit"
             className="bg-primary hover:bg-primary/85 cursor-pointer active:bg-primary/85 text-accent font-semibold px-8 py-3.5 rounded-md flex items-center justify-center gap-2 uppercase tracking-widest text-sm transition-all duration-300"
           >
@@ -40,7 +46,7 @@ const Newsletter = () => {
         <p className="text-neutral-400 text-[10px] md:text-xs">
           By subscribing, you agree to our <span className="underline cursor-pointer">Privacy Policy</span>. Unsubscribe anytime.
         </p>
-      </div>
+      </motion.div>
     </section>
   );
 };

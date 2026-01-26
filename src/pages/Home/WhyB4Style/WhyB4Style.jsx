@@ -29,16 +29,15 @@ const containerVariants = {
      hidden: {},
      show: {
           transition: {
-               staggerChildren: 0.08,
+               staggerChildren: 0.09,
           },
      },
 };
 
 const cardVariants = {
-     hidden: { opacity: 0, y: 36 },
-     show: { opacity: 1, y: 0, transition: { duration: 0.25, ease: "easeInOut" } },
+     hidden: { opacity: 0, y: 38 },
+     show: { opacity: 1, y: 0, transition: { duration: 0.34, ease: "easeIn" } },
 };
-
 
 const WhyB4Style = () => {
      return (
