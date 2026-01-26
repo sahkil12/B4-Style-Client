@@ -21,7 +21,7 @@ const Contact = () => {
      return (
           <div className="bg-base-100 text-accent min-h-screen">
                {/* 1. Header Section */}
-               <section className="pt-6 pb-12 bg-secondary mt-[81px] text-center">
+               <section className="pb-12 bg-secondary mt-[81px] text-center">
                     <motion.section
                          initial={{ opacity: 0, y: 40 }}
                          whileInView={{ opacity: 1, y: 0 }}

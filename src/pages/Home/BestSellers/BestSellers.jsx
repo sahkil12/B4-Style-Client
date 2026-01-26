@@ -101,7 +101,6 @@ const BestSellers = () => {
                                    key={product.id}
                                    product={product}
                                    animation={cardVariants}
-                                   top={'top-3'}
                               ></ProductCard>
                          ))}
                     </motion.div>

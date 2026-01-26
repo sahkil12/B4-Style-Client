@@ -9,7 +9,7 @@ const Newsletter = () => {
         initial={{ opacity: 0, y: 100 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: .7, delay: .1, ease: "easeOut" }}
-        viewport={{ once: false }}
+        viewport={{ once: true }}
         className="max-w-4xl mx-auto bg-secondary border border-zinc-700 rounded-[18px] py-12 px-6 md:px-16 flex flex-col items-center text-center">
         {/* Subtitle */}
         <h4 className="text-primary text-xs md:text-sm font-medium tracking-[0.35em] uppercase mb-7">

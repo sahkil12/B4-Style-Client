@@ -1,9 +1,374 @@
-import React from 'react';
+import { useState, useMemo } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { FiSearch, FiFilter, FiX, FiChevronDown } from 'react-icons/fi';
+import ProductCard from '../../utils/ProductCard';
+
+// Demo Data (Extended with Sizes for filtering)
+const demoProducts = [
+     {
+          id: 1,
+          category: "T-SHIRTS",
+          title: "ESSENTIAL OVERSIZED TEE",
+          price: 850, oldPrice: 1200,
+          discount: "-29%",
+          image: "/assets/category/OVERSIZED-TEE.webp.jpg",
+          isNew: true, sizes: ["M", "L", "XL"]
+     },
+     {
+          id: 11,
+          category: "T-SHIRTS",
+          title: "White T-Shirt",
+          price: 550, oldPrice: 800,
+          discount: "-19%",
+          image: "assets/Others/white-tshirt.webp",
+          isNew: true, sizes: ["M", "L", "XL"]
+     },
+     {
+          id: 21,
+          category: "T-SHIRTS",
+          title: "Black T-Shirt",
+          price: 550, oldPrice: 800,
+          discount: "-19%",
+          image: "assets/Others/black-tshirt.webp",
+          isNew: true, sizes: ["M", "L", "XL", "XXL"]
+     },
+     {
+          id: 2233,
+          category: "PANTS",
+          title: "Black Baggy Pant",
+          price: 1600,
+          image: "assets/Others/black-bagy-pant.webp",
+          isNew: true,
+          sizes: ["30", "32", "36"]
+     },
+     {
+          id: 121,
+          category: "T-SHIRTS",
+          title: "Stylish Black T-Shirt",
+          price: 650, oldPrice: 850,
+          discount: "-25%",
+          image: "assets/category/black-tshirt.webp",
+          isNew: true, sizes: ["M", "L", "XL", "XXL"]
+     },
+     {
+          id: 2,
+          category: "HOODIES",
+          title: "STEALTH HOODIE",
+          price: 2200, oldPrice: 2800,
+          discount: "-21%",
+          image: "/assets/category/stealth-hoodie.webp.jpg",
+          isNew: true,
+          sizes: ["S", "M", "L"]
+     },
+     {
+          id: 3,
+          category: "PANTS",
+          title: "Blue Jeans",
+          price: 1600,
+          image: "/assets/category/blue-jeans.webp",
+          isNew: true,
+          sizes: ["30", "32", "34"]
+     },
+     {
+          id: 30,
+          category: "PANTS",
+          title: "Formal Pants",
+          price: 1600,
+          image: "assets/category/pants.webp",
+          isNew: true,
+          sizes: ["30", "32", "34"]
+     },
+     {
+          id: 33,
+          category: "PANTS",
+          title: "Black Baggy Pant",
+          price: 1600,
+          image: "assets/Others/black-bagy-pant.webp",
+          isNew: true,
+          sizes: ["30", "32", "36"]
+     },
+     {
+          id: 56745634,
+          category: "HOODIES",
+          title: "Warm Winter Hoodie",
+          price: 2400,
+          image: "assets/Others/warm-winter-hoodie.webp",
+          isNew: true,
+          sizes: ["L", "XL", "XXL"]
+     },
+     {
+          id: 44,
+          category: "HOODIES",
+          title: "Winter Jacket",
+          price: 3400,
+          image: "assets/Others/cold-winter-jacket.webp",
+          isNew: true,
+          sizes: ["M", "L", "XL", "XXL"]
+     },
+     {
+          id: 4,
+          category: "HOODIES",
+          title: "MIDNIGHT HOODIE",
+          price: 2400,
+          image: "/assets/category/winter.webp",
+          isNew: true,
+          sizes: ["L", "XL", "XXL"]
+     },
+     {
+          id: 4122,
+          category: "SHIRTS",
+          title: "Navy Blue Shirt",
+          price: 1300,
+          image: "assets/Others/shirt-navy.webp",
+          isNew: true,
+          sizes: ["M", "L", "XL", "XXL"]
+     },
+     {
+          id: 33345,
+          category: "PANTS",
+          title: "Black Baggy Pant",
+          price: 1600,
+          image: "assets/Others/black-bagy-pant.webp",
+          isNew: true,
+          sizes: ["30", "32", "36"]
+     },
+];
+
+const categories = ["All Products", "T-Shirts", "Hoodies", "Pants", "Shirts", "Winter Wear"];
+const sizes = ["S", "M", "L", "XL", "XXL"];
 
 const Shop = () => {
+     const [selectedCategory, setSelectedCategory] = useState("All Products");
+     const [selectedSize, setSelectedSize] = useState("");
+     const [searchQuery, setSearchQuery] = useState("");
+     const [sortBy, setSortBy] = useState("Newest");
+     const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
+
+     // Animation Variants
+     const containerVariants = {
+          hidden: { opacity: 0 },
+          show: { opacity: 1, transition: { staggerChildren: 0.1 } }
+     };
+
+     const cardVariants = {
+          hidden: { opacity: 0, y: 20 },
+          show: { opacity: 1, y: 0, transition: { duration: 0.4 } }
+     };
+
+     // Filter Logic
+     const filteredProducts = useMemo(() => {
+          return demoProducts
+               .filter(p => selectedCategory === "All Products" || p.category.toLowerCase() === selectedCategory.toLowerCase())
+               .filter(p => !selectedSize || p.sizes.includes(selectedSize))
+               .filter(p => p.title.toLowerCase().includes(searchQuery.toLowerCase()))
+               .sort((a, b) => {
+                    if (sortBy === "Price: Low to High") return a.price - b.price;
+                    if (sortBy === "Price: High to Low") return b.price - a.price;
+                    return b.id - a.id; // Newest (based on ID)
+               });
+     }, [selectedCategory, selectedSize, searchQuery, sortBy]);
+
      return (
-           <div className='min-h-screen flex justify-center items-center text-center'>
-                <h2 className='text-4xl '>Shop</h2>    
+          <div className="min-h-screen text-accent pb-20">
+               <div className="">
+                    {/* heading title section */}
+                    <header className=" mb-12 bg-secondary mt-[81px] text-center">
+                         <motion.section
+                              initial={{ opacity: 0, y: 40 }}
+                              whileInView={{ opacity: 1, y: 0 }}
+                              transition={{ duration: .6, ease: "easeOut" }}
+                              viewport={{ once: true }}
+                              className='py-14'>
+                              <h4 className="text-primary text-xs md:text-[15px] font-semibold tracking-[0.35em] uppercase mb-5">
+                                   browse and shop
+                              </h4>
+                              <h2 className="text-5xl md:text-6xl font-medium tracking-wider bebas mb-5">
+                                   Shop All
+                              </h2>
+                              <p className="text-neutral-400 text-sm md:text-base max-w-2xl px-6 mx-auto leading-relaxed">
+                                   Discover our complete collection of premium streetwear. From everyday essentials to statement pieces.
+                              </p>
+                         </motion.section>
+                    </header>
+                    {/*  */}
+                    <div className="flex xl:max-w-[75%] mx-auto px-3 sm:p-6 flex-col lg:flex-row gap-10">
+                         {/* --- Sidebar (Desktop) --- */}
+                         <aside className="hidden lg:block w-64 space-y-10">
+                              {/* Categories */}
+                              <div>
+                                   <h3 className="text-2xl font-medium bebas tracking-[3.5px] mb-4 border-b border-accent/10 pb-2.5">Categories</h3>
+                                   <ul className="space-y-3">
+                                        {categories?.map(cat => (
+                                             <li
+                                                  key={cat}
+                                                  onClick={() => setSelectedCategory(cat)}
+                                                  className={`cursor-pointer transition-all duration-300 hover:pl-2 p-2 rounded-md font-semibold ${selectedCategory === cat ? 'bg-primary/90 font-bold' : 'text-neutral-300 hover:bg-accent/10'}`}
+                                             >
+                                                  {cat}
+                                             </li>
+                                        ))}
+                                   </ul>
+                              </div>
+                              {/* Sizes */}
+                              <div>
+                                   <h3 className="text-2xl font-medium bebas tracking-[3.5px] mb-4 border-b border-accent/10 pb-2.5">Size</h3>
+                                   <div className="grid grid-cols-4 gap-2">
+                                        {sizes.map(size => (
+                                             <button
+                                                  key={size}
+                                                  onClick={() => setSelectedSize(selectedSize === size ? "" : size)}
+                                                  className={`h-10 rounded-md border flex items-center justify-center text-sm font-bold transition-all
+                                            ${selectedSize === size ? 'bg-primary border-primary text-accent' : 'border-white/15 hover:border-primary'}`}
+                                             >
+                                                  {size}
+                                             </button>
+                                        ))}
+                                   </div>
+                              </div>
+                         </aside>
+                         {/* --- Main Content Area --- */}
+                         <main className="flex-1">
+                              {/* Toolbar: Search & Sort */}
+                              <div className="flex flex-col md:flex-row gap-4 justify-between items-center mb-10">
+                                   <div className="relative w-full md:w-[420px]">
+                                        <FiSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-neutral-500" />
+                                        <input
+                                             type="text"
+                                             placeholder="Search products..."
+                                             value={searchQuery}
+                                             onChange={(e) => setSearchQuery(e.target.value)}
+                                             className="w-full bg-[#1a1a1a] border border-accent/10 rounded-sm py-3 pl-12 pr-4 focus:border-primary outline-none transition-all"
+                                        />
+                                   </div>
+
+                                   <div className="flex items-center gap-3 w-full md:w-auto">
+                                        {/* Mobile Filter Toggle */}
+                                        <button
+                                             onClick={() => setIsMobileFilterOpen(true)}
+                                             className="lg:hidden flex-1 flex items-center justify-center gap-2 bg-[#1a1a1a] border border-accent/10 py-3 px-6 rounded-sm"
+                                        >
+                                             <FiFilter /> Filter
+                                        </button>
+                                        {/* sort by */}
+                                        <div className="relative flex-1 md:flex-none">
+                                             <select
+                                                  value={sortBy}
+                                                  onChange={(e) => setSortBy(e.target.value)}
+                                                  className="w-full appearance-none bg-[#1a1a1a] border border-accent/10 py-3 px-6 pr-10 rounded-sm outline-none focus:border-primary cursor-pointer"
+                                             >
+                                                  <option>Newest</option>
+                                                  <option>Price: Low to High</option>
+                                                  <option>Price: High to Low</option>
+                                             </select>
+                                             <FiChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none" />
+                                        </div>
+                                   </div>
+                              </div>
+
+                              {/* Product Grid */}
+                              {filteredProducts?.length > 0 ? (
+                                   <motion.div
+                                        variants={containerVariants}
+                                        initial="hidden"
+                                        animate="show"
+                                        key={selectedCategory + selectedSize + searchQuery}
+                                        className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 2xl:grid-cols-4 gap-5"
+                                   >
+                                        {filteredProducts?.map(product => (
+                                             <ProductCard
+                                                  key={product.id}
+                                                  product={product}
+                                                  animation={cardVariants}
+                                             />
+                                        ))}
+                                   </motion.div>
+                              ) : (
+                                   <div className="py-20 text-center space-y-4">
+                                        <h3 className="text-3xl font-medium bebas tracking-wider">No Products Found</h3>
+                                        <button
+                                             onClick={() => {
+                                                  setSelectedCategory("All Products");
+                                                  setSelectedSize("");
+                                                  setSearchQuery("");
+                                             }}
+                                             className="text-primary tracking-wide underline"
+                                        >
+                                             Clear all filters
+                                        </button>
+                                   </div>
+                              )}
+                         </main>
+                    </div>
+               </div>
+               {/* --- Mobile Filter Drawer --- */}
+               <AnimatePresence>
+                    {isMobileFilterOpen && (
+                         <>
+                              <motion.div
+                                   initial={{ opacity: 0 }}
+                                   animate={{ opacity: 1 }}
+                                   exit={{ opacity: 0 }}
+                                   onClick={() => setIsMobileFilterOpen(false)}
+                                   className="fixed inset-0 bg-base-100/80 backdrop-blur-sm z-[90] lg:hidden"
+                              />
+                              <motion.div
+                                   initial={{ x: "100%" }}
+                                   animate={{ x: 0 }}
+                                   exit={{ x: "100%" }}
+                                   transition={{ type: "tween", duration: 0.3 }}
+                                   className="fixed right-0 top-0 h-full w-[80%] max-w-sm bg-secondary 
+                                   z-[100] p-5 sm:p-8 shadow-2xl lg:hidden"
+                              >
+                                   {/* header */}
+                                   <div className="flex justify-between items-center mb-10">
+                                        <h2 className="text-2xl bebas tracking-widest">Filters</h2>
+                                        <button onClick={() => setIsMobileFilterOpen(false)} className="p-2 bg-white/5 active:bg-primary rounded-full">
+                                             <FiX size={24} />
+                                        </button>
+                                   </div>
+                                   {/* main content */}
+                                   <div className="space-y-10">
+                                        <div>
+                                             <h3 className="text-sm font-bold uppercase tracking-[3px] mb-4 text-primary">Category</h3>
+                                             <div className="flex flex-wrap gap-2">
+                                                  {categories?.map(cat => (
+                                                       <button
+                                                            key={cat}
+                                                            onClick={() => setSelectedCategory(cat)}
+                                                            className={`px-4 py-2 text-xs border rounded-full font-normal duration-100 transition-all ${selectedCategory === cat ? 'bg-primary border-primary' : 'border-accent/10'}`}
+                                                       >
+                                                            {cat}
+                                                       </button>
+                                                  ))}
+                                             </div>
+                                        </div>
+
+                                        <div>
+                                             <h3 className="text-sm font-bold uppercase tracking-[3px] mb-4 text-primary">Size</h3>
+                                             <div className="grid grid-cols-4 gap-2">
+                                                  {sizes.map(size => (
+                                                       <button
+                                                            key={size}
+                                                            onClick={() => setSelectedSize(selectedSize === size ? "" : size)}
+                                                            className={`h-10 border rounded-md flex items-center justify-center text-xs font-bold ${selectedSize === size ? 'bg-primary border-primary' : 'border-white/10'}`}
+                                                       >
+                                                            {size}
+                                                       </button>
+                                                  ))}
+                                             </div>
+                                        </div>
+                                        {/*  */}
+                                        <button
+                                             onClick={() => setIsMobileFilterOpen(false)}
+                                             className="w-full bg-primary py-3 uppercase font-bold tracking-widest mt-10"
+                                        >
+                                             Apply Filters
+                                        </button>
+                                   </div>
+                              </motion.div>
+                         </>
+                    )}
+               </AnimatePresence>
           </div>
      );
 };
