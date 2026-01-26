@@ -7,7 +7,7 @@ import useProductFilter from '../../Hooks/useProductFilter';
 // Demo Data
 const demoProducts = [
      {
-          id: 1,
+          id: 10,
           category: "T-SHIRTS",
           title: "ESSENTIAL OVERSIZED TEE",
           price: 850, oldPrice: 1200,
@@ -25,7 +25,7 @@ const demoProducts = [
           isNew: true, sizes: ["M", "L", "XL"]
      },
      {
-          id: 21,
+          id: 12,
           category: "T-SHIRTS",
           title: "Black T-Shirt",
           price: 550, oldPrice: 800,
@@ -34,7 +34,7 @@ const demoProducts = [
           isNew: true, sizes: ["M", "L", "XL", "XXL"]
      },
      {
-          id: 2233,
+          id: 13,
           category: "PANTS",
           title: "Black Baggy Pant",
           price: 1600,
@@ -43,7 +43,7 @@ const demoProducts = [
           sizes: ["30", "32", "36"]
      },
      {
-          id: 121,
+          id: 14,
           category: "T-SHIRTS",
           title: "Stylish Black T-Shirt",
           price: 650, oldPrice: 850,
@@ -52,7 +52,7 @@ const demoProducts = [
           isNew: true, sizes: ["M", "L", "XL", "XXL"]
      },
      {
-          id: 2,
+          id: 15,
           category: "HOODIES",
           title: "STEALTH HOODIE",
           price: 2200, oldPrice: 2800,
@@ -62,7 +62,7 @@ const demoProducts = [
           sizes: ["S", "M", "L"]
      },
      {
-          id: 3,
+          id: 16,
           category: "PANTS",
           title: "Blue Jeans",
           price: 1600,
@@ -71,7 +71,7 @@ const demoProducts = [
           sizes: ["30", "32", "34"]
      },
      {
-          id: 30,
+          id: 17,
           category: "PANTS",
           title: "Formal Pants",
           price: 1600,
@@ -80,7 +80,7 @@ const demoProducts = [
           sizes: ["30", "32", "34"]
      },
      {
-          id: 33,
+          id: 18,
           category: "PANTS",
           title: "Black Baggy Pant",
           price: 1600,
@@ -89,7 +89,7 @@ const demoProducts = [
           sizes: ["30", "32", "36"]
      },
      {
-          id: 56745634,
+          id: 19,
           category: "HOODIES",
           title: "Warm Winter Hoodie",
           price: 2400,
@@ -98,7 +98,7 @@ const demoProducts = [
           sizes: ["L", "XL", "XXL"]
      },
      {
-          id: 44,
+          id: 20,
           category: "HOODIES",
           title: "Winter Jacket",
           price: 3400,
@@ -107,7 +107,7 @@ const demoProducts = [
           sizes: ["M", "L", "XL", "XXL"]
      },
      {
-          id: 4,
+          id: 21,
           category: "HOODIES",
           title: "MIDNIGHT HOODIE",
           price: 2400,
@@ -116,7 +116,7 @@ const demoProducts = [
           sizes: ["L", "XL", "XXL"]
      },
      {
-          id: 4122,
+          id: 22,
           category: "SHIRTS",
           title: "Navy Blue Shirt",
           price: 1300,
@@ -125,7 +125,7 @@ const demoProducts = [
           sizes: ["M", "L", "XL", "XXL"]
      },
      {
-          id: 33345,
+          id: 23,
           category: "PANTS",
           title: "Black Baggy Pant",
           price: 1600,
@@ -134,6 +134,7 @@ const demoProducts = [
           sizes: ["30", "32", "36"]
      },
 ];
+
 
 const categories = ["All Products", "T-Shirts", "Hoodies", "Pants", "Shirts", "Winter Wear"];
 const sizes = ["S", "M", "L", "XL", "XXL"];

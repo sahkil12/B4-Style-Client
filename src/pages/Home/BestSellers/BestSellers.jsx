@@ -8,7 +8,7 @@ import { FaArrowRightLong } from "react-icons/fa6";
 const bestSellers = [
 
      {
-          id: 1,
+          id: 5,
           category: "PANTS",
           title: "STREET FIT DENIM",
           price: 1700,
@@ -17,7 +17,7 @@ const bestSellers = [
           badge: "Hot",
      },
      {
-          id: 2,
+          id: 6,
           category: "T-SHIRTS",
           title: "SIGNATURE OVERSIZED TEE",
           price: 950,
@@ -26,7 +26,7 @@ const bestSellers = [
           badge: "Best Seller",
      },
      {
-          id: 3,
+          id: 7,
           category: "HOODIES",
           title: "ESSENTIAL WINTER HOODIE",
           price: 2400,
@@ -34,7 +34,7 @@ const bestSellers = [
           badge: "Popular",
      },
      {
-          id: 4,
+          id: 8,
           category: "HOODIES",
           title: "URBAN CORE HOODIE",
           price: 2600,

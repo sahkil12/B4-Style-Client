@@ -1,8 +1,10 @@
 import { motion } from 'motion/react';
 import { FiHeart, FiShoppingBag } from 'react-icons/fi';
+import { Link } from 'react-router-dom';
 
 const ProductCard = ({ product, animation }) => {
      return (
+        <Link to={`/product/${product.id}`}>
           <motion.div
                variants={animation}
                className="group cursor-pointer">
@@ -67,6 +69,7 @@ const ProductCard = ({ product, animation }) => {
                     </div>
                </div>
           </motion.div >
+        </Link>
      );
 };
 
