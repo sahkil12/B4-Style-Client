@@ -8,6 +8,7 @@ import {
 import { IoArrowForward } from "react-icons/io5";
 import { Link } from "react-router-dom";
 import displayImage from '../../../public/assets/Others/about-display-pic.png'
+import { motion } from 'motion/react';
 
 const stats = [
      { title: "10K+", subtitle: "Happy Customers" },
@@ -34,11 +35,30 @@ const Missions = [
      },
 ]
 
+const containerVariants = {
+     hidden: {},
+     show: {
+          transition: {
+               staggerChildren: 0.15,
+          },
+     },
+};
+
+const cardVariants = {
+     hidden: { opacity: 0, y: 40 },
+     show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } },
+};
+
 const About = () => {
      return (
           <div className="bg-base-100 text-accent">
                {/* 1. Hero Section: Our Story */}
-               <section className="pt-36 md:pt-44 pb-20 px-6 md:px-12 max-w-7xl mx-auto">
+               <motion.section
+                    initial={{ opacity: 0, y: 40 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: .6, ease: "easeOut" }}
+                    viewport={{ once: false }}
+                    className="pt-36 md:pt-44 pb-20 px-6 md:px-12 max-w-7xl mx-auto">
                     <div className="max-w-3xl">
                          <h4 className="text-primary text-sm md:text-base font-bold tracking-[0.3em] uppercase mb-6">
                               Our Story
@@ -52,13 +72,21 @@ const About = () => {
                               out and express their unique identity.
                          </p>
                     </div>
-               </section>
+               </motion.section>
                {/* 2. Mission, Vision, Values */}
                <div className="w-full bg-secondary">
                     <section className="py-20 md:py-28 px-6 md:px-12 max-w-7xl mx-auto w-full">
-                         <div className="grid grid-cols-1 md:grid-cols-3 gap-16">
+                         <motion.div
+                              variants={containerVariants}
+                              initial="hidden"
+                              whileInView="show"
+                              viewport={{ once: false }}
+                              className="grid grid-cols-1 md:grid-cols-3 gap-16">
                               {Missions?.map((mission, ind) => (
-                                   <div key={ind} className="space-y-5">
+                                   <motion.div
+                                        variants={cardVariants}
+                                        key={ind}
+                                        className="space-y-5">
                                         <div className="w-16 h-16 flex items-center justify-center rounded-full bg-primary/10 text-primary">
                                              {mission.icon}
                                         </div>
@@ -66,15 +94,21 @@ const About = () => {
                                         <p className="text-neutral-400 text-[15px] font-medium leading-relaxed">
                                              {mission.subtitle}
                                         </p>
-                                   </div>
+                                   </motion.div>
                               ))}
-                         </div>
+                         </motion.div>
                     </section>
                </div>
                {/* 3. From Vision to Reality Section */}
                <section className="py-24 ">
                     <div className="max-w-7xl mx-auto px-6 md:px-12 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-                         <div className="order-2 lg:order-1">
+                         {/* text side */}
+                         <motion.div
+                              initial={{ opacity: 0, x: -70 }}
+                              whileInView={{ opacity: 1, x: 0 }}
+                              transition={{ duration: .9 }}
+                              viewport={{ once: false }}
+                              className="order-2 lg:order-1">
                               <h4 className="text-primary text-sm font-semibold tracking-[0.3em] uppercase mb-6">
                                    The Beginning
                               </h4>
@@ -95,9 +129,14 @@ const About = () => {
                               <Link to={'/shop'}>
                                    <button className="mt-10 bg-primary hover:bg-primary/85 hover:scale-105 active:bg-primary/85 active:scale-105 text-accent font-bold py-3 sm:py-4 px-5 sm:px-7 text-[11px] sm:text-sm uppercase tracking-[0.2em] transition-all duration-300 flex items-center gap-2">Explore Our Collection<IoArrowForward size={20} /></button>
                               </Link>
-                         </div>
+                         </motion.div>
                          {/* Image Side with Badge */}
-                         <div className="relative order-1 lg:order-2">
+                         <motion.div
+                              initial={{ opacity: 0, x: 70 }}
+                              whileInView={{ opacity: 1, x: 0 }}
+                              transition={{ duration: .9 }}
+                              viewport={{ once: false }}
+                              className="relative order-1 lg:order-2">
                               <div className="aspect-[4/5] overflow-hidden rounded-2xl">
                                    <img
                                         src={displayImage}
@@ -106,11 +145,16 @@ const About = () => {
                                    />
                               </div>
                               {/* BD Badge */}
-                              <div className="absolute -bottom-6 -left-4 md:-left-12 bg-primary p-7 rounded-md shadow-2xl">
+                              <motion.div
+                                   initial={{ opacity: 0, scale: 0.5 }}
+                                   whileInView={{ opacity: 1, scale: 1 }}
+                                   transition={{ duration: .5 }}
+                                   viewport={{ once: false }}
+                                   className="absolute -bottom-6 -left-4 md:-left-12 bg-primary p-7 rounded-md shadow-2xl">
                                    <h3 className="text-3xl font-black mb-1.5 italic">BD</h3>
                                    <p className="text-xs uppercase font-bold tracking-widest opacity-75">Made in Bangladesh</p>
-                              </div>
-                         </div>
+                              </motion.div>
+                         </motion.div>
                     </div>
                </section>
                {/* 4. Small Info Bar */}
@@ -130,10 +174,15 @@ const About = () => {
                <section className="bg-primary py-20">
                     <div className="max-w-7xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-12 text-center">
                          {stats?.map((stat, ind) => (
-                              <div key={ind} className="space-y-2">
+                              <motion.div
+                                   initial={{ opacity: 0, scale: 0.6 }}
+                                   whileInView={{ opacity: 1, scale: 1 }}
+                                   transition={{ duration: .5, delay: .2 }}
+                                   viewport={{ once: false }}
+                                   key={ind} className="space-y-2">
                                    <h2 className="text-3xl sm:text-5xl font-black">{stat.title}</h2>
                                    <p className="text-xs uppercase font-bold tracking-widest opacity-80">{stat.subtitle}</p>
-                              </div>
+                              </motion.div>
                          ))}
                     </div>
                </section>

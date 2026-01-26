@@ -63,7 +63,7 @@ const Hero = () => {
                                    OUR STORY
                               </Link>
                          </motion.div>
-                         {/*  */}
+                         {/* stats */}
                          <motion.div variants={childVariants} className="flex gap-8 sm:gap-10 pt-8 sm:pt-10">
                               <Stat title="10K+" label="HAPPY CUSTOMERS" />
                               <Stat title="100+" label="UNIQUE STYLES" />
