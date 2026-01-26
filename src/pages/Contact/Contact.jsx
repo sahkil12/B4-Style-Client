@@ -1,6 +1,7 @@
 import React from 'react';
 import { FiSend, FiMapPin, FiPhone, FiMail } from "react-icons/fi";
 import { FaInstagram, FaFacebookF, FaTiktok } from "react-icons/fa";
+import { motion } from 'motion/react';
 
 const inputStyles = "w-full bg-accent/10 border border-neutral-700 p-3 md:p-4 rounded-lg focus:outline-none focus:border-primary transition-colors"
 
@@ -20,8 +21,13 @@ const Contact = () => {
      return (
           <div className="bg-base-100 text-accent min-h-screen">
                {/* 1. Header Section */}
-               <section className="pt-20 pb-12 text-center">
-                    <section className='bg-secondary py-14'>
+               <section className="pt-6 pb-12 bg-secondary mt-[81px] text-center">
+                    <motion.section
+                         initial={{ opacity: 0, y: 40 }}
+                         whileInView={{ opacity: 1, y: 0 }}
+                         transition={{ duration: .6, ease: "easeOut" }}
+                         viewport={{ once: true }}
+                         className='py-14'>
                          <h4 className="text-primary text-xs md:text-[15px] font-semibold tracking-[0.35em] uppercase mb-5">
                               Get In Touch
                          </h4>
@@ -32,13 +38,18 @@ const Contact = () => {
                               Have a question or feedback? We'd love to hear from you. Our team is here
                               to help customers across Bangladesh.
                          </p>
-                    </section>
+                    </motion.section>
                </section>
                {/* 2. Main Content Section (Form & Info) */}
                <section className="max-w-7xl mx-auto px-4 md:px-12 py-16">
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
                          {/* Left Side: Contact Form */}
-                         <div className="space-y-8">
+                         <motion.div
+                              initial={{ opacity: 0, x: -75 }}
+                              whileInView={{ opacity: 1, x: 0 }}
+                              transition={{ duration: .9 }}
+                              viewport={{ once: true }}
+                              className="space-y-8">
                               <div>
                                    <h3 className="text-3xl font-normal bebas tracking-wider mb-2">Send Us A Message</h3>
                                    <p className="text-neutral-400">Fill out the form below and we'll get back to you as soon as possible.</p>
@@ -72,9 +83,14 @@ const Contact = () => {
                                         Send Message <FiSend size={16} />
                                    </button>
                               </form>
-                         </div>
+                         </motion.div>
                          {/* Right Side: Contact Info Cards */}
-                         <div className="space-y-8">
+                         <motion.div
+                              initial={{ opacity: 0, x: 75 }}
+                              whileInView={{ opacity: 1, x: 0 }}
+                              transition={{ duration: .9 }}
+                              viewport={{ once: true }}
+                              className="space-y-8">
                               <div>
                                    <h3 className="text-3xl font-normal bebas tracking-wider mb-2">Contact Information</h3>
                                    <p className="text-neutral-400">Reach out to us through any of the following channels. We serve all 64 districts of Bangladesh!</p>
@@ -116,8 +132,7 @@ const Contact = () => {
                                         }
                                    </div>
                               </div>
-                         </div>
-
+                         </motion.div>
                     </div>
                </section>
           </div>

@@ -57,7 +57,7 @@ const About = () => {
                     initial={{ opacity: 0, y: 40 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: .6, ease: "easeOut" }}
-                    viewport={{ once: false }}
+                    viewport={{ once: true }}
                     className="pt-36 md:pt-44 pb-20 px-6 md:px-12 max-w-7xl mx-auto">
                     <div className="max-w-3xl">
                          <h4 className="text-primary text-sm md:text-base font-bold tracking-[0.3em] uppercase mb-6">
@@ -80,7 +80,7 @@ const About = () => {
                               variants={containerVariants}
                               initial="hidden"
                               whileInView="show"
-                              viewport={{ once: false }}
+                              viewport={{ once: true }}
                               className="grid grid-cols-1 md:grid-cols-3 gap-16">
                               {Missions?.map((mission, ind) => (
                                    <motion.div
@@ -107,7 +107,7 @@ const About = () => {
                               initial={{ opacity: 0, x: -70 }}
                               whileInView={{ opacity: 1, x: 0 }}
                               transition={{ duration: .9 }}
-                              viewport={{ once: false }}
+                              viewport={{ once: true }}
                               className="order-2 lg:order-1">
                               <h4 className="text-primary text-sm font-semibold tracking-[0.3em] uppercase mb-6">
                                    The Beginning
@@ -135,7 +135,7 @@ const About = () => {
                               initial={{ opacity: 0, x: 70 }}
                               whileInView={{ opacity: 1, x: 0 }}
                               transition={{ duration: .9 }}
-                              viewport={{ once: false }}
+                              viewport={{ once: true }}
                               className="relative order-1 lg:order-2">
                               <div className="aspect-[4/5] overflow-hidden rounded-2xl">
                                    <img
@@ -149,7 +149,7 @@ const About = () => {
                                    initial={{ opacity: 0, scale: 0.5 }}
                                    whileInView={{ opacity: 1, scale: 1 }}
                                    transition={{ duration: .5 }}
-                                   viewport={{ once: false }}
+                                   viewport={{ once: true }}
                                    className="absolute -bottom-6 -left-4 md:-left-12 bg-primary p-7 rounded-md shadow-2xl">
                                    <h3 className="text-3xl font-black mb-1.5 italic">BD</h3>
                                    <p className="text-xs uppercase font-bold tracking-widest opacity-75">Made in Bangladesh</p>
@@ -178,7 +178,7 @@ const About = () => {
                                    initial={{ opacity: 0, scale: 0.6 }}
                                    whileInView={{ opacity: 1, scale: 1 }}
                                    transition={{ duration: .5, delay: .2 }}
-                                   viewport={{ once: false }}
+                                   viewport={{ once: true }}
                                    key={ind} className="space-y-2">
                                    <h2 className="text-3xl sm:text-5xl font-black">{stat.title}</h2>
                                    <p className="text-xs uppercase font-bold tracking-widest opacity-80">{stat.subtitle}</p>
