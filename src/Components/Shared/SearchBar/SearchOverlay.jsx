@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FiSearch, FiX } from "react-icons/fi";
 import SearchCard from "./SearchCard";
 
@@ -7,81 +7,15 @@ const SearchOverlay = ({ isOpen, onClose }) => {
      // const categories = ["T-Shirts", "Hoodies", "Pants", "Winter"];
      // const [searchCategory, setSearchCategory] = useState('')
      const [searchText, setSearchText] = useState('')
+     const [products, setProducts] = useState([])
 
-     const products = [
-          {
-               id: 1,
-               category: "T-SHIRTS",
-               title: "ESSENTIAL OVERSIZED TEE",
-               price: 850,
-               image: "/assets/category/OVERSIZED-TEE.webp.jpg",
-          },
-          {
-               id: 2,
-               category: "HOODIES",
-               title: "STEALTH HOODIE",
-               price: 2200,
-               image: "/assets/category/stealth-hoodie.webp.jpg",
-          },
-          {
-               id: 3,
-               category: "PANTS",
-               title: "Blue Jeans",
-               price: 1600,
-               image: "/assets/category/blue-jeans.webp",
-          },
-          {
-               id: 4,
-               category: "HOODIES",
-               title: "MIDNIGHT HOODIE",
-               price: 2400,
-               image: "/assets/category/winter.webp",
-          },
-          {
-               id: 12313,
-               category: "T-SHIRTS",
-               title: "ESSENTIAL OVERSIZED TEE",
-               price: 850,
-               image: "/assets/category/black-tshirt.webp",
-          },
-          {
-               id: 2301,
-               category: "HOODIES",
-               title: "STEALTH HOODIE",
-               price: 2200,
-               image: "/assets/category/Hoodies.webp",
-          },
-          {
-               id: 3123,
-               category: "PANTS",
-               title: "Blue Jeans",
-               price: 1600,
-               image: "/assets/category/pants.webp",
-          },
-          {
-               id: 412,
-               category: "HOODIES",
-               title: "Black Hoodie",
-               price: 2400,
-               image: "/assets/category/Hoodies.webp",
-          },
-          {
-               id: 3139,
-               category: "T-SHIRTS",
-               title: "Black Comfort T-Shirt",
-               price: 850,
-               image: "/assets/category/black-tshirt.webp",
-          },
-          {
-               id: 123123,
-               category: "PANTS",
-               title: "Formal Pants",
-               price: 1600,
-               image: "/assets/category/pants.webp",
-          },
-     ];
+     useEffect(() => {
+          fetch('/products.json')
+               .then(res => res.json())
+               .then(data => setProducts(data))
+     }, [])
 
-     const filteredProducts = products.filter((product) => (
+     const filteredProducts = products?.filter((product) => (
           product.title.toLowerCase().includes(searchText.toLowerCase())
           // product.category.toLowerCase().includes(searchText.toLowerCase())
      )
@@ -121,13 +55,14 @@ const SearchOverlay = ({ isOpen, onClose }) => {
                               <div className="w-full h-[2px] bg-primary"></div>
                               {/* Results */}
                               <div className="mt-14 max-h-[75vh] overflow-y-auto">
-                                   {searchText?  (
+                                   {searchText ? (
                                         filteredProducts.length > 0 ? (
                                              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
                                                   {filteredProducts?.map((product) => (
                                                        <SearchCard
-                                                            key={product.id}
+                                                            key={product?.id}
                                                             product={product}
+                                                            onClose={onClose}
                                                        />
                                                   ))}
                                              </div>
@@ -136,7 +71,7 @@ const SearchOverlay = ({ isOpen, onClose }) => {
                                                   No products found for "{searchText}"
                                              </p>
                                         )
-                                   ) : <p className="text-center text-xl sm:text-2xl mt-16 text-neutral-400">Search To Find Your Products...</p> }
+                                   ) : <p className="text-center text-xl sm:text-2xl mt-16 text-neutral-400">Search To Find Your Products...</p>}
                               </div>
 
                               {/* Middle Content */}

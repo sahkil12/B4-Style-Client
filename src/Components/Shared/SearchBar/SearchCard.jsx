@@ -1,7 +1,16 @@
+import { useNavigate } from "react-router-dom";
 
-const SearchCard = ({ product }) => {
+const SearchCard = ({ product, onClose }) => {
+
+     const navigate = useNavigate()
+
      return (
-          <div className="bg-secondary rounded-lg overflow-hidden border-2 border-transparent hover:border-primary/90 active:border-primary/90 cursor-pointer transition-all duration-300">
+          <div
+               onClick={() => {
+                    navigate(`/product/${product?.id}`)
+                   onClose(true)
+               }}
+               className="bg-secondary rounded-lg overflow-hidden border-2 border-transparent hover:border-primary/90 active:border-primary/90 cursor-pointer transition-all duration-300">
                <img
                     src={product.image}
                     alt={product.title}
