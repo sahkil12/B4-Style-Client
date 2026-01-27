@@ -2,16 +2,15 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { FiHeart, FiShoppingBag, FiMinus, FiPlus, FiChevronLeft, FiTruck, FiShield, FiRotateCcw } from 'react-icons/fi';
 import ProductCard from '../../utils/ProductCard';
-import { useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 
 const ProductDetails = () => {
 
      const { id } = useParams()
-     console.log(id);
      // State for interactions
      const [selectedSize, setSelectedSize] = useState('M');
      const [quantity, setQuantity] = useState(1);
-
+     // const navigate = useNavigate()
      // Demo Data for the main product
      const products = [
           {
@@ -254,28 +253,9 @@ const ProductDetails = () => {
 
      const product = products?.filter(p => p.id == id)[0]
      // Demo Data for "You May Also Like"
-     const relatedProducts = [
-          {
-               id: 22,
-               category: "SHIRTS",
-               title: "Navy Blue Shirt",
-               price: 1300,
-               description: "Classic navy blue shirt with comfortable fit and soft fabric.",
-               image: "/assets/Others/shirt-navy.webp",
-               isNew: true,
-               sizes: ["M", "L", "XL", "XXL"]
-          },
-          {
-               id: 23,
-               category: "PANTS",
-               title: "Black Baggy Pant",
-               price: 1600,
-               description: "Casual black baggy pants with relaxed fit and durable fabric.",
-               image: "/assets/Others/black-bagy-pant.webp",
-               isNew: true,
-               sizes: ["30", "32", "36"]
-          },
-     ];
+     const relatedProducts = products
+          .filter(p => p.category === product.category && p.id !== product.id)
+          .slice(0, 3);
 
      const handleQuantity = (type) => {
           if (type === 'inc') setQuantity(prev => prev + 1);
@@ -283,15 +263,14 @@ const ProductDetails = () => {
      };
 
      return (
-          <div className="min-h-screen bg-secondary text-accent pt-28 pb-20">
-               <div className="xl:max-w-[75%] mx-auto px-5 md:px-10">
+          <div className="min-h-screen text-accent pt-20 pb-20">
+               <div className="xl:max-w-[75%] pt-8 mx-auto px-5">
 
                     {/* Back Button */}
-                    <button className="flex items-center gap-2 text-neutral-400 hover:text-white transition-colors mb-10 group">
+                    <Link to={'/'} className="flex items-center gap-2 text-neutral-400 hover:text-accent transition-colors mb-8 group active:text-center">
                          <FiChevronLeft className="group-hover:-translate-x-1 transition-transform" />
                          <span className="text-sm font-medium">Back to Shop</span>
-                    </button>
-
+                    </Link>
                     {/* Main Product Section */}
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20">
 
