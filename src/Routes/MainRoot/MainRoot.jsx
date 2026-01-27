@@ -39,7 +39,8 @@ export const router = createBrowserRouter([
                },
                {
                     path: "product/:id",
-                    element: <ProductDetails></ProductDetails>
+                    element: <ProductDetails></ProductDetails>,
+                    loader: ()=> fetch('/products.json').then(res => res.json())
                }
           ]
      },
