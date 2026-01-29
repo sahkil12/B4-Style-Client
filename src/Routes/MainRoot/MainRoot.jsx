@@ -7,11 +7,13 @@ import Wishlist from "../../pages/Wishlist/Wishlist";
 import AddCart from "../../pages/AddCart/AddCart";
 import MainLayout from "../../layouts/MainLayout/MainLayout";
 import ProductDetails from "../../pages/ProductDetails/ProductDetails";
+import NotFound from "../../Components/Shared/NotFound";
 
 export const router = createBrowserRouter([
      {
           path: "/",
           element: <MainLayout></MainLayout>,
+          errorElement: <NotFound></NotFound>,
           children: [
                {
                     index: true,
@@ -40,7 +42,7 @@ export const router = createBrowserRouter([
                {
                     path: "product/:id",
                     element: <ProductDetails></ProductDetails>,
-                    loader: ()=> fetch('/products.json').then(res => res.json())
+                    loader: () => fetch('/products.json').then(res => res.json())
                }
           ]
      },
