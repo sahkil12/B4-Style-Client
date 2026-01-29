@@ -2,46 +2,7 @@ import { FaArrowRightLong } from "react-icons/fa6";
 import { motion } from "motion/react";
 import { NavLink } from "react-router-dom";
 import ProductCard from "../../../utils/ProductCard";
-
-const products = [
-     {
-          id: 1,
-          category: "T-SHIRTS",
-          title: "ESSENTIAL OVERSIZED TEE",
-          price: 850,
-          oldPrice: 1200,
-          discount: "-29%",
-          image: "/assets/category/OVERSIZED-TEE.webp.jpg",
-          isNew: true,
-     },
-     {
-          id: 2,
-          category: "HOODIES",
-          title: "STEALTH HOODIE",
-          price: 2200,
-          oldPrice: 2800,
-          discount: "-21%",
-          image: "/assets/category/stealth-hoodie.webp.jpg",
-          isNew: true,
-     },
-     {
-          id: 3,
-          category: "PANTS",
-          title: "Blue Jeans",
-          price: 1600,
-          image: "/assets/category/blue-jeans.webp",
-          isNew: true,
-     },
-     {
-          id: 4,
-          category: "HOODIES",
-          title: "MIDNIGHT HOODIE",
-          price: 2400,
-          image: "/assets/category/winter.webp",
-          isNew: true,
-     },
-];
-
+import { useEffect, useState } from "react";
 
 const containerVariants = {
      hidden: {},
@@ -58,6 +19,16 @@ const cardVariants = {
 };
 
 const NewArrivals = () => {
+     const [products, setProducts] = useState([])
+
+     useEffect(() => {
+          fetch('/products.json')
+               .then(res => res.json())
+               .then(data => {
+                    setProducts(data)
+               })
+     }, [])
+
      return (
           <section className="py-20 bg-secondary">
                <motion.div className="xl:max-w-[75%] mx-auto px-5 md:px-10">
@@ -89,8 +60,8 @@ const NewArrivals = () => {
                          whileInView='show'
                          viewport={{ once: false }}
                          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-                         {products?.map((product) => (
-                             <ProductCard key={product.id} product={product} animation={cardVariants}></ProductCard>
+                         {products?.slice(0, 4)?.map((product) => (
+                              <ProductCard key={product.id} product={product} animation={cardVariants}></ProductCard>
                          ))}
                     </motion.div >
                </motion.div>

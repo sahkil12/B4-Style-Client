@@ -4,44 +4,7 @@ import { FaFire } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
 import ProductCard from "../../../utils/ProductCard";
 import { FaArrowRightLong } from "react-icons/fa6";
-
-const bestSellers = [
-
-     {
-          id: 5,
-          category: "PANTS",
-          title: "STREET FIT DENIM",
-          price: 1700,
-          oldPrice: 2100,
-          image: "/assets/category/blue-jeans.webp",
-          badge: "Hot",
-     },
-     {
-          id: 6,
-          category: "T-SHIRTS",
-          title: "SIGNATURE OVERSIZED TEE",
-          price: 950,
-          oldPrice: 1300,
-          image: "/assets/category/OVERSIZED-TEE.webp.jpg",
-          badge: "Best Seller",
-     },
-     {
-          id: 7,
-          category: "HOODIES",
-          title: "ESSENTIAL WINTER HOODIE",
-          price: 2400,
-          image: "/assets/category/winter.webp",
-          badge: "Popular",
-     },
-     {
-          id: 8,
-          category: "HOODIES",
-          title: "URBAN CORE HOODIE",
-          price: 2600,
-          image: "/assets/category/stealth-hoodie.webp.jpg",
-          badge: "Trending",
-     },
-];
+import { useEffect, useState } from "react";
 
 const containerVariants = {
      hidden: {},
@@ -58,6 +21,18 @@ const cardVariants = {
 };
 
 const BestSellers = () => {
+
+     const [bestSellers, setBestSellers] = useState([])
+
+     useEffect(() => {
+          fetch('/products.json')
+               .then(res => res.json())
+               .then(data => {
+                    console.log(data)
+                    setBestSellers(data)
+               })
+     }, [])
+
      return (
           <section className="py-20 bg-secondary">
                <motion.div className="xl:max-w-[75%] mx-auto px-5 md:px-10">
@@ -96,7 +71,7 @@ const BestSellers = () => {
                          viewport={{ once: false }}
                          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8"
                     >
-                         {bestSellers?.map((product) => (
+                         {bestSellers?.slice(5, 9)?.map((product) => (
                               <ProductCard
                                    key={product.id}
                                    product={product}
