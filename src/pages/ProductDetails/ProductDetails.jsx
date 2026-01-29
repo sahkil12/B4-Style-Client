@@ -25,6 +25,7 @@ const ProductDetails = () => {
 
      return (
           <div className="min-h-screen text-accent pt-20 pb-20">
+
                <div className="xl:max-w-[75%] pt-8 mx-auto px-5">
                     {/* Back Button */}
                     <Link to={'/'} className="flex items-center gap-2 text-neutral-400 hover:text-accent transition-colors mb-8 group active:text-center">

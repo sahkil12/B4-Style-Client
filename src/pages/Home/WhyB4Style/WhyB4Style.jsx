@@ -56,7 +56,7 @@ const WhyB4Style = () => {
                     variants={containerVariants}
                     initial="hidden"
                     whileInView='show'
-                    viewport={{once: false}}
+                    viewport={{ once: true }}
                     className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-10 md:max-w-[75%] mx-auto px-6">
                     {features.map((feature, index) => (
                          <motion.div

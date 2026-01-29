@@ -28,7 +28,6 @@ const BestSellers = () => {
           fetch('/products.json')
                .then(res => res.json())
                .then(data => {
-                    console.log(data)
                     setBestSellers(data)
                })
      }, [])
