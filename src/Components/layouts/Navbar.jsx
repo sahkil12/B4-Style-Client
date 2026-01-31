@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { FiSearch, FiHeart, FiShoppingBag } from "react-icons/fi";
 import { RiMenuFill } from "react-icons/ri";
 import { RxCross2 } from "react-icons/rx";
+import { LuUser } from "react-icons/lu";
 import { motion } from "motion/react"
 import { Link, NavLink } from "react-router-dom";
 import SearchOverlay from "../Shared/SearchBar/SearchOverlay";
@@ -13,6 +14,7 @@ const links = [
      { name: "ABOUT", to: '/about' },
      { name: "CONTACT", to: '/contact' },
      { name: "WISHLIST", icon: <FiHeart />, to: '/wishlist' },
+     { name: "Sign In", icon: <LuUser size={22}/>, to: '/auth/sign_in' },
 ];
 
 const menuVariants = {
@@ -114,6 +116,9 @@ const Navbar = () => {
                          <Link to={'/cart'} className="hover:text-primary active:text-primary">
                               <FiShoppingBag size={22}></FiShoppingBag>
                          </Link>
+                         <Link to={'/auth/sign_in'} className="hidden lg:flex items-center gap-2 font-medium hover:text-primary active:text-primary">
+                              <LuUser size={22}/> Sign In
+                         </Link>
                          {/* menu open close button */}
                          <div className="flex justify-center items-center lg:hidden">
                               <button
@@ -138,7 +143,7 @@ const Navbar = () => {
                     className="lg:hidden overflow-hidden absolute top-20 w-full border-b border-neutral-700 bg-base-100"
                >
                     <motion.ul className="py-10 px-6 flex flex-col gap-8 text-lg font-medium">
-                         {links.map((item, index) => (
+                         {links?.map((item, index) => (
                               <motion.li
                                    key={index}
                                    variants={itemVariants}
