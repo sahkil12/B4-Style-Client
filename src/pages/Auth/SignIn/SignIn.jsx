@@ -3,10 +3,11 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { FiMail, FiLock, FiEye, FiEyeOff, FiArrowRight, FiCheckCircle } from 'react-icons/fi';
 import { FcGoogle } from 'react-icons/fc';
+import { ImSpinner9 } from "react-icons/im";
 import UseAuth from '../../../Hooks/UseAuth';
 
 const SignIn = () => {
-     const { googleCreate, loginUser } = UseAuth()
+     const { googleCreate, loginUser, loading } = UseAuth()
      const [email, setEmail] = useState("");
      const [password, setPassword] = useState("");
      const [showPassword, setShowPassword] = useState(false);
@@ -14,10 +15,9 @@ const SignIn = () => {
 
      const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
-     const handleSignIn = (e) => {
+     const handleSignIn = async (e) => {
           e.preventDefault()
-
-          console.log(email, password);
+          setError("")
 
           if (!email || !password) {
                setError("Please fill all fields");
@@ -28,10 +28,20 @@ const SignIn = () => {
                setError("Invalid email address");
                return;
           }
+          console.log(email, password);
+
+          try {
+               const result = await loginUser(email, password)
+               console.log(result);
+          }
+          catch (error) {
+               console.log(error);
+               setError(error.message)
+          }
      }
 
      const handleGoogleSignin = () => {
-          
+          googleCreate()
      }
 
      const inputClass = "w-full bg-secondary/90 border border-accent/10 rounded-md py-3.5 pl-14 pr-12 focus:border-primary outline-none transition-all text-accent placeholder:text-neutral-600"
@@ -112,18 +122,18 @@ const SignIn = () => {
                                    {/* Google Sign In Button (NEW) */}
                                    <button
                                         type="button"
+                                        onClick={handleGoogleSignin}
                                         className="w-full bg-accent text-base-100 text-xs sm:text-sm font-bold py-3 rounded-sm flex items-center justify-center gap-2 hover:bg-accent/90 transition-all uppercase tracking-wider"
                                    >
-                                        <FcGoogle size={22} />
-                                        <span>Sign in with Google</span>
+
+                                        {loading ? <span className='animate-spin'><ImSpinner9 size={22} /></span> : <> <FcGoogle size={22} /> <span>Sign in with Google</span></>}
                                    </button>
                                    {/* Main Sign In Button */}
                                    <button
                                         type="submit"
                                         className="w-full bg-primary text-accent font-bold py-3 text-xs sm:text-sm rounded-sm flex items-center justify-center gap-2 hover:bg-primary/90 active:scale-[0.98] transition-all uppercase tracking-widest group"
                                    >
-                                        Sign In
-                                        <FiArrowRight className="group-hover:translate-x-1 transition-transform duration-300" />
+                                        {loading ? <span className='animate-spin'><ImSpinner9 size={22} /></span> : <>Sign in <FiArrowRight size={18} className="group-hover:translate-x-1 transition-transform duration-300" /></>}
                                    </button>
                               </div>
                          </form>

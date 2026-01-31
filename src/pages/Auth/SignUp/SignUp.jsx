@@ -4,9 +4,10 @@ import { Link } from 'react-router-dom';
 import { FiMail, FiLock, FiEye, FiEyeOff, FiArrowRight, FiUser, FiCheckCircle } from 'react-icons/fi';
 import { FcGoogle } from 'react-icons/fc';
 import UseAuth from '../../../Hooks/UseAuth';
+import { ImSpinner9 } from 'react-icons/im';
 
 const SignUp = () => {
-     const { createUser, googleCreate } = UseAuth()
+     const { createUser, googleCreate, loading } = UseAuth()
      const [name, setName] = useState("");
      const [email, setEmail] = useState("");
      const [password, setPassword] = useState("");
@@ -35,14 +36,20 @@ const SignUp = () => {
           }
           console.log(name, email, password);
 
-          try{
+          try {
                const result = await createUser(email, password)
                console.log(result);
           }
-          catch(error){
+          catch (error) {
                console.log(error.message);
+               setError(error.message);
+
           }
 
+     }
+
+     const handleGoogleSignUp = () => {
+          googleCreate()
      }
 
      const inputStyle = `w-full bg-secondary border border-accent/10 rounded-md py-3.5 pl-14 pr-12 focus:border-primary outline-none transition-all text-accent placeholder:text-neutral-600`
@@ -122,18 +129,20 @@ const SignUp = () => {
                               <div className="pt-4 space-y-4">
                                    <button
                                         type="button"
+                                        onClick={handleGoogleSignUp}
                                         className="w-full bg-accent text-base-100 text-xs sm:text-sm font-bold py-3 rounded-sm flex items-center justify-center gap-2 hover:bg-accent/90 transition-all uppercase tracking-wider"
                                    >
-                                        <FcGoogle size={22} />
-                                        <span>Join with Google</span>
+                                        {loading ? <span className='animate-spin'><ImSpinner9 size={22} /></span> : <><FcGoogle size={22} />
+                                             <span>Join with Google</span></>}
                                    </button>
                                    {/* Main Sign In Button */}
                                    <button
                                         type="submit"
                                         className="w-full bg-primary text-accent font-bold py-3 text-xs sm:text-sm rounded-sm flex items-center justify-center gap-2 hover:bg-primary/90 active:scale-[0.98] transition-all uppercase tracking-widest group"
                                    >
-                                        Create Account
-                                        <FiArrowRight className="group-hover:translate-x-1 transition-transform duration-300" />
+
+                                        {loading ? <span className='animate-spin'><ImSpinner9 size={22} /></span> : <>Create Account
+                                             <FiArrowRight size={18} className="group-hover:translate-x-1 transition-transform duration-300" /></>}
                                    </button>
                               </div>
                          </form>
