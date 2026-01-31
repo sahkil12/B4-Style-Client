@@ -2,11 +2,14 @@ import { useEffect, useState } from "react";
 import { FiSearch, FiHeart, FiShoppingBag } from "react-icons/fi";
 import { RiMenuFill } from "react-icons/ri";
 import { RxCross2 } from "react-icons/rx";
+import { FaRegUserCircle } from "react-icons/fa";
 import { LuUser } from "react-icons/lu";
 import { motion } from "motion/react"
 import { Link, NavLink } from "react-router-dom";
-import SearchOverlay from "../Shared/SearchBar/SearchOverlay";
-import logo from '../../../public/assets/Others/b4-style-logo.png'
+import SearchOverlay from "../../Shared/SearchBar/SearchOverlay";
+import logo from '../../../../public/assets/Others/b4-style-logo.png'
+import UseAuth from "../../../Hooks/UseAuth";
+import AuthLink from "./AuthLink";
 
 const links = [
      { name: "HOME", to: '/' },
@@ -14,7 +17,6 @@ const links = [
      { name: "ABOUT", to: '/about' },
      { name: "CONTACT", to: '/contact' },
      { name: "WISHLIST", icon: <FiHeart />, to: '/wishlist' },
-     { name: "Sign In", icon: <LuUser size={22}/>, to: '/auth/sign_in' },
 ];
 
 const menuVariants = {
@@ -22,7 +24,7 @@ const menuVariants = {
           height: 0,
           opacity: 0,
           transition: {
-               duration: 0.5,
+               duration: 0.6,
                ease: "easeInOut",
           },
      },
@@ -30,10 +32,10 @@ const menuVariants = {
           height: "auto",
           opacity: 1,
           transition: {
-               duration: 0.3,
+               duration: 0.32,
                ease: "easeOut",
                when: "beforeChildren",
-               staggerChildren: 0.10,
+               staggerChildren: 0.15,
           },
      },
 };
@@ -57,6 +59,8 @@ const Navbar = () => {
      const [open, setOpen] = useState(false)
      const [scrolled, setScrolled] = useState(false)
      const [isSearchOpen, setIsSearchOpen] = useState(false);
+     const { user, loading } = UseAuth()
+     console.log(user);
 
      useEffect(() => {
           const handleScrolled = () => {
@@ -116,9 +120,10 @@ const Navbar = () => {
                          <Link to={'/cart'} className="hover:text-primary active:text-primary">
                               <FiShoppingBag size={22}></FiShoppingBag>
                          </Link>
-                         <Link to={'/auth/sign_in'} className="hidden lg:flex items-center gap-2 font-medium hover:text-primary active:text-primary">
-                              <LuUser size={22}/> Sign In
-                         </Link>
+
+                         {/* reuseable */}
+                         <AuthLink user={user} className="hover:text-primary active:text-primary hidden lg:flex items-center gap-2"></AuthLink>
+
                          {/* menu open close button */}
                          <div className="flex justify-center items-center lg:hidden">
                               <button
@@ -135,7 +140,7 @@ const Navbar = () => {
                     </div>
 
                </div>
-               {/*Menu Box */}
+               {/*mobile Menu Box */}
                {<motion.div
                     variants={menuVariants}
                     initial="closed"
@@ -153,7 +158,7 @@ const Navbar = () => {
                                         to={item.to}
                                         className={({ isActive }) =>
                                              `flex items-center gap-3 tracking-widest transition-colors duration-200 hover:text-accent
-                                                  ${isActive ? "text-primary" : "text-white/80"}`
+                                                  ${isActive ? "text-primary" : "text-accent/80"}`
                                         }
                                    >
                                         {item.icon && item.icon}
@@ -161,6 +166,21 @@ const Navbar = () => {
                                    </NavLink>
                               </motion.li>
                          ))}
+
+                         <motion.li
+                              initial={{ opacity: 0, y: 25 }}
+                              whileInView={{ opacity: 1, y: 0 }}
+                              viewport={{ once: false }}
+                              transition={{ duration: 0.45, delay: 0.6 }}
+                              className="border-t pt-4 border-accent/40"
+                         >
+                              <AuthLink
+                                   user={user}
+                                   onClick={() => setOpen(false)}
+                                   className="hover:text-primary active:text-primary">
+                              </AuthLink>
+
+                         </motion.li>
                     </motion.ul>
 
                </motion.div>
