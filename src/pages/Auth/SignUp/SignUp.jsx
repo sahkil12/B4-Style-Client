@@ -14,6 +14,8 @@ const SignUp = () => {
      // Simple Email Validation for visual check
      const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email);
 
+     const inputStyle = `w-full bg-secondary border border-accent/10 rounded-md py-3.5 pl-14 pr-12 focus:border-primary outline-none transition-all text-accent placeholder:text-neutral-600`
+
      return (
           <div className="flex items-center justify-center text-accent px-4 pt-12">
                <motion.div
@@ -42,7 +44,7 @@ const SignUp = () => {
                                         <input
                                              type="text"
                                              placeholder="Your full name"
-                                             className="w-full bg-secondary border border-accent/10 rounded-sm py-4 pl-14 pr-4 focus:border-primary outline-none transition-all text-accent placeholder:text-neutral-600"
+                                             className={inputStyle}
                                              onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
                                         />
                                    </div>
@@ -55,7 +57,7 @@ const SignUp = () => {
                                         <input
                                              type="email"
                                              placeholder="your@email.com"
-                                             className="w-full bg-secondary border border-accent/10 rounded-sm py-4 pl-14 pr-12 focus:border-primary outline-none transition-all text-accent placeholder:text-neutral-600"
+                                             className={inputStyle}
                                              onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                                         />
                                         {isEmailValid && (
@@ -72,7 +74,7 @@ const SignUp = () => {
                                         <input
                                              type={showPassword ? "text" : "password"}
                                              placeholder="........"
-                                             className="w-full bg-secondary border border-accent/10 rounded-sm py-4 pl-14 pr-12 focus:border-primary outline-none transition-all text-accent placeholder:text-neutral-600"
+                                             className={inputStyle}
                                              onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                                         />
                                         <button

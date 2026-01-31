@@ -5,18 +5,28 @@ import { FiMail, FiLock, FiEye, FiEyeOff, FiArrowRight, FiCheckCircle } from 're
 import { FcGoogle } from 'react-icons/fc';
 
 const SignIn = () => {
-     const handleSignIn = (e) => {
-          e.preventdefault()
-          const email2 = e.target.email.value
-          console.log(email2);
-     }
 
+     const [email, setEmail] = useState("");
+     const [password, setPassword] = useState("");
      const [showPassword, setShowPassword] = useState(false);
-     const [email, setEmail] = useState('');
-     const [password, setPassword] = useState('');
+     const [error, setError] = useState("");
+     const [loading, setLoading] = useState(false);
 
-     // Simple email validation regex for visual feedback (Check icon)
      const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
+     const handleSignIn = (e) => {
+          e.preventDefault()
+          if (!email || !password) {
+               setError("Please fill all fields");
+               return;
+          }
+
+          if (!isEmailValid) {
+               setError("Invalid email address");
+               return;
+          }
+     }
+     const inputClass = "w-full bg-secondary/90 border border-accent/10 rounded-md py-3.5 pl-14 pr-12 focus:border-primary outline-none transition-all text-accent placeholder:text-neutral-600"
 
 
      return (
@@ -51,9 +61,10 @@ const SignIn = () => {
                                              type="email"
                                              id="email"
                                              name='email'
-                                             // value={email}
+                                             value={email}
+                                             onChange={(e) => setEmail(e.target.value)}
                                              placeholder="your@gmail.com"
-                                             className="w-full bg-secondary/90 border border-accent/10 rounded-sm py-4 pl-14 pr-12 focus:border-primary outline-none transition-all text-accent placeholder:text-neutral-600"
+                                             className={inputClass}
                                         />
                                         {/* Conditional Check Icon based on validation */}
                                         {isEmailValid && (
@@ -61,7 +72,6 @@ const SignIn = () => {
                                         )}
                                    </div>
                               </div>
-
                               {/* Password Input */}
                               <div className="space-y-2">
                                    <label className="block text-sm font-bold tracking-wider" htmlFor="password">Password</label>
@@ -73,7 +83,7 @@ const SignIn = () => {
                                              value={password}
                                              onChange={(e) => setPassword(e.target.value)}
                                              placeholder="*******"
-                                             className="w-full bg-secondary border border-white/10 rounded-sm py-4 pl-14 pr-12 focus:border-primary outline-none transition-all text-accent placeholder:text-neutral-600"
+                                             className={inputClass}
                                         />
                                         {/* Toggle Password Visibility */}
                                         <button
