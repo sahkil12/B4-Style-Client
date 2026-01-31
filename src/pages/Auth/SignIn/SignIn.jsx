@@ -10,12 +10,14 @@ const SignIn = () => {
      const [password, setPassword] = useState("");
      const [showPassword, setShowPassword] = useState(false);
      const [error, setError] = useState("");
-     const [loading, setLoading] = useState(false);
 
      const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
      const handleSignIn = (e) => {
           e.preventDefault()
+
+          console.log(email, password);
+
           if (!email || !password) {
                setError("Please fill all fields");
                return;
@@ -28,9 +30,8 @@ const SignIn = () => {
      }
      const inputClass = "w-full bg-secondary/90 border border-accent/10 rounded-md py-3.5 pl-14 pr-12 focus:border-primary outline-none transition-all text-accent placeholder:text-neutral-600"
 
-
      return (
-          <div className="flex items-center justify-center text-accent px-4 pt-12 ">
+          <div className="flex items-center justify-center text-accent px-4 pt-12">
                <motion.div
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -47,14 +48,14 @@ const SignIn = () => {
                          <p className="text-neutral-500">Sign In to your account</p>
                     </div>
 
-                    <div className='bg-base-200 border p-8 md:p-10 rounded-lg min-w-md md:min-w-lg border border-accent/10 '>
+                    <div className='bg-base-200 border p-6 sm:p-10 rounded-lg max-w-md md:min-w-lg border border-accent/10 '>
                          {/* Form */}
                          <form className="space-y-4"
                               onSubmit={handleSignIn}
                          >
                               {/* Email Input */}
                               <div className="space-y-2">
-                                   <label className="block text-sm font-bold tracking-wider" htmlFor="email">Email</label>
+                                   <label className="block text-sm font-semibold tracking-wider" htmlFor="email">Email</label>
                                    <div className="relative flex items-center text-neutral-500 focus-within:text-primary transition-colors">
                                         <FiMail className="absolute left-4" size={20} />
                                         <input
@@ -74,7 +75,7 @@ const SignIn = () => {
                               </div>
                               {/* Password Input */}
                               <div className="space-y-2">
-                                   <label className="block text-sm font-bold tracking-wider" htmlFor="password">Password</label>
+                                   <label className="block text-sm font-semibold tracking-wider" htmlFor="password">Password</label>
                                    <div className="relative flex items-center text-neutral-500 focus-within:text-primary transition-colors">
                                         <FiLock className="absolute left-4" size={20} />
                                         <input
@@ -105,7 +106,7 @@ const SignIn = () => {
                                    {/* Google Sign In Button (NEW) */}
                                    <button
                                         type="button"
-                                        className="w-full bg-accent text-base-100 text-sm font-bold py-3 rounded-sm flex items-center justify-center gap-2 hover:bg-accent/90 transition-all uppercase tracking-wider"
+                                        className="w-full bg-accent text-base-100 text-xs sm:text-sm font-bold py-3 rounded-sm flex items-center justify-center gap-2 hover:bg-accent/90 transition-all uppercase tracking-wider"
                                    >
                                         <FcGoogle size={22} />
                                         <span>Sign in with Google</span>
@@ -113,7 +114,7 @@ const SignIn = () => {
                                    {/* Main Sign In Button */}
                                    <button
                                         type="submit"
-                                        className="w-full bg-primary text-accent font-bold py-3 text-sm rounded-sm flex items-center justify-center gap-2 hover:bg-primary/90 active:scale-[0.98] transition-all uppercase tracking-widest group"
+                                        className="w-full bg-primary text-accent font-bold py-3 text-xs sm:text-sm rounded-sm flex items-center justify-center gap-2 hover:bg-primary/90 active:scale-[0.98] transition-all uppercase tracking-widest group"
                                    >
                                         Sign In
                                         <FiArrowRight className="group-hover:translate-x-1 transition-transform duration-300" />

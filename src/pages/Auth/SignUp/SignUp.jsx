@@ -5,14 +5,31 @@ import { FiMail, FiLock, FiEye, FiEyeOff, FiArrowRight, FiUser, FiCheckCircle } 
 import { FcGoogle } from 'react-icons/fc';
 
 const SignUp = () => {
+     
+     const [name, setName] = useState("");
+     const [email, setEmail] = useState("");
+     const [password, setPassword] = useState("");
+     const [error, setError] = useState("");
      const [showPassword, setShowPassword] = useState(false);
-     const [formData, setFormData] = useState({
-          fullName: '',
-          email: '',
-          password: '',
-     });
+
      // Simple Email Validation for visual check
-     const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email);
+     const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+     const handleSignUp = (e) => {
+          e.preventDefault()
+          if (!email || !password) {
+               setError("Please fill all fields");
+               return;
+          }
+
+          if (!isEmailValid) {
+               setError("Invalid email address");
+               return;
+          }
+          if (password.length < 6) {
+               console.log('bhai ki problem ');
+          }
+          console.log(name, email, password);
+     }
 
      const inputStyle = `w-full bg-secondary border border-accent/10 rounded-md py-3.5 pl-14 pr-12 focus:border-primary outline-none transition-all text-accent placeholder:text-neutral-600`
 
@@ -34,31 +51,33 @@ const SignUp = () => {
                          <p className="text-neutral-500">Create your account today</p>
                     </div>
                     {/* Form */}
-                    <div className='bg-base-200 border p-8 md:p-10 rounded-lg min-w-md md:min-w-lg border border-accent/10 '>
-                         <form className="space-y-4">
+                    <div className='bg-base-200 border p-6 sm:p-10 rounded-lg max-w-md md:min-w-lg border border-accent/10 '>
+                         <form className="space-y-4"
+                              onSubmit={handleSignUp}
+                         >
                               {/* Full Name Field */}
                               <div className="space-y-2">
-                                   <label className="block text-sm font-bold tracking-wider">Full Name</label>
+                                   <label className="block text-sm font-semibold tracking-wider">Full Name</label>
                                    <div className="relative flex items-center text-neutral-500 focus-within:text-primary transition-colors">
                                         <FiUser className="absolute left-4" size={20} />
                                         <input
                                              type="text"
                                              placeholder="Your full name"
                                              className={inputStyle}
-                                             onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
+                                             onChange={(e) => setName(e.target.value)}
                                         />
                                    </div>
                               </div>
                               {/* Email Field */}
                               <div className="space-y-2">
-                                   <label className="block text-sm font-bold tracking-wider">Email</label>
+                                   <label className="block text-sm font-semibold tracking-wider">Email</label>
                                    <div className="relative flex items-center text-neutral-500 focus-within:text-primary transition-colors">
                                         <FiMail className="absolute left-4" size={20} />
                                         <input
                                              type="email"
                                              placeholder="your@email.com"
                                              className={inputStyle}
-                                             onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                                             onChange={(e) => setEmail(e.target.value)}
                                         />
                                         {isEmailValid && (
                                              <FiCheckCircle className="absolute right-4 text-green-500" size={20} />
@@ -68,14 +87,14 @@ const SignUp = () => {
 
                               {/* Password Field */}
                               <div className="space-y-2">
-                                   <label className="block text-sm font-bold tracking-wider">Password</label>
+                                   <label className="block text-sm font-semibold tracking-wider">Password</label>
                                    <div className="relative flex items-center text-neutral-500 focus-within:text-primary transition-colors">
                                         <FiLock className="absolute left-4" size={20} />
                                         <input
                                              type={showPassword ? "text" : "password"}
-                                             placeholder="........"
                                              className={inputStyle}
-                                             onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                                             onChange={(e) => setPassword(e.target.value)}
+                                             placeholder="*******"
                                         />
                                         <button
                                              type="button"
@@ -89,7 +108,7 @@ const SignUp = () => {
                               <div className="pt-4 space-y-4">
                                    <button
                                         type="button"
-                                        className="w-full bg-accent text-base-100 text-sm font-bold py-3 rounded-sm flex items-center justify-center gap-2 hover:bg-accent/90 transition-all uppercase tracking-wider"
+                                        className="w-full bg-accent text-base-100 text-xs sm:text-sm font-bold py-3 rounded-sm flex items-center justify-center gap-2 hover:bg-accent/90 transition-all uppercase tracking-wider"
                                    >
                                         <FcGoogle size={22} />
                                         <span>Join with Google</span>
@@ -97,7 +116,7 @@ const SignUp = () => {
                                    {/* Main Sign In Button */}
                                    <button
                                         type="submit"
-                                        className="w-full bg-primary text-accent font-bold py-3 text-sm rounded-sm flex items-center justify-center gap-2 hover:bg-primary/90 active:scale-[0.98] transition-all uppercase tracking-widest group"
+                                        className="w-full bg-primary text-accent font-bold py-3 text-xs sm:text-sm rounded-sm flex items-center justify-center gap-2 hover:bg-primary/90 active:scale-[0.98] transition-all uppercase tracking-widest group"
                                    >
                                         Create Account
                                         <FiArrowRight className="group-hover:translate-x-1 transition-transform duration-300" />
