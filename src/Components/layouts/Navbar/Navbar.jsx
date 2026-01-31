@@ -58,7 +58,7 @@ const Navbar = () => {
      const [open, setOpen] = useState(false)
      const [scrolled, setScrolled] = useState(false)
      const [isSearchOpen, setIsSearchOpen] = useState(false);
-     const { user, loading } = UseAuth()
+     const { user } = UseAuth()
 
      useEffect(() => {
           const handleScrolled = () => {
@@ -79,19 +79,19 @@ const Navbar = () => {
                className={`fixed top-0 py-2 left-0 border-b w-full z-50 transition-all duration-300
                      ${scrolled
                          ? "bg-base-100/95 backdrop-blur-xl border-neutral-800"
-                         : "bg-transparent border-transparent "
+                         : "bg-transparent border-transparent"
                     }`}>
-               <div className="navbar md:max-w-[75%] mx-auto px-3">
+               <div className="navbar w-full md:max-w-[75%] mx-auto px-3">
                     <div className="navbar-start">
                          <NavLink to={'/'}>
                               <img src={logo} className="h-12" alt="B4 Style Logo" />
                          </NavLink>
                     </div>
-                    <div className="navbar-center hidden lg:flex">
+                    <div className="navbar-center hidden lg:inline">
                          <DesktopLinks links={links}>
                          </DesktopLinks>
                     </div>
-                    <div className="navbar-end gap-6">
+                    <div className="navbar-end gap-6 items-center">
                          <button
                               onClick={() => setIsSearchOpen(true)}
                               className="hover:text-primary transition-colors"
