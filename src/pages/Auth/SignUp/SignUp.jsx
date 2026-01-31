@@ -1,9 +1,123 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
+import { FiMail, FiLock, FiEye, FiEyeOff, FiArrowRight, FiUser, FiCheckCircle } from 'react-icons/fi';
+import { FcGoogle } from 'react-icons/fc';
 
 const SignUp = () => {
+     const [showPassword, setShowPassword] = useState(false);
+     const [formData, setFormData] = useState({
+          fullName: '',
+          email: '',
+          password: '',
+     });
+     // Simple Email Validation for visual check
+     const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email);
+
      return (
-          <div>
-               
+          <div className="flex items-center justify-center text-accent px-4 pt-12">
+               <motion.div
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5 }}
+                    className=""
+               >
+                    {/* Header */}
+                    <div className="text-center mb-10">
+                         {/* Replace with your actual Logo component or IMG tag */}
+                         <div className="mb-6 flex justify-center">
+                              <img src="/b4-style-logo.png" className='h-14' alt="" />
+                         </div>
+                         <h1 className="text-3xl font-semibold tracking-widest mb-3 bebas">Join The Style</h1>
+                         <p className="text-neutral-500">Create your account today</p>
+                    </div>
+                    {/* Form */}
+                    <div className='bg-base-200 border p-8 md:p-10 rounded-lg min-w-md md:min-w-lg border border-accent/10 '>
+                         <form className="space-y-4">
+                              {/* Full Name Field */}
+                              <div className="space-y-2">
+                                   <label className="block text-sm font-bold tracking-wider">Full Name</label>
+                                   <div className="relative flex items-center text-neutral-500 focus-within:text-primary transition-colors">
+                                        <FiUser className="absolute left-4" size={20} />
+                                        <input
+                                             type="text"
+                                             placeholder="Your full name"
+                                             className="w-full bg-secondary border border-accent/10 rounded-sm py-4 pl-14 pr-4 focus:border-primary outline-none transition-all text-accent placeholder:text-neutral-600"
+                                             onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
+                                        />
+                                   </div>
+                              </div>
+                              {/* Email Field */}
+                              <div className="space-y-2">
+                                   <label className="block text-sm font-bold tracking-wider">Email</label>
+                                   <div className="relative flex items-center text-neutral-500 focus-within:text-primary transition-colors">
+                                        <FiMail className="absolute left-4" size={20} />
+                                        <input
+                                             type="email"
+                                             placeholder="your@email.com"
+                                             className="w-full bg-secondary border border-accent/10 rounded-sm py-4 pl-14 pr-12 focus:border-primary outline-none transition-all text-accent placeholder:text-neutral-600"
+                                             onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                                        />
+                                        {isEmailValid && (
+                                             <FiCheckCircle className="absolute right-4 text-green-500" size={20} />
+                                        )}
+                                   </div>
+                              </div>
+
+                              {/* Password Field */}
+                              <div className="space-y-2">
+                                   <label className="block text-sm font-bold tracking-wider">Password</label>
+                                   <div className="relative flex items-center text-neutral-500 focus-within:text-primary transition-colors">
+                                        <FiLock className="absolute left-4" size={20} />
+                                        <input
+                                             type={showPassword ? "text" : "password"}
+                                             placeholder="........"
+                                             className="w-full bg-secondary border border-accent/10 rounded-sm py-4 pl-14 pr-12 focus:border-primary outline-none transition-all text-accent placeholder:text-neutral-600"
+                                             onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                                        />
+                                        <button
+                                             type="button"
+                                             onClick={() => setShowPassword(!showPassword)}
+                                             className="absolute right-4 hover:text-accent cursor-pointer"
+                                        >
+                                             {showPassword ? <FiEyeOff size={20} /> : <FiEye size={20} />}
+                                        </button>
+                                   </div>
+                              </div>
+                              <div className="pt-4 space-y-4">
+                                   <button
+                                        type="button"
+                                        className="w-full bg-accent text-base-100 text-sm font-bold py-3 rounded-sm flex items-center justify-center gap-2 hover:bg-accent/90 transition-all uppercase tracking-wider"
+                                   >
+                                        <FcGoogle size={22} />
+                                        <span>Join with Google</span>
+                                   </button>
+                                   {/* Main Sign In Button */}
+                                   <button
+                                        type="submit"
+                                        className="w-full bg-primary text-accent font-bold py-3 text-sm rounded-sm flex items-center justify-center gap-2 hover:bg-primary/90 active:scale-[0.98] transition-all uppercase tracking-widest group"
+                                   >
+                                        Create Account
+                                        <FiArrowRight className="group-hover:translate-x-1 transition-transform duration-300" />
+                                   </button>
+                              </div>
+                         </form>
+                    </div>
+
+                    {/* Footer */}
+                    <div className="mt-7 text-center space-y-4 text-neutral-500 text-base font-medium">
+                         <p>
+                              Already have an account?{' '}
+                              <Link to="/auth/sign_in" className="text-primary hover:underline ml-1 transition-all">
+                                   Sign Up
+                              </Link>
+                         </p>
+                         <Link to="/shop" className="inline-flex items-center gap-2 hover:text-accent/90 transition-colors group">
+                              Continue as Guest
+                              <FiArrowRight className="group-hover:translate-x-1 transition-transform" />
+                         </Link>
+                    </div>
+               </motion.div>
           </div>
      );
 };

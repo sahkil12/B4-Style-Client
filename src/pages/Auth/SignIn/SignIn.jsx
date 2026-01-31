@@ -1,9 +1,130 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
+import { FiMail, FiLock, FiEye, FiEyeOff, FiArrowRight, FiCheckCircle } from 'react-icons/fi';
+import { FcGoogle } from 'react-icons/fc';
 
 const SignIn = () => {
+     const handleSignIn = (e) => {
+          e.preventdefault()
+          const email2 = e.target.email.value
+          console.log(email2);
+     }
+
+     const [showPassword, setShowPassword] = useState(false);
+     const [email, setEmail] = useState('');
+     const [password, setPassword] = useState('');
+
+     // Simple email validation regex for visual feedback (Check icon)
+     const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
+
      return (
-          <div>
-               
+          <div className="flex items-center justify-center text-accent px-4 pt-12 ">
+               <motion.div
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5 }}
+                    className=""
+               >
+                    {/* Header */}
+                    <div className="text-center mb-10">
+                         {/* Replace with your actual Logo component or IMG tag */}
+                         <div className="mb-6 flex justify-center">
+                              <img src="/b4-style-logo.png" className='h-14' alt="" />
+                         </div>
+                         <h1 className="text-3xl font-semibold tracking-widest mb-3 bebas">Welcome Back</h1>
+                         <p className="text-neutral-500">Sign In to your account</p>
+                    </div>
+
+                    <div className='bg-base-200 border p-8 md:p-10 rounded-lg min-w-md md:min-w-lg border border-accent/10 '>
+                         {/* Form */}
+                         <form className="space-y-4"
+                              onSubmit={handleSignIn}
+                         >
+                              {/* Email Input */}
+                              <div className="space-y-2">
+                                   <label className="block text-sm font-bold tracking-wider" htmlFor="email">Email</label>
+                                   <div className="relative flex items-center text-neutral-500 focus-within:text-primary transition-colors">
+                                        <FiMail className="absolute left-4" size={20} />
+                                        <input
+                                             type="email"
+                                             id="email"
+                                             name='email'
+                                             // value={email}
+                                             placeholder="your@gmail.com"
+                                             className="w-full bg-secondary/90 border border-accent/10 rounded-sm py-4 pl-14 pr-12 focus:border-primary outline-none transition-all text-accent placeholder:text-neutral-600"
+                                        />
+                                        {/* Conditional Check Icon based on validation */}
+                                        {isEmailValid && (
+                                             <FiCheckCircle className="absolute right-4 text-green-500 transition-opacity" size={20} />
+                                        )}
+                                   </div>
+                              </div>
+
+                              {/* Password Input */}
+                              <div className="space-y-2">
+                                   <label className="block text-sm font-bold tracking-wider" htmlFor="password">Password</label>
+                                   <div className="relative flex items-center text-neutral-500 focus-within:text-primary transition-colors">
+                                        <FiLock className="absolute left-4" size={20} />
+                                        <input
+                                             type={showPassword ? "text" : "password"}
+                                             id="password"
+                                             value={password}
+                                             onChange={(e) => setPassword(e.target.value)}
+                                             placeholder="*******"
+                                             className="w-full bg-secondary border border-white/10 rounded-sm py-4 pl-14 pr-12 focus:border-primary outline-none transition-all text-accent placeholder:text-neutral-600"
+                                        />
+                                        {/* Toggle Password Visibility */}
+                                        <button
+                                             type="button"
+                                             onClick={() => setShowPassword(!showPassword)}
+                                             className="absolute right-4 hover:text-accent transition-colors cursor-pointer"
+                                        >
+                                             {showPassword ? <FiEyeOff size={20} /> : <FiEye size={20} />}
+                                        </button>
+                                   </div>
+                              </div>
+                              {/* Forgot Password */}
+                              <div className="flex justify-end">
+                                   <Link to="/forgot-password" className="text-sm text-primary hover:underline font-medium transition-all">
+                                        Forgot password?
+                                   </Link>
+                              </div>
+                              <div className="space-y-4 pt-2">
+                                   {/* Google Sign In Button (NEW) */}
+                                   <button
+                                        type="button"
+                                        className="w-full bg-accent text-base-100 text-sm font-bold py-3 rounded-sm flex items-center justify-center gap-2 hover:bg-accent/90 transition-all uppercase tracking-wider"
+                                   >
+                                        <FcGoogle size={22} />
+                                        <span>Sign in with Google</span>
+                                   </button>
+                                   {/* Main Sign In Button */}
+                                   <button
+                                        type="submit"
+                                        className="w-full bg-primary text-accent font-bold py-3 text-sm rounded-sm flex items-center justify-center gap-2 hover:bg-primary/90 active:scale-[0.98] transition-all uppercase tracking-widest group"
+                                   >
+                                        Sign In
+                                        <FiArrowRight className="group-hover:translate-x-1 transition-transform duration-300" />
+                                   </button>
+                              </div>
+                         </form>
+                    </div>
+                    {/* Footer Links */}
+                    <div className="mt-7 text-center space-y-4 text-neutral-500 text-base font-medium">
+                         <p>
+                              Don't have an account?{' '}
+                              <Link to="/auth/sign_up" className="text-primary hover:underline ml-1 transition-all">
+                                   Sign Up
+                              </Link>
+                         </p>
+                         <Link to="/shop" className="inline-flex items-center gap-2 hover:text-accent/90 transition-colors group">
+                              Continue as Guest
+                              <FiArrowRight className="group-hover:translate-x-1 transition-transform" />
+                         </Link>
+                    </div>
+               </motion.div>
           </div>
      );
 };
