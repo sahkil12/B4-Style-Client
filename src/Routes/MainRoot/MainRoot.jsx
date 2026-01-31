@@ -8,6 +8,9 @@ import AddCart from "../../pages/AddCart/AddCart";
 import MainLayout from "../../layouts/MainLayout/MainLayout";
 import ProductDetails from "../../pages/ProductDetails/ProductDetails";
 import NotFound from "../../Components/Shared/NotFound";
+import AuthLayout from "../../layouts/AuthLayout/AuthLayout";
+import SignIn from "../../pages/Auth/SignIn/SignIn";
+import SignUp from "../../pages/Auth/SignUp/SignUp";
 
 export const router = createBrowserRouter([
      {
@@ -46,4 +49,18 @@ export const router = createBrowserRouter([
                }
           ]
      },
+     {
+          path: 'auth',
+          element: <AuthLayout></AuthLayout>,
+          children: [
+               {
+                    path: '/sign_in',
+                    element: <SignIn></SignIn>
+               },
+               {
+                    path: '/sign_up',
+                    element: <SignUp></SignUp>
+               }
+          ] 
+     }
 ]);
