@@ -2,14 +2,13 @@ import { useEffect, useState } from "react";
 import { FiSearch, FiHeart, FiShoppingBag } from "react-icons/fi";
 import { RiMenuFill } from "react-icons/ri";
 import { RxCross2 } from "react-icons/rx";
-import { FaRegUserCircle } from "react-icons/fa";
-import { LuUser } from "react-icons/lu";
 import { motion } from "motion/react"
 import { Link, NavLink } from "react-router-dom";
 import SearchOverlay from "../../Shared/SearchBar/SearchOverlay";
 import logo from '../../../../public/assets/Others/b4-style-logo.png'
 import UseAuth from "../../../Hooks/UseAuth";
 import AuthLink from "./AuthLink";
+import DesktopLinks from "./DesktopLinks";
 
 const links = [
      { name: "HOME", to: '/' },
@@ -18,7 +17,7 @@ const links = [
      { name: "CONTACT", to: '/contact' },
      { name: "WISHLIST", icon: <FiHeart />, to: '/wishlist' },
 ];
-
+// animation file
 const menuVariants = {
      closed: {
           height: 0,
@@ -60,7 +59,6 @@ const Navbar = () => {
      const [scrolled, setScrolled] = useState(false)
      const [isSearchOpen, setIsSearchOpen] = useState(false);
      const { user, loading } = UseAuth()
-     console.log(user);
 
      useEffect(() => {
           const handleScrolled = () => {
@@ -75,9 +73,9 @@ const Navbar = () => {
 
      return (
           <motion.div
-               initial={{ opacity: 0, y: -15 }}
+               initial={{ opacity: 0, y: -10 }}
                animate={{ opacity: 1, y: 0 }}
-               transition={{ duration: 0.5, ease: "easeIn", }}
+               transition={{ duration: 0.4, ease: "easeIn", }}
                className={`fixed top-0 py-2 left-0 border-b w-full z-50 transition-all duration-300
                      ${scrolled
                          ? "bg-base-100/95 backdrop-blur-xl border-neutral-800"
@@ -90,22 +88,8 @@ const Navbar = () => {
                          </NavLink>
                     </div>
                     <div className="navbar-center hidden lg:flex">
-                         <ul className="flex gap-10 text-sm">
-                              {links
-                                   .filter(item => !item.icon)
-                                   .map((item, index) => (
-                                        <li key={index}>
-                                             <NavLink to={item.to}
-                                                  className={({ isActive }) => `
-                                                  relative tracking-widest cursor-pointer after:content-[''] after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-0 after:bg-primary after:transition-all after:duration-300 hover:after:w-full
-                                             ${isActive ? "after:w-full text-primary font-extrabold" : "after:w-0 hover:after:w-full font-normal"}
-                                                  `}
-                                             >
-                                                  {item.name}
-                                             </NavLink>
-                                        </li>
-                                   ))}
-                         </ul>
+                         <DesktopLinks links={links}>
+                         </DesktopLinks>
                     </div>
                     <div className="navbar-end gap-6">
                          <button
@@ -120,12 +104,10 @@ const Navbar = () => {
                          <Link to={'/cart'} className="hover:text-primary active:text-primary">
                               <FiShoppingBag size={22}></FiShoppingBag>
                          </Link>
-
-                         {/* reuseable */}
+                         {/* reuseable desktop auth link*/}
                          <AuthLink user={user} className="hover:text-primary active:text-primary hidden lg:flex items-center gap-2"></AuthLink>
-
                          {/* menu open close button */}
-                         <div className="flex justify-center items-center lg:hidden">
+                         <div className="flex items-center lg:hidden">
                               <button
                                    className="text-2xl font-extrabold transition-all duration-500 cursor-pointer"
                                    onClick={() => setOpen(!open)}
@@ -138,7 +120,6 @@ const Navbar = () => {
                               onClose={() => setIsSearchOpen(false)}
                          />
                     </div>
-
                </div>
                {/*mobile Menu Box */}
                {<motion.div
@@ -152,10 +133,10 @@ const Navbar = () => {
                               <motion.li
                                    key={index}
                                    variants={itemVariants}
-                                   onClick={() => setOpen(false)}
                               >
                                    <NavLink
-                                        to={item.to}
+                                        to={item?.to}
+                                        onClickCapture={() => setOpen(false)}
                                         className={({ isActive }) =>
                                              `flex items-center gap-3 tracking-widest transition-colors duration-200 hover:text-accent
                                                   ${isActive ? "text-primary" : "text-accent/80"}`
@@ -166,7 +147,7 @@ const Navbar = () => {
                                    </NavLink>
                               </motion.li>
                          ))}
-
+                         {/* auth link */}
                          <motion.li
                               initial={{ opacity: 0, y: 25 }}
                               whileInView={{ opacity: 1, y: 0 }}
@@ -179,10 +160,8 @@ const Navbar = () => {
                                    onClick={() => setOpen(false)}
                                    className="hover:text-primary active:text-primary">
                               </AuthLink>
-
                          </motion.li>
                     </motion.ul>
-
                </motion.div>
                }
           </motion.div>
