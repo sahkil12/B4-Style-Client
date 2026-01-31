@@ -3,9 +3,10 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { FiMail, FiLock, FiEye, FiEyeOff, FiArrowRight, FiUser, FiCheckCircle } from 'react-icons/fi';
 import { FcGoogle } from 'react-icons/fc';
+import UseAuth from '../../../Hooks/UseAuth';
 
 const SignUp = () => {
-     
+     const { createUser, googleCreate } = UseAuth()
      const [name, setName] = useState("");
      const [email, setEmail] = useState("");
      const [password, setPassword] = useState("");
@@ -14,9 +15,12 @@ const SignUp = () => {
 
      // Simple Email Validation for visual check
      const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-     const handleSignUp = (e) => {
+
+     const handleSignUp = async (e) => {
           e.preventDefault()
-          if (!email || !password) {
+          setError("");
+
+          if (!name || !email || !password) {
                setError("Please fill all fields");
                return;
           }
@@ -26,9 +30,19 @@ const SignUp = () => {
                return;
           }
           if (password.length < 6) {
-               console.log('bhai ki problem ');
+               setError("Password must be at least 6 characters");
+               return;
           }
           console.log(name, email, password);
+
+          try{
+               const result = await createUser(email, password)
+               console.log(result);
+          }
+          catch(error){
+               console.log(error.message);
+          }
+
      }
 
      const inputStyle = `w-full bg-secondary border border-accent/10 rounded-md py-3.5 pl-14 pr-12 focus:border-primary outline-none transition-all text-accent placeholder:text-neutral-600`

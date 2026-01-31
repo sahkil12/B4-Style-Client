@@ -3,9 +3,10 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { FiMail, FiLock, FiEye, FiEyeOff, FiArrowRight, FiCheckCircle } from 'react-icons/fi';
 import { FcGoogle } from 'react-icons/fc';
+import UseAuth from '../../../Hooks/UseAuth';
 
 const SignIn = () => {
-
+     const { googleCreate, loginUser } = UseAuth()
      const [email, setEmail] = useState("");
      const [password, setPassword] = useState("");
      const [showPassword, setShowPassword] = useState(false);
@@ -28,6 +29,11 @@ const SignIn = () => {
                return;
           }
      }
+
+     const handleGoogleSignin = () => {
+          
+     }
+
      const inputClass = "w-full bg-secondary/90 border border-accent/10 rounded-md py-3.5 pl-14 pr-12 focus:border-primary outline-none transition-all text-accent placeholder:text-neutral-600"
 
      return (
