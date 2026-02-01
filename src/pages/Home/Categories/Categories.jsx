@@ -57,18 +57,21 @@ const Categories = () => {
                     variants={containerVariants}
                     initial='hidden'
                     whileInView='show'
-                    viewport={{ once: false }}
+                    viewport={{ once: true }}
                     className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mt-16 px-6 mx-auto">
-                    {categories.map((cat, index) => (
+                    {categories?.map((cat, index) => (
                          <motion.div
-                         key={index}
-                         className="group relative h-[420px] rounded-xl overflow-hidden cursor-pointer"
-                         variants={cardVariants}
+                              key={index}
+                              className="group relative h-[420px] rounded-xl overflow-hidden cursor-pointer"
+                              variants={cardVariants}
                          >
                               {/* image */}
                               <img
                                    src={cat.image}
                                    alt={cat.title}
+                                   loading="lazy"
+                                   width="400"
+                                   height="500"
                                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                               />
                               {/* overlay */}

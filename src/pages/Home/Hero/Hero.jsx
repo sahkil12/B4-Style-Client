@@ -7,8 +7,8 @@ const containerVariants = {
      hidden: {},
      show: {
           transition: {
-               staggerChildren: 0.2,
-               delayChildren: .7
+               staggerChildren: 0.15,
+               delayChildren: .4
           },
      }
 }
@@ -24,11 +24,11 @@ const Hero = () => {
           <motion.section
                initial={{ scale: 1.1, opacity: 0.5 }}
                animate={{ scale: 1, opacity: 1 }}
-               transition={{ duration: 1.3 }}
+               transition={{ duration: 0.9 }}
                className="relative h-screen w-full bg-cover bg-center xl:max-w-[75%] mx-auto"
                style={{
                     backgroundImage:
-                         "url('/assets/Others/b4-style-hero-1.jpg')",
+                         "url('/assets/Others/b4-style-hero-1.webp')",
                }}>
                {/* Overlay */}
                <div className="absolute inset-0 bg-base-100/70 md:bg-base-100/65"></div>

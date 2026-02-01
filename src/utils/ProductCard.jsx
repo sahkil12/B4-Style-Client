@@ -12,6 +12,7 @@ const ProductCard = ({ product, animation }) => {
                     <div className="relative aspect-[6/6] overflow-hidden rounded-sm transition-all duration-200 ease-in-out">
                          <img
                               src={product.image}
+                              loading='lazy'
                               alt={product.title}
                               className="w-full h-full object-cover transition-transform duration-600 group-hover:scale-105 group-active:scale-105"
                          />

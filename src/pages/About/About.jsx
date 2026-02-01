@@ -7,7 +7,7 @@ import {
 } from "react-icons/lu";
 import { IoArrowForward } from "react-icons/io5";
 import { Link } from "react-router-dom";
-import displayImage from '../../../public/assets/Others/about-display-pic.png'
+import displayImage from '../../../public/assets/Others/about-display-pic.webp'
 import { motion } from 'motion/react';
 
 const stats = [
