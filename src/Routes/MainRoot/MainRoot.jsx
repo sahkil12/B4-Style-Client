@@ -11,6 +11,7 @@ import NotFound from "../../Components/Shared/NotFound";
 import AuthLayout from "../../layouts/AuthLayout/AuthLayout";
 import SignIn from "../../pages/Auth/SignIn/SignIn";
 import SignUp from "../../pages/Auth/SignUp/SignUp";
+import Profile from "../../pages/Profile/Profile";
 
 export const router = createBrowserRouter([
      {
@@ -46,6 +47,10 @@ export const router = createBrowserRouter([
                     path: "product/:id",
                     element: <ProductDetails></ProductDetails>,
                     loader: () => fetch('/products.json').then(res => res.json())
+               },
+               {
+                    path: "profile",
+                    element: <Profile></Profile>
                }
           ]
      },

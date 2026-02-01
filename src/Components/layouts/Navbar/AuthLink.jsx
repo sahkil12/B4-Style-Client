@@ -6,7 +6,7 @@ const AuthLink = ({ user, onClick, className = "" }) => {
 
   return user ? (
     <Link
-      to="/shop"
+      to="/profile"
       onClick={onClick}
       className={`flex items-center gap-2 hover:text-primary ${className}`}
     >
