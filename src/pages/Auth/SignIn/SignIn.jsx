@@ -25,18 +25,18 @@ const SignIn = () => {
           setError("")
 
           if (!email || !password) {
-               toast.error("Please fill all fields");
+               toast.error("Please fill all fields", { duration: 1000 });
                return;
           }
           if (!isEmailValid) {
-               toast.error("Invalid email address");
+               toast.error("Invalid email address", { duration: 1000 });
                return;
           }
           try {
                setFormLoading(true)
                const result = await loginUser(email, password)
                if (result) {
-                    toast.success("Logged in successfully")
+                    toast.success("Logged in successfully", { duration: 1000 })
                     navigate('/')
                     setFormLoading(false)
                }
@@ -54,7 +54,7 @@ const SignIn = () => {
 
           googleCreate()
                .then(res => {
-                    toast.success(`You Are Successfully Login`)
+                    toast.success(`You Are Successfully Login`, { duration: 1000 })
                     navigate('/')
                     setGoogleLoading(false);
                })
@@ -138,7 +138,7 @@ const SignIn = () => {
                                         Forgot password?
                                    </Link>
                               </div>
-                              {error && <p className='text-sm text-primary'>{error}</p>}
+                              {error && <p className='text-base text-primary'>{error}</p>}
                               <div className="space-y-4 pt-2">
                                    {/* Google Sign In Button*/}
                                    <button
@@ -156,7 +156,7 @@ const SignIn = () => {
                                         disabled={formLoading}
                                         className={`w-full ${formLoading && "opacity-80 cursor-not-allowed"} bg-primary text-accent font-bold py-3 text-xs sm:text-sm rounded-sm flex items-center justify-center gap-2 hover:bg-primary/90 active:scale-[0.98] transition-all uppercase tracking-widest group`}
                                    >
-                                        {formLoading ? loader : <>Sign in <FiArrowRight size={18} className="group-hover:translate-x-1 transition-transform duration-300" /></>}
+                                        {formLoading ? loader : <> Sign in <FiArrowRight size={18} className="group-hover:translate-x-1 transition-transform duration-300" /></>}
                                    </button>
                               </div>
                          </form>

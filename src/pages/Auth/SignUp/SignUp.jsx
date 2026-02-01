@@ -28,12 +28,12 @@ const SignUp = () => {
           setError("");
 
           if (!name || !email || !password) {
-               toast.error("Please fill all fields");
+               toast.error("Please fill all fields", { duration: 1000 });
                return;
           }
 
           if (!isEmailValid) {
-               toast.error("Invalid email address");
+               toast.error("Invalid email address", { duration: 1000 });
                return;
           }
           if (password.length < 6) {
@@ -59,13 +59,13 @@ const SignUp = () => {
                     await updateUserProfile({
                          displayName: name,
                     })
-                    toast.success(`${name}, your account was created successfully`)
+                    toast.success(`${name}, your account was created successfully`, { duration: 1000 })
                     navigate('/')
                }
           }
           catch (error) {
                if (error?.code === "auth/email-already-in-use") {
-                    setError("Email already exists")
+                    setError("This Email is already exists")
                } else {
                     setError("Something went wrong. Try again.")
                }
@@ -81,7 +81,7 @@ const SignUp = () => {
           googleCreate()
                .then(res => {
                     console.log(res);
-                    toast.success(`Your Account Create Successfully`)
+                    toast.success(`Your Account Create Successfully`, { duration: 1000 })
                     navigate('/')
                     setGoogleLoading(false);
                })
@@ -177,7 +177,7 @@ const SignUp = () => {
                                    <span className='text-sm font-medium text-neutral-400'> I agree to Terms & Privacy Policy</span>
                               </div>
                               {/* error message */}
-                              {error && <p className='text-sm text-primary'>{error}</p>}
+                              {error && <p className='text-base text-primary'>{error}</p>}
                               <div className="pt-3 space-y-4">
                                    <button
                                         type="button"
@@ -191,7 +191,7 @@ const SignUp = () => {
                                    {/* Main Sign In Button */}
                                    <button
                                         type="submit"
-                                        disabled={formLoading || !accepted}
+                                        disabled={formLoading }
                                         className="w-full bg-primary text-accent font-bold py-3 text-xs sm:text-sm rounded-sm flex items-center justify-center gap-2 hover:bg-primary/90 active:scale-[0.98] transition-all uppercase tracking-widest group cursor-pointer"
                                    >
                                         {formLoading ? <span className='animate-spin'><ImSpinner9 size={22} /></span> : <>Create Account

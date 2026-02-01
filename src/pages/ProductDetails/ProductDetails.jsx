@@ -28,7 +28,7 @@ const ProductDetails = () => {
 
                <div className="xl:max-w-[75%] pt-8 mx-auto px-5">
                     {/* Back Button */}
-                    <Link to={'/'} className="flex items-center gap-2 text-neutral-400 hover:text-accent transition-colors mb-8 group active:text-center">
+                    <Link to={'/shop'} className="flex items-center gap-2 text-neutral-400 hover:text-accent transition-colors mb-8 group active:text-center">
                          <FiChevronLeft className="group-hover:-translate-x-1 transition-transform" />
                          <span className="text-sm font-medium">Back to Shop</span>
                     </Link>
