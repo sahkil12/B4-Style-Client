@@ -48,7 +48,7 @@ const ForgotPassword = () => {
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5 }}
-                    className="w-full max-w-lg"
+                    className="w-full max-w-md md:min-w-lg mx-auto p-5"
                >
                     {/* Header */}
                     <div className="text-center mb-10">

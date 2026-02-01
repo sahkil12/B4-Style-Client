@@ -111,7 +111,7 @@ const SignUp = () => {
                          <p className="text-neutral-500">Create your account today</p>
                     </div>
                     {/* Form */}
-                    <div className='bg-base-200 border p-6 sm:p-10 rounded-lg max-w-md md:min-w-lg border border-accent/10 '>
+                    <div className='bg-base-200 border p-5 sm:p-10 rounded-lg max-w-md md:min-w-lg border border-accent/10 '>
                          <form className="space-y-4"
                               onSubmit={handleSignUp}
                          >

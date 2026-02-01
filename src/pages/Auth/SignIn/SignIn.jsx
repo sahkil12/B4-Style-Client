@@ -8,7 +8,7 @@ import UseAuth from '../../../Hooks/UseAuth';
 import toast from 'react-hot-toast';
 
 const SignIn = () => {
-     const { googleCreate, loginUser, loading } = UseAuth()
+     const { googleCreate, loginUser } = UseAuth()
      const [email, setEmail] = useState("");
      const [password, setPassword] = useState("");
      const [showPassword, setShowPassword] = useState(false);
@@ -66,6 +66,8 @@ const SignIn = () => {
 
      const inputClass = "w-full bg-secondary/90 border border-accent/10 rounded-md py-3.5 pl-14 pr-12 focus:border-primary outline-none transition-all text-accent placeholder:text-neutral-600"
 
+
+
      return (
           <div className="flex items-center justify-center text-accent px-4 pt-12 pb-14 md:pb-4">
                <motion.div
@@ -84,7 +86,7 @@ const SignIn = () => {
                          <p className="text-neutral-500">Sign In to your account</p>
                     </div>
 
-                    <div className='bg-base-200 border p-6 sm:p-10 rounded-lg max-w-md md:min-w-lg border border-accent/10 '>
+                    <div className='bg-base-200 border p-5 sm:p-10 rounded-lg max-w-md md:min-w-lg border border-accent/10 '>
                          {/* Form */}
                          <form className="space-y-4"
                               onSubmit={handleSignIn}

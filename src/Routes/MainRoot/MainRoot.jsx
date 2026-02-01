@@ -14,6 +14,7 @@ import SignUp from "../../pages/Auth/SignUp/SignUp";
 import Profile from "../../pages/Profile/Profile";
 import ForgotPassword from "../../pages/Auth/ForgotPassword/ForgotPassword";
 import PrivateRoute from "../PrivateRoute/PrivateRoute";
+import AuthProtected from "../AuthProtected/AuthProtected";
 
 export const router = createBrowserRouter([
      {
@@ -62,15 +63,15 @@ export const router = createBrowserRouter([
           children: [
                {
                     path: 'sign_in',
-                    element: <SignIn></SignIn>
+                    element: <AuthProtected><SignIn></SignIn></AuthProtected>
                },
                {
                     path: 'sign_up',
-                    element: <SignUp></SignUp>
+                    element: <AuthProtected> <SignUp></SignUp></AuthProtected>
                },
                {
                     path: 'forgot_password',
-                    element: <ForgotPassword></ForgotPassword>
+                    element: <AuthProtected> <ForgotPassword></ForgotPassword> </AuthProtected>
                }
           ]
      }
