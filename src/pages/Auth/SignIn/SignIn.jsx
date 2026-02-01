@@ -35,26 +35,25 @@ const SignIn = () => {
           try {
                setFormLoading(true)
                const result = await loginUser(email, password)
-               console.log(result);
                if (result) {
-                    toast.success("You Are Successfully Login")
+                    toast.success("Logged in successfully")
                     navigate('/')
                     setFormLoading(false)
                }
           }
           catch (error) {
                console.log(error);
-               setError(error.message)
+               // setError(error.message)
+               setError("Invalid email or password");
+               setFormLoading(false);
           }
      }
 
      const handleGoogleSignin = () => {
-
           setGoogleLoading(true);
 
           googleCreate()
                .then(res => {
-                    console.log(res);
                     toast.success(`You Are Successfully Login`)
                     navigate('/')
                     setGoogleLoading(false);
@@ -135,7 +134,7 @@ const SignIn = () => {
                               </div>
                               {/* Forgot Password */}
                               <div className="flex justify-end">
-                                   <Link  className="text-sm text-primary hover:underline font-medium transition-all">
+                                   <Link to={'/auth/forgot_password'} className="text-sm text-primary hover:underline font-medium transition-all">
                                         Forgot password?
                                    </Link>
                               </div>
@@ -146,7 +145,7 @@ const SignIn = () => {
                                         type="button"
                                         disabled={googleLoading}
                                         onClick={handleGoogleSignin}
-                                        className="w-full bg-accent text-base-100 text-xs sm:text-sm font-bold py-3 rounded-sm flex items-center justify-center gap-2 hover:bg-accent/90 transition-all uppercase tracking-wider"
+                                        className={`w-full ${googleLoading && "opacity-80 cursor-not-allowed"} bg-accent text-base-100 text-xs sm:text-sm font-bold py-3 rounded-sm flex items-center justify-center gap-2 hover:bg-accent/90 transition-all uppercase tracking-wider`}
                                    >
 
                                         {googleLoading ? loader : <> <FcGoogle size={22} /> <span>Sign in with Google</span></>}
@@ -155,7 +154,7 @@ const SignIn = () => {
                                    <button
                                         type="submit"
                                         disabled={formLoading}
-                                        className="w-full bg-primary text-accent font-bold py-3 text-xs sm:text-sm rounded-sm flex items-center justify-center gap-2 hover:bg-primary/90 active:scale-[0.98] transition-all uppercase tracking-widest group"
+                                        className={`w-full ${formLoading && "opacity-80 cursor-not-allowed"} bg-primary text-accent font-bold py-3 text-xs sm:text-sm rounded-sm flex items-center justify-center gap-2 hover:bg-primary/90 active:scale-[0.98] transition-all uppercase tracking-widest group`}
                                    >
                                         {formLoading ? loader : <>Sign in <FiArrowRight size={18} className="group-hover:translate-x-1 transition-transform duration-300" /></>}
                                    </button>
