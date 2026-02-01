@@ -1,19 +1,24 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FiMail, FiLock, FiEye, FiEyeOff, FiArrowRight, FiUser, FiCheckCircle } from 'react-icons/fi';
 import { FcGoogle } from 'react-icons/fc';
 import UseAuth from '../../../Hooks/UseAuth';
 import { ImSpinner9 } from 'react-icons/im';
+import toast from 'react-hot-toast';
 
 const SignUp = () => {
-     const { createUser, googleCreate, loading, updateUserProfile } = UseAuth()
+     const { createUser, googleCreate, updateUserProfile } = UseAuth()
      const [name, setName] = useState("");
      const [email, setEmail] = useState("");
      const [password, setPassword] = useState("");
      const [error, setError] = useState("");
      const [nameError, setNameError] = useState("");
+     const [formLoading, setFormLoading] = useState(false);
+     const [googleLoading, setGoogleLoading] = useState(false);
+
      const [showPassword, setShowPassword] = useState(false);
+     const navigate = useNavigate()
 
      // Simple Email Validation for visual check
      const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -21,42 +26,69 @@ const SignUp = () => {
      const handleSignUp = async (e) => {
           e.preventDefault()
           setError("");
+          const check = e.target.check.checked
 
           if (!name || !email || !password) {
-               setError("Please fill all fields");
+               toast.error("Please fill all fields");
                return;
           }
 
           if (!isEmailValid) {
-               setError("Invalid email address");
+               toast.error("Invalid email address");
                return;
           }
           if (password.length < 6) {
-               setError("Password must be at least 6 characters");
+               toast.error("Password must be at least 6 characters");
                return;
           }
           if (name.length < 5) {
                setNameError("Name must be at least 5 characters");
                return;
           }
-
+          if (name.length > 16) {
+               setNameError("Name should be under 16 characters");
+               return;
+          }
+          if (!check) {
+               setError("Please Accept Our Term And Condition")
+               return
+          }
           try {
+               setFormLoading(true)
                const result = await createUser(email, password)
-               await updateUserProfile({
-                    displayName: name,
-               })
-               
-              
+               if (result) {
+                    await updateUserProfile({
+                         displayName: name,
+                    })
+                    toast.success(`${name}, your account was created successfully`)
+                    navigate('/')
+               }
           }
           catch (error) {
-               setError(error.message);
-
+               if (error?.code === "auth/email-already-in-use") {
+                    setError("Email already exists")
+               } else {
+                    setError("Something went wrong. Try again.")
+               }
           }
-
+          finally {
+               setFormLoading(false)
+          }
      }
 
      const handleGoogleSignUp = () => {
+          setGoogleLoading(true);
+
           googleCreate()
+               .then(res => {
+                    console.log(res);
+                    toast.success(`Your Account Create Successfully`)
+                    navigate('/')
+                    setGoogleLoading(false);
+               })
+               .catch(error => {
+                    setError("Something is wrong try again!!");
+               })
      }
 
      const inputStyle = `w-full bg-secondary border border-accent/10 rounded-md py-3.5 pl-14 pr-12 focus:border-primary outline-none transition-all text-accent placeholder:text-neutral-600`
@@ -92,9 +124,13 @@ const SignUp = () => {
                                              type="text"
                                              placeholder="Your full name"
                                              className={inputStyle}
-                                             onChange={(e) => setName(e.target.value)}
+                                             onChange={(e) => {
+                                                  setName(e.target.value)
+                                                  setNameError("")
+                                             }}
                                         />
                                    </div>
+                                   {nameError && <p className='text-primary test-xs'>{nameError}</p>}
                               </div>
                               {/* Email Field */}
                               <div className="space-y-2">
@@ -112,7 +148,6 @@ const SignUp = () => {
                                         )}
                                    </div>
                               </div>
-
                               {/* Password Field */}
                               <div className="space-y-2">
                                    <label className="block text-sm font-semibold tracking-wider">Password</label>
@@ -133,22 +168,29 @@ const SignUp = () => {
                                         </button>
                                    </div>
                               </div>
-                              <div className="pt-4 space-y-4">
+                              <div className='flex items-center pt-2 gap-2'>
+                                   <input type="checkbox" name='check' className="checkbox checkbox-sm checkbox-primary" />
+                                   <span className='text-sm font-medium text-neutral-400'> I agree to Terms & Privacy Policy</span>
+                              </div>
+                              {/* error message */}
+                              {error && <p className='text-xs text-primary'>{error}</p>}
+                              <div className="pt-3 space-y-4">
                                    <button
                                         type="button"
+                                        disabled={googleLoading}
                                         onClick={handleGoogleSignUp}
-                                        className="w-full bg-accent text-base-100 text-xs sm:text-sm font-bold py-3 rounded-sm flex items-center justify-center gap-2 hover:bg-accent/90 transition-all uppercase tracking-wider"
+                                        className="w-full bg-accent text-base-100 text-xs sm:text-sm font-bold py-3 rounded-sm flex items-center justify-center gap-2 hover:bg-accent/90 transition-all uppercase tracking-wider cursor-pointer"
                                    >
-                                        {loading ? <span className='animate-spin'><ImSpinner9 size={22} /></span> : <><FcGoogle size={22} />
+                                        {googleLoading ? <span className='animate-spin'><ImSpinner9 size={22} /></span> : <><FcGoogle size={22} />
                                              <span>Join with Google</span></>}
                                    </button>
                                    {/* Main Sign In Button */}
                                    <button
                                         type="submit"
-                                        className="w-full bg-primary text-accent font-bold py-3 text-xs sm:text-sm rounded-sm flex items-center justify-center gap-2 hover:bg-primary/90 active:scale-[0.98] transition-all uppercase tracking-widest group"
+                                        disabled={formLoading}
+                                        className="w-full bg-primary text-accent font-bold py-3 text-xs sm:text-sm rounded-sm flex items-center justify-center gap-2 hover:bg-primary/90 active:scale-[0.98] transition-all uppercase tracking-widest group cursor-pointer"
                                    >
-
-                                        {loading ? <span className='animate-spin'><ImSpinner9 size={22} /></span> : <>Create Account
+                                        {formLoading ? <span className='animate-spin'><ImSpinner9 size={22} /></span> : <>Create Account
                                              <FiArrowRight size={18} className="group-hover:translate-x-1 transition-transform duration-300" /></>}
                                    </button>
                               </div>
@@ -160,7 +202,7 @@ const SignUp = () => {
                          <p>
                               Already have an account?{' '}
                               <Link to="/auth/sign_in" className="text-primary hover:underline ml-1 transition-all">
-                                   Sign Up
+                                   Sign In
                               </Link>
                          </p>
                          <Link to="/shop" className="inline-flex items-center gap-2 hover:text-accent/90 transition-colors group">

@@ -46,13 +46,13 @@ const Profile = () => {
                     className="w-full max-w-xl space-y-4"
                >
                     {/* --- Profile Header Section --- */}
-                    <div className="bg-base-200 border-2 border-primary/15 p-6 rounded-xl flex items-center gap-5">
-                         <div className="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center text-primary border border-accent/10">
-                              <FiUser size={32} />
+                    <div className="bg-base-200 border-2 border-primary/15 p-4 sm:p-6 rounded-xl flex items-center gap-4">
+                         <div className="w-14 h-14 md:w-20 md:h-20 bg-primary/10 rounded-full flex items-center justify-center text-primary border border-accent/10">
+                              <FiUser size={30} />
                          </div>
                          <div>
-                              <h2 className="text-2xl font-medium tracking-wider bebas">{user?.displayName}</h2>
-                              <p className="text-neutral-500 text-sm font-medium">{user?.email}</p>
+                              <h2 className="text-xl text-wrap sm:text-2xl font-medium tracking-wider bebas">{user?.displayName}</h2>
+                              <p className="text-neutral-500 text-xs sm:text-sm font-medium ">{user?.email}</p>
                          </div>
                     </div>
                     {/* --- Menu Items Section --- */}
