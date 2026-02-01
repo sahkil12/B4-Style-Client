@@ -76,12 +76,12 @@ const Navbar = () => {
                initial={{ opacity: 0, y: -10 }}
                animate={{ opacity: 1, y: 0 }}
                transition={{ duration: 0.4, ease: "easeIn", }}
-               className={`fixed top-0 py-2 left-0 border-b w-full z-50 transition-all duration-300
+               className={`absolute border top-0 py-2 left-0 border-b w-full z-50 transition-all duration-300
                      ${scrolled
                          ? "bg-base-100/95 backdrop-blur-xl border-neutral-800"
                          : "bg-transparent border-transparent"
                     }`}>
-               <div className="navbar w-full md:max-w-[75%] mx-auto px-3">
+               <div className="navbar w-full xl:max-w-[75%] mx-auto px-3">
                     <div className="navbar-start">
                          <NavLink to={'/'}>
                               <img src={logo} className="h-12" alt="B4 Style Logo" />
@@ -91,7 +91,7 @@ const Navbar = () => {
                          <DesktopLinks links={links}>
                          </DesktopLinks>
                     </div>
-                    <div className="navbar-end gap-6 items-center">
+                    <div className="navbar-end gap-6">
                          <button
                               onClick={() => setIsSearchOpen(true)}
                               className="hover:text-primary transition-colors"

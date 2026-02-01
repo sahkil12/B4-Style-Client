@@ -19,7 +19,7 @@ const contactInfo = [
 
 const Contact = () => {
      return (
-          <div className="bg-base-100 text-accent min-h-screen">
+          <div className="bg-base-100 text-accent min-h-screen overflow-x-hidden">
                {/* 1. Header Section */}
                <section className="pb-12 bg-secondary mt-[81px] text-center">
                     <motion.section
@@ -41,7 +41,7 @@ const Contact = () => {
                     </motion.section>
                </section>
                {/* 2. Main Content Section (Form & Info) */}
-               <section className="max-w-7xl mx-auto px-4 md:px-12 py-16">
+               <section className="max-w-7xl mx-auto px-3 md:px-12 py-16">
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
                          {/* Left Side: Contact Form */}
                          <motion.div

@@ -51,7 +51,7 @@ const cardVariants = {
 
 const About = () => {
      return (
-          <div className="bg-base-100 text-accent">
+          <div className="bg-base-100 text-accent overflow-x-hidden">
                {/* 1. Hero Section: Our Story */}
                <motion.section
                     initial={{ opacity: 0, y: 40 }}
@@ -100,7 +100,7 @@ const About = () => {
                     </section>
                </div>
                {/* 3. From Vision to Reality Section */}
-               <section className="py-24 ">
+               <section className="py-24">
                     <div className="max-w-7xl mx-auto px-6 md:px-12 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
                          {/* text side */}
                          <motion.div
@@ -141,7 +141,7 @@ const About = () => {
                                    <img
                                         src={displayImage}
                                         alt="B4 Style Fashion"
-                                        className="w-full h-full object-cover grayscale hover:grayscale-0 active:grayscale-0 transition-all duration-600"
+                                        className="w-full h-full object-cover lg:grayscale hover:grayscale-0 transition-all duration-600"
                                    />
                               </div>
                               {/* BD Badge */}
@@ -150,7 +150,7 @@ const About = () => {
                                    whileInView={{ opacity: 1, scale: 1 }}
                                    transition={{ duration: .5 }}
                                    viewport={{ once: true }}
-                                   className="absolute -bottom-6 -left-4 md:-left-12 bg-primary p-7 rounded-md shadow-2xl">
+                                   className="absolute -bottom-6 -left-3 md:-left-12 bg-primary p-5 sm:p-7 rounded-md shadow-2xl">
                                    <h3 className="text-3xl font-black mb-1.5 italic">BD</h3>
                                    <p className="text-xs uppercase font-bold tracking-widest opacity-75">Made in Bangladesh</p>
                               </motion.div>
