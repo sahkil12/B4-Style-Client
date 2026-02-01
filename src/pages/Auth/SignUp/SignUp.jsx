@@ -7,11 +7,12 @@ import UseAuth from '../../../Hooks/UseAuth';
 import { ImSpinner9 } from 'react-icons/im';
 
 const SignUp = () => {
-     const { createUser, googleCreate, loading } = UseAuth()
+     const { createUser, googleCreate, loading, updateUserProfile } = UseAuth()
      const [name, setName] = useState("");
      const [email, setEmail] = useState("");
      const [password, setPassword] = useState("");
      const [error, setError] = useState("");
+     const [nameError, setNameError] = useState("");
      const [showPassword, setShowPassword] = useState(false);
 
      // Simple Email Validation for visual check
@@ -34,10 +35,18 @@ const SignUp = () => {
                setError("Password must be at least 6 characters");
                return;
           }
+          if (name.length < 5) {
+               setNameError("Name must be at least 5 characters");
+               return;
+          }
 
           try {
                const result = await createUser(email, password)
-               console.log(result);
+               await updateUserProfile({
+                    displayName: name,
+               })
+               
+              
           }
           catch (error) {
                setError(error.message);
