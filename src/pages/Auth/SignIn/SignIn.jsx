@@ -1,38 +1,46 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FiMail, FiLock, FiEye, FiEyeOff, FiArrowRight, FiCheckCircle } from 'react-icons/fi';
 import { FcGoogle } from 'react-icons/fc';
 import { ImSpinner9 } from "react-icons/im";
 import UseAuth from '../../../Hooks/UseAuth';
+import toast from 'react-hot-toast';
 
 const SignIn = () => {
      const { googleCreate, loginUser, loading } = UseAuth()
      const [email, setEmail] = useState("");
      const [password, setPassword] = useState("");
      const [showPassword, setShowPassword] = useState(false);
+     const [formLoading, setFormLoading] = useState(false);
+     const [googleLoading, setGoogleLoading] = useState(false);
      const [error, setError] = useState("");
+     const navigate = useNavigate()
 
      const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+     const loader = <span className='animate-spin'><ImSpinner9 size={22} /></span>
 
      const handleSignIn = async (e) => {
           e.preventDefault()
           setError("")
 
           if (!email || !password) {
-               setError("Please fill all fields");
+               toast.error("Please fill all fields");
                return;
           }
-
           if (!isEmailValid) {
-               setError("Invalid email address");
+               toast.error("Invalid email address");
                return;
           }
-          console.log(email, password);
-
           try {
+               setFormLoading(true)
                const result = await loginUser(email, password)
                console.log(result);
+               if (result) {
+                    toast.success("You Are Successfully Login")
+                    navigate('/')
+                    setFormLoading(false)
+               }
           }
           catch (error) {
                console.log(error);
@@ -41,7 +49,20 @@ const SignIn = () => {
      }
 
      const handleGoogleSignin = () => {
+
+          setGoogleLoading(true);
+
           googleCreate()
+               .then(res => {
+                    console.log(res);
+                    toast.success(`You Are Successfully Login`)
+                    navigate('/')
+                    setGoogleLoading(false);
+               })
+               .catch(error => {
+                    setError("Something is wrong try again!!");
+                    setGoogleLoading(false);
+               })
      }
 
      const inputClass = "w-full bg-secondary/90 border border-accent/10 rounded-md py-3.5 pl-14 pr-12 focus:border-primary outline-none transition-all text-accent placeholder:text-neutral-600"
@@ -114,26 +135,29 @@ const SignIn = () => {
                               </div>
                               {/* Forgot Password */}
                               <div className="flex justify-end">
-                                   <Link to="/forgot-password" className="text-sm text-primary hover:underline font-medium transition-all">
+                                   <Link  className="text-sm text-primary hover:underline font-medium transition-all">
                                         Forgot password?
                                    </Link>
                               </div>
+                              {error && <p className='text-sm text-primary'>{error}</p>}
                               <div className="space-y-4 pt-2">
-                                   {/* Google Sign In Button (NEW) */}
+                                   {/* Google Sign In Button*/}
                                    <button
                                         type="button"
+                                        disabled={googleLoading}
                                         onClick={handleGoogleSignin}
                                         className="w-full bg-accent text-base-100 text-xs sm:text-sm font-bold py-3 rounded-sm flex items-center justify-center gap-2 hover:bg-accent/90 transition-all uppercase tracking-wider"
                                    >
 
-                                        {loading ? <span className='animate-spin'><ImSpinner9 size={22} /></span> : <> <FcGoogle size={22} /> <span>Sign in with Google</span></>}
+                                        {googleLoading ? loader : <> <FcGoogle size={22} /> <span>Sign in with Google</span></>}
                                    </button>
                                    {/* Main Sign In Button */}
                                    <button
                                         type="submit"
+                                        disabled={formLoading}
                                         className="w-full bg-primary text-accent font-bold py-3 text-xs sm:text-sm rounded-sm flex items-center justify-center gap-2 hover:bg-primary/90 active:scale-[0.98] transition-all uppercase tracking-widest group"
                                    >
-                                        {loading ? <span className='animate-spin'><ImSpinner9 size={22} /></span> : <>Sign in <FiArrowRight size={18} className="group-hover:translate-x-1 transition-transform duration-300" /></>}
+                                        {formLoading ? loader : <>Sign in <FiArrowRight size={18} className="group-hover:translate-x-1 transition-transform duration-300" /></>}
                                    </button>
                               </div>
                          </form>

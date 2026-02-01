@@ -12,11 +12,11 @@ const SignUp = () => {
      const [name, setName] = useState("");
      const [email, setEmail] = useState("");
      const [password, setPassword] = useState("");
+     const [accepted, setAccepted] = useState(false);
      const [error, setError] = useState("");
      const [nameError, setNameError] = useState("");
      const [formLoading, setFormLoading] = useState(false);
      const [googleLoading, setGoogleLoading] = useState(false);
-
      const [showPassword, setShowPassword] = useState(false);
      const navigate = useNavigate()
 
@@ -26,7 +26,6 @@ const SignUp = () => {
      const handleSignUp = async (e) => {
           e.preventDefault()
           setError("");
-          const check = e.target.check.checked
 
           if (!name || !email || !password) {
                toast.error("Please fill all fields");
@@ -49,8 +48,8 @@ const SignUp = () => {
                setNameError("Name should be under 16 characters");
                return;
           }
-          if (!check) {
-               setError("Please Accept Our Term And Condition")
+          if (!accepted) {
+               setError("Please accept Terms & Privacy Policy");
                return
           }
           try {
@@ -88,6 +87,7 @@ const SignUp = () => {
                })
                .catch(error => {
                     setError("Something is wrong try again!!");
+                    setGoogleLoading(false);
                })
      }
 
@@ -169,11 +169,15 @@ const SignUp = () => {
                                    </div>
                               </div>
                               <div className='flex items-center pt-2 gap-2'>
-                                   <input type="checkbox" name='check' className="checkbox checkbox-sm checkbox-primary" />
+                                   <input
+                                        type="checkbox"
+                                        checked={accepted}
+                                        onChange={(e) => setAccepted(e.target.checked)}
+                                        className="checkbox checkbox-sm checkbox-primary" />
                                    <span className='text-sm font-medium text-neutral-400'> I agree to Terms & Privacy Policy</span>
                               </div>
                               {/* error message */}
-                              {error && <p className='text-xs text-primary'>{error}</p>}
+                              {error && <p className='text-sm text-primary'>{error}</p>}
                               <div className="pt-3 space-y-4">
                                    <button
                                         type="button"
@@ -187,7 +191,7 @@ const SignUp = () => {
                                    {/* Main Sign In Button */}
                                    <button
                                         type="submit"
-                                        disabled={formLoading}
+                                        disabled={formLoading || !accepted}
                                         className="w-full bg-primary text-accent font-bold py-3 text-xs sm:text-sm rounded-sm flex items-center justify-center gap-2 hover:bg-primary/90 active:scale-[0.98] transition-all uppercase tracking-widest group cursor-pointer"
                                    >
                                         {formLoading ? <span className='animate-spin'><ImSpinner9 size={22} /></span> : <>Create Account
