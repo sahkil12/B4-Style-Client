@@ -19,7 +19,6 @@ const SignUp = () => {
      const [googleLoading, setGoogleLoading] = useState(false);
      const [showPassword, setShowPassword] = useState(false);
      const navigate = useNavigate()
-     console.log(accepted);
 
      // Simple Email Validation for visual check
      const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);

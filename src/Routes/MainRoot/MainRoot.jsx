@@ -13,6 +13,7 @@ import SignIn from "../../pages/Auth/SignIn/SignIn";
 import SignUp from "../../pages/Auth/SignUp/SignUp";
 import Profile from "../../pages/Profile/Profile";
 import ForgotPassword from "../../pages/Auth/ForgotPassword/ForgotPassword";
+import PrivateRoute from "../PrivateRoute/PrivateRoute";
 
 export const router = createBrowserRouter([
      {
@@ -51,7 +52,7 @@ export const router = createBrowserRouter([
                },
                {
                     path: "profile",
-                    element: <Profile></Profile>
+                    element: <PrivateRoute><Profile></Profile></PrivateRoute>
                }
           ]
      },
@@ -71,6 +72,6 @@ export const router = createBrowserRouter([
                     path: 'forgot_password',
                     element: <ForgotPassword></ForgotPassword>
                }
-          ] 
+          ]
      }
 ]);

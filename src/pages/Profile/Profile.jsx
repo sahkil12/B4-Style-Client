@@ -1,11 +1,11 @@
 import { motion } from 'framer-motion';
 import { FiUser, FiPackage, FiHeart, FiSettings, FiLogOut } from 'react-icons/fi';
 import UseAuth from '../../Hooks/UseAuth';
+import { useNavigate } from 'react-router-dom';
 
 const Profile = () => {
-     // Demo User Data
-
      const { logOutUser, user } = UseAuth()
+     const navigate = useNavigate()
 
      const menuItems = [
           {
