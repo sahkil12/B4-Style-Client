@@ -146,12 +146,12 @@ const About = () => {
                               </div>
                               {/* BD Badge */}
                               <motion.div
-                                   initial={{ opacity: 0, scale: 0.5 }}
+                                   initial={{ opacity: 0, scale: 0.6 }}
                                    whileInView={{ opacity: 1, scale: 1 }}
                                    transition={{ duration: .5 }}
                                    viewport={{ once: true }}
-                                   className="absolute -bottom-6 -left-3 md:-left-12 bg-primary p-5 sm:p-7 rounded-md shadow-2xl">
-                                   <h3 className="text-3xl font-black mb-1.5 italic">BD</h3>
+                                   className="absolute -bottom-6 -left-3 md:-left-12 bg-primary p-4 sm:p-7 rounded-md shadow-2xl">
+                                   <h3 className="text-2xl md:text-3xl font-black mb-1.5 italic">BD</h3>
                                    <p className="text-xs uppercase font-bold tracking-widest opacity-75">Made in Bangladesh</p>
                               </motion.div>
                          </motion.div>
@@ -174,15 +174,11 @@ const About = () => {
                <section className="bg-primary py-20">
                     <div className="max-w-7xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-12 text-center">
                          {stats?.map((stat, ind) => (
-                              <motion.div
-                                   initial={{ opacity: 0, scale: 0.6 }}
-                                   whileInView={{ opacity: 1, scale: 1 }}
-                                   transition={{ duration: .5, delay: .2 }}
-                                   viewport={{ once: true }}
+                              <div
                                    key={ind} className="space-y-2">
                                    <h2 className="text-3xl sm:text-5xl font-black">{stat.title}</h2>
                                    <p className="text-xs uppercase font-bold tracking-widest opacity-80">{stat.subtitle}</p>
-                              </motion.div>
+                              </div>
                          ))}
                     </div>
                </section>
