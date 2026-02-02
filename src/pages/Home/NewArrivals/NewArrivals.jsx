@@ -3,20 +3,7 @@ import { motion } from "motion/react";
 import { NavLink } from "react-router-dom";
 import ProductCard from "../../../utils/ProductCard";
 import { useEffect, useState } from "react";
-
-const containerVariants = {
-     hidden: {},
-     show: {
-          transition: {
-               staggerChildren: 0.15,
-          },
-     },
-};
-
-const cardVariants = {
-     hidden: { opacity: 0, y: 30 },
-     show: { opacity: 1, y: 0, transition: { duration: 0.4, ease: "easeOut" } },
-};
+import { containerVariants, cardVariants } from "../../../utils/CardAnimation";
 
 const NewArrivals = () => {
      const [products, setProducts] = useState([])

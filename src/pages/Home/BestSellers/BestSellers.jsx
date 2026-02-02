@@ -5,23 +5,10 @@ import { NavLink } from "react-router-dom";
 import ProductCard from "../../../utils/ProductCard";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { useEffect, useState } from "react";
+import { containerVariants, cardVariants } from "../../../utils/CardAnimation";
 
-const containerVariants = {
-     hidden: {},
-     show: {
-          transition: {
-               staggerChildren: 0.15,
-          },
-     },
-};
-
-const cardVariants = {
-     hidden: { opacity: 0, y: 30 },
-     show: { opacity: 1, y: 0, transition: { duration: 0.4, ease: "easeOut" } },
-};
 
 const BestSellers = () => {
-
      const [bestSellers, setBestSellers] = useState([])
 
      useEffect(() => {

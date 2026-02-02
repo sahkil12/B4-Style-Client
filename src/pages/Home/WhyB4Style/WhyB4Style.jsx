@@ -1,6 +1,7 @@
 import { FaShippingFast, FaAward, FaLock, FaHeadset } from "react-icons/fa";
 import { AiOutlineSafety } from "react-icons/ai";
 import { motion } from "framer-motion";
+import { containerVariants, cardVariants } from "../../../utils/CardAnimation";
 
 const features = [
      {
@@ -24,20 +25,6 @@ const features = [
           desc: "Our friendly team is here to help you anytime.",
      },
 ];
-
-const containerVariants = {
-     hidden: {},
-     show: {
-          transition: {
-               staggerChildren: 0.09,
-          },
-     },
-};
-
-const cardVariants = {
-     hidden: { opacity: 0, y: 38 },
-     show: { opacity: 1, y: 0, transition: { duration: 0.34, ease: "easeIn" } },
-};
 
 const WhyB4Style = () => {
      return (
