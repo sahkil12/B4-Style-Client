@@ -1,15 +1,9 @@
 import React from 'react';
 import { FiSend, FiMapPin, FiPhone, FiMail } from "react-icons/fi";
-import { FaInstagram, FaFacebookF, FaTiktok } from "react-icons/fa";
 import { motion } from 'motion/react';
+import { socials } from '../../utils/AllLinks';
 
 const inputStyles = "w-full bg-accent/10 border border-neutral-700 p-3 md:p-4 rounded-lg focus:outline-none focus:border-primary transition-colors"
-
-const socials = [
-     { icon: <FaFacebookF size={20} />, link: "https://www.facebook.com/" },
-     { icon: <FaInstagram size={20} />, link: "https://www.instagram.com/" },
-     { icon: <FaTiktok size={20} />, link: "https://www.tiktok.com/" },
-];
 
 const contactInfo = [
      { icon: <FiMapPin size={22} />, title: 'Visit Us', info: `Patiya, Chittagong Bangladesh BD` },

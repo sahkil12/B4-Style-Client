@@ -1,32 +1,11 @@
-import { FaInstagram, FaFacebookF, FaPhoneAlt, FaMapMarkerAlt, FaTiktok } from "react-icons/fa";
+import { FaPhoneAlt, FaMapMarkerAlt } from "react-icons/fa";
 import { IoMailOutline } from "react-icons/io5";
 import { NavLink } from "react-router-dom";
 import logo from '../../../public/assets/Others/b4-style-logo.png'
+import { links1, links2, socials } from "../../utils/AllLinks";
 
 const Footer = () => {
      const linkStyle = 'hover:text-primary active:text-primary transition-all duration-300 hover:ml-1 active:ml-1'
-     
-     const links = [
-          { name: 'Shop All', to: '/shop' },
-          { name: 'New Arrivals', to: '/shop' },
-          { name: 'Best Sellers', to: '/shop' },
-          { name: 'Sale', to: '/shop' },
-          { name: 'About Us', to: '/about' },
-          { name: 'Contact', to: '/contact' },
-     ]
-     const links2 = [
-          { name: 'T-Shirts', to: '/shop' },
-          { name: 'Hoodies', to: '/shop' },
-          { name: 'Pants', to: '/shop' },
-          { name: 'Sweatshirts', to: '/shop' },
-          { name: 'Winter Wear', to: '/shop' },
-          { name: 'Drop Shoulder', to: '/shop' },
-     ]
-     const socials = [
-          { icon: <FaFacebookF size={20} />, link: "https://www.facebook.com/" },
-          { icon: <FaInstagram size={20} />, link: "https://www.instagram.com/" },
-          { icon: <FaTiktok size={20} />, link: "https://www.tiktok.com/" },
-     ];
 
      return (
           <footer className="bg-secondary text-neutral-400 py-14 px-4 md:px-8 border-t border-neutral-700/90">
@@ -57,7 +36,7 @@ const Footer = () => {
                               <h3 className="text-accent md:text-xl bebas mb-5 tracking-wider">Quick Links</h3>
                               <ul className="flex flex-col gap-4 text-sm ">
                                    {
-                                        links?.map((link, ind) => (
+                                        links1?.map((link, ind) => (
                                              <li key={ind}>
                                                   <NavLink to={link.to} className={linkStyle}>{link.name}</NavLink>
                                              </li>
