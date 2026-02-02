@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Link, useNavigate } from 'react-router-dom';
 import { FiMail, FiLock, FiEye, FiEyeOff, FiArrowRight, FiCheckCircle } from 'react-icons/fi';
@@ -143,7 +143,7 @@ const SignIn = () => {
                                         type="button"
                                         disabled={googleLoading}
                                         onClick={handleGoogleSignin}
-                                        className={`w-full ${googleLoading && "opacity-80 cursor-not-allowed"} bg-accent text-base-100 text-xs sm:text-sm font-bold py-3 rounded-sm flex items-center justify-center gap-2 hover:bg-accent/90 transition-all uppercase tracking-wider`}
+                                        className={`w-full ${googleLoading && "opacity-80 cursor-not-allowed"} bg-accent text-base-100 text-xs sm:text-sm font-bold py-3 rounded-sm flex items-center justify-center gap-2 hover:bg-accent/90 cursor-pointer transition-all uppercase tracking-wider`}
                                    >
 
                                         {googleLoading ? loader : <> <FcGoogle size={22} /> <span>Sign in with Google</span></>}
@@ -152,7 +152,7 @@ const SignIn = () => {
                                    <button
                                         type="submit"
                                         disabled={formLoading}
-                                        className={`w-full ${formLoading && "opacity-80 cursor-not-allowed"} bg-primary text-accent font-bold py-3 text-xs sm:text-sm rounded-sm flex items-center justify-center gap-2 hover:bg-primary/90 active:scale-[0.98] transition-all uppercase tracking-widest group`}
+                                        className={`w-full ${formLoading && "opacity-80 cursor-not-allowed"} bg-primary text-accent font-bold py-3 text-xs sm:text-sm rounded-sm flex items-center justify-center gap-2 hover:bg-primary/90 active:scale-[0.98] transition-all cursor-pointer uppercase tracking-widest group`}
                                    >
                                         {formLoading ? loader : <> Sign in <FiArrowRight size={18} className="group-hover:translate-x-1 transition-transform duration-300" /></>}
                                    </button>

@@ -50,6 +50,7 @@ const Navbar = () => {
                     </div>
                     <div className="navbar-end gap-6">
                          <button
+                              title="Search"
                               aria-label="Search"
                               onClick={() => setIsSearchOpen(true)}
                               className="hover:text-primary transition-colors"
@@ -57,15 +58,17 @@ const Navbar = () => {
                               <FiSearch size={22} />
                          </button>
                          <Link
-                         aria-label="Wishlist"
-                          to={'/wishlist'} 
-                          className="hover:text-primary hidden lg:inline">
+                              title="Wishlist"
+                              aria-label="Wishlist"
+                              to={'/wishlist'}
+                              className="hover:text-primary hidden lg:inline">
                               <FiHeart size={22}></FiHeart>
                          </Link>
                          <Link
-                         aria-label="Cart"
-                          to={'/cart'} 
-                          className="hover:text-primary active:text-primary">
+                              aria-label="Cart"
+                              title="Cart"
+                              to={'/cart'}
+                              className="hover:text-primary active:text-primary">
                               <FiShoppingBag size={22}></FiShoppingBag>
                          </Link>
                          {/* reuseable desktop auth link*/}

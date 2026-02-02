@@ -1,4 +1,3 @@
-import React from 'react';
 import UseAuth from '../../Hooks/UseAuth';
 import Loader from '../../Components/Shared/Loader';
 import { Navigate } from 'react-router-dom';
