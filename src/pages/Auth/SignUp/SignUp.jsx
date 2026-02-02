@@ -19,9 +19,9 @@ const SignUp = () => {
      const [googleLoading, setGoogleLoading] = useState(false);
      const [showPassword, setShowPassword] = useState(false);
      const navigate = useNavigate()
-
-     // Simple Email Validation for visual check
+     // Simple Email Validation
      const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+     const loader = <span className='animate-spin'><ImSpinner9 size={22} /></span>
 
      const handleSignUp = async (e) => {
           e.preventDefault()
@@ -74,13 +74,12 @@ const SignUp = () => {
                setFormLoading(false)
           }
      }
-
+     // handle google sign up
      const handleGoogleSignUp = () => {
           setGoogleLoading(true);
 
           googleCreate()
                .then(res => {
-                    console.log(res);
                     toast.success(`Your Account Create Successfully`, { duration: 1000 })
                     navigate('/')
                     setGoogleLoading(false);
@@ -185,7 +184,7 @@ const SignUp = () => {
                                         onClick={handleGoogleSignUp}
                                         className="w-full bg-accent text-base-100 text-xs sm:text-sm font-bold py-3 rounded-sm flex items-center justify-center gap-2 hover:bg-accent/90 transition-all uppercase tracking-wider cursor-pointer"
                                    >
-                                        {googleLoading ? <span className='animate-spin'><ImSpinner9 size={22} /></span> : <><FcGoogle size={22} />
+                                        {googleLoading ? loader : <><FcGoogle size={22} />
                                              <span>Join with Google</span></>}
                                    </button>
                                    {/* Main Sign In Button */}
@@ -194,7 +193,7 @@ const SignUp = () => {
                                         disabled={formLoading }
                                         className="w-full bg-primary text-accent font-bold py-3 text-xs sm:text-sm rounded-sm flex items-center justify-center gap-2 hover:bg-primary/90 active:scale-[0.98] transition-all uppercase tracking-widest group cursor-pointer"
                                    >
-                                        {formLoading ? <span className='animate-spin'><ImSpinner9 size={22} /></span> : <>Create Account
+                                        {formLoading ? loader : <> Create Account
                                              <FiArrowRight size={18} className="group-hover:translate-x-1 transition-transform duration-300" /></>}
                                    </button>
                               </div>

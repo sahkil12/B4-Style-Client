@@ -16,7 +16,7 @@ const SignIn = () => {
      const [googleLoading, setGoogleLoading] = useState(false);
      const [error, setError] = useState("");
      const navigate = useNavigate()
-
+     // Simple Email Validation
      const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
      const loader = <span className='animate-spin'><ImSpinner9 size={22} /></span>
 
@@ -42,13 +42,11 @@ const SignIn = () => {
                }
           }
           catch (error) {
-               console.log(error);
-               // setError(error.message)
                setError("Invalid email or password");
                setFormLoading(false);
           }
      }
-
+     // handle google sign in
      const handleGoogleSignin = () => {
           setGoogleLoading(true);
 
@@ -65,8 +63,6 @@ const SignIn = () => {
      }
 
      const inputClass = "w-full bg-secondary/90 border border-accent/10 rounded-md py-3.5 pl-14 pr-12 focus:border-primary outline-none transition-all text-accent placeholder:text-neutral-600"
-
-
 
      return (
           <div className="flex items-center justify-center text-accent px-4 pt-12 pb-14 md:pb-4">
