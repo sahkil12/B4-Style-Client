@@ -7,7 +7,11 @@ const AuthLayout = () => {
                <div className=''>
                     <section className='md:w-[75%] mx-auto py-5 flex justify-between items-center gap-10 px-5'>
                          <NavLink to={'/'}>
-                              <img src='/b4-style-logo.png' className="h-12" alt="B4 Style Logo" />
+                              <img
+                                   src='/b4-style-logo.png'
+                                   loading="lazy"
+                                   className="h-12"
+                                   alt="B4 Style Logo" />
                          </NavLink>
                          <NavLink to={'/'}>
                               <button className='text-accent cursor-pointer py-2 px-6 font-semibold bg-primary hover:bg-primary/90'>Home</button>

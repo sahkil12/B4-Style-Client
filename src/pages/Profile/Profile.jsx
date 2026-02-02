@@ -1,11 +1,9 @@
 import { motion } from 'framer-motion';
 import { FiUser, FiPackage, FiHeart, FiSettings, FiLogOut } from 'react-icons/fi';
 import UseAuth from '../../Hooks/UseAuth';
-import { useNavigate } from 'react-router-dom';
 
 const Profile = () => {
      const { logOutUser, user } = UseAuth()
-     const navigate = useNavigate()
 
      const menuItems = [
           {
@@ -44,8 +42,8 @@ const Profile = () => {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6 }}
                     className="w-full max-w-xl space-y-4"
-               >
-                    {/* --- Profile Header Section --- */}
+                 >
+                    {/* Profile Header Section box */}
                     <div className="bg-base-200 border-2 border-primary/15 p-4 sm:p-6 rounded-xl flex items-center gap-4">
                          <div className="w-14 h-14 md:w-20 md:h-20 bg-primary/10 rounded-full flex items-center justify-center text-primary border border-accent/10">
                               <FiUser size={30} />
@@ -55,26 +53,21 @@ const Profile = () => {
                               <p className="text-neutral-500 text-xs sm:text-sm font-medium ">{user?.email}</p>
                          </div>
                     </div>
-                    {/* --- Menu Items Section --- */}
+                    {/* Menu Items Section box */}
                     <div className="space-y-3">
                          {menuItems?.map((item) => (
-                              <motion.div
+                              <div
                                    onClick={item?.logout}
                                    key={item.id}
-                                   whileHover={{ x: 5 }}
-                                   className={`
-                                  cursor-pointer p-5 rounded-xl flex items-center gap-5 transition-all duration-300 border bg-base-200 border-accent/10
-                                  ${item.isLogIn ? 'hover:bg-primary/15 active:bg-primary/15 group' : 'hover:border-primary/35 active:border-primary/35'}
-                            `}
+                                   className={`cursor-pointer p-5 rounded-xl flex items-center gap-5 transition-all duration-300 hover:translate-x-2 border bg-base-200 border-accent/10
+                                  ${item.isLogIn ? 'hover:bg-primary/15 active:bg-primary/15 group' : 'hover:border-primary/35 active:border-primary/35'}`}
                               >
                                    {/* Icon Box */}
                                    <div className={`
                                   w-12 h-12 rounded-lg flex items-center justify-center
-                                  ${item.isLogIn ? 'bg-primary/15 text-primary' : 'bg-neutral-800 text-primary'}
-                            `}>
+                                  ${item.isLogIn ? 'bg-primary/15 text-primary' : 'bg-neutral-800 text-primary'}`}>
                                         {item.icon}
                                    </div>
-
                                    {/* Text Info */}
                                    <div className="flex-1">
                                         <h3 className={`text-lg font-medium tracking-[2.5px] bebas ${item.isLogIn ? 'text-primary' : 'text-accent'}`}>
@@ -84,15 +77,9 @@ const Profile = () => {
                                              {item.subtitle}
                                         </p>
                                    </div>
-                              </motion.div>
+                              </div>
                          ))}
-
                     </div>
-
-                    {/* Footer simple credit if needed
-                    <p className="text-center text-[10px] text-neutral-600 uppercase tracking-[3px] pt-6">
-                         B4 Style Premium Member
-                    </p> */}
                </motion.div>
           </div>
      );

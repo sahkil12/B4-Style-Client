@@ -84,7 +84,7 @@ const Navbar = () => {
                <div className="navbar w-full xl:max-w-[75%] mx-auto px-3">
                     <div className="navbar-start">
                          <NavLink to={'/'}>
-                              <img src={logo} className="h-12" alt="B4 Style Logo" />
+                              <img src={logo} loading="lazy" className="h-12" alt="B4 Style Logo" />
                          </NavLink>
                     </div>
                     <div className="navbar-center hidden lg:inline">

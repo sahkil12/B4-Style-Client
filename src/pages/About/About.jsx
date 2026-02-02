@@ -1,10 +1,4 @@
-import {
-     LuTarget,
-     LuEye,
-     LuZap,
-     LuMapPin,
-     LuTruck
-} from "react-icons/lu";
+import { LuTarget, LuEye, LuZap, LuMapPin, LuTruck } from "react-icons/lu";
 import { IoArrowForward } from "react-icons/io5";
 import { Link } from "react-router-dom";
 import displayImage from '../../../public/assets/Others/about-display-pic.webp'
@@ -16,7 +10,7 @@ const stats = [
      { title: 64, subtitle: "Districts Served" },
      { title: 4.9, subtitle: "    Customer Rating" },
 ]
-
+// mission data
 const Missions = [
      {
           icon: <LuTarget size={28} />,
@@ -141,6 +135,7 @@ const About = () => {
                                    <img
                                         src={displayImage}
                                         alt="B4 Style Fashion"
+                                        loading="lazy"
                                         className="w-full h-full object-cover lg:grayscale hover:grayscale-0 transition-all duration-600"
                                    />
                               </div>

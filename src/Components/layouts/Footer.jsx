@@ -36,7 +36,7 @@ const Footer = () => {
                          {/* Column 1: Logo & Info */}
                          <div className="flex flex-col gap-5">
                               <NavLink to={'/'} className="w-16 h-16 bg-accent flex items-center justify-center mb-2">
-                                   <img src={logo} alt="B4 Style Logo" />
+                                   <img src={logo} loading="lazy" alt="B4 Style Logo" />
                               </NavLink>
                               <p className="text-sm/relaxed max-w-xs">
                                    Born for Style. Premium streetwear for the bold and fashion-forward young generation of Bangladesh. Elevate your wardrobe with our curated collection.

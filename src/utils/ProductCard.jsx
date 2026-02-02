@@ -18,7 +18,7 @@ const ProductCard = ({ product, animation }) => {
                          />
                          {/* Badges */}
                          <div className="absolute top-4 left-3 flex flex-col gap-3">
-                              {product.isNew && (
+                              {product?.isNew && (
                                    <span className="bg-secondary/90 backdrop-blur-lg text-accent rounded-sm text-[10px] font-semibold px-3 py-2 uppercase">
                                         New
                                    </span>

@@ -59,7 +59,7 @@ const Hero = () => {
                               <Link to={'/shop'} className="bg-primary px-6 sm:px-8 py-2.5 font-semibold hover:bg-primary flex items-center justify-center cursor-pointer gap-2 transition-all duration-200 hover:scale-105 active:scale-105 group w-fit">
                                    SHOP NOW <IoArrowForward className="group-hover:ml-0.5" size={20} />
                               </Link>
-                              <Link to={'/about'} className="border cursor-pointer border-accent/90 px-6 w-fit py-2.5 font-semibold transition-all duration-200 hover:scale-105 hover:bg-accent hover:text-secondary active:scale-105 active:bg-accent active:text-secondary">
+                              <Link to={'/about'} className="border cursor-pointer border-accent/70 px-6 w-fit py-2.5 font-semibold transition-all duration-200 hover:scale-105 hover:bg-accent hover:text-secondary active:scale-105 active:bg-accent active:text-secondary">
                                    OUR STORY
                               </Link>
                          </motion.div>

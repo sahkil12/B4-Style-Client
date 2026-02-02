@@ -37,7 +37,7 @@ const NewArrivals = () => {
                          initial={{ opacity: 0, y: 40 }}
                          whileInView={{ opacity: 1, y: 0 }}
                          viewport={{ once: true }}
-                         transition={{ duration: 0.8 }}
+                         transition={{ duration: 0.7 }}
                          className="flex flex-col gap-6 md:flex-row md:justify-between md:items-end mb-16">
                          <section className="space-y-4 md:space-y-6">
                               <h4 className="text-primary font-medium uppercase tracking-[5px]">Just Dropped</h4>

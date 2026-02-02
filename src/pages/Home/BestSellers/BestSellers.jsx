@@ -40,7 +40,7 @@ const BestSellers = () => {
                          initial={{ opacity: 0, y: 40 }}
                          whileInView={{ opacity: 1, y: 0 }}
                          viewport={{ once: true }}
-                         transition={{ duration: 0.8 }}
+                         transition={{ duration: 0.7 }}
                          className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-16"
                     >
                          <div className="space-y-4 md:space-y-6">
