@@ -8,8 +8,8 @@ const Hero = () => {
 
      return (
           <motion.section
-               initial={{ opacity: 0 }}
-               animate={{ opacity: 1 }}
+               initial={{scale:1.05, opacity: 0 }}
+               animate={{scale:1, opacity: 1 }}
                transition={{ duration: 0.9 }}
                className="relative h-screen w-full bg-center xl:max-w-[75%] mx-auto overflow-hidden"
           >
