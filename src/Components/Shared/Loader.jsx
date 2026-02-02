@@ -13,7 +13,7 @@ const Loader = () => {
                          duration: 1,
                          ease: "easeInOut"
                     }}
-                    src="/b4-style-logo.png"
+                    src="/b4-style-logo.webp"
                     className="w-20 h-20 mb-8"
                     alt="B4 Style Logo" />
                {/* Loading Bar */}

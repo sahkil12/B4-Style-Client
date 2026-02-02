@@ -8,7 +8,7 @@ const AuthLayout = () => {
                     <section className='md:w-[75%] mx-auto py-5 flex justify-between items-center gap-10 px-5'>
                          <NavLink to={'/'}>
                               <img
-                                   src='/b4-style-logo.png'
+                                   src='/b4-style-logo.webp'
                                    loading="lazy"
                                    className="h-12"
                                    alt="B4 Style Logo" />

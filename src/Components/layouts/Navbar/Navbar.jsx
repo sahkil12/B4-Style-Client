@@ -5,7 +5,7 @@ import { RxCross2 } from "react-icons/rx";
 import { motion } from "motion/react"
 import { Link, NavLink } from "react-router-dom";
 import SearchOverlay from "../../Shared/SearchBar/SearchOverlay";
-import logo from '../../../../public/assets/Others/b4-style-logo.png'
+import logo from '../../../../public/assets/Others/b4-style-logo.webp'
 import UseAuth from "../../../Hooks/UseAuth";
 import AuthLink from "./AuthLink";
 import DesktopLinks from "./DesktopLinks";

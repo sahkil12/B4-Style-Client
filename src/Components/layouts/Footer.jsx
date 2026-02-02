@@ -1,7 +1,7 @@
 import { FaPhoneAlt, FaMapMarkerAlt } from "react-icons/fa";
 import { IoMailOutline } from "react-icons/io5";
 import { NavLink } from "react-router-dom";
-import logo from '../../../public/assets/Others/b4-style-logo.png'
+import logo from '../../../public/assets/Others/b4-style-logo.webp'
 import { links1, links2, socials } from "../../utils/AllLinks";
 
 const Footer = () => {
