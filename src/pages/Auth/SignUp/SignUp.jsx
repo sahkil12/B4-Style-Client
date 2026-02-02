@@ -104,7 +104,7 @@ const SignUp = () => {
                     <div className="text-center mb-10">
                          {/* Replace with your actual Logo component or IMG tag */}
                          <div className="mb-6 flex justify-center">
-                              <img src="/b4-style-logo.png" loading="lazy" className='h-14' alt="" />
+                              <img src="/b4-style-logo.png" loading="lazy" className='h-14' alt="B4 Style Logo" />
                          </div>
                          <h1 className="text-3xl font-semibold tracking-widest mb-3 bebas">Join The Style</h1>
                          <p className="text-neutral-500">Create your account today</p>

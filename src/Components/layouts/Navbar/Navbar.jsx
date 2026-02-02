@@ -33,7 +33,7 @@ const Navbar = () => {
                initial={{ opacity: 0, y: -10 }}
                animate={{ opacity: 1, y: 0 }}
                transition={{ duration: 0.4, ease: "easeIn", }}
-               className={`absolute border top-0 py-2 left-0 border-b w-full z-50 transition-all duration-300
+               className={`fixed border top-0 py-2 left-0 border-b w-full z-50 transition-all duration-300
                      ${scrolled
                          ? "bg-base-100/95 backdrop-blur-xl border-neutral-800"
                          : "bg-transparent border-transparent"
@@ -50,15 +50,22 @@ const Navbar = () => {
                     </div>
                     <div className="navbar-end gap-6">
                          <button
+                              aria-label="Search"
                               onClick={() => setIsSearchOpen(true)}
                               className="hover:text-primary transition-colors"
                          >
                               <FiSearch size={22} />
                          </button>
-                         <Link to={'/wishlist'} className="hover:text-primary hidden lg:inline">
+                         <Link
+                         aria-label="Wishlist"
+                          to={'/wishlist'} 
+                          className="hover:text-primary hidden lg:inline">
                               <FiHeart size={22}></FiHeart>
                          </Link>
-                         <Link to={'/cart'} className="hover:text-primary active:text-primary">
+                         <Link
+                         aria-label="Cart"
+                          to={'/cart'} 
+                          className="hover:text-primary active:text-primary">
                               <FiShoppingBag size={22}></FiShoppingBag>
                          </Link>
                          {/* reuseable desktop auth link*/}
@@ -66,6 +73,7 @@ const Navbar = () => {
                          {/* menu open close button */}
                          <div className="flex items-center lg:hidden">
                               <button
+                                   aria-label="Mobile menu toggle"
                                    className="text-2xl font-extrabold transition-all duration-500 cursor-pointer"
                                    onClick={() => setOpen(!open)}
                               >

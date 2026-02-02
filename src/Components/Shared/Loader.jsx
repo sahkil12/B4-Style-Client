@@ -15,7 +15,7 @@ const Loader = () => {
                     }}
                     src="/b4-style-logo.png"
                     className="w-20 h-20 mb-8"
-                    alt="logo" />
+                    alt="B4 Style Logo" />
                {/* Loading Bar */}
                <div className="w-40 h-[3px] bg-accent/10 overflow-hidden">
                     <motion.div

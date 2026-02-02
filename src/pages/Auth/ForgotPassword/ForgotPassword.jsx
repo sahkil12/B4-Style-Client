@@ -53,7 +53,7 @@ const ForgotPassword = () => {
                     {/* Header */}
                     <div className="text-center mb-10">
                          <div className="mb-6 flex justify-center">
-                              <img src="/b4-style-logo.png" loading="lazy" className="h-14" alt="logo" />
+                              <img src="/b4-style-logo.png" loading="lazy" className="h-14" alt="B4 Style Logo" />
                          </div>
                          <h1 className="text-3xl font-semibold tracking-widest mb-3 bebas">
                               Forgot Password

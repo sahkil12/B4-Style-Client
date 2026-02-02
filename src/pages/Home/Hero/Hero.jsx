@@ -15,7 +15,7 @@ const Hero = () => {
           >
                <img
                     src="/assets/Others/b4-style-hero-1.webp"
-                    alt="B4 Style premium streetwear collection"
+                    alt="B4 Style Stylish Hero Picture"
                     fetchpriority="high"
                     loading="eager"
                     className="absolute inset-0 h-full w-full object-cover"

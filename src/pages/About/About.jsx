@@ -134,7 +134,7 @@ const About = () => {
                               <div className="aspect-[4/5] overflow-hidden rounded-2xl">
                                    <img
                                         src={displayImage}
-                                        alt="B4 Style Fashion"
+                                        alt="B4 Style About Fashion"
                                         loading="lazy"
                                         className="w-full h-full object-cover lg:grayscale hover:grayscale-0 transition-all duration-600"
                                    />
