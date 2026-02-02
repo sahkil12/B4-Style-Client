@@ -1,5 +1,6 @@
-
 import { motion } from 'motion/react';
+import { containerVariants, cardVariants } from '../../../utils/CardAnimation';
+
 const Categories = () => {
 
      const categories = [
@@ -25,21 +26,6 @@ const Categories = () => {
           },
      ];
 
-     const containerVariants = {
-          hidden: {},
-          show: {
-               transition: {
-                    staggerChildren: 0.18,
-               },
-          },
-     };
-
-     const cardVariants = {
-          hidden: { opacity: 0, y: 30 },
-          show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } },
-     };
-
-
      return (
           <div className='py-20 md:py-28 xl:max-w-[75%] mx-auto'>
                {/* title */}
@@ -47,7 +33,7 @@ const Categories = () => {
                     initial={{ opacity: 0, y: 40 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    transition={{ duration: 1.3 }}
+                    transition={{ duration: 1.2 }}
                     className='flex flex-col text-center gap-6'>
                     <h4 className='text-primary text-sm sm:text-base font-medium uppercase tracking-[6px]'>Browse By</h4>
                     <h2 className='text-4xl md:text-6xl bebas tracking-wider'>Shop Categories</h2>
@@ -78,7 +64,6 @@ const Categories = () => {
                               <div className="absolute inset-0 transition-all duration-400
                               bg-black/30 group-active:bg-gradient-to-b from-secondary/30 to-primary/30
                               group-hover:bg-gradient-to-b from-secondary/30 to-primary/30"></div>
-
                               {/* text */}
                               <div className="absolute bottom-6 left-5 z-10">
                                    <h3 className="text-2xl bebas tracking-wider text-white">
