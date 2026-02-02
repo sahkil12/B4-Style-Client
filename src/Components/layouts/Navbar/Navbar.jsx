@@ -32,10 +32,10 @@ const Navbar = () => {
           <motion.div
                initial={{ opacity: 0, y: -10 }}
                animate={{ opacity: 1, y: 0 }}
-               transition={{ duration: 0.4, ease: "easeIn", }}
-               className={`fixed border top-0 py-2 left-0 border-b w-full z-50 transition-all duration-300
+               transition={{ duration: 0.3, ease: "easeIn", }}
+               className={`fixed top-0 py-2 left-0 border-b w-full z-50 transition-all duration-300
                      ${scrolled
-                         ? "bg-base-100/95 backdrop-blur-xl border-neutral-800"
+                         ? "bg-base-100/95 md:backdrop-blur-xl border-neutral-900"
                          : "bg-transparent border-transparent"
                     }`}>
                <div className="navbar w-full xl:max-w-[75%] mx-auto px-3">
@@ -50,7 +50,6 @@ const Navbar = () => {
                     </div>
                     <div className="navbar-end gap-6">
                          <button
-                              title="Search"
                               aria-label="Search"
                               onClick={() => setIsSearchOpen(true)}
                               className="hover:text-primary transition-colors"
@@ -58,14 +57,12 @@ const Navbar = () => {
                               <FiSearch size={22} />
                          </button>
                          <Link
-                              title="Wishlist"
                               aria-label="Wishlist"
                               to={'/wishlist'}
                               className="hover:text-primary hidden lg:inline">
                               <FiHeart size={22}></FiHeart>
                          </Link>
                          <Link
-                              aria-label="Cart"
                               title="Cart"
                               to={'/cart'}
                               className="hover:text-primary active:text-primary">
