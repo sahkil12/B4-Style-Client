@@ -8,14 +8,18 @@ const Hero = () => {
 
      return (
           <motion.section
-               initial={{ scale: 1.1, opacity: 0.5 }}
-               animate={{ scale: 1, opacity: 1 }}
-               transition={{ duration: 0.9 }}
-               className="relative h-screen w-full bg-cover bg-center xl:max-w-[75%] mx-auto"
-               style={{
-                    backgroundImage:
-                         "url('/assets/Others/b4-style-hero-1.webp')",
-               }}>
+               initial={{ opacity: 0.1 }}
+               animate={{ opacity: 1 }}
+               transition={{ duration: 1.2 }}
+               className="relative h-screen w-full bg-center xl:max-w-[75%] mx-auto overflow-hidden"
+          >
+               <img
+                    src="/assets/Others/b4-style-hero-1.webp"
+                    alt="B4 Style premium streetwear collection"
+                    fetchpriority="high"
+                    loading="eager"
+                    className="absolute inset-0 h-full w-full object-cover"
+               />
                {/* Overlay */}
                <div className="absolute inset-0 bg-base-100/70 md:bg-base-100/65"></div>
                {/* Content */}
