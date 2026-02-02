@@ -17,7 +17,7 @@ export const heroContainerVariants = {
      show: {
           transition: {
                staggerChildren: 0.15,
-               delayChildren: .3
+               delayChildren: .25
           },
      }
 }
