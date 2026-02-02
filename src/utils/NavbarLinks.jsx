@@ -1,13 +1,13 @@
 import { FiHeart } from "react-icons/fi";
 
-export const links = [
+export const navLinks = [
      { name: "HOME", to: '/' },
      { name: "SHOP", to: '/shop' },
      { name: "ABOUT", to: '/about' },
      { name: "CONTACT", to: '/contact' },
      { name: "WISHLIST", icon: <FiHeart />, to: '/wishlist' },
 ];
-// animation file
+
 export const menuVariants = {
      closed: {
           height: 0,

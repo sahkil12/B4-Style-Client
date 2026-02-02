@@ -9,50 +9,7 @@ import logo from '../../../../public/assets/Others/b4-style-logo.png'
 import UseAuth from "../../../Hooks/UseAuth";
 import AuthLink from "./AuthLink";
 import DesktopLinks from "./DesktopLinks";
-
-const links = [
-     { name: "HOME", to: '/' },
-     { name: "SHOP", to: '/shop' },
-     { name: "ABOUT", to: '/about' },
-     { name: "CONTACT", to: '/contact' },
-     { name: "WISHLIST", icon: <FiHeart />, to: '/wishlist' },
-];
-// animation file
-const menuVariants = {
-     closed: {
-          height: 0,
-          opacity: 0,
-          transition: {
-               duration: 0.6,
-               ease: "easeInOut",
-          },
-     },
-     open: {
-          height: "auto",
-          opacity: 1,
-          transition: {
-               duration: 0.32,
-               ease: "easeOut",
-               when: "beforeChildren",
-               staggerChildren: 0.15,
-          },
-     },
-};
-
-const itemVariants = {
-     closed: {
-          opacity: 0,
-          x: -20,
-     },
-     open: {
-          opacity: 1,
-          x: 0,
-          transition: {
-               duration: 0.12,
-               ease: "easeOut",
-          },
-     },
-};
+import { menuVariants, itemVariants, navLinks } from "../../../utils/NavbarLinks";
 
 const Navbar = () => {
      const [open, setOpen] = useState(false)
@@ -88,7 +45,7 @@ const Navbar = () => {
                          </NavLink>
                     </div>
                     <div className="navbar-center hidden lg:inline">
-                         <DesktopLinks links={links}>
+                         <DesktopLinks links={navLinks}>
                          </DesktopLinks>
                     </div>
                     <div className="navbar-end gap-6">
@@ -129,7 +86,7 @@ const Navbar = () => {
                     className="lg:hidden overflow-hidden absolute top-20 w-full border-b border-neutral-700 bg-base-100"
                >
                     <motion.ul className="py-10 px-6 flex flex-col gap-8 text-lg font-medium">
-                         {links?.map((item, index) => (
+                         {navLinks?.map((item, index) => (
                               <motion.li
                                    key={index}
                                    variants={itemVariants}
