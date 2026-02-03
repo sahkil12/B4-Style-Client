@@ -62,6 +62,7 @@ const BestSellers = () => {
                                    <ProductCard
                                         key={product._id}
                                         product={product}
+                                        bestSellers={true}
                                         animation={cardVariants}
                                    >
                                    </ProductCard>

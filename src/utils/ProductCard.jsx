@@ -2,7 +2,8 @@ import { motion } from 'motion/react';
 import { FiHeart, FiShoppingBag } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
 
-const ProductCard = ({ product, animation }) => {
+const ProductCard = ({ product, animation, bestSellers }) => {
+     console.log(bestSellers);
      return (
           <Link to={`/product/${product.id}`}>
                <motion.div
@@ -32,6 +33,13 @@ const ProductCard = ({ product, animation }) => {
                                    product.badge && (
                                         < span className="bg-primary/90 backdrop-blur-xl text-accent text-[10px] font-bold px-3 py-2 uppercase tracking-wider rounded-sm">
                                              {product?.badge}
+                                        </span>
+                                   )
+                              }
+                              {
+                                   bestSellers && (
+                                        < span className="bg-primary/90 backdrop-blur-xl text-accent text-[10px] font-bold px-3 py-2 uppercase tracking-wider rounded-sm">
+                                           Hot 
                                         </span>
                                    )
                               }
