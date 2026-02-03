@@ -9,11 +9,10 @@ import useProducts from "../../../Hooks/useProducts";
 import ProductSkeleton from "../../../Components/Shared/ProductSkeleton/ProductSkeleton";
 
 const BestSellers = () => {
-
+     // get best sellers products
      const { data: bestSellers, isLoading, error } = useProducts({ isBestSeller: true })
-     console.log("bestSellers", bestSellers?.slice(0, 4));
-     console.log(error);
-     // if(error)
+
+     if (error) return <p className="text-center text-xl font-medium text-primary my-10">Error fetching products</p>;
 
      return (
           <section className="py-20 bg-secondary">
@@ -59,7 +58,7 @@ const BestSellers = () => {
                               ))
                          }
                          {!isLoading &&
-                              bestSellers?.slice(5, 9)?.map((product) => (
+                              bestSellers?.slice(0, 4)?.map((product) => (
                                    <ProductCard
                                         key={product._id}
                                         product={product}

@@ -7,9 +7,10 @@ import useProducts from "../../../Hooks/useProducts";
 import ProductSkeleton from "../../../Components/Shared/ProductSkeleton/ProductSkeleton";
 
 const NewArrivals = () => {
-
+     // get newest products
      const { data: products, isLoading, error } = useProducts({ isNew: true })
-     console.log("products", products?.slice(0, 4));
+
+     if (error) return <p className="text-center text-xl font-medium text-primary my-10">Error fetching products</p>;
 
      return (
           <section className="py-20 bg-secondary">
