@@ -4,20 +4,16 @@ import { FaFire } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
 import ProductCard from "../../../utils/ProductCard";
 import { FaArrowRightLong } from "react-icons/fa6";
-import { useEffect, useState } from "react";
 import { containerVariants, cardVariants } from "../../../utils/CardAnimation";
-
+import useProducts from "../../../Hooks/useProducts";
+import ProductSkeleton from "../../../Components/Shared/ProductSkeleton/ProductSkeleton";
 
 const BestSellers = () => {
-     const [bestSellers, setBestSellers] = useState([])
 
-     useEffect(() => {
-          fetch('/products.json')
-               .then(res => res.json())
-               .then(data => {
-                    setBestSellers(data)
-               })
-     }, [])
+     const { data: bestSellers, isLoading, error } = useProducts({ isBestSeller: true })
+     console.log("bestSellers", bestSellers?.slice(0, 4));
+     console.log(error);
+     // if(error)
 
      return (
           <section className="py-20 bg-secondary">
@@ -57,14 +53,27 @@ const BestSellers = () => {
                          viewport={{ once: true }}
                          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8"
                     >
-                         {bestSellers?.slice(5, 9)?.map((product) => (
-                              <ProductCard
-                                   key={product.id}
-                                   product={product}
-                                   animation={cardVariants}
-                              ></ProductCard>
-                         ))}
+                         {isLoading &&
+                              Array.from({ length: 4 }).map((_, ind) => (
+                                   <ProductSkeleton key={ind}></ProductSkeleton>
+                              ))
+                         }
+                         {!isLoading &&
+                              bestSellers?.slice(5, 9)?.map((product) => (
+                                   <ProductCard
+                                        key={product._id}
+                                        product={product}
+                                        animation={cardVariants}
+                                   >
+                                   </ProductCard>
+                              ))}
+                         {!isLoading && bestSellers?.length === 0 && (
+                              <p className="text-center col-span-full text-lg md:text-2xl text-accent/70">
+                                   No Products found.
+                              </p>
+                         )}
                     </motion.div>
+
                </motion.div>
           </section>
      );

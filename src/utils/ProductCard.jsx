@@ -11,9 +11,9 @@ const ProductCard = ({ product, animation }) => {
                     {/* Image Container */}
                     <div className="relative aspect-[6/6] overflow-hidden rounded-sm transition-all duration-200 ease-in-out">
                          <img
-                              src={product.image}
+                              src={product.images[0]}
                               loading='lazy'
-                              alt={product.title}
+                              alt={product.slug}
                               className="w-full h-full object-cover transition-transform duration-600 group-hover:scale-105 group-active:scale-105"
                          />
                          {/* Badges */}
@@ -25,7 +25,7 @@ const ProductCard = ({ product, animation }) => {
                               )}
                               {product.discount && (
                                    <span className="bg-primary text-accent text-[10px] rounded-sm font-bold px-3 py-1.5">
-                                        {product.discount}
+                                        -{product.discount}%
                                    </span>
                               )}
                               {

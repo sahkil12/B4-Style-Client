@@ -8,8 +8,8 @@ const Hero = () => {
 
      return (
           <motion.section
-               initial={{scale:1.05, opacity: 0 }}
-               animate={{scale:1, opacity: 1 }}
+               initial={{ scale: 1.05, opacity: 0 }}
+               animate={{ scale: 1, opacity: 1 }}
                transition={{ duration: 0.9 }}
                className="relative h-screen w-full bg-center xl:max-w-[75%] mx-auto overflow-hidden"
           >
@@ -41,8 +41,8 @@ const Hero = () => {
                          </motion.h1>
                          {/*  */}
                          <motion.p variants={heroChildVariants} className="text-accent/70 text-base sm:text-xl">
-                              Elevate your wardrobe with premium streetwear. Bold designs for the
-                              fashion-forward generation in Bangladesh.
+                              Premium streetwear and modern men's fashion in Bangladesh.
+                              Designed for the bold, confident generation.
                          </motion.p>
                          {/* button */}
                          <motion.div variants={heroChildVariants} className="flex flex-col sm:flex-row gap-4 pt-2 flex-wrap">

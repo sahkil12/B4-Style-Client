@@ -2,19 +2,14 @@ import { FaArrowRightLong } from "react-icons/fa6";
 import { motion } from "motion/react";
 import { NavLink } from "react-router-dom";
 import ProductCard from "../../../utils/ProductCard";
-import { useEffect, useState } from "react";
 import { containerVariants, cardVariants } from "../../../utils/CardAnimation";
+import useProducts from "../../../Hooks/useProducts";
+import ProductSkeleton from "../../../Components/Shared/ProductSkeleton/ProductSkeleton";
 
 const NewArrivals = () => {
-     const [products, setProducts] = useState([])
 
-     useEffect(() => {
-          fetch('/products.json')
-               .then(res => res.json())
-               .then(data => {
-                    setProducts(data)
-               })
-     }, [])
+     const { data: products, isLoading, error } = useProducts({ isNew: true })
+     console.log("products", products?.slice(0, 4));
 
      return (
           <section className="py-20 bg-secondary">
@@ -47,9 +42,25 @@ const NewArrivals = () => {
                          whileInView='show'
                          viewport={{ once: true }}
                          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-                         {products?.slice(0, 4)?.map((product) => (
-                              <ProductCard key={product.id} product={product} animation={cardVariants}></ProductCard>
-                         ))}
+                         {isLoading &&
+                              Array.from({ length: 4 }).map((_, ind) => (
+                                   <ProductSkeleton key={ind}></ProductSkeleton>
+                              ))
+                         }
+                         {!isLoading &&
+                              products?.slice(0, 4)?.map((product) => (
+                                   <ProductCard
+                                        key={product._id}
+                                        product={product}
+                                        animation={cardVariants}
+                                   >
+                                   </ProductCard>
+                              ))}
+                         {!isLoading && products?.length === 0 && (
+                              <p className="text-center col-span-full text-lg md:text-2xl text-accent/70">
+                                   No Products found.
+                              </p>
+                         )}
                     </motion.div >
                </motion.div>
           </section>

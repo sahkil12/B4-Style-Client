@@ -4,6 +4,7 @@ import { FiSearch, FiFilter, FiX, FiChevronDown } from 'react-icons/fi';
 import ProductCard from '../../utils/ProductCard';
 import useProductFilter from '../../Hooks/useProductFilter';
 import products from '../../../public/products.json'
+import { shopContainerVariants, shopCardVariants } from './../../utils/CardAnimation';
 // Products Data
 const demoProducts = products;
 
@@ -22,15 +23,15 @@ const Shop = () => {
      const filteredProducts = useProductFilter(demoProducts, filters);
 
      // Animation Variants
-     const containerVariants = {
-          hidden: { opacity: 0 },
-          show: { opacity: 1, transition: { staggerChildren: 0.1 } }
-     };
-     // 
-     const cardVariants = {
-          hidden: { opacity: 0, y: 25 },
-          show: { opacity: 1, y: 0, transition: { duration: 0.4 } }
-     };
+     // const containerVariants = {
+     //      hidden: { opacity: 0 },
+     //      show: { opacity: 1, transition: { staggerChildren: 0.1 } }
+     // };
+     // // 
+     // const cardVariants = {
+     //      hidden: { opacity: 0, y: 25 },
+     //      show: { opacity: 1, y: 0, transition: { duration: 0.4 } }
+     // };
      return (
           <div className="min-h-screen text-accent pb-20">
                <div className="">
@@ -79,7 +80,7 @@ const Shop = () => {
                               <div>
                                    <h3 className="text-2xl font-medium bebas tracking-[3.5px] mb-4 border-b border-accent/10 pb-2.5">Size</h3>
                                    <div className="grid grid-cols-4 gap-2">
-                                        {sizes.map(size => (
+                                        {sizes?.map(size => (
                                              <button
                                                   key={size}
                                                   onClick={() => setFilters(prev => ({
@@ -88,7 +89,7 @@ const Shop = () => {
                                                   }))
                                                   }
                                                   className={`h-10 rounded-md border flex items-center justify-center text-sm font-bold transition-all
-                                                   ${filters.size === size ? 'bg-primary border-primary text-accent' : 'border-white/15 hover:border-primary'}`}
+                                                   ${filters?.size === size ? 'bg-primary border-primary text-accent' : 'border-white/15 hover:border-primary'}`}
                                              >
                                                   {size}
                                              </button>
@@ -105,7 +106,7 @@ const Shop = () => {
                                         <input
                                              type="text"
                                              placeholder="Search products..."
-                                             value={filters.search}
+                                             value={filters?.search}
                                              onChange={(e) =>
                                                   setFilters(prev => ({
                                                        ...prev,
@@ -127,7 +128,7 @@ const Shop = () => {
                                         {/* sort by */}
                                         <div className="relative flex-1 md:flex-none">
                                              <select
-                                                  value={filters.sort}
+                                                  value={filters?.sort}
                                                   onChange={(e) =>
                                                        setFilters(prev => ({
                                                             ...prev,
@@ -148,17 +149,17 @@ const Shop = () => {
                               {/* Product Grid */}
                               {filteredProducts?.length > 0 ? (
                                    <motion.div
-                                        variants={containerVariants}
+                                        variants={shopContainerVariants}
                                         initial="hidden"
                                         animate="show"
-                                        key={filters.category + filters.size + filters.search}
+                                        key={filters.category + filters?.size + filters?.search}
                                         className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 2xl:grid-cols-4 gap-5"
                                    >
                                         {filteredProducts?.map(product => (
                                              <ProductCard
                                                   key={product.id}
                                                   product={product}
-                                                  animation={cardVariants}
+                                                  animation={shopCardVariants}
                                              />
                                         ))}
                                    </motion.div>
@@ -232,7 +233,7 @@ const Shop = () => {
                                         <div>
                                              <h3 className="text-sm font-bold uppercase tracking-[3px] mb-4 text-primary">Size</h3>
                                              <div className="grid grid-cols-4 gap-2">
-                                                  {sizes.map(size => (
+                                                  {sizes?.map(size => (
                                                        <button
                                                             key={size}
                                                             onClick={() => setFilters(prev => ({
