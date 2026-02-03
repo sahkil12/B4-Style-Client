@@ -10,8 +10,6 @@ const NewArrivals = () => {
      // get newest products
      const { data: products, isLoading, error } = useProducts({ isNew: true })
 
-     if (error) return <p className="text-center text-xl font-medium text-primary my-10">Error fetching products</p>;
-
      return (
           <section className="py-20 bg-secondary">
                <motion.div className="xl:max-w-[75%] mx-auto px-5 md:px-10">
@@ -62,6 +60,9 @@ const NewArrivals = () => {
                                    No Products found.
                               </p>
                          )}
+                         {
+                              error && <p className="text-center col-end-4 text-xl font-medium text-primary my-10">Error fetching products</p>
+                         }
                     </motion.div >
                </motion.div>
           </section>

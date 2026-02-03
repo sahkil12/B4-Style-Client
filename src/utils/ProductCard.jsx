@@ -3,7 +3,7 @@ import { FiHeart, FiShoppingBag } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
 
 const ProductCard = ({ product, animation, bestSellers }) => {
-     console.log(bestSellers);
+
      return (
           <Link to={`/product/${product.id}`}>
                <motion.div
@@ -24,13 +24,13 @@ const ProductCard = ({ product, animation, bestSellers }) => {
                                         New
                                    </span>
                               )}
-                              {product.discount && (
+                              {product?.discount && (
                                    <span className="bg-primary text-accent text-[10px] rounded-sm font-bold px-3 py-1.5">
                                         -{product.discount}%
                                    </span>
                               )}
                               {
-                                   product.badge && (
+                                   product?.badge && (
                                         < span className="bg-primary/90 backdrop-blur-xl text-accent text-[10px] font-bold px-3 py-2 uppercase tracking-wider rounded-sm">
                                              {product?.badge}
                                         </span>
@@ -39,7 +39,7 @@ const ProductCard = ({ product, animation, bestSellers }) => {
                               {
                                    bestSellers && (
                                         < span className="bg-primary/90 backdrop-blur-xl text-accent text-[10px] font-bold px-3 py-2 uppercase tracking-wider rounded-sm">
-                                           Hot 
+                                             Hot
                                         </span>
                                    )
                               }
@@ -58,18 +58,18 @@ const ProductCard = ({ product, animation, bestSellers }) => {
                     {/* Product Info */}
                     <div className="p-4 space-y-1.5 rounded-b-xl bg-secondary">
                          <p className="text-neutral-500 text-[12px] font-bold tracking-widest uppercase">
-                              {product.category}
+                              {product?.category}
                          </p>
                          <h3 className="text-sm font-semibold tracking-tight uppercase group-hover:text-primary group-active:text-primary transition-colors">
-                              {product.title}
+                              {product?.title}
                          </h3>
                          <div className="flex items-center gap-3 mt-2">
                               <span className="text-lg font-semibold">
-                                   ৳{product.price}
+                                   ৳{product?.price}
                               </span>
                               {product.oldPrice && (
                                    <span className="text-neutral-500 line-through text-sm">
-                                        ৳{product.oldPrice}
+                                        ৳{product?.oldPrice}
                                    </span>
                               )}
                          </div>

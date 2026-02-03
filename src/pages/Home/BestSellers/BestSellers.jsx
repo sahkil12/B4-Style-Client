@@ -12,8 +12,6 @@ const BestSellers = () => {
      // get best sellers products
      const { data: bestSellers, isLoading, error } = useProducts({ isBestSeller: true })
 
-     if (error) return <p className="text-center text-xl font-medium text-primary my-10">Error fetching products</p>;
-
      return (
           <section className="py-20 bg-secondary">
                <motion.div className="xl:max-w-[75%] mx-auto px-5 md:px-10">
@@ -72,6 +70,9 @@ const BestSellers = () => {
                                    No Products found.
                               </p>
                          )}
+                          {
+                              error && <p className="text-center col-end-4 text-xl font-medium text-primary my-10">Error fetching products</p>
+                         }
                     </motion.div>
 
                </motion.div>
