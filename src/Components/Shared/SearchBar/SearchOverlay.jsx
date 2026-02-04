@@ -6,24 +6,20 @@ import useProducts from "../../../Hooks/useProducts";
 
 const SearchOverlay = ({ isOpen, onClose }) => {
      const [searchText, setSearchText] = useState('')
-     // const [products, setProducts] = useState([])
-
-     // useEffect(() => {
-     //      fetch('/products.json')
-     //           .then(res => res.json())
-     //           .then(data => setProducts(data))
-     // }, [])
-
-     // const filteredProducts = products?.filter((product) => (
-     //      product.title.toLowerCase().includes(searchText.toLowerCase())
-     // )
-     // );
 
      const { data: products = [], isLoading, error } = useProducts(
-          searchText ? { search: searchText } : null
+          { search: searchText },
+          !!searchText
      )
-
-     console.log(products);
+     // loading skelton
+     const skelton = <div className="animate-pulse bg-accent/5 rounded-md shadow ">
+          <div className="h-60 bg-accent/15 rounded mb-2"></div>
+          <div className="p-3">
+               <div className="h-4 bg-accent/15 rounded w-3/8 "></div>
+               <div className="h-5  bg-accent/15 w-5/6 rounded my-3"></div>
+               <div className="h-4 bg-accent/15 rounded w-3/5  "></div>
+          </div>
+     </div>
 
      return (
           <AnimatePresence >
@@ -48,7 +44,7 @@ const SearchOverlay = ({ isOpen, onClose }) => {
                                    <FiSearch size={26} className="text-accent" />
                                    <input
                                         autoFocus
-                                        defaultValue={searchText}
+                                        value={searchText}
                                         onChange={(e) => { setSearchText(e.target.value) }}
                                         type="text"
                                         placeholder="SEARCH PRODUCTS..."
@@ -59,15 +55,21 @@ const SearchOverlay = ({ isOpen, onClose }) => {
                               <div className="w-full h-[2px] bg-primary"></div>
                               {/* Results */}
                               <div className="mt-14 max-h-[75vh] overflow-y-auto">
-                                   {searchText ? (
+                                   {isLoading ? (
+                                        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
+                                             {Array(8).fill(0).map((_, idx) => (
+                                                  <div key={idx}>{skelton}</div>
+                                             ))}
+                                        </div>
+                                   ) : error ? (
+                                        <p className="text-center text-red-500 mt-20">
+                                             Something went wrong! Please try again.
+                                        </p>
+                                   ) : searchText ? (
                                         products?.length > 0 ? (
                                              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
                                                   {products?.map((product) => (
-                                                       <SearchCard
-                                                            key={product?.id}
-                                                            product={product}
-                                                            onClose={onClose}
-                                                       />
+                                                       <SearchCard key={product?._id} product={product} onClose={onClose} />
                                                   ))}
                                              </div>
                                         ) : (
@@ -75,7 +77,11 @@ const SearchOverlay = ({ isOpen, onClose }) => {
                                                   No products found for "{searchText}"
                                              </p>
                                         )
-                                   ) : <p className="text-center text-xl sm:text-2xl mt-16 text-neutral-400">Search To Find Your Products...</p>}
+                                   ) : (
+                                        <p className="text-center text-xl sm:text-2xl mt-16 text-neutral-400">
+                                             Search To Find Your Products...
+                                        </p>
+                                   )}
                               </div>
                          </div>
                     </motion.div>
