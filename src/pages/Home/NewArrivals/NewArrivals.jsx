@@ -61,7 +61,7 @@ const NewArrivals = () => {
                               </p>
                          )}
                          {
-                              error && <p className="text-center col-end-4 text-xl font-medium text-primary my-10">Error fetching products</p>
+                              error && <p className="text-center col-span-full text-xl font-medium text-primary my-10">Error fetching products</p>
                          }
                     </motion.div >
                </motion.div>
