@@ -4,8 +4,6 @@ import { FiSearch, FiX } from "react-icons/fi";
 import SearchCard from "./SearchCard";
 
 const SearchOverlay = ({ isOpen, onClose }) => {
-     // const categories = ["T-Shirts", "Hoodies", "Pants", "Winter"];
-     // const [searchCategory, setSearchCategory] = useState('')
      const [searchText, setSearchText] = useState('')
      const [products, setProducts] = useState([])
 
@@ -17,7 +15,6 @@ const SearchOverlay = ({ isOpen, onClose }) => {
 
      const filteredProducts = products?.filter((product) => (
           product.title.toLowerCase().includes(searchText.toLowerCase())
-          // product.category.toLowerCase().includes(searchText.toLowerCase())
      )
      );
 
@@ -73,28 +70,6 @@ const SearchOverlay = ({ isOpen, onClose }) => {
                                         )
                                    ) : <p className="text-center text-xl sm:text-2xl mt-16 text-neutral-400">Search To Find Your Products...</p>}
                               </div>
-
-                              {/* Middle Content */}
-                              {/* <div className="hidden mt-14 text-center">
-                                   <p className="text-neutral-400 text-sm uppercase tracking-widest mb-8">
-                                        Start typing to search for products...
-                                   </p>
-                                 
-                                   <div className="flex flex-wrap justify-center gap-3">
-                                        {categories.map((item, index) => (
-                                             <button
-                                                  key={index}
-                                                  onClick={() => (
-                                                       setSearchText(''),
-                                                       setSearchText(item)
-                                                  )}
-                                                  className="px-6 py-3 bg-base-200 text-accent text-xs font-bold rounded-full hover:bg-primary transition-all duration-300 cursor-pointer"
-                                             >
-                                                  {item}
-                                             </button>
-                                        ))}
-                                   </div>
-                              </div> */}
                          </div>
                     </motion.div>
                )}

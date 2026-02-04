@@ -4,6 +4,10 @@ import { Link } from 'react-router-dom';
 
 const ProductCard = ({ product, animation, bestSellers }) => {
 
+     const discountedPrice = product?.discount
+          ? Math.round(product.price - (product.price * product.discount) / 100)
+          : product.price;
+
      return (
           <Link to={`/product/${product._id}`}>
                <motion.div
@@ -61,16 +65,16 @@ const ProductCard = ({ product, animation, bestSellers }) => {
                               {product?.category}
                          </p>
                          <h3 className="text-sm flex gap-2 items-center font-semibold tracking-tight uppercase group-hover:text-primary group-active:text-primary transition-colors">
-                              {product?.title} 
+                              {product?.title}
                               <span className='text-neutral-500 text-xs'>( Stock - {product.stock})</span>
                          </h3>
                          <div className="flex items-center gap-3 mt-2">
                               <span className="text-lg font-semibold">
-                                   ৳{product?.price}
+                                   ৳{discountedPrice}
                               </span>
-                              {product.oldPrice && (
+                              {product.discount && (
                                    <span className="text-neutral-500 line-through text-sm">
-                                        ৳{product?.oldPrice}
+                                        ৳{product?.price}
                                    </span>
                               )}
                          </div>

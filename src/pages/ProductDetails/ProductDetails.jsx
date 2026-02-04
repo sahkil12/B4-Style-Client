@@ -10,23 +10,29 @@ const ProductDetails = () => {
 
      const product = useLoaderData()
      // State for interactions
-     const [selectedSize, setSelectedSize] = useState('M');
+     const [selectedSize, setSelectedSize] = useState('');
      const [quantity, setQuantity] = useState(1);
 
      const { data: relatedProducts = [], isLoading } = useProducts({
           category: product?.category
      });
+     // 
+     const suggestProducts = relatedProducts?.filter(p => p._id !== product._id)
 
      const handleQuantity = (type) => {
           if (type === 'inc') setQuantity(prev => prev + 1);
           if (type === 'dec' && quantity > 1) setQuantity(prev => prev - 1);
      };
-     // badgesD
+     // badges
      const trustBadges = [
           { icon: <FiTruck />, text: 'Free delivery across Bangladesh on orders over ৳2000' },
           { icon: <FiShield />, text: '  Secure payment - Cash on Delivery available' },
           { icon: <FiRotateCcw />, text: '   Easy 7-day return policy' },
      ]
+
+     const discountedPrice = product?.discount
+          ? Math.round(product.price - (product.price * product.discount)/100)
+          : product.price;
 
      return (
           <div className="min-h-screen text-accent pt-20 pb-20">
@@ -72,15 +78,15 @@ const ProductDetails = () => {
                               <h1 className="text-4xl md:text-5xl bebas tracking-wider mb-6 leading-tight">{product?.title}</h1>
                               {/*  */}
                               <div className="flex items-center gap-4 mb-8">
-                                   <span className="text-3xl font-bold text-accent">৳{product?.price}</span>
+                                   <span className="text-3xl font-bold text-accent">৳{discountedPrice}</span>
                                    {
                                         product?.oldPrice && (
-                                             <span className="text-neutral-500 line-through text-xl font-medium">৳{product?.oldPrice}</span>
+                                             <span className="text-neutral-500 line-through text-xl font-medium">৳{product?.price}</span>
                                         )
                                    }
                                    {
                                         product?.discount && (
-                                             <span className="bg-primary/15 text-primary text-sm font-bold px-4 py-2 rounded-full">{product?.discount} %</span>
+                                             <span className="bg-primary/15 text-primary text-sm font-bold px-4 py-2 rounded-full">-{product?.discount}%</span>
                                         )
                                    }
                               </div>
@@ -149,7 +155,7 @@ const ProductDetails = () => {
                                         <ProductSkeleton key={ind}></ProductSkeleton>
                                    ))
                               }
-                              {!isLoading && relatedProducts?.slice(0, 3)?.map(item => (
+                              {!isLoading && suggestProducts?.slice(0, 3)?.map(item => (
                                    <ProductCard key={item?.id} product={item} />
                               ))}
 

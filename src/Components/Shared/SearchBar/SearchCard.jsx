@@ -6,13 +6,13 @@ const SearchCard = ({ product, onClose }) => {
      return (
           <div
                onClick={() => {
-                    navigate(`/product/${product?.id}`)
+                    navigate(`/product/${product?._id}`)
                     onClose(true)
                }}
                className="bg-secondary rounded-lg overflow-hidden border-2 border-transparent hover:border-primary/90 active:border-primary/90 cursor-pointer transition-all duration-300">
                <img
-                    src={product?.image}
-                    alt={product?.title}
+                    src={product?.images[0]}
+                    alt={product?.slug}
                     loading="lazy"
                     className="w-full h-[210px] lg:h-[230px] object-cover"
                />
