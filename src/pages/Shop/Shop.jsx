@@ -3,15 +3,16 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { FiSearch, FiFilter, FiX, FiChevronDown } from 'react-icons/fi';
 import ProductCard from '../../utils/ProductCard';
 import useProductFilter from '../../Hooks/useProductFilter';
-import products from '../../../public/products.json'
 import { shopContainerVariants, shopCardVariants } from './../../utils/CardAnimation';
-// Products Data
-const demoProducts = products;
+import useProducts from '../../Hooks/useProducts';
+import ProductSkeleton from '../../Components/Shared/ProductSkeleton/ProductSkeleton';
 
 const categories = ["All Products", "T-Shirts", "Hoodies", "Pants", "Shirts", "Winter Wear"];
 const sizes = ["S", "M", "L", "XL", "XXL"];
 
 const Shop = () => {
+     const { data: products, isLoading, error } = useProducts()
+
      const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
      // use hooks to reuseable filter
      const [filters, setFilters] = useState({
@@ -20,18 +21,9 @@ const Shop = () => {
           search: "",
           sort: "Newest"
      })
-     const filteredProducts = useProductFilter(demoProducts, filters);
 
-     // Animation Variants
-     // const containerVariants = {
-     //      hidden: { opacity: 0 },
-     //      show: { opacity: 1, transition: { staggerChildren: 0.1 } }
-     // };
-     // // 
-     // const cardVariants = {
-     //      hidden: { opacity: 0, y: 25 },
-     //      show: { opacity: 1, y: 0, transition: { duration: 0.4 } }
-     // };
+     const filteredProducts = useProductFilter(products, filters);
+
      return (
           <div className="min-h-screen text-accent pb-20">
                <div className="">
@@ -69,7 +61,7 @@ const Shop = () => {
                                                        ...prev,
                                                        category: cat
                                                   }))}
-                                                  className={`cursor-pointer transition-all duration-300 hover:pl-2 p-2 rounded-md font-semibold ${filters.category === cat ? 'bg-primary/90 font-bold' : 'text-neutral-300 hover:bg-accent/10'}`}
+                                                  className={`cursor-pointer transition-all duration-300 hover:pl-2 p-2 rounded-md font-semibold ${filters?.category === cat ? 'bg-primary/90 font-bold' : 'text-neutral-300 hover:bg-accent/10'}`}
                                              >
                                                   {cat}
                                              </li>
@@ -145,42 +137,48 @@ const Shop = () => {
                                         </div>
                                    </div>
                               </div>
-
                               {/* Product Grid */}
-                              {filteredProducts?.length > 0 ? (
-                                   <motion.div
-                                        variants={shopContainerVariants}
-                                        initial="hidden"
-                                        animate="show"
-                                        key={filters.category + filters?.size + filters?.search}
-                                        className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 2xl:grid-cols-4 gap-5"
-                                   >
-                                        {filteredProducts?.map(product => (
-                                             <ProductCard
-                                                  key={product.id}
-                                                  product={product}
-                                                  animation={shopCardVariants}
-                                             />
-                                        ))}
-                                   </motion.div>
-                              ) : (
-                                   <div className="py-20 text-center space-y-4">
-                                        <h3 className="text-3xl font-medium bebas tracking-wider">No Products Found</h3>
-                                        <button
-                                             onClick={() => {
-                                                  setFilters({
-                                                       category: "All Products",
-                                                       size: "",
-                                                       search: "",
-                                                       sort: "Newest"
-                                                  });
-                                             }}
-                                             className="text-primary cursor-pointer tracking-wide underline"
-                                        >
-                                             Clear all filters
-                                        </button>
-                                   </div>
-                              )}
+                              <motion.div
+                                   variants={shopContainerVariants}
+                                   initial="hidden"
+                                   animate="show"
+                                   key={filters?.category + filters?.size + filters?.search}
+                                   className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 2xl:grid-cols-4 gap-5"
+                              >
+                                   {isLoading &&
+                                        Array.from({ length: 12 }).map((_, ind) => (
+                                             <ProductSkeleton key={ind}></ProductSkeleton>
+                                        ))
+                                   }
+                                   {!isLoading && filteredProducts?.map(product => (
+                                        <ProductCard
+                                             key={product._id}
+                                             product={product}
+                                             animation={shopCardVariants}
+                                        />
+                                   ))}
+                                   {filteredProducts?.length < 1 && (
+                                        <div className="py-30 col-span-full text-center space-y-4">
+                                             <h3 className="text-3xl font-medium bebas tracking-wider">No Products Found</h3>
+                                             <button
+                                                  onClick={() => {
+                                                       setFilters({
+                                                            category: "All Products",
+                                                            size: "",
+                                                            search: "",
+                                                            sort: "Newest"
+                                                       });
+                                                  }}
+                                                  className="text-primary cursor-pointer tracking-wide underline"
+                                             >
+                                                  Clear all filters
+                                             </button>
+                                        </div>
+                                   )}
+                                   {
+                                        error && <p className="text-center col-span-full text-xl font-medium text-primary my-20">Error fetching products</p>
+                                   }
+                              </motion.div>
                          </main>
                     </div>
                </div >

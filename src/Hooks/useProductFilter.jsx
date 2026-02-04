@@ -9,8 +9,7 @@ const useProductFilter = (products, filters) => {
   } = filters;
 
   return useMemo(() => {
-    return products
-      .filter(p =>
+    return products?.filter(p =>
         category === "All Products" ||
         p.category.toLowerCase() === category.toLowerCase()
       )
