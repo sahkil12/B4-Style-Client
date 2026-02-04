@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 const ProductCard = ({ product, animation, bestSellers }) => {
 
      return (
-          <Link to={`/product/${product.id}`}>
+          <Link to={`/product/${product._id}`}>
                <motion.div
                     variants={animation}
                     className="group cursor-pointer">

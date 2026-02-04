@@ -3,20 +3,22 @@ import { motion } from 'framer-motion';
 import { FiHeart, FiShoppingBag, FiMinus, FiPlus, FiChevronLeft, FiTruck, FiShield, FiRotateCcw } from 'react-icons/fi';
 import ProductCard from '../../utils/ProductCard';
 import { Link, useLoaderData, useParams } from 'react-router-dom';
+import useProducts from '../../Hooks/useProducts';
 
 const ProductDetails = () => {
 
      const { id } = useParams()
-     const products = useLoaderData()
+     const product = useLoaderData()
+     console.log(id);
      // State for interactions
      const [selectedSize, setSelectedSize] = useState('M');
      const [quantity, setQuantity] = useState(1);
 
-     const product = products?.filter(p => p.id == id)[0]
-     // Demo Data for "You May Also Like"
-     const relatedProducts = products
-          .filter(p => p.category === product.category && p.id !== product.id)
-          .slice(0, 3);
+     console.log(product);
+
+     const { data: relatedProducts = [], isLoading } = useProducts({
+          category: product?.category
+     });
 
      const handleQuantity = (type) => {
           if (type === 'inc') setQuantity(prev => prev + 1);
@@ -41,8 +43,8 @@ const ProductDetails = () => {
                               className="relative bg-[#1a1a1a] rounded-sm overflow-hidden aspect-[3/4]"
                          >
                               <img
-                                   src={product?.image}
-                                   alt={product?.title}
+                                   src={product?.images[0]}
+                                   alt={product?.slug}
                                    loading='lazy'
                                    width="600"
                                    height="800"
@@ -53,11 +55,10 @@ const ProductDetails = () => {
                                         <span className="bg-primary text-accent text-[11px] font-bold px-4 py-2 uppercase tracking-widest">New</span>
                                    )}
                                    {product?.discount && (
-                                        <span className="bg-accent text-base-100 text-xs font-bold px-4 py-2 uppercase tracking-widest">{product?.discount}</span>
+                                        <span className="bg-accent text-base-100 text-xs font-bold px-4 py-2 uppercase tracking-widest">-{product?.discount}%</span>
                                    )}
                               </div>
                          </motion.div>
-
                          {/* Right Side: Details */}
                          <motion.div
                               initial={{ opacity: 0, x: 30 }}
@@ -100,7 +101,6 @@ const ProductDetails = () => {
                                         ))}
                                    </div>
                               </div>
-
                               {/* Quantity & Actions */}
                               <div className="space-y-6">
                                    <h4 className="text-base font-medium bebas tracking-[2.5px] mb-4">Quantity</h4>
@@ -121,7 +121,6 @@ const ProductDetails = () => {
                                         </button>
                                    </div>
                               </div>
-
                               {/* Trust Badges */}
                               <div className="mt-12 pt-8 border-t border-accent/10 space-y-4">
                                    <div className="flex items-center gap-4 text-neutral-300/85">
@@ -146,7 +145,7 @@ const ProductDetails = () => {
                               <div className="h-1 w-24 bg-primary"></div>
                          </div>
                          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-                              {relatedProducts?.map(item => (
+                              {relatedProducts?.slice(0, 2)?.map(item => (
                                    <ProductCard key={item?.id} product={item} />
                               ))}
                          </div>

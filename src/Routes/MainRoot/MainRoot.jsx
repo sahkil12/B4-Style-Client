@@ -15,6 +15,8 @@ import Profile from "../../pages/Profile/Profile";
 import ForgotPassword from "../../pages/Auth/ForgotPassword/ForgotPassword";
 import PrivateRoute from "../PrivateRoute/PrivateRoute";
 import AuthProtected from "../AuthProtected/AuthProtected";
+import { fetchProductById } from "../../Hooks/products";
+import Loader from "../../Components/Shared/Loader";
 
 export const router = createBrowserRouter([
      {
@@ -49,7 +51,8 @@ export const router = createBrowserRouter([
                {
                     path: "product/:id",
                     element: <ProductDetails></ProductDetails>,
-                    loader: () => fetch('/products.json').then(res => res.json())
+                    loader: ({ params }) => fetchProductById(params.id),
+                    HydrateFallback: <Loader></Loader>
                },
                {
                     path: "profile",

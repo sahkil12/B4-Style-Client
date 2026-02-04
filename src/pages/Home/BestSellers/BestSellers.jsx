@@ -10,7 +10,7 @@ import ProductSkeleton from "../../../Components/Shared/ProductSkeleton/ProductS
 
 const BestSellers = () => {
      // get best sellers products
-     const { data: bestSellers, isLoading, error } = useProducts({ isBestSeller: true })
+     const { data: bestSellers =[], isLoading, error } = useProducts({ isBestSeller: true })
 
      return (
           <section className="py-20 bg-secondary">
