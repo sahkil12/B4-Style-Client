@@ -2,19 +2,16 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { FiHeart, FiShoppingBag, FiMinus, FiPlus, FiChevronLeft, FiTruck, FiShield, FiRotateCcw } from 'react-icons/fi';
 import ProductCard from '../../utils/ProductCard';
-import { Link, useLoaderData, useParams } from 'react-router-dom';
+import { Link, useLoaderData } from 'react-router-dom';
 import useProducts from '../../Hooks/useProducts';
+import ProductSkeleton from '../../Components/Shared/ProductSkeleton/ProductSkeleton';
 
 const ProductDetails = () => {
 
-     const { id } = useParams()
      const product = useLoaderData()
-     console.log(id);
      // State for interactions
      const [selectedSize, setSelectedSize] = useState('M');
      const [quantity, setQuantity] = useState(1);
-
-     console.log(product);
 
      const { data: relatedProducts = [], isLoading } = useProducts({
           category: product?.category
@@ -145,9 +142,15 @@ const ProductDetails = () => {
                               <div className="h-1 w-24 bg-primary"></div>
                          </div>
                          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-                              {relatedProducts?.slice(0, 2)?.map(item => (
+                              {isLoading &&
+                                   Array.from({ length: 2 }).map((_, ind) => (
+                                        <ProductSkeleton key={ind}></ProductSkeleton>
+                                   ))
+                              }
+                              {!isLoading && relatedProducts?.slice(0, 3)?.map(item => (
                                    <ProductCard key={item?.id} product={item} />
                               ))}
+
                          </div>
                     </section>
                </div>
