@@ -11,7 +11,7 @@ const categories = ["All Products", "T-Shirts", "Hoodies", "Pants", "Shirts", "W
 const sizes = ["S", "M", "L", "XL", "XXL"];
 
 const Shop = () => {
-     const { data: products, isLoading, error } = useProducts()
+     const { data: products = [], isLoading, error } = useProducts()
 
      const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
      // use hooks to reuseable filter
@@ -143,7 +143,7 @@ const Shop = () => {
                                    initial="hidden"
                                    animate="show"
                                    key={filters?.category + filters?.size + filters?.search}
-                                   className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 2xl:grid-cols-4 gap-5"
+                                   className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5"
                               >
                                    {isLoading &&
                                         Array.from({ length: 12 }).map((_, ind) => (

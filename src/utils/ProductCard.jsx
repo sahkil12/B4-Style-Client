@@ -14,7 +14,7 @@ const ProductCard = ({ product, animation, bestSellers }) => {
                          <img
                               src={product?.images[0]}
                               loading='lazy'
-                              alt={product.slug}
+                              alt={product?.slug}
                               className="w-full h-full object-cover transition-transform duration-600 group-hover:scale-105 group-active:scale-105"
                          />
                          {/* Badges */}
@@ -60,8 +60,9 @@ const ProductCard = ({ product, animation, bestSellers }) => {
                          <p className="text-neutral-500 text-[12px] font-bold tracking-widest uppercase">
                               {product?.category}
                          </p>
-                         <h3 className="text-sm font-semibold tracking-tight uppercase group-hover:text-primary group-active:text-primary transition-colors">
-                              {product?.title}
+                         <h3 className="text-sm flex gap-2 items-center font-semibold tracking-tight uppercase group-hover:text-primary group-active:text-primary transition-colors">
+                              {product?.title} 
+                              <span className='text-neutral-500 text-xs'>( Stock - {product.stock})</span>
                          </h3>
                          <div className="flex items-center gap-3 mt-2">
                               <span className="text-lg font-semibold">

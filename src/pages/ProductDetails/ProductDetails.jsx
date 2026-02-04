@@ -21,6 +21,12 @@ const ProductDetails = () => {
           if (type === 'inc') setQuantity(prev => prev + 1);
           if (type === 'dec' && quantity > 1) setQuantity(prev => prev - 1);
      };
+     // badgesD
+     const trustBadges = [
+          { icon: <FiTruck />, text: 'Free delivery across Bangladesh on orders over ৳2000' },
+          { icon: <FiShield />, text: '  Secure payment - Cash on Delivery available' },
+          { icon: <FiRotateCcw />, text: '   Easy 7-day return policy' },
+     ]
 
      return (
           <div className="min-h-screen text-accent pt-20 pb-20">
@@ -74,7 +80,7 @@ const ProductDetails = () => {
                                    }
                                    {
                                         product?.discount && (
-                                             <span className="bg-primary/15 text-primary text-sm font-bold px-4 py-2 rounded-full">{product?.discount}</span>
+                                             <span className="bg-primary/15 text-primary text-sm font-bold px-4 py-2 rounded-full">{product?.discount} %</span>
                                         )
                                    }
                               </div>
@@ -120,18 +126,14 @@ const ProductDetails = () => {
                               </div>
                               {/* Trust Badges */}
                               <div className="mt-12 pt-8 border-t border-accent/10 space-y-4">
-                                   <div className="flex items-center gap-4 text-neutral-300/85">
-                                        <FiTruck className="text-primary" />
-                                        <span className="text-xs font-medium">Free delivery across Bangladesh on orders over ৳2000</span>
-                                   </div>
-                                   <div className="flex items-center gap-4 text-neutral-300/85">
-                                        <FiShield className="text-primary" />
-                                        <span className="text-xs font-medium">Secure payment - Cash on Delivery available</span>
-                                   </div>
-                                   <div className="flex items-center gap-4 text-neutral-300/85">
-                                        <FiRotateCcw className="text-primary" />
-                                        <span className="text-xs font-medium">Easy 7-day return policy</span>
-                                   </div>
+                                   {
+                                        trustBadges?.map((badge, idx) => (
+                                             <div key={idx} className="flex items-center gap-4 text-neutral-300/85">
+                                                  <span className='text-primary text-lg'>{badge.icon}</span>
+                                                  <span className="text-xs sm:text-sm font-medium">{badge.text}</span>
+                                             </div>
+                                        ))
+                                   }
                               </div>
                          </motion.div>
                     </div>
