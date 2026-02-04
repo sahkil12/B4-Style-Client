@@ -4,7 +4,8 @@ import { fetchProducts } from './products';
 const useProducts = (params) => {
      return useQuery({
           queryKey: ["products", params],
-          queryFn: () => fetchProducts(params)
+          queryFn: () => fetchProducts(params),
+          keepPreviousData: true
      })
 };
 

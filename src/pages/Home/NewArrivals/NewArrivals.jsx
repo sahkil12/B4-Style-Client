@@ -9,7 +9,7 @@ import ProductSkeleton from "../../../Components/Shared/ProductSkeleton/ProductS
 const NewArrivals = () => {
      // get newest products
      const { data: products = [], isLoading, error } = useProducts({ isNew: true })
-
+     
      return (
           <section className="py-20 bg-secondary">
                <motion.div className="xl:max-w-[75%] mx-auto px-5 md:px-10">

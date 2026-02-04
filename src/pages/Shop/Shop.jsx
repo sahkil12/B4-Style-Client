@@ -2,27 +2,40 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FiSearch, FiFilter, FiX, FiChevronDown } from 'react-icons/fi';
 import ProductCard from '../../utils/ProductCard';
-import useProductFilter from '../../Hooks/useProductFilter';
 import { shopContainerVariants, shopCardVariants } from './../../utils/CardAnimation';
 import useProducts from '../../Hooks/useProducts';
 import ProductSkeleton from '../../Components/Shared/ProductSkeleton/ProductSkeleton';
 
-const categories = ["All Products", "T-Shirts", "Hoodies", "Pants", "Shirts", "Winter Wear"];
+const categories = [
+     { label: "All Products", value: "" },
+     { label: "T-Shirts", value: "T-SHIRTS" },
+     { label: "Hoodies", value: "HOODIES" },
+     { label: "Pants", value: "PANTS" },
+     { label: "Shirts", value: "SHIRTS" },
+     { label: "Winter Wear", value: "WINTER WEAR" }
+];
 const sizes = ["S", "M", "L", "XL", "XXL"];
 
 const Shop = () => {
-     const { data: products = [], isLoading, error } = useProducts()
 
      const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
      // use hooks to reuseable filter
      const [filters, setFilters] = useState({
-          category: "All Products",
+          category: "",
           size: "",
           search: "",
-          sort: "Newest"
+          sort: "newest"
      })
-
-     const filteredProducts = useProductFilter(products, filters);
+     const { data: products = [], isLoading, error } = useProducts({
+          category: filters?.category,
+          size: filters?.size,
+          search: filters?.search,
+          sort:
+               filters?.sort === "Price: Low to High" ? "priceLow"
+                    :
+                    filters?.sort === "Price: High to Low" ? "priceHigh"
+                         : "newest"
+     })
 
      return (
           <div className="min-h-screen text-accent pb-20">
@@ -56,14 +69,14 @@ const Shop = () => {
                                    <ul className="space-y-3">
                                         {categories?.map(cat => (
                                              <li
-                                                  key={cat}
+                                                  key={cat.label}
                                                   onClick={() => setFilters(prev => ({
                                                        ...prev,
-                                                       category: cat
+                                                       category: cat?.value
                                                   }))}
-                                                  className={`cursor-pointer transition-all duration-300 hover:pl-2 p-2 rounded-md font-semibold ${filters?.category === cat ? 'bg-primary/90 font-bold' : 'text-neutral-300 hover:bg-accent/10'}`}
+                                                  className={`cursor-pointer transition-all duration-300 hover:pl-2 p-2 rounded-md font-semibold ${filters?.category === cat?.value ? 'bg-primary/90 font-bold' : 'text-neutral-300 hover:bg-accent/10'}`}
                                              >
-                                                  {cat}
+                                                  {cat?.label}
                                              </li>
                                         ))}
                                    </ul>
@@ -150,20 +163,20 @@ const Shop = () => {
                                              <ProductSkeleton key={ind}></ProductSkeleton>
                                         ))
                                    }
-                                   {!isLoading && filteredProducts?.map(product => (
+                                   {!isLoading && products?.map(product => (
                                         <ProductCard
                                              key={product._id}
                                              product={product}
                                              animation={shopCardVariants}
                                         />
                                    ))}
-                                   {filteredProducts?.length < 1 && (
+                                   {products?.length < 1 && (
                                         <div className="py-30 col-span-full text-center space-y-4">
                                              <h3 className="text-3xl font-medium bebas tracking-wider">No Products Found</h3>
                                              <button
                                                   onClick={() => {
                                                        setFilters({
-                                                            category: "All Products",
+                                                            category: "",
                                                             size: "",
                                                             search: "",
                                                             sort: "Newest"
@@ -213,16 +226,16 @@ const Shop = () => {
                                         <div>
                                              <h3 className="text-sm font-bold uppercase tracking-[3px] mb-4 text-primary">Category</h3>
                                              <div className="flex flex-wrap gap-2">
-                                                  {categories?.map(cat => (
+                                                  {categories?.map((cat, idx) => (
                                                        <button
-                                                            key={cat}
+                                                            key={idx}
                                                             onClick={() => setFilters(prev => ({
                                                                  ...prev,
-                                                                 category: cat
+                                                                 category: cat.value
                                                             }))}
-                                                            className={`px-4 py-2 text-xs border rounded-full font-normal duration-100 transition-all ${filters.category === cat ? 'bg-primary border-primary' : 'border-accent/10'}`}
+                                                            className={`px-4 py-2 text-xs border rounded-full font-normal duration-100 transition-all ${filters?.category === cat.value ? 'bg-primary border-primary' : 'border-accent/10'}`}
                                                        >
-                                                            {cat}
+                                                            {cat.label}
                                                        </button>
                                                   ))}
                                              </div>

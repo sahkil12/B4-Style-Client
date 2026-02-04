@@ -10,7 +10,7 @@ import ProductSkeleton from "../../../Components/Shared/ProductSkeleton/ProductS
 
 const BestSellers = () => {
      // get best sellers products
-     const { data: bestSellers =[], isLoading, error } = useProducts({ isBestSeller: true })
+     const { data: bestSellers = [], isLoading, error } = useProducts({ isBestSeller: true })
 
      return (
           <section className="py-20 bg-secondary">
@@ -70,7 +70,7 @@ const BestSellers = () => {
                                    No Products found.
                               </p>
                          )}
-                          {
+                         {
                               error && <p className="text-center col-span-full text-xl font-medium text-primary my-10">Error fetching products</p>
                          }
                     </motion.div>
