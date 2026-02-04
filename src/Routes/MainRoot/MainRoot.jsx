@@ -52,7 +52,7 @@ export const router = createBrowserRouter([
                     path: "product/:id",
                     element: <ProductDetails></ProductDetails>,
                     loader: ({ params }) => fetchProductById(params.id),
-                    HydrateFallback: <Loader></Loader>
+                    hydrateFallbackElement: <Loader />
                },
                {
                     path: "profile",

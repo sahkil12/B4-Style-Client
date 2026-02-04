@@ -156,7 +156,7 @@ const ProductDetails = () => {
                                    ))
                               }
                               {!isLoading && suggestProducts?.slice(0, 3)?.map(item => (
-                                   <ProductCard key={item?.id} product={item} />
+                                   <ProductCard key={item?._id} product={item} />
                               ))}
 
                          </div>

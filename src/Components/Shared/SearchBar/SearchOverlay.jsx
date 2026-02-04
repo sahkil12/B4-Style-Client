@@ -1,22 +1,29 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { FiSearch, FiX } from "react-icons/fi";
 import SearchCard from "./SearchCard";
+import useProducts from "../../../Hooks/useProducts";
 
 const SearchOverlay = ({ isOpen, onClose }) => {
      const [searchText, setSearchText] = useState('')
-     const [products, setProducts] = useState([])
+     // const [products, setProducts] = useState([])
 
-     useEffect(() => {
-          fetch('/products.json')
-               .then(res => res.json())
-               .then(data => setProducts(data))
-     }, [])
+     // useEffect(() => {
+     //      fetch('/products.json')
+     //           .then(res => res.json())
+     //           .then(data => setProducts(data))
+     // }, [])
 
-     const filteredProducts = products?.filter((product) => (
-          product.title.toLowerCase().includes(searchText.toLowerCase())
+     // const filteredProducts = products?.filter((product) => (
+     //      product.title.toLowerCase().includes(searchText.toLowerCase())
+     // )
+     // );
+
+     const { data: products = [], isLoading, error } = useProducts(
+          searchText ? { search: searchText } : null
      )
-     );
+
+     console.log(products);
 
      return (
           <AnimatePresence >
@@ -53,9 +60,9 @@ const SearchOverlay = ({ isOpen, onClose }) => {
                               {/* Results */}
                               <div className="mt-14 max-h-[75vh] overflow-y-auto">
                                    {searchText ? (
-                                        filteredProducts.length > 0 ? (
+                                        products?.length > 0 ? (
                                              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
-                                                  {filteredProducts?.map((product) => (
+                                                  {products?.map((product) => (
                                                        <SearchCard
                                                             key={product?.id}
                                                             product={product}

@@ -14,7 +14,7 @@ const categories = [
      { label: "Shirts", value: "SHIRTS" },
      { label: "Winter Wear", value: "WINTER WEAR" }
 ];
-const sizes = ["S", "M", "L", "XL", "XXL"];
+const sizes = ["S", "M", "L", "XL", "XXL", 32, 34, 36, 38];
 
 const Shop = () => {
 
