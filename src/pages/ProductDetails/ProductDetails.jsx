@@ -2,12 +2,21 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { FiHeart, FiShoppingBag, FiMinus, FiPlus, FiChevronLeft, FiTruck, FiShield, FiRotateCcw } from 'react-icons/fi';
 import ProductCard from '../../utils/ProductCard';
-import { Link, useLoaderData } from 'react-router-dom';
+import { Link, Navigate, useLoaderData } from 'react-router-dom';
 import useProducts from '../../Hooks/useProducts';
 import ProductSkeleton from '../../Components/Shared/ProductSkeleton/ProductSkeleton';
+import useCart from '../../Hooks/useCart';
+import useWishlist from '../../Hooks/useWishlist';
+import UseAuth from '../../Hooks/UseAuth';
+import toast from 'react-hot-toast';
 
 const ProductDetails = () => {
      const product = useLoaderData()
+     const { user, loading } = UseAuth()
+     const { handleAddToCart, isAddingToCart } = useCart()
+     const { handleAddToWishlist } = useWishlist()
+     const userId = user?.uid
+     console.log(isAddingToCart);
      // State for interactions
      const [selectedSize, setSelectedSize] = useState('');
      const [quantity, setQuantity] = useState(1);
@@ -32,6 +41,18 @@ const ProductDetails = () => {
      const discountedPrice = product?.discount
           ? Math.round(product.price - (product.price * product.discount) / 100)
           : product.price;
+
+     const addToCart = () => {
+          if (!user) return <Navigate to={'/auth/sign_in'} replace></Navigate>
+
+          if (!selectedSize) return toast.error("Please Select Product Size")
+          handleAddToCart({
+               userId: userId,
+               productId: product?._id,
+               quantity: quantity,
+               size: selectedSize
+          })
+     }
 
      return (
           <div className="min-h-screen text-accent pt-20 pb-20">
@@ -120,7 +141,9 @@ const ProductDetails = () => {
                                              <button onClick={() => handleQuantity('inc')} className="px-5 hover:text-primary transition-colors"><FiPlus /></button>
                                         </div>
                                         {/* add to card button */}
-                                        <button className="flex-1 min-w-[200px] h-14 bg-primary text-accent font-bold text-sm sm:text-base uppercase tracking-widest flex items-center justify-center gap-3 hover:bg-primary/90 transition-all active:scale-95">
+                                        <button
+                                             onClick={addToCart}
+                                             className="flex-1 min-w-[200px] h-14 bg-primary text-accent font-bold text-sm sm:text-base uppercase tracking-widest flex items-center justify-center gap-3 hover:bg-primary/90 transition-all active:scale-95">
                                              <FiShoppingBag size={18} /> Add to Cart
                                         </button>
 
