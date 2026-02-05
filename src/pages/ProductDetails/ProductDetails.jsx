@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { FiHeart, FiShoppingBag, FiMinus, FiPlus, FiChevronLeft, FiTruck, FiShield, FiRotateCcw } from 'react-icons/fi';
+import { FaHeart } from "react-icons/fa";
 import ProductCard from '../../utils/ProductCard';
 import { Link, Navigate, useLoaderData, useNavigate } from 'react-router-dom';
 import useProducts from '../../Hooks/useProducts';
@@ -14,10 +15,10 @@ const ProductDetails = () => {
      const product = useLoaderData()
      const { user, loading } = UseAuth()
      const { handleAddToCart, isAddingToCart } = useCart()
-     const { handleAddToWishlist } = useWishlist()
+     const { handleAddToWishlist, wishlist, isAddingToWishlist } = useWishlist()
      const navigate = useNavigate()
      const userId = user?.uid
-     console.log(isAddingToCart);
+
      // State for interactions
      const [selectedSize, setSelectedSize] = useState('');
      const [quantity, setQuantity] = useState(1);
@@ -62,6 +63,9 @@ const ProductDetails = () => {
                productId: product?._id
           })
      }
+     // 
+     const matchProduct = wishlist?.find(p => p.productId === product?._id)
+     const isWishlist = matchProduct?.productId === product?._id
 
      return (
           <div className="min-h-screen text-accent pt-20 pb-20">
@@ -131,8 +135,8 @@ const ProductDetails = () => {
                                              <button
                                                   key={size}
                                                   onClick={() => setSelectedSize(size)}
-                                                  className={`w-12 h-12 flex items-center justify-center border font-bold rounded-md text-sm transition-all
-                                            ${selectedSize === size ? 'bg-primary text-accent border-primary' : 'border-accent/15 text-accent hover:border-accent'}`}
+                                                  className={`w-12 h-12 flex items-center justify-center border font-bold rounded-md text-sm transition-all cursor-pointer
+                                                  ${selectedSize === size ? 'bg-primary text-accent border-primary' : 'border-accent/15 text-accent hover:border-primary '}`}
                                              >
                                                   {size}
                                              </button>
@@ -144,22 +148,24 @@ const ProductDetails = () => {
                                    <h4 className="text-base font-medium bebas tracking-[2.5px] mb-4">Quantity</h4>
                                    <div className="flex flex-wrap items-center gap-4">
                                         {/* quantity button */}
-                                        <div className="flex items-center border border-accent/10 h-14">
-                                             <button onClick={() => handleQuantity('dec')} className="px-5 hover:text-primary transition-colors"><FiMinus /></button>
+                                        <div className="flex rounded-md items-center border border-accent/10 h-14">
+                                             <button onClick={() => handleQuantity('dec')} className="px-5 hover:text-primary transition-colors cursor-pointer"><FiMinus /></button>
                                              <span className="w-10 text-center font-bold">{quantity}</span>
-                                             <button onClick={() => handleQuantity('inc')} className="px-5 hover:text-primary transition-colors"><FiPlus /></button>
+                                             <button onClick={() => handleQuantity('inc')} className="px-5 hover:text-primary transition-colors cursor-pointer"><FiPlus /></button>
                                         </div>
                                         {/* add to card button */}
                                         <button
                                              onClick={addToCart}
-                                             className="flex-1 min-w-[200px] h-14 bg-primary text-accent font-bold text-sm sm:text-base uppercase tracking-widest flex items-center justify-center gap-3 hover:bg-primary/90 transition-all active:scale-95">
+                                             className="flex-1 min-w-[200px] h-14 bg-primary text-accent font-bold text-sm sm:text-base uppercase tracking-widest flex items-center justify-center gap-3 hover:bg-primary/90 transition-all active:scale-95 rounded-md cursor-pointer">
                                              <FiShoppingBag size={18} /> {isAddingToCart ? "Adding.." : "Add to Cart"}
                                         </button>
-
+                                        {/* wishlist button */}
                                         <button
+                                             disabled={isAddingToWishlist}
                                              onClick={addWishlist}
-                                             className="w-14 h-14 border border-accent/10 flex items-center justify-center hover:bg-primary hover:text-accent transition-all">
-                                             <FiHeart size={20} />
+                                             className={`w-14 h-14 border border-accent/10 flex items-center justify-center hover:bg-primary hover:text-accent  cursor-pointer transition-all duration-200 rounded-md ${isWishlist ? 'bg-primary' : ''}`}>
+                                             
+                                             {isWishlist ? <FaHeart size={20} /> : <FiHeart size={20} />}
                                         </button>
                                    </div>
                               </div>
