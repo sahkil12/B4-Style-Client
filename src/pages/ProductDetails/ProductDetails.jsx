@@ -13,9 +13,9 @@ import toast from 'react-hot-toast';
 
 const ProductDetails = () => {
      const product = useLoaderData()
-     const { user, loading } = UseAuth()
+     const { user } = UseAuth()
      const { handleAddToCart, isAddingToCart } = useCart()
-     const { handleAddToWishlist, wishlist, isAddingToWishlist } = useWishlist()
+     const { handleAddToWishlist, handleRemoveWishlist, wishlist, isWishlistLoading } = useWishlist()
      const navigate = useNavigate()
      const userId = user?.uid
 
@@ -26,7 +26,7 @@ const ProductDetails = () => {
      const { data: relatedProducts = [], isLoading } = useProducts({
           category: product?.category
      });
-     // 
+     // suggest product based on category
      const suggestProducts = relatedProducts?.filter(p => p._id !== product._id)
 
      const handleQuantity = (type) => {
@@ -59,13 +59,17 @@ const ProductDetails = () => {
      const addWishlist = () => {
           if (!user) return navigate("/auth/sign_in");
           handleAddToWishlist({
-               userId: userId,
                productId: product?._id
           })
      }
-     // 
-     const matchProduct = wishlist?.find(p => p.productId === product?._id)
-     const isWishlist = matchProduct?.productId === product?._id
+     const removeWishlist = () => {
+          if (!user) return navigate("/auth/sign_in");
+          handleRemoveWishlist({
+               productId: product?._id
+          })
+     }
+     // wishlist check 
+     const isWishlist = wishlist?.some(p => p.productId === product?._id)
 
      return (
           <div className="min-h-screen text-accent pt-20 pb-20">
@@ -156,15 +160,16 @@ const ProductDetails = () => {
                                         {/* add to card button */}
                                         <button
                                              onClick={addToCart}
+                                             disabled={isAddingToCart}
                                              className="flex-1 min-w-[200px] h-14 bg-primary text-accent font-bold text-sm sm:text-base uppercase tracking-widest flex items-center justify-center gap-3 hover:bg-primary/90 transition-all active:scale-95 rounded-md cursor-pointer">
                                              <FiShoppingBag size={18} /> {isAddingToCart ? "Adding.." : "Add to Cart"}
                                         </button>
                                         {/* wishlist button */}
                                         <button
-                                             disabled={isAddingToWishlist}
-                                             onClick={addWishlist}
-                                             className={`w-14 h-14 border border-accent/10 flex items-center justify-center hover:bg-primary hover:text-accent  cursor-pointer transition-all duration-200 rounded-md ${isWishlist ? 'bg-primary' : ''}`}>
-                                             
+                                             disabled={isWishlistLoading}
+                                             onClick={isWishlist ? removeWishlist : addWishlist}
+                                             className={`w-14 h-14 border border-accent/10 flex items-center justify-center cursor-pointer transition-all duration-200 rounded-md ${isWishlist ? 'bg-primary scale-105' : 'hover:bg-primary active:bg-primary'}`}>
+
                                              {isWishlist ? <FaHeart size={20} /> : <FiHeart size={20} />}
                                         </button>
                                    </div>

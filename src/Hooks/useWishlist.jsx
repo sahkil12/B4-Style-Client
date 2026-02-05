@@ -18,29 +18,51 @@ const useWishlist = () => {
      });
      // add wishlist
      const addWishlistMutation = useMutation({
-          mutationFn: async ({ userId, productId }) => {
+          mutationFn: async ({ productId }) => {
                const res = await axiosPublic.post("/wishlist", {
                     userId,
                     productId
                });
-               return res.data;
+               return res;
           },
-          onSuccess: (data, variables) => {
-               toast.success(data.message);
-               queryClient.invalidateQueries(["wishlist", variables.userId]);
+          onSuccess: (res) => {
+               toast.success(res.data.message);
+               queryClient.invalidateQueries(["wishlist", userId]);
           },
           onError: () => {
                toast.error("Failed to add to wishlist");
           }
      });
-
+     // Remove wishlist
+     const removeWishlistMutation = useMutation({
+          mutationFn: async (productId) => {
+               return axiosPublic.delete("/wishlist", {
+                    data: {
+                         userId,
+                         productId
+                    }
+               });
+          },
+          onSuccess: (res) => {
+               toast.success(res.data.message);
+               queryClient.invalidateQueries(["wishlist", userId]);
+          },
+          onError: () => {
+               toast.error("Failed to add to wishlist");
+          }
+     });
+     
      const handleAddToWishlist = (wishlistData) => {
           addWishlistMutation.mutate(wishlistData);
+     };
+     const handleRemoveWishlist = (wishlistData) => {
+          removeWishlistMutation.mutate(wishlistData?.productId)
      };
 
      return {
           handleAddToWishlist,
-          isAddingToWishlist: addWishlistMutation.isPending,
+          handleRemoveWishlist,
+          isWishlistLoading: addWishlistMutation.isPending || removeWishlistMutation.isPending,
           wishlist
      };
 };
