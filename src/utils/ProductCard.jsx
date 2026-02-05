@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import UseAuth from '../Hooks/UseAuth';
 import useCart from '../Hooks/useCart';
 import useWishlist from '../Hooks/useWishlist';
+import { FaHeart } from 'react-icons/fa';
 
 const ProductCard = ({ product, animation, bestSellers }) => {
 
@@ -18,31 +19,32 @@ const ProductCard = ({ product, animation, bestSellers }) => {
      const navigate = useNavigate()
      const userId = user?.uid
 
+     // handle add to cart 
      const addToCart = () => {
           if (!user) return navigate("/auth/sign_in");
-         
+
           handleAddToCart({
                userId: userId,
                productId: product?._id,
                quantity: 1,
-               size: product?.sizes[0]
+               size: product?.sizes[0] || null
           })
      }
-     // add wishlist
-     // const addWishlist = () => {
-     //      if (!user) return navigate("/auth/sign_in");
-     //      handleAddToWishlist({
-     //           productId: product?._id
-     //      })
-     // }
-     // const removeWishlist = () => {
-     //      if (!user) return navigate("/auth/sign_in");
-     //      handleRemoveWishlist({
-     //           productId: product?._id
-     //      })
-     // }
-     // // wishlist check 
-     // const isWishlist = wishlist?.some(p => p.productId === product?._id)
+     // add wishlist 
+     const addWishlist = () => {
+          if (!user) return navigate("/auth/sign_in");
+          handleAddToWishlist({
+               productId: product?._id
+          })
+     }
+     const removeWishlist = () => {
+          if (!user) return navigate("/auth/sign_in");
+          handleRemoveWishlist({
+               productId: product?._id
+          })
+     }
+     // wishlist check 
+     const isWishlist = wishlist?.some(p => p.productId === product?._id)
 
      return (
           <Link to={`/product/${product._id}`}>
@@ -85,16 +87,27 @@ const ProductCard = ({ product, animation, bestSellers }) => {
                               }
                          </div>
                          {/* Wishlist Icon */}
-                         <button className={`absolute top-4 right-3 p-2.5 bg-secondary/85 md:opacity-0 group-hover:opacity-100 rounded-full transition-all duration-200 hover:bg-primary/90 active:bg-primary/90 cursor-pointer text-accent hover:scale-115 active:scale-115`}>
-                              <FiHeart size={16} />
+                         <button
+                              disabled={isWishlistLoading}
+                              onClick={(e) => {
+                                   e.preventDefault();
+                                   e.stopPropagation();
+                                   isWishlist ? removeWishlist() : addWishlist();
+                              }}
+                              className={`absolute top-4 right-3 p-2.5 rounded-full transition-all duration-200 cursor-pointer text-accent hover:scale-115 active:scale-115 ${isWishlist ? 'opacity-100 bg-primary' : 'group-hover:opacity-100 hover:bg-primary/90 md:opacity-0 active:bg-primary/90 bg-secondary/85'}`}>
+                              {isWishlist ? <FaHeart size={20} /> : <FiHeart size={20} />}
                          </button>
                          {/* Quick Add Button */}
                          <div className="absolute bottom-0 left-0 w-full p-2.5 sm:p-3 translate-y-0 sm:translate-y-full group-hover:translate-y-0 transition-transform duration-600 ease-out">
                               <button
-                                   onClick={addToCart}
+                                   onClick={(e) => {
+                                        e.preventDefault();
+                                        e.stopPropagation();
+                                        addToCart();
+                                   }}
                                    disabled={isAddingToCart}
                                    className="w-full bg-primary hover:bg-primary/90 active:bg-primary/90 cursor-pointer text-accent font-semibold py-2.5 flex items-center justify-center gap-2 text-xs uppercase tracking-widest transition-all">
-                                   <FiShoppingBag /> Quick Add
+                                   <FiShoppingBag /> {isAddingToCart ? "Adding.." : "Quick Add"}
                               </button>
                          </div>
                     </div>
