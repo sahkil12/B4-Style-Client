@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { FiHeart, FiShoppingBag, FiMinus, FiPlus, FiChevronLeft, FiTruck, FiShield, FiRotateCcw } from 'react-icons/fi';
 import ProductCard from '../../utils/ProductCard';
-import { Link, Navigate, useLoaderData } from 'react-router-dom';
+import { Link, Navigate, useLoaderData, useNavigate } from 'react-router-dom';
 import useProducts from '../../Hooks/useProducts';
 import ProductSkeleton from '../../Components/Shared/ProductSkeleton/ProductSkeleton';
 import useCart from '../../Hooks/useCart';
@@ -15,6 +15,7 @@ const ProductDetails = () => {
      const { user, loading } = UseAuth()
      const { handleAddToCart, isAddingToCart } = useCart()
      const { handleAddToWishlist } = useWishlist()
+     const navigate = useNavigate()
      const userId = user?.uid
      console.log(isAddingToCart);
      // State for interactions
@@ -43,7 +44,7 @@ const ProductDetails = () => {
           : product.price;
 
      const addToCart = () => {
-          if (!user) return <Navigate to={'/auth/sign_in'} replace></Navigate>
+          if (!user) return navigate("/auth/sign_in");
 
           if (!selectedSize) return toast.error("Please Select Product Size")
           handleAddToCart({
@@ -51,6 +52,14 @@ const ProductDetails = () => {
                productId: product?._id,
                quantity: quantity,
                size: selectedSize
+          })
+     }
+     // add wishlist
+     const addWishlist = () => {
+          if (!user) return navigate("/auth/sign_in");
+          handleAddToWishlist({
+               userId: userId,
+               productId: product?._id
           })
      }
 
@@ -144,10 +153,12 @@ const ProductDetails = () => {
                                         <button
                                              onClick={addToCart}
                                              className="flex-1 min-w-[200px] h-14 bg-primary text-accent font-bold text-sm sm:text-base uppercase tracking-widest flex items-center justify-center gap-3 hover:bg-primary/90 transition-all active:scale-95">
-                                             <FiShoppingBag size={18} /> Add to Cart
+                                             <FiShoppingBag size={18} /> {isAddingToCart ? "Adding.." : "Add to Cart"}
                                         </button>
 
-                                        <button className="w-14 h-14 border border-accent/10 flex items-center justify-center hover:bg-primary hover:text-accent transition-all">
+                                        <button
+                                             onClick={addWishlist}
+                                             className="w-14 h-14 border border-accent/10 flex items-center justify-center hover:bg-primary hover:text-accent transition-all">
                                              <FiHeart size={20} />
                                         </button>
                                    </div>
