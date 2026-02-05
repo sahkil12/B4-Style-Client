@@ -159,7 +159,7 @@ const Shop = () => {
                                    className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5"
                               >
                                    {isLoading &&
-                                        Array.from({ length: 12 }).map((_, ind) => (
+                                        Array.from({ length: 9 }).map((_, ind) => (
                                              <ProductSkeleton key={ind}></ProductSkeleton>
                                         ))
                                    }

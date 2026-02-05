@@ -7,7 +7,6 @@ import useProducts from '../../Hooks/useProducts';
 import ProductSkeleton from '../../Components/Shared/ProductSkeleton/ProductSkeleton';
 
 const ProductDetails = () => {
-
      const product = useLoaderData()
      // State for interactions
      const [selectedSize, setSelectedSize] = useState('');
@@ -31,7 +30,7 @@ const ProductDetails = () => {
      ]
 
      const discountedPrice = product?.discount
-          ? Math.round(product.price - (product.price * product.discount)/100)
+          ? Math.round(product.price - (product.price * product.discount) / 100)
           : product.price;
 
      return (
@@ -151,14 +150,13 @@ const ProductDetails = () => {
                          </div>
                          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
                               {isLoading &&
-                                   Array.from({ length: 2 }).map((_, ind) => (
+                                   Array.from({ length: 3 }).map((_, ind) => (
                                         <ProductSkeleton key={ind}></ProductSkeleton>
                                    ))
                               }
                               {!isLoading && suggestProducts?.slice(0, 3)?.map(item => (
                                    <ProductCard key={item?._id} product={item} />
                               ))}
-
                          </div>
                     </section>
                </div>

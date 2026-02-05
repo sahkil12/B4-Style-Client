@@ -3,14 +3,22 @@ import { useState } from "react";
 import { FiSearch, FiX } from "react-icons/fi";
 import SearchCard from "./SearchCard";
 import useProducts from "../../../Hooks/useProducts";
+import { useQueryClient } from "@tanstack/react-query";
 
 const SearchOverlay = ({ isOpen, onClose }) => {
      const [searchText, setSearchText] = useState('')
+     const queryClient = useQueryClient()
 
      const { data: products = [], isLoading, error } = useProducts(
           { search: searchText },
           !!searchText
      )
+
+     const handleClose = () => {
+          queryClient.removeQueries({ queryKey: ["products"] })
+          setSearchText("")
+          onClose()
+     }
      // loading skelton
      const skelton = <div className="animate-pulse bg-accent/5 rounded-md shadow ">
           <div className="h-60 bg-accent/15 rounded mb-2"></div>
@@ -33,7 +41,7 @@ const SearchOverlay = ({ isOpen, onClose }) => {
                     >
                          {/* Close Button */}
                          <button
-                              onClick={onClose}
+                              onClick={handleClose}
                               className="absolute top-10 right-10 text-accent hover:text-primary transition-all duration-200 active:text-primary"
                          >
                               <FiX size={32} />

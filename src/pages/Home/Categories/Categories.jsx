@@ -1,7 +1,9 @@
 import { motion } from 'motion/react';
 import { containerVariants, cardVariants } from '../../../utils/CardAnimation';
+import { useNavigate } from 'react-router-dom';
 
 const Categories = () => {
+     const navigate = useNavigate()
 
      const categories = [
           {
@@ -44,6 +46,7 @@ const Categories = () => {
                     initial='hidden'
                     whileInView='show'
                     viewport={{ once: true }}
+                    onClick={() => navigate('/shop')}
                     className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mt-16 px-6 mx-auto">
                     {categories?.map((cat, index) => (
                          <motion.div
