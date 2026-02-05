@@ -1,12 +1,48 @@
 import { motion } from 'motion/react';
 import { FiHeart, FiShoppingBag } from 'react-icons/fi';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import UseAuth from '../Hooks/UseAuth';
+import useCart from '../Hooks/useCart';
+import useWishlist from '../Hooks/useWishlist';
 
 const ProductCard = ({ product, animation, bestSellers }) => {
 
      const discountedPrice = product?.discount
           ? Math.round(product.price - (product.price * product.discount) / 100)
           : product.price;
+
+     // console.log(product);
+     const { user } = UseAuth()
+     const { handleAddToCart, isAddingToCart } = useCart()
+     const { handleAddToWishlist, handleRemoveWishlist, wishlist, isWishlistLoading } = useWishlist()
+     const navigate = useNavigate()
+     const userId = user?.uid
+
+     const addToCart = () => {
+          if (!user) return navigate("/auth/sign_in");
+         
+          handleAddToCart({
+               userId: userId,
+               productId: product?._id,
+               quantity: 1,
+               size: product?.sizes[0]
+          })
+     }
+     // add wishlist
+     // const addWishlist = () => {
+     //      if (!user) return navigate("/auth/sign_in");
+     //      handleAddToWishlist({
+     //           productId: product?._id
+     //      })
+     // }
+     // const removeWishlist = () => {
+     //      if (!user) return navigate("/auth/sign_in");
+     //      handleRemoveWishlist({
+     //           productId: product?._id
+     //      })
+     // }
+     // // wishlist check 
+     // const isWishlist = wishlist?.some(p => p.productId === product?._id)
 
      return (
           <Link to={`/product/${product._id}`}>
@@ -54,7 +90,10 @@ const ProductCard = ({ product, animation, bestSellers }) => {
                          </button>
                          {/* Quick Add Button */}
                          <div className="absolute bottom-0 left-0 w-full p-2.5 sm:p-3 translate-y-0 sm:translate-y-full group-hover:translate-y-0 transition-transform duration-600 ease-out">
-                              <button className="w-full bg-primary hover:bg-primary/90 active:bg-primary/90 cursor-pointer text-accent font-semibold py-2.5 flex items-center justify-center gap-2 text-xs uppercase tracking-widest transition-all">
+                              <button
+                                   onClick={addToCart}
+                                   disabled={isAddingToCart}
+                                   className="w-full bg-primary hover:bg-primary/90 active:bg-primary/90 cursor-pointer text-accent font-semibold py-2.5 flex items-center justify-center gap-2 text-xs uppercase tracking-widest transition-all">
                                    <FiShoppingBag /> Quick Add
                               </button>
                          </div>
