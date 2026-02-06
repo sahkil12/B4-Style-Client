@@ -51,6 +51,19 @@ const useWishlist = () => {
                toast.error("Failed to add to wishlist");
           }
      });
+     // 
+     const clearWishlistMutation = useMutation({
+          mutationFn: async () => {
+               return axiosPublic.delete(`/wishlist/clear/${userId}`);
+          },
+          onSuccess: (res) => {
+               toast.success(res.data.message);
+               queryClient.invalidateQueries(["wishlist", userId]);
+          },
+          onError: () => {
+               toast.error("Failed to clear wishlist");
+          }
+     });
 
      const handleAddToWishlist = (wishlistData) => {
           addWishlistMutation.mutate(wishlistData);
@@ -58,11 +71,17 @@ const useWishlist = () => {
      const handleRemoveWishlist = (wishlistData) => {
           removeWishlistMutation.mutate(wishlistData?.productId)
      };
+     
 
      return {
           handleAddToWishlist,
           handleRemoveWishlist,
-          isWishlistLoading: isPending || addWishlistMutation.isPending || removeWishlistMutation.isPending,
+          clearWishlist: clearWishlistMutation.mutate,
+          isWishlistLoading: 
+          isPending || 
+          addWishlistMutation.isPending || 
+          removeWishlistMutation.isPending ||
+          clearWishlistMutation.isPending,
           wishlist
      };
 };

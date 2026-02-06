@@ -16,12 +16,10 @@ const useCart = () => {
                return res.data;
           },
           onSuccess: (data, variables) => {
-               console.log(data);
                toast.success(data.message);
                queryClient.invalidateQueries(["cart", variables.userId]);
           },
-          onError: (err) => {
-               console.log(err);
+          onError: () => {
                toast.error("Failed to add to cart");
           }
      });

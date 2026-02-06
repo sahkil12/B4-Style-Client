@@ -15,7 +15,7 @@ const ProductDetails = () => {
      const product = useLoaderData()
      const { user } = UseAuth()
      const { handleAddToCart, isAddingToCart } = useCart()
-     const { handleAddToWishlist, handleRemoveWishlist, wishlist, isWishlistLoading } = useWishlist()
+     const { handleAddToWishlist, handleRemoveWishlist, wishlist } = useWishlist()
      const navigate = useNavigate()
      const userId = user?.uid
 
@@ -64,6 +64,7 @@ const ProductDetails = () => {
                toast.error("Please login to Add wishlist"),
                navigate("/auth/sign_in")
           )
+
           handleAddToWishlist({
                productId: product?._id
           })
@@ -76,6 +77,7 @@ const ProductDetails = () => {
      }
      // wishlist check 
      const isWishlist = wishlist?.some(p => p.productId === product?._id)
+     const outOfStock = product?.stock === 0;
 
      return (
           <div className="min-h-screen text-accent pt-20 pb-20">
@@ -133,7 +135,9 @@ const ProductDetails = () => {
                                         )
                                    }
                               </div>
-                              <p className='text-lg font-semibold mb-5 text-primary/90'>Stock - <span className='text-accent/80'>{product?.stock}</span></p>
+                              <h3 className={`text-base font-semibold mb-5 ${outOfStock ? 'text-primary' : 'text-accent'}`}>
+                                  {outOfStock ? 'Out Of Stock' : <span> Only <span className='text-xl text-primary/90'> {product?.stock} </span> items left</span>}
+                              </h3>
                               {/*  */}
                               <p className="text-neutral-400 text-sm leading-relaxed mb-10 max-w-md">
                                    {product?.description}
@@ -154,7 +158,7 @@ const ProductDetails = () => {
                                         ))}
                                    </div>
                               </div>
-                              {/* <p className='text-lg font-semibold mb-5'>Stock - {product?.stock}</p> */}
+
                               {/* Quantity & Actions */}
                               <div className="space-y-6">
                                    <h4 className="text-base font-medium bebas tracking-[2.5px] mb-4">Quantity</h4>
@@ -168,16 +172,15 @@ const ProductDetails = () => {
                                         {/* add to card button */}
                                         <button
                                              onClick={addToCart}
-                                             disabled={isAddingToCart}
+                                             disabled={outOfStock || isAddingToCart}
                                              className="flex-1 min-w-[200px] h-14 bg-primary text-accent font-bold text-sm sm:text-base uppercase tracking-widest flex items-center justify-center gap-3 hover:bg-primary/90 transition-all active:scale-95 rounded-md cursor-pointer">
                                              <FiShoppingBag size={18} /> {isAddingToCart ? "Adding.." : "Add to Cart"}
                                         </button>
                                         {/* wishlist button */}
                                         <button
-                                             disabled={isWishlistLoading}
+                                             // disabled={isWishlistLoading}
                                              onClick={isWishlist ? removeWishlist : addWishlist}
                                              className={`w-14 h-14 border border-accent/10 flex items-center justify-center cursor-pointer transition-all duration-200 rounded-md ${isWishlist ? 'bg-primary scale-105' : 'hover:bg-primary active:bg-primary'}`}>
-
                                              {isWishlist ? <FaHeart size={20} /> : <FiHeart size={20} />}
                                         </button>
                                    </div>

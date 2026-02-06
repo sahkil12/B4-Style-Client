@@ -1,13 +1,13 @@
-import React from 'react';
 import { motion } from 'framer-motion';
-import { HiOutlineTrash, HiMinus, HiPlus } from 'react-icons/hi';
+import { HiMinus, HiPlus } from 'react-icons/hi';
 import { IoClose } from "react-icons/io5";
 import { FaArrowRightLong } from "react-icons/fa6";
+import { Link } from 'react-router-dom';
 
 const AddCart = () => {
      return (
           <div className="min-h-screen bg-base-100 text-accent p-4 mt-20 sm:p-6">
-               <div className="xl:max-w-[75%] mx-auto py-5">
+               <div className="xl:max-w-[75%] mx-auto py-6 md:py-10">
                     {/* Page Title */}
                     <h1 className="bebas text-4xl md:text-5xl mb-10 tracking-wider">
                          SHOPPING CART
@@ -66,15 +66,10 @@ const AddCart = () => {
                                    <h2 className="bebas text-2xl mb-6 tracking-wider">ORDER SUMMARY</h2>
 
                                    <div className="space-y-4 text-sm font-medium">
-                                        <div className="flex justify-between">
+                                        <div className="flex justify-between border-b border-accent/10 pb-8">
                                              <span className="text-neutral-400">Subtotal</span>
                                              <span>$2400.00</span>
                                         </div>
-                                        <div className="flex justify-between border-b border-accent/10 pb-4">
-                                             <span className="text-neutral-400">Shipping</span>
-                                             <span className="text-green-500">Free</span>
-                                        </div>
-
                                         <div className="flex justify-between items-center pt-2">
                                              <span className="font-semibold text-lg">Total</span>
                                              <span className="font-semibold text-lg">$2400.00</span>
@@ -83,11 +78,11 @@ const AddCart = () => {
                                    {/* Checkout Button */}
                                    <button className="bg-primary py-2.5 sm:py-3 w-full mt-8 rounded-xs text-xs sm:text-sm tracking-widest flex font-semibold items-center justify-center gap-2 group">
                                         PROCEED TO CHECKOUT
-                                        <span className="group-hover:translate-x-1 transition-transform"><FaArrowRightLong size={15}/></span>
+                                        <span className="group-hover:translate-x-1 transition-transform"><FaArrowRightLong size={15} /></span>
                                    </button>
 
-                                   <button className="w-full text-center text-gray-400 hover:text-accent transition-colors text-sm mt-4 underline underline-offset-4">
-                                        Continue Shopping
+                                   <button className="w-full text-center text-neutral-400 hover:text-accent transition-colors text-sm mt-4 underline underline-offset-4">
+                                        <Link to={'/shop'}> Continue Shopping</Link>
                                    </button>
                               </motion.div>
                          </div>
