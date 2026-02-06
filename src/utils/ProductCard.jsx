@@ -8,17 +8,16 @@ import { FaHeart } from 'react-icons/fa';
 
 const ProductCard = ({ product, animation, bestSellers }) => {
 
-     const discountedPrice = product?.discount
-          ? Math.round(product.price - (product.price * product.discount) / 100)
-          : product.price;
-
-     // console.log(product);
      const { user } = UseAuth()
      const { handleAddToCart, isAddingToCart } = useCart()
      const { handleAddToWishlist, handleRemoveWishlist, wishlist, isWishlistLoading } = useWishlist()
      const navigate = useNavigate()
      const userId = user?.uid
-
+     
+     // discount price
+     const discountedPrice = product?.discount
+          ? Math.round(product.price - (product.price * product.discount) / 100)
+          : product.price;
      // handle add to cart 
      const addToCart = () => {
           if (!user) return navigate("/auth/sign_in");
@@ -47,12 +46,12 @@ const ProductCard = ({ product, animation, bestSellers }) => {
      const isWishlist = wishlist?.some(p => p.productId === product?._id)
 
      return (
-          <Link to={`/product/${product._id}`}>
-               <motion.div
-                    variants={animation}
-                    className="group cursor-pointer">
+          <motion.div
+               variants={animation}
+               className="group cursor-pointer">
+               <Link to={`/product/${product?._id}`}>
                     {/* Image Container */}
-                    <div className="relative aspect-[6/6] overflow-hidden rounded-sm transition-all duration-200 ease-in-out">
+                    <div className="relative aspect-[5/6] overflow-hidden rounded-sm transition-all duration-200 ease-in-out">
                          <img
                               src={product?.images[0]}
                               loading='lazy'
@@ -94,8 +93,8 @@ const ProductCard = ({ product, animation, bestSellers }) => {
                                    e.stopPropagation();
                                    isWishlist ? removeWishlist() : addWishlist();
                               }}
-                              className={`absolute top-4 right-3 p-2.5 rounded-full transition-all duration-200 cursor-pointer text-accent hover:scale-115 active:scale-115 ${isWishlist ? 'opacity-100 bg-primary' : 'group-hover:opacity-100 hover:bg-primary/90 md:opacity-0 active:bg-primary/90 bg-secondary/85'}`}>
-                              {isWishlist ? <FaHeart size={20} /> : <FiHeart size={20} />}
+                              className={`absolute top-4 right-3 p-2 rounded-full transition-all duration-200 cursor-pointer text-accent hover:scale-110 active:scale-110 ${isWishlist ? 'opacity-100 bg-primary' : 'group-hover:opacity-100 hover:bg-primary/90 md:opacity-0 active:bg-primary/90 bg-secondary/85'}`}>
+                              {isWishlist ? <FaHeart size={18} /> : <FiHeart size={18} />}
                          </button>
                          {/* Quick Add Button */}
                          <div className="absolute bottom-0 left-0 w-full p-2.5 sm:p-3 translate-y-0 sm:translate-y-full group-hover:translate-y-0 transition-transform duration-600 ease-out">
@@ -131,8 +130,8 @@ const ProductCard = ({ product, animation, bestSellers }) => {
                               )}
                          </div>
                     </div>
-               </motion.div >
-          </Link>
+               </Link>
+          </motion.div >
      );
 };
 

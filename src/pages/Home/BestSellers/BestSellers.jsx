@@ -1,5 +1,4 @@
 import { motion } from "motion/react";
-import { FiHeart, FiShoppingBag } from "react-icons/fi";
 import { FaFire } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
 import ProductCard from "../../../utils/ProductCard";
