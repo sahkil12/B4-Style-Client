@@ -25,7 +25,7 @@ const AddCart = () => {
                                    {/* Product Image */}
                                    <div className="w-24 h-24 md:w-32 md:h-32 bg-accent/50 rounded-md overflow-hidden flex items-center justify-center">
                                         <img
-                                             src="https://i.ibb.co/Lz0mN6N/hoodie.png"
+                                             src="https://i.ibb.co.com/fG4rTLsr/stealth-hoodie-webp.jpg"
                                              alt="Midnight Hoodie"
                                              loading='lazy'
                                              className="object-cover w-full h-full"

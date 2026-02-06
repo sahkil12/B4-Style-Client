@@ -13,7 +13,7 @@ const ProductCard = ({ product, animation, bestSellers }) => {
      const { handleAddToWishlist, handleRemoveWishlist, wishlist, isWishlistLoading } = useWishlist()
      const navigate = useNavigate()
      const userId = user?.uid
-     
+
      // discount price
      const discountedPrice = product?.discount
           ? Math.round(product.price - (product.price * product.discount) / 100)
@@ -114,20 +114,24 @@ const ProductCard = ({ product, animation, bestSellers }) => {
                     <div className="p-4 space-y-1.5 rounded-b-xl bg-secondary">
                          <p className="text-neutral-500 text-[12px] font-bold tracking-widest uppercase">
                               {product?.category}
+
                          </p>
                          <h3 className="text-sm flex gap-2 items-center font-semibold tracking-tight uppercase group-hover:text-primary group-active:text-primary transition-colors">
                               {product?.title}
-                              <span className='text-neutral-500 text-xs'>( Stock - {product.stock})</span>
+
                          </h3>
-                         <div className="flex items-center gap-3 mt-2">
-                              <span className="text-lg font-semibold">
-                                   ৳{discountedPrice}
-                              </span>
-                              {product.discount && (
-                                   <span className="text-neutral-500 line-through text-sm">
-                                        ৳{product?.price}
+                         <div className="flex justify-between items-center gap-3 mt-2">
+                              <div className='flex items-center gap-3'>
+                                   <span className="text-lg font-semibold">
+                                        ৳{discountedPrice}
                                    </span>
-                              )}
+                                   {product.discount && (
+                                        <span className="text-neutral-500 line-through text-sm">
+                                             ৳{product?.price}
+                                        </span>
+                                   )}
+                              </div>
+                              <span className='text-emerald-600 text-sm font-semibold'> Stock - {product.stock}</span>
                          </div>
                     </div>
                </Link>
