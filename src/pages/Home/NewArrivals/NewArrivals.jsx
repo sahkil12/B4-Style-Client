@@ -47,7 +47,7 @@ const NewArrivals = () => {
                               ))
                          }
                          {!isLoading &&
-                              products?.slice(0, 4)?.map((product) => (
+                              products?.slice(0, 8)?.map((product) => (
                                    <ProductCard
                                         key={product._id}
                                         product={product}

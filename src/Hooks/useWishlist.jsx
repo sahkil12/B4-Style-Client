@@ -8,7 +8,7 @@ const useWishlist = () => {
      const { user } = UseAuth()
      const userId = user?.uid
 
-     const { data: wishlist = [] } = useQuery({
+     const { data: wishlist = [], isPending } = useQuery({
           queryKey: ["wishlist", userId],
           enabled: !!userId,
           queryFn: async () => {
@@ -51,7 +51,7 @@ const useWishlist = () => {
                toast.error("Failed to add to wishlist");
           }
      });
-     
+
      const handleAddToWishlist = (wishlistData) => {
           addWishlistMutation.mutate(wishlistData);
      };
@@ -62,7 +62,7 @@ const useWishlist = () => {
      return {
           handleAddToWishlist,
           handleRemoveWishlist,
-          isWishlistLoading: addWishlistMutation.isPending || removeWishlistMutation.isPending,
+          isWishlistLoading: isPending || addWishlistMutation.isPending || removeWishlistMutation.isPending,
           wishlist
      };
 };

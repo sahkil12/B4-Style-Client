@@ -27,7 +27,7 @@ const ProductDetails = () => {
           category: product?.category
      });
      // suggest product based on category
-     const suggestProducts = relatedProducts?.filter(p => p._id !== product._id)
+     const suggestProducts = relatedProducts?.filter(p => p._id !== product?._id)
 
      const handleQuantity = (type) => {
           if (type === 'inc') setQuantity(prev => prev + 1);
@@ -45,7 +45,10 @@ const ProductDetails = () => {
           : product.price;
 
      const addToCart = () => {
-          if (!user) return navigate("/auth/sign_in");
+          if (!user) return (
+               toast.error("Please login to Add To Cart"),
+               navigate("/auth/sign_in")
+          )
 
           if (!selectedSize) return toast.error("Please Select Product Size")
           handleAddToCart({
@@ -57,7 +60,10 @@ const ProductDetails = () => {
      }
      // add wishlist
      const addWishlist = () => {
-          if (!user) return navigate("/auth/sign_in");
+          if (!user) return (
+               toast.error("Please login to Add wishlist"),
+               navigate("/auth/sign_in")
+          )
           handleAddToWishlist({
                productId: product?._id
           })
@@ -114,7 +120,7 @@ const ProductDetails = () => {
                               <p className="text-primary font-semibold tracking-[3px] text-sm mb-4 uppercase">{product?.category}</p>
                               <h1 className="text-4xl md:text-5xl bebas tracking-wider mb-6 leading-tight">{product?.title}</h1>
                               {/*  */}
-                              <div className="flex items-center gap-4 mb-8">
+                              <div className="flex items-center gap-4 mb-5">
                                    <span className="text-3xl font-bold text-accent">৳{discountedPrice}</span>
                                    {
                                         product?.oldPrice && (
@@ -127,6 +133,7 @@ const ProductDetails = () => {
                                         )
                                    }
                               </div>
+                              <p className='text-lg font-semibold mb-5 text-primary/90'>Stock - <span className='text-accent/80'>{product?.stock}</span></p>
                               {/*  */}
                               <p className="text-neutral-400 text-sm leading-relaxed mb-10 max-w-md">
                                    {product?.description}
@@ -140,13 +147,14 @@ const ProductDetails = () => {
                                                   key={size}
                                                   onClick={() => setSelectedSize(size)}
                                                   className={`w-12 h-12 flex items-center justify-center border font-bold rounded-md text-sm transition-all cursor-pointer
-                                                  ${selectedSize === size ? 'bg-primary text-accent border-primary' : 'border-accent/15 text-accent hover:border-primary '}`}
+                                                       ${selectedSize === size ? 'bg-primary text-accent border-primary' : 'border-accent/15 text-accent hover:border-primary '}`}
                                              >
                                                   {size}
                                              </button>
                                         ))}
                                    </div>
                               </div>
+                              {/* <p className='text-lg font-semibold mb-5'>Stock - {product?.stock}</p> */}
                               {/* Quantity & Actions */}
                               <div className="space-y-6">
                                    <h4 className="text-base font-medium bebas tracking-[2.5px] mb-4">Quantity</h4>

@@ -5,6 +5,7 @@ import UseAuth from '../Hooks/UseAuth';
 import useCart from '../Hooks/useCart';
 import useWishlist from '../Hooks/useWishlist';
 import { FaHeart } from 'react-icons/fa';
+import toast from 'react-hot-toast';
 
 const ProductCard = ({ product, animation, bestSellers }) => {
 
@@ -20,8 +21,10 @@ const ProductCard = ({ product, animation, bestSellers }) => {
           : product.price;
      // handle add to cart 
      const addToCart = () => {
-          if (!user) return navigate("/auth/sign_in");
-
+          if (!user) return (
+               toast.error("Please login to Add To Cart"),
+               navigate("/auth/sign_in")
+          )
           handleAddToCart({
                userId: userId,
                productId: product?._id,
@@ -31,7 +34,10 @@ const ProductCard = ({ product, animation, bestSellers }) => {
      }
      // add wishlist 
      const addWishlist = () => {
-          if (!user) return navigate("/auth/sign_in");
+          if (!user) return (
+               toast.error("Please login to Add Wishlist"),
+               navigate("/auth/sign_in")
+          )
           handleAddToWishlist({
                productId: product?._id
           })
@@ -131,7 +137,7 @@ const ProductCard = ({ product, animation, bestSellers }) => {
                                         </span>
                                    )}
                               </div>
-                              <span className='text-emerald-600 text-sm font-semibold'> Stock - {product.stock}</span>
+                              <span className='text-primary/90 text-sm font-semibold'> Stock - {product.stock}</span>
                          </div>
                     </div>
                </Link>
