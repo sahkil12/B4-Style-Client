@@ -10,9 +10,18 @@ const AddCart = () => {
 
      const { cart, isCartLoading } = useCart()
      console.log(cart);
+     // total amount count
+     const subtotal = cart?.reduce(
+          (sum, item) => sum + item?.product?.price * item?.quantity, 0
+     )
+     const quantity = cart?.reduce(
+          (sum, item) => sum + item?.quantity, 0
+     )
+
+     console.log(quantity);
 
      return (
-          <div className="min-h-[calc(100vh-300px)] bg-base-100 text-accent p-4 mt-20 sm:p-6">
+          <div className="min-h-[calc(100vh-200px)] bg-base-100 text-accent p-4 mt-20 sm:p-6">
                <div className="xl:max-w-[75%] mx-auto py-6 md:py-10">
                     {/* Page Title */}
                     {
@@ -23,7 +32,7 @@ const AddCart = () => {
                          )
                     }
                     {/* main content */}
-                    { cart?.length > 0 && (
+                    {cart?.length > 0 && (
                          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
                               {/* Left Side: Cart Items */}
                               <div className="lg:col-span-8 space-y-4">
@@ -100,11 +109,11 @@ const AddCart = () => {
                                         <div className="space-y-4 text-sm font-medium">
                                              <div className="flex justify-between border-b border-accent/10 pb-8">
                                                   <span className="text-neutral-400">Subtotal</span>
-                                                  <span>$2400.00</span>
+                                                  <span>৳ {subtotal}.00</span>
                                              </div>
                                              <div className="flex justify-between items-center pt-2">
                                                   <span className="font-semibold text-lg">Total</span>
-                                                  <span className="font-semibold text-lg">$2400.00</span>
+                                                  <span className="font-semibold text-lg">৳ {subtotal}.00</span>
                                              </div>
                                         </div>
                                         {/* Checkout Button */}

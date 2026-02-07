@@ -11,11 +11,11 @@ const Wishlist = () => {
      const { wishlist, isWishlistLoading, clearWishlist, wishlistLoad } = useWishlist()
 
      return (
-          <div className="min-h-[calc(100vh-300px)] bg-base-100 text-accent p-4 mt-20 sm:p-6">
+          <div className="min-h-[calc(100vh-200px)] bg-base-100 text-accent p-4 mt-20 sm:p-6">
                <div className="xl:max-w-[75%] mx-auto py-6 md:py-10">
                     {/* Header Section */}
                     {
-                         wishlist?.length < 0 && (
+                         wishlist?.length > 0 && (
                               <div className="flex justify-between items-end mb-6 border-b border-accent/10 pb-6">
                                    <h1 className="bebas text-3xl md:text-5xl tracking-wider">
                                         MY WISHLIST

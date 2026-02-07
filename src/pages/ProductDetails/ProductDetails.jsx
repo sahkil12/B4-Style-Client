@@ -158,7 +158,6 @@ const ProductDetails = () => {
                                         ))}
                                    </div>
                               </div>
-
                               {/* Quantity & Actions */}
                               <div className="space-y-6">
                                    <h4 className="text-base font-medium bebas tracking-[2.5px] mb-4">Quantity</h4>

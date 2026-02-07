@@ -50,6 +50,7 @@ const ProductCard = ({ product, animation, bestSellers, open }) => {
      }
      // wishlist check 
      const isWishlist = wishlist?.some(p => p.productId === product?._id)
+     const outOfStock = product?.stock === 0;
 
      return (
           <motion.div
@@ -110,7 +111,7 @@ const ProductCard = ({ product, animation, bestSellers, open }) => {
                                         e.stopPropagation();
                                         addToCart();
                                    }}
-                                   disabled={isAddingToCart}
+                                   disabled={isAddingToCart || outOfStock}
                                    className="w-full bg-primary hover:bg-primary/90 active:bg-primary/90 cursor-pointer text-accent font-semibold py-2.5 flex items-center justify-center gap-2 text-xs uppercase tracking-widest transition-all">
                                    <FiShoppingBag /> {isAddingToCart ? "Adding.." : "Quick Add"}
                               </button>
@@ -137,7 +138,7 @@ const ProductCard = ({ product, animation, bestSellers, open }) => {
                                         </span>
                                    )}
                               </div>
-                              <span className='text-primary/90 text-sm font-semibold'> Stock - {product.stock}</span>
+                              <span className='text-primary/90 text-sm font-semibold'>{outOfStock ? "Stock Out" : <p>Stock - {product.stock}</p>}</span>
                          </div>
                     </div>
                </Link>
