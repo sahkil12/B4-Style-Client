@@ -8,7 +8,7 @@ const useWishlist = () => {
      const { user } = UseAuth()
      const userId = user?.uid
 
-     const { data: wishlist = [], isPending } = useQuery({
+     const { data: wishlist = [], isPending: wishlistLoad } = useQuery({
           queryKey: ["wishlist", userId],
           enabled: !!userId,
           queryFn: async () => {
@@ -77,8 +77,8 @@ const useWishlist = () => {
           handleAddToWishlist,
           handleRemoveWishlist,
           clearWishlist: clearWishlistMutation.mutate,
+          wishlistLoad,
           isWishlistLoading: 
-          isPending || 
           addWishlistMutation.isPending || 
           removeWishlistMutation.isPending ||
           clearWishlistMutation.isPending,

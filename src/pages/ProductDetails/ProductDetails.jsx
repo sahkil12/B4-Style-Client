@@ -15,7 +15,7 @@ const ProductDetails = () => {
      const product = useLoaderData()
      const { user } = UseAuth()
      const { handleAddToCart, isAddingToCart } = useCart()
-     const { handleAddToWishlist, handleRemoveWishlist, wishlist } = useWishlist()
+     const { handleAddToWishlist, handleRemoveWishlist, wishlist, isWishlistLoading } = useWishlist()
      const navigate = useNavigate()
      const userId = user?.uid
 
@@ -178,7 +178,7 @@ const ProductDetails = () => {
                                         </button>
                                         {/* wishlist button */}
                                         <button
-                                             // disabled={isWishlistLoading}
+                                             disabled={isWishlistLoading}
                                              onClick={isWishlist ? removeWishlist : addWishlist}
                                              className={`w-14 h-14 border border-accent/10 flex items-center justify-center cursor-pointer transition-all duration-200 rounded-md ${isWishlist ? 'bg-primary scale-105' : 'hover:bg-primary active:bg-primary'}`}>
                                              {isWishlist ? <FaHeart size={20} /> : <FiHeart size={20} />}

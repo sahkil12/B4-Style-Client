@@ -42,11 +42,17 @@ export const router = createBrowserRouter([
                },
                {
                     path: 'wishlist',
-                    element: <Wishlist></Wishlist>
+                    element: <PrivateRoute>
+                         <Wishlist>
+                         </Wishlist>
+                    </PrivateRoute>
                },
                {
                     path: 'cart',
-                    element: <AddCart></AddCart>
+                    element: <PrivateRoute>
+                         <AddCart>
+                         </AddCart>
+                    </PrivateRoute>
                },
                {
                     path: "product/:id",
@@ -56,7 +62,10 @@ export const router = createBrowserRouter([
                },
                {
                     path: "profile",
-                    element: <PrivateRoute><Profile></Profile></PrivateRoute>
+                    element: <PrivateRoute>
+                         <Profile>
+                         </Profile>
+                    </PrivateRoute>
                }
           ]
      },

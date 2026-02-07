@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { FiMail, FiLock, FiEye, FiEyeOff, FiArrowRight, FiUser, FiCheckCircle } from 'react-icons/fi';
 import { FcGoogle } from 'react-icons/fc';
 import UseAuth from '../../../Hooks/UseAuth';
@@ -19,6 +19,9 @@ const SignUp = () => {
      const [googleLoading, setGoogleLoading] = useState(false);
      const [showPassword, setShowPassword] = useState(false);
      const navigate = useNavigate()
+     const location = useLocation()
+     const from = location.state?.from?.pathname || "/";
+
      // Simple Email Validation
      const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
      const loader = <span className='animate-spin'><ImSpinner9 size={22} /></span>
@@ -60,7 +63,7 @@ const SignUp = () => {
                          displayName: name,
                     })
                     toast.success(`${name}, your account was created successfully`, { duration: 1000 })
-                    navigate('/')
+                    navigate(from, { replace: true });
                }
           }
           catch (error) {
@@ -81,7 +84,7 @@ const SignUp = () => {
           googleCreate()
                .then(res => {
                     toast.success(`Your Account Create Successfully`, { duration: 1000 })
-                    navigate('/')
+                    navigate(from, { replace: true });
                     setGoogleLoading(false);
                })
                .catch(error => {
@@ -190,7 +193,7 @@ const SignUp = () => {
                                    {/* Main Sign In Button */}
                                    <button
                                         type="submit"
-                                        disabled={formLoading }
+                                        disabled={formLoading}
                                         className="w-full bg-primary text-accent font-bold py-3 text-xs sm:text-sm rounded-sm flex items-center justify-center gap-2 hover:bg-primary/90 active:scale-[0.98] transition-all uppercase tracking-widest group cursor-pointer"
                                    >
                                         {formLoading ? loader : <> Create Account

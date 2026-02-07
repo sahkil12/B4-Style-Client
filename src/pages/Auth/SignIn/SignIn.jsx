@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { FiMail, FiLock, FiEye, FiEyeOff, FiArrowRight, FiCheckCircle } from 'react-icons/fi';
 import { FcGoogle } from 'react-icons/fc';
 import { ImSpinner9 } from "react-icons/im";
@@ -16,6 +16,9 @@ const SignIn = () => {
      const [googleLoading, setGoogleLoading] = useState(false);
      const [error, setError] = useState("");
      const navigate = useNavigate()
+     const location = useLocation()
+     const from = location.state?.from?.pathname || "/";
+
      // Simple Email Validation
      const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
      const loader = <span className='animate-spin'><ImSpinner9 size={22} /></span>
@@ -37,7 +40,7 @@ const SignIn = () => {
                const result = await loginUser(email, password)
                if (result) {
                     toast.success("Logged in successfully", { duration: 1000 })
-                    navigate('/')
+                    navigate(from, { replace: true });
                     setFormLoading(false)
                }
           }
@@ -53,7 +56,7 @@ const SignIn = () => {
           googleCreate()
                .then(res => {
                     toast.success(`You Are Successfully Login`, { duration: 1000 })
-                    navigate('/')
+                    navigate(from, { replace: true });
                     setGoogleLoading(false);
                })
                .catch(error => {

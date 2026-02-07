@@ -8,7 +8,7 @@ import { FiHeart } from 'react-icons/fi';
 import { MdDeleteForever } from "react-icons/md";
 
 const Wishlist = () => {
-     const { wishlist, isWishlistLoading, clearWishlist } = useWishlist()
+     const { wishlist, isWishlistLoading, clearWishlist, wishlistLoad } = useWishlist()
 
      return (
           <div className="min-h-screen bg-base-100 text-accent p-4 mt-20 sm:p-6">
@@ -35,12 +35,12 @@ const Wishlist = () => {
                     </div>
                     {/* Wishlist Grid */}
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                         {isWishlistLoading &&
+                         {wishlistLoad &&
                               Array.from({ length: 6 }).map((_, ind) => (
                                    <ProductSkeleton key={ind}></ProductSkeleton>
                               ))
                          }
-                         {!isWishlistLoading &&
+                         {!wishlistLoad &&
                               wishlist?.map((item, index) => (
                                    <ProductCard
                                         key={index}
@@ -52,8 +52,8 @@ const Wishlist = () => {
                               ))}
 
                     </div>
-                    {/* Empty State (Optional) */}
-                    {!isWishlistLoading && wishlist.length === 0 && (
+                    {/* Empty State  */}
+                    {!wishlistLoad && wishlist.length === 0 && (
                          <div className="flex flex-col space-y-3 w-fit mx-auto text-center py-36 col-span-full">
                               <span className="p-6 text-accent/70 bg-accent/10 rounded-full mx-auto mb-7"> < FiHeart size={45} /> </span>
                               <h2 className="bebas tracking-wider text-2xl text-accent/90">Your wishlist is empty</h2>
