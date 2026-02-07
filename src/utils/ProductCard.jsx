@@ -14,7 +14,6 @@ const ProductCard = ({ product, animation, bestSellers, open }) => {
      const { handleAddToWishlist, handleRemoveWishlist, wishlist, isWishlistLoading, wishlistLoad } = useWishlist()
      const navigate = useNavigate()
      const userId = user?.uid
-
      // discount price
      const discountedPrice = product?.discount
           ? Math.round(product.price - (product.price * product.discount) / 100)

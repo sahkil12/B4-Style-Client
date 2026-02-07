@@ -14,7 +14,9 @@ const categories = [
      { label: "Shirts", value: "SHIRTS" },
      { label: "Winter Wear", value: "WINTER WEAR" }
 ];
-const sizes = ["S", "M", "L", "XL", "XXL", 32, 34, 36, 38];
+const clothSizes = ["S", "M", "L", "XL", "XXL"];
+const pantsSizes = [32, 34, 36, 38];
+const allSizes = ["S", "M", "L", "XL", "XXL", 32, 34, 36, 38]
 
 const Shop = () => {
 
@@ -26,6 +28,19 @@ const Shop = () => {
           search: "",
           sort: "newest"
      })
+
+     let sizes = []
+
+     if(filters?.category === ""){
+          sizes = allSizes
+     }
+     else if(filters?.category === "PANTS"){
+          sizes = pantsSizes
+     }
+     else{
+          sizes = clothSizes
+     }
+
      const { data: products = [], isLoading, error } = useProducts({
           category: filters?.category,
           size: filters?.size,

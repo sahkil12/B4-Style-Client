@@ -8,19 +8,20 @@ import useCart from '../../Hooks/useCart';
 import { MdDeleteForever } from 'react-icons/md';
 
 const AddCart = () => {
-
      const {
-          cart, isCartLoading, updateCartQuantity, removeCartItem, removeCartLoad, clearAllCart, clearCartLoading
+          cart,
+          isCartLoading,
+          updateCartQuantity,
+          removeCartItem,
+          removeCartLoad,
+          clearAllCart,
+          clearCartLoading,
+          updateCartQuantityLoading
      } = useCart()
      // total amount count
      const subtotal = cart?.reduce(
           (sum, item) => sum + item?.product?.price * item?.quantity, 0
      )
-     const quantity = cart?.reduce(
-          (sum, item) => sum + item?.quantity, 0
-     )
-
-     console.log(quantity);
 
      return (
           <div className="min-h-[calc(100vh-200px)] bg-base-100 text-accent p-2.5 mt-20 sm:p-6">
@@ -79,7 +80,7 @@ const AddCart = () => {
                                                                  src={item?.product?.images[0]}
                                                                  alt={item?.product?.slug}
                                                                  loading='lazy'
-                                                                 className="object-cover w-full h-full"
+                                                                 className="object-cover w-fit h-24 md:h-32"
                                                             />
                                                        </Link>
                                                   </div>
@@ -102,20 +103,22 @@ const AddCart = () => {
                                                             {/* Quantity Controller */}
                                                             <div className="flex items-center border border-accent/20 rounded-md overflow-hidden">
                                                                  <button
+                                                                      disabled={updateCartQuantityLoading}
                                                                       onClick={() =>
                                                                            updateCartQuantity.mutate(
                                                                                 { cartItemId: item?._id, type: "dec" }
                                                                            )}
-                                                                      className="p-2 hover:bg-accent/10 active:bg-accent/10 transition-colors">
+                                                                      className="p-2 hover:bg-accent/10 active:bg-accent/10 transition-colors cursor-pointer">
                                                                       <HiMinus size={14} />
                                                                  </button>
                                                                  <span className="px-4 py-1 text-sm font-bold">{item?.quantity}</span>
                                                                  <button
+                                                                      disabled={updateCartQuantityLoading || item?.quantity >= item?.product?.stock}
                                                                       onClick={() =>
                                                                            updateCartQuantity.mutate(
                                                                                 { cartItemId: item?._id, type: "inc" }
                                                                            )}
-                                                                      className="p-2 hover:bg-accent/10 active:bg-accent/10 transition-colors">
+                                                                      className={`p-2 transition-colors ${item?.quantity >= item?.product?.stock ? ' bg-primary/80 cursor-not-allowed' : 'hover:bg-accent/10 active:bg-accent/10 cursor-pointer'}`}>
                                                                       <HiPlus size={14} />
                                                                  </button>
                                                             </div>
@@ -132,6 +135,7 @@ const AddCart = () => {
                                    <motion.div
                                         initial={{ opacity: 0, x: 20 }}
                                         animate={{ opacity: 1, x: 0 }}
+                                        transition={{ duration: .25, ease:"easeOut" }}
                                         className="bg-base-200/70 border border-accent/10 rounded-lg p-6"
                                    >
                                         <h2 className="bebas text-2xl mb-6 tracking-wider">ORDER SUMMARY</h2>

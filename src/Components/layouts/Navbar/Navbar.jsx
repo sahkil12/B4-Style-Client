@@ -20,8 +20,7 @@ const Navbar = () => {
      const { user } = UseAuth()
      const { wishlistCount } = useWishlist()
      const { cartQuantity } = useCart()
-     console.log(wishlistCount);
-     console.log(cartQuantity);
+
 
      useEffect(() => {
           const handleScrolled = () => {

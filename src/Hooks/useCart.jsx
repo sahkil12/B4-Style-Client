@@ -17,18 +17,16 @@ const useCart = () => {
                return res.data;
           }
      });
-
+     // total cart quantity
      const cartQuantity = cart?.reduce(
           (sum, item) => sum + item?.quantity, 0
      )
-
      // UPDATE QUANTITY
      const updateCartQuantity = useMutation({
           mutationFn: ({ cartItemId, type }) =>
                axiosPublic.patch("/cart/quantity", { cartItemId, type }),
 
-          onSuccess: (res) => {
-               console.log(res.data);
+          onSuccess: () => {
                queryClient.invalidateQueries(["cart", user?.uid])
           }
      })
@@ -82,6 +80,7 @@ const useCart = () => {
           isCartLoading: isPending,
           isAddingToCart: addToCartMutation.isPending,
           updateCartQuantity,
+          updateCartQuantityLoading: updateCartQuantity.isPending ,
           removeCartItem,
           removeCartLoad: removeCartItem.isPending,
           clearAllCart,
