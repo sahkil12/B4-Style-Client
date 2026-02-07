@@ -2,6 +2,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import axiosPublic from "./axiosPublic";
 import UseAuth from "./UseAuth";
+import axios from "axios";
 
 const useCart = () => {
      const queryClient = useQueryClient();
@@ -17,12 +18,18 @@ const useCart = () => {
                return res.data;
           }
      });
+
+     const CartQuantity = cart?.reduce(
+          (sum, item) => sum + item?.quantity, 0
+     )
+
      // UPDATE QUANTITY
      const updateCartQuantity = useMutation({
           mutationFn: ({ cartItemId, type }) =>
                axiosPublic.patch("/cart/quantity", { cartItemId, type }),
 
-          onSuccess: () => {
+          onSuccess: (res) => {
+               console.log(res.data);
                queryClient.invalidateQueries(["cart", user?.uid])
           }
      })
@@ -31,12 +38,21 @@ const useCart = () => {
           mutationFn: (cartItemId) =>
                axiosPublic.delete(`/cart/${cartItemId}`),
 
-          onSuccess: () => {
+          onSuccess: (res) => {
+               toast.success(res?.data?.message);
                queryClient.invalidateQueries(["cart", user?.uid])
           }
      })
-     console.log(removeCartItem);
+     // clear all cart api
+     const clearAllCart = useMutation({
+          mutationFn: () =>
+               axiosPublic.delete(`/cart/clear/${userId}`),
 
+          onSuccess: (res) => {
+               toast.success(res?.data?.message);
+               queryClient.invalidateQueries(["cart", userId])
+          },
+     })
      // ADD to cart
      const addToCartMutation = useMutation({
           mutationFn: async ({ userId, productId, quantity, size }) => {
@@ -68,8 +84,10 @@ const useCart = () => {
           isAddingToCart: addToCartMutation.isPending,
           updateCartQuantity,
           removeCartItem,
-          removeCartLoad: removeCartItem.isPending
-     
+          removeCartLoad: removeCartItem.isPending,
+          clearAllCart,
+          clearCartLoading: clearAllCart.isPending,
+          CartQuantity
      };
 };
 

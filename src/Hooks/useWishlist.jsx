@@ -16,6 +16,9 @@ const useWishlist = () => {
                return res.data
           }
      });
+
+     const wishlistCount = wishlist?.length
+
      // add wishlist
      const addWishlistMutation = useMutation({
           mutationFn: async ({ productId }) => {
@@ -71,18 +74,19 @@ const useWishlist = () => {
      const handleRemoveWishlist = (wishlistData) => {
           removeWishlistMutation.mutate(wishlistData?.productId)
      };
-     
+
 
      return {
           handleAddToWishlist,
           handleRemoveWishlist,
           clearWishlist: clearWishlistMutation.mutate,
           wishlistLoad,
-          isWishlistLoading: 
-          addWishlistMutation.isPending || 
-          removeWishlistMutation.isPending ||
-          clearWishlistMutation.isPending,
-          wishlist
+          isWishlistLoading:
+               addWishlistMutation.isPending ||
+               removeWishlistMutation.isPending ||
+               clearWishlistMutation.isPending,
+          wishlist,
+          wishlistCount
      };
 };
 

@@ -9,8 +9,9 @@ import { MdDeleteForever } from 'react-icons/md';
 
 const AddCart = () => {
 
-     const { cart, isCartLoading, updateCartQuantity, removeCartItem, removeCartLoad } = useCart()
-     console.log(cart);
+     const {
+          cart, isCartLoading, updateCartQuantity, removeCartItem, removeCartLoad, clearAllCart, clearCartLoading
+     } = useCart()
      // total amount count
      const subtotal = cart?.reduce(
           (sum, item) => sum + item?.product?.price * item?.quantity, 0
@@ -33,9 +34,9 @@ const AddCart = () => {
                                    </h1>
                                    {/*  */}
                                    <button
-                                        // onClick={clearWishlist}
+                                        onClick={() => clearAllCart.mutate()}
                                         className="flex items-center text-sm font-semibold text-neutral-300 gap-2 hover:bg-primary hover:text-accent py-2 px-2.5 rounded-xs active:text-primary/85 transition-all duration-200 cursor-pointer"
-                                       // disabled={isWishlistLoading}
+                                        disabled={clearCartLoading}
                                    >
                                         <MdDeleteForever size={20} /> CLEAR ALL
                                    </button>
@@ -48,7 +49,7 @@ const AddCart = () => {
                               {/* Left Side: Cart Items */}
                               <div className="lg:col-span-8 space-y-4">
                                    {/* loading skelton */}
-                                   {isCartLoading &&
+                                   {isCartLoading || clearCartLoading &&
                                         Array.from({ length: 3 }).map((_, idx) => (
                                              <div key={idx} className="animate-pulse h-36 flex gap-5 p-4 bg-accent/5 rounded-md shadow ">
                                                   <div className="w-28 rounded-sm bg-accent/15 "></div>
@@ -73,12 +74,14 @@ const AddCart = () => {
                                              >
                                                   {/* Product Image */}
                                                   <div className="w-24 h-24 md:w-32 md:h-32 bg-accent/50 rounded-md overflow-hidden flex items-center justify-center">
-                                                       <img
-                                                            src={item?.product?.images[0]}
-                                                            alt={item?.product?.slug}
-                                                            loading='lazy'
-                                                            className="object-cover w-full h-full"
-                                                       />
+                                                       <Link to={`/product/${item?.product._id}`}>
+                                                            <img
+                                                                 src={item?.product?.images[0]}
+                                                                 alt={item?.product?.slug}
+                                                                 loading='lazy'
+                                                                 className="object-cover w-full h-full"
+                                                            />
+                                                       </Link>
                                                   </div>
                                                   {/* Product Info */}
                                                   <div className="flex-1 flex flex-col justify-between">
