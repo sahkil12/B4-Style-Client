@@ -17,7 +17,7 @@ const Wishlist = () => {
                     {
                          wishlist?.length > 0 && (
                               <div className="flex justify-between items-end mb-6 border-b border-accent/10 pb-6">
-                                   <h1 className="bebas text-3xl md:text-5xl tracking-wider">
+                                   <h1 className="bebas text-3xl sm:text-4xl md:text-5xl tracking-wider">
                                         MY WISHLIST
                                    </h1>
                                    <p className="text-neutral-400 font-medium pb-1">
@@ -30,7 +30,7 @@ const Wishlist = () => {
                          {wishlist?.length > 0 && (
                               <button
                                    onClick={clearWishlist}
-                                   className="flex items-center text-sm font-semibold text-neutral-300 gap-2 hover:bg-primary hover:text-accent py-2 px-2.5 rounded-xs active:text-primary/85 transition-all duration-200 cursor-pointer"
+                                   className="flex items-center text-xs sm:text-sm font-semibold text-neutral-300 gap-1 hover:bg-primary hover:text-accent py-2 px-2.5 rounded-xs active:bg-primary active:text-accent transition-all duration-200 cursor-pointer"
                                    disabled={isWishlistLoading}
                               >
                                    <MdDeleteForever size={20} /> CLEAR ALL

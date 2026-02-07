@@ -2,7 +2,6 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import axiosPublic from "./axiosPublic";
 import UseAuth from "./UseAuth";
-import axios from "axios";
 
 const useCart = () => {
      const queryClient = useQueryClient();
@@ -19,7 +18,7 @@ const useCart = () => {
           }
      });
 
-     const CartQuantity = cart?.reduce(
+     const cartQuantity = cart?.reduce(
           (sum, item) => sum + item?.quantity, 0
      )
 
@@ -87,7 +86,7 @@ const useCart = () => {
           removeCartLoad: removeCartItem.isPending,
           clearAllCart,
           clearCartLoading: clearAllCart.isPending,
-          CartQuantity
+          cartQuantity
      };
 };
 

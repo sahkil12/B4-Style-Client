@@ -54,7 +54,7 @@ const useWishlist = () => {
                toast.error("Failed to add to wishlist");
           }
      });
-     // 
+     // clear all wishlist 
      const clearWishlistMutation = useMutation({
           mutationFn: async () => {
                return axiosPublic.delete(`/wishlist/clear/${userId}`);

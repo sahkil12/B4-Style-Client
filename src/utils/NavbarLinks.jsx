@@ -5,7 +5,7 @@ export const navLinks = [
      { name: "SHOP", to: '/shop' },
      { name: "ABOUT", to: '/about' },
      { name: "CONTACT", to: '/contact' },
-     { name: "WISHLIST", icon: <FiHeart />, to: '/wishlist' },
+     { name: "WISHLIST", icon: <FiHeart />, to: '/wishlist', wishlist: true },
 ];
 
 export const menuVariants = {

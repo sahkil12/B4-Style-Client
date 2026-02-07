@@ -10,12 +10,18 @@ import UseAuth from "../../../Hooks/UseAuth";
 import AuthLink from "./AuthLink";
 import DesktopLinks from "./DesktopLinks";
 import { menuVariants, itemVariants, navLinks } from "../../../utils/NavbarLinks";
+import useWishlist from "../../../Hooks/useWishlist";
+import useCart from "../../../Hooks/useCart";
 
 const Navbar = () => {
      const [open, setOpen] = useState(false)
      const [scrolled, setScrolled] = useState(false)
      const [isSearchOpen, setIsSearchOpen] = useState(false);
      const { user } = UseAuth()
+     const { wishlistCount } = useWishlist()
+     const { cartQuantity } = useCart()
+     console.log(wishlistCount);
+     console.log(cartQuantity);
 
      useEffect(() => {
           const handleScrolled = () => {
@@ -48,7 +54,7 @@ const Navbar = () => {
                          <DesktopLinks links={navLinks}>
                          </DesktopLinks>
                     </div>
-                    <div className="navbar-end gap-6">
+                    <div className="navbar-end gap-7">
                          <button
                               aria-label="Search"
                               onClick={() => setIsSearchOpen(true)}
@@ -56,18 +62,26 @@ const Navbar = () => {
                          >
                               <FiSearch size={22} />
                          </button>
-                         <Link
-                              aria-label="Wishlist"
-                              to={'/wishlist'}
-                              className="hover:text-primary hidden lg:inline">
-                              <FiHeart size={22}></FiHeart>
-                         </Link>
-                         <Link
-                              title="Cart"
-                              to={'/cart'}
-                              className="hover:text-primary active:text-primary">
-                              <FiShoppingBag size={22}></FiShoppingBag>
-                         </Link>
+                         {/* wishlist icon button */}
+                         <div className="indicator hidden lg:inline">
+                              <Link
+                                   aria-label="Wishlist"
+                                   to={'/wishlist'}
+                                   className="hover:text-primary ">
+                                   <FiHeart size={22}></FiHeart>
+                              </Link>
+                              <span className="badge badge-sm bg-primary text-accent -top-1.5 -right-0.5 w-6 h-6 indicator-item rounded-full">{wishlistCount}</span>
+                         </div>
+                         {/* cart icon button*/}
+                         <div className="indicator">
+                              <Link
+                                   title="Cart"
+                                   to={'/cart'}
+                                   className="hover:text-primary active:text-primary">
+                                   <FiShoppingBag size={22}></FiShoppingBag>
+                              </Link>
+                              <span className="badge badge-sm bg-primary text-accent -top-1.5 -right-0.5 w-6 h-6 indicator-item rounded-full">{cartQuantity}</span>
+                         </div>
                          {/* reuseable desktop auth link*/}
                          <AuthLink user={user} className="hover:text-primary active:text-primary hidden lg:flex items-center gap-2"></AuthLink>
                          {/* menu open close button */}
@@ -103,12 +117,15 @@ const Navbar = () => {
                                         to={item?.to}
                                         onClickCapture={() => setOpen(false)}
                                         className={({ isActive }) =>
-                                             `flex items-center gap-3 tracking-widest transition-colors duration-200 hover:text-accent
+                                             `flex items-center gap-3 tracking-widest transition-colors duration-200 hover:text-accent ${item.wishlist ? 'indicator' : ''}
                                                   ${isActive ? "text-primary" : "text-accent/80"}`
                                         }
                                    >
                                         {item.icon && item.icon}
                                         {item.name}
+                                        {item.wishlist &&
+                                             <span className="badge badge-sm font-extrabold bg-primary text-accent top-1 -right-4 w-7 h-7 indicator-item rounded-full">{wishlistCount}</span>
+                                        }
                                    </NavLink>
                               </motion.li>
                          ))}

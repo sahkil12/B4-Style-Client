@@ -23,19 +23,19 @@ const AddCart = () => {
      console.log(quantity);
 
      return (
-          <div className="min-h-[calc(100vh-200px)] bg-base-100 text-accent p-4 mt-20 sm:p-6">
+          <div className="min-h-[calc(100vh-200px)] bg-base-100 text-accent p-2.5 mt-20 sm:p-6">
                <div className="xl:max-w-[75%] mx-auto py-6 md:py-10">
                     {/* Page Title */}
                     {
                          cart?.length > 0 && (
                               <div className='flex items-end mb-12 justify-between'>
-                                   <h1 className="bebas text-4xl md:text-5xl tracking-wider">
+                                   <h1 className="bebas text-3xl sm:text-4xl md:text-5xl tracking-wider">
                                         SHOPPING CART
                                    </h1>
                                    {/*  */}
                                    <button
                                         onClick={() => clearAllCart.mutate()}
-                                        className="flex items-center text-sm font-semibold text-neutral-300 gap-2 hover:bg-primary hover:text-accent py-2 px-2.5 rounded-xs active:text-primary/85 transition-all duration-200 cursor-pointer"
+                                        className="flex items-center text-xs sm:text-sm font-semibold text-neutral-300 gap-1 hover:bg-primary hover:text-accent py-2 px-2.5 rounded-xs active:bg-primary active:text-accent transition-all duration-200 cursor-pointer"
                                         disabled={clearCartLoading}
                                    >
                                         <MdDeleteForever size={20} /> CLEAR ALL
@@ -93,7 +93,7 @@ const AddCart = () => {
                                                             <button
                                                                  disabled={removeCartLoad}
                                                                  onClick={() => removeCartItem?.mutate(item?._id)}
-                                                                 className="text-accent hover:text-primary cursor-pointer transition-colors">
+                                                                 className="text-accent hover:text-primary active:text-primary cursor-pointer transition-colors">
                                                                  <IoClose size={24} />
                                                             </button>
                                                        </div>
@@ -106,7 +106,7 @@ const AddCart = () => {
                                                                            updateCartQuantity.mutate(
                                                                                 { cartItemId: item?._id, type: "dec" }
                                                                            )}
-                                                                      className="p-2 hover:bg-accent/10 transition-colors">
+                                                                      className="p-2 hover:bg-accent/10 active:bg-accent/10 transition-colors">
                                                                       <HiMinus size={14} />
                                                                  </button>
                                                                  <span className="px-4 py-1 text-sm font-bold">{item?.quantity}</span>
@@ -115,12 +115,12 @@ const AddCart = () => {
                                                                            updateCartQuantity.mutate(
                                                                                 { cartItemId: item?._id, type: "inc" }
                                                                            )}
-                                                                      className="p-2 hover:bg-accent/10 transition-colors">
+                                                                      className="p-2 hover:bg-accent/10 active:bg-accent/10 transition-colors">
                                                                       <HiPlus size={14} />
                                                                  </button>
                                                             </div>
                                                             {/* Price */}
-                                                            <p className="font-semibold text-base md:text-lg">৳ {item?.product?.price * item?.quantity} </p>
+                                                            <p className="font-semibold text-sm sm:text-base md:text-lg">৳ {item?.product?.price * item?.quantity} </p>
                                                        </div>
                                                   </div>
                                              </motion.div>
