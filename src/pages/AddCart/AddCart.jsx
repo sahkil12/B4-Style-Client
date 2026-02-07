@@ -5,10 +5,11 @@ import { IoClose } from "react-icons/io5";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { Link } from 'react-router-dom';
 import useCart from '../../Hooks/useCart';
+import { MdDeleteForever } from 'react-icons/md';
 
 const AddCart = () => {
 
-     const { cart, isCartLoading, updateCartQuantity } = useCart()
+     const { cart, isCartLoading, updateCartQuantity, removeCartItem, removeCartLoad } = useCart()
      console.log(cart);
      // total amount count
      const subtotal = cart?.reduce(
@@ -26,9 +27,19 @@ const AddCart = () => {
                     {/* Page Title */}
                     {
                          cart?.length > 0 && (
-                              <h1 className="bebas text-4xl md:text-5xl mb-10 tracking-wider">
-                                   SHOPPING CART
-                              </h1>
+                              <div className='flex items-end mb-12 justify-between'>
+                                   <h1 className="bebas text-4xl md:text-5xl tracking-wider">
+                                        SHOPPING CART
+                                   </h1>
+                                   {/*  */}
+                                   <button
+                                        // onClick={clearWishlist}
+                                        className="flex items-center text-sm font-semibold text-neutral-300 gap-2 hover:bg-primary hover:text-accent py-2 px-2.5 rounded-xs active:text-primary/85 transition-all duration-200 cursor-pointer"
+                                       // disabled={isWishlistLoading}
+                                   >
+                                        <MdDeleteForever size={20} /> CLEAR ALL
+                                   </button>
+                              </div>
                          )
                     }
                     {/* main content */}
@@ -76,7 +87,10 @@ const AddCart = () => {
                                                                  <h3 className="uppercase text-sm mb-1.5 sm:text-lg font-semibold tracking-wider">{item?.product?.title}</h3>
                                                                  <p className="text-neutral-400 text-sm font-medium">Size: {item?.size}</p>
                                                             </div>
-                                                            <button className="text-accent hover:text-primary transition-colors">
+                                                            <button
+                                                                 disabled={removeCartLoad}
+                                                                 onClick={() => removeCartItem?.mutate(item?._id)}
+                                                                 className="text-accent hover:text-primary cursor-pointer transition-colors">
                                                                  <IoClose size={24} />
                                                             </button>
                                                        </div>

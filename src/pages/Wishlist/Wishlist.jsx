@@ -30,7 +30,7 @@ const Wishlist = () => {
                          {wishlist?.length > 0 && (
                               <button
                                    onClick={clearWishlist}
-                                   className="flex items-center text-sm font-medium text-neutral-400 gap-2 hover:text-primary/85 active:text-primary/85 transition-all duration-200 cursor-pointer"
+                                   className="flex items-center text-sm font-semibold text-neutral-300 gap-2 hover:bg-primary hover:text-accent py-2 px-2.5 rounded-xs active:text-primary/85 transition-all duration-200 cursor-pointer"
                                    disabled={isWishlistLoading}
                               >
                                    <MdDeleteForever size={20} /> CLEAR ALL

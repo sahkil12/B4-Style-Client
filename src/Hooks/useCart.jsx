@@ -26,7 +26,17 @@ const useCart = () => {
                queryClient.invalidateQueries(["cart", user?.uid])
           }
      })
-     console.log(updateCartQuantity.data);
+     // REMOVE SINGLE ITEM
+     const removeCartItem = useMutation({
+          mutationFn: (cartItemId) =>
+               axiosPublic.delete(`/cart/${cartItemId}`),
+
+          onSuccess: () => {
+               queryClient.invalidateQueries(["cart", user?.uid])
+          }
+     })
+     console.log(removeCartItem);
+
      // ADD to cart
      const addToCartMutation = useMutation({
           mutationFn: async ({ userId, productId, quantity, size }) => {
@@ -56,7 +66,10 @@ const useCart = () => {
           handleAddToCart,
           isCartLoading: isPending,
           isAddingToCart: addToCartMutation.isPending,
-          updateCartQuantity
+          updateCartQuantity,
+          removeCartItem,
+          removeCartLoad: removeCartItem.isPending
+     
      };
 };
 
