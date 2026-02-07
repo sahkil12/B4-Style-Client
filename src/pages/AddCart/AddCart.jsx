@@ -8,7 +8,7 @@ import useCart from '../../Hooks/useCart';
 
 const AddCart = () => {
 
-     const { cart, isCartLoading } = useCart()
+     const { cart, isCartLoading, updateCartQuantity } = useCart()
      console.log(cart);
      // total amount count
      const subtotal = cart?.reduce(
@@ -49,8 +49,7 @@ const AddCart = () => {
                                                        <span className="h-7 rounded-full bg-accent/15 w-7"></span>
                                                   </div>
                                              </div>
-                                        ))
-                                   }
+                                        ))}
                                    {/* Item Card */}
                                    {!isCartLoading &&
                                         cart?.map((item, index) => (
@@ -85,9 +84,23 @@ const AddCart = () => {
                                                        <div className="flex justify-between items-center gap-1.5  mt-4">
                                                             {/* Quantity Controller */}
                                                             <div className="flex items-center border border-accent/20 rounded-md overflow-hidden">
-                                                                 <button className="p-2 hover:bg-accent/10 transition-colors"><HiMinus size={14} /></button>
+                                                                 <button
+                                                                      onClick={() =>
+                                                                           updateCartQuantity.mutate(
+                                                                                { cartItemId: item?._id, type: "dec" }
+                                                                           )}
+                                                                      className="p-2 hover:bg-accent/10 transition-colors">
+                                                                      <HiMinus size={14} />
+                                                                 </button>
                                                                  <span className="px-4 py-1 text-sm font-bold">{item?.quantity}</span>
-                                                                 <button className="p-2 hover:bg-accent/10 transition-colors"><HiPlus size={14} /></button>
+                                                                 <button
+                                                                      onClick={() =>
+                                                                           updateCartQuantity.mutate(
+                                                                                { cartItemId: item?._id, type: "inc" }
+                                                                           )}
+                                                                      className="p-2 hover:bg-accent/10 transition-colors">
+                                                                      <HiPlus size={14} />
+                                                                 </button>
                                                             </div>
                                                             {/* Price */}
                                                             <p className="font-semibold text-base md:text-lg">৳ {item?.product?.price * item?.quantity} </p>
@@ -128,8 +141,7 @@ const AddCart = () => {
                                    </motion.div>
                               </div>
                          </div>
-                    )
-                    }
+                    )}
                     {/* Empty State  */}
                     {!isCartLoading && cart.length === 0 && (
                          <div className="flex flex-col space-y-3 w-fit mx-auto text-center pt-20 col-span-full">
