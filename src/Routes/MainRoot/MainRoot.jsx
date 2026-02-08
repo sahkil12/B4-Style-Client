@@ -17,6 +17,7 @@ import PrivateRoute from "../PrivateRoute/PrivateRoute";
 import AuthProtected from "../AuthProtected/AuthProtected";
 import { fetchProductById } from "../../Hooks/products";
 import Loader from "../../Components/Shared/Loader";
+import Checkout from "../../pages/CheckoutPage/Checkout";
 
 export const router = createBrowserRouter([
      {
@@ -52,6 +53,12 @@ export const router = createBrowserRouter([
                     element: <PrivateRoute>
                          <AddCart>
                          </AddCart>
+                    </PrivateRoute>
+               },
+               {
+                    path: 'checkout',
+                    element: <PrivateRoute>
+                         <Checkout></Checkout>
                     </PrivateRoute>
                },
                {

@@ -151,10 +151,12 @@ const AddCart = () => {
                                              </div>
                                         </div>
                                         {/* Checkout Button */}
-                                        <button className="bg-primary py-2.5 sm:py-3 w-full mt-8 rounded-xs text-xs sm:text-sm tracking-widest flex font-semibold items-center justify-center gap-2 group">
+                                        <Link 
+                                        to={'/checkout'}
+                                        className="bg-primary py-2.5 sm:py-3 w-full mt-8 rounded-xs text-xs sm:text-sm tracking-widest flex font-semibold items-center justify-center gap-2 group">
                                              PROCEED TO CHECKOUT
                                              <span className="group-hover:translate-x-1 transition-transform"><FaArrowRightLong size={15} /></span>
-                                        </button>
+                                        </Link>
 
                                         <button className="w-full text-center text-neutral-400 hover:text-accent transition-colors text-sm mt-4 underline underline-offset-4">
                                              <Link to={'/shop'}> Continue Shopping</Link>
