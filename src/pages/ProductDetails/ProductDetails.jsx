@@ -102,7 +102,7 @@ const ProductDetails = () => {
                                    loading='lazy'
                                    width="600"
                                    height="800"
-                                   className="w-full h-full hover:scale-110 active:scale-110 transition-all duration-300 object-cover"
+                                   className="w-full h-full hover:scale-105 active:scale-105 transition-all duration-300 object-cover"
                               />
                               <div className="absolute top-6 left-6 flex flex-col gap-3">
                                    {product?.isNew && (

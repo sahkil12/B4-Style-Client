@@ -69,7 +69,16 @@ const Navbar = () => {
                                    className="hover:text-primary ">
                                    <FiHeart size={22}></FiHeart>
                               </Link>
-                              <span className="badge badge-sm bg-primary text-accent -top-1.5 -right-0.5 w-6 h-6 indicator-item rounded-full">{wishlistCount}</span>
+                              {wishlistCount > 0 && (
+                                   <motion.span
+                                        key={wishlistCount}
+                                        className="badge badge-sm bg-primary text-accent -top-1.5 -right-0.5 w-6 h-6 indicator-item rounded-full"
+                                        animate={{ scale: [1, 1.2, 1] }}
+                                        transition={{ duration: 0.20 }}
+                                   >
+                                        {wishlistCount}
+                                   </motion.span>
+                              )}
                          </div>
                          {/* cart icon button*/}
                          <div className="indicator">
@@ -79,7 +88,16 @@ const Navbar = () => {
                                    className="hover:text-primary active:text-primary">
                                    <FiShoppingBag size={22}></FiShoppingBag>
                               </Link>
-                              <span className="badge badge-sm bg-primary text-accent -top-1.5 -right-0.5 w-6 h-6 indicator-item rounded-full">{cartQuantity}</span>
+                              {cartQuantity > 0 && (
+                                   <motion.span
+                                        key={cartQuantity}
+                                        className="badge badge-sm bg-primary text-accent -top-1.5 -right-0.5 w-6 h-6 indicator-item rounded-full"
+                                        animate={{ scale: [1, 1.2, 1] }}
+                                        transition={{ duration: 0.2 }}
+                                   >
+                                        {cartQuantity}
+                                   </motion.span>
+                              )}
                          </div>
                          {/* reuseable desktop auth link*/}
                          <AuthLink user={user} className="hover:text-primary active:text-primary hidden lg:flex items-center gap-2"></AuthLink>
@@ -123,7 +141,7 @@ const Navbar = () => {
                                         {item.icon && item.icon}
                                         {item.name}
                                         {item.wishlist &&
-                                             <span className="badge badge-sm font-extrabold bg-primary text-accent top-1 -right-4 w-7 h-7 indicator-item rounded-full">{wishlistCount}</span>
+                                             <span className={`${wishlistCount > 0 ? '' : 'hidden'} badge badge-sm font-extrabold bg-primary text-accent top-1 -right-4 w-7 h-7 indicator-item rounded-full`}>{wishlistCount}</span>
                                         }
                                    </NavLink>
                               </motion.li>
@@ -133,7 +151,7 @@ const Navbar = () => {
                               initial={{ opacity: 0, y: 25 }}
                               whileInView={{ opacity: 1, y: 0 }}
                               viewport={{ once: false }}
-                              transition={{ duration: 0.45, delay: 0.6 }}
+                              transition={{ duration: 0.4, delay: 0.5 }}
                               className="border-t pt-4 border-accent/40"
                          >
                               <AuthLink

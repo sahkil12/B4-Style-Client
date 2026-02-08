@@ -21,10 +21,10 @@ export const menuVariants = {
           height: "auto",
           opacity: 1,
           transition: {
-               duration: 0.32,
+               duration: 0.3,
                ease: "easeOut",
                when: "beforeChildren",
-               staggerChildren: 0.15,
+               staggerChildren: 0.12,
           },
      },
 };
