@@ -80,7 +80,7 @@ const AddCart = () => {
                                                                  src={item?.product?.images[0]}
                                                                  alt={item?.product?.slug}
                                                                  loading='lazy'
-                                                                 className="object-cover w-fit h-24 md:h-32"
+                                                                 className="object-cover w-24 md:w-36 h-24 md:h-32"
                                                             />
                                                        </Link>
                                                   </div>

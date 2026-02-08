@@ -1,9 +1,13 @@
 import { motion } from 'framer-motion';
 import { FiUser, FiPackage, FiHeart, FiSettings, FiLogOut } from 'react-icons/fi';
 import UseAuth from '../../Hooks/UseAuth';
+import useWishlist from './../../Hooks/useWishlist';
+import { useNavigate } from 'react-router-dom';
 
 const Profile = () => {
      const { logOutUser, user } = UseAuth()
+     const { wishlistCount } = useWishlist()
+     const navigate = useNavigate()
 
      const menuItems = [
           {
@@ -16,8 +20,9 @@ const Profile = () => {
           {
                id: 2,
                title: "WISHLIST",
-               subtitle: "0 items saved",
+               subtitle: `${wishlistCount} items saved`,
                icon: <FiHeart size={22} />,
+               to: '/wishlist'
           },
           {
                id: 3,
@@ -42,7 +47,7 @@ const Profile = () => {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6 }}
                     className="w-full max-w-xl space-y-4"
-                 >
+               >
                     {/* Profile Header Section box */}
                     <div className="bg-base-200 border-2 border-primary/15 p-4 sm:p-6 rounded-xl flex items-center gap-4">
                          <div className="w-14 h-14 md:w-20 md:h-20 bg-primary/10 rounded-full flex items-center justify-center text-primary border border-accent/10">
@@ -57,7 +62,10 @@ const Profile = () => {
                     <div className="space-y-3">
                          {menuItems?.map((item) => (
                               <div
-                                   onClick={item?.logout}
+                                   onClick={()=>{
+                                        item?.logout,
+                                        item?.to & navigate(item?.to)
+                                   }}
                                    key={item.id}
                                    className={`cursor-pointer p-5 rounded-xl flex items-center gap-5 transition-all duration-300 hover:translate-x-2 border bg-base-200 border-accent/10
                                   ${item.isLogIn ? 'hover:bg-primary/15 active:bg-primary/15 group' : 'hover:border-primary/35 active:border-primary/35'}`}
