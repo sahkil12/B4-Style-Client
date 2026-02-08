@@ -123,7 +123,7 @@ const AddCart = () => {
                                                                  </button>
                                                             </div>
                                                             {/* Price */}
-                                                            <p className="font-semibold text-sm sm:text-base md:text-lg">৳ {item?.product?.price * item?.quantity} </p>
+                                                            <p className="font-semibold text-sm sm:text-base md:text-lg">৳ {(item?.product?.price * item?.quantity).toFixed(2)} </p>
                                                        </div>
                                                   </div>
                                              </motion.div>
@@ -143,11 +143,11 @@ const AddCart = () => {
                                         <div className="space-y-4 text-sm font-medium">
                                              <div className="flex justify-between border-b border-accent/10 pb-8">
                                                   <span className="text-neutral-400">Subtotal</span>
-                                                  <span>৳ {subtotal}.00</span>
+                                                  <span>৳ {subtotal.toFixed(2)}</span>
                                              </div>
                                              <div className="flex justify-between items-center pt-2">
                                                   <span className="font-semibold text-lg">Total</span>
-                                                  <span className="font-semibold text-lg">৳ {subtotal}.00</span>
+                                                  <span className="font-semibold text-lg">৳ {subtotal.toFixed(2)}</span>
                                              </div>
                                         </div>
                                         {/* Checkout Button */}

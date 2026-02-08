@@ -123,7 +123,7 @@ const ProductDetails = () => {
                               <h1 className="text-4xl md:text-5xl bebas tracking-wider mb-6 leading-tight">{product?.title}</h1>
                               {/*  */}
                               <div className="flex items-center gap-4 mb-5">
-                                   <span className="text-3xl font-bold text-accent">৳{discountedPrice}</span>
+                                   <span className="text-3xl font-bold text-accent">৳ {discountedPrice.toFixed(2)}</span>
                                    {
                                         product?.oldPrice && (
                                              <span className="text-neutral-500 line-through text-xl font-medium">৳{product?.price}</span>
