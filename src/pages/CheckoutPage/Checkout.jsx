@@ -1,10 +1,11 @@
 import { motion } from 'framer-motion';
 import { FiChevronLeft, FiLock, FiCreditCard } from 'react-icons/fi';
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import useCart from '../../Hooks/useCart';
 import UseAuth from '../../Hooks/UseAuth';
 import { useState } from 'react';
 import { cartSkeleton } from '../../utils/Skelton';
+import Loader from '../../../src/Components/Shared/Loader'
 
 const Checkout = () => {
 
@@ -26,13 +27,22 @@ const Checkout = () => {
 
      const subtotal = cart?.reduce(
           (sum, item) => sum + item?.product?.price * item?.quantity, 0
-     )
+     ) || 0
 
      const total = subtotal + shipping;
+
+     const isPayDisabled =
+          !selectedCity ||
+          cart.length === 0 ||
+          isCartLoading;
 
      // Common Input Styling
      const inputClasses = "w-full bg-base-200 border border-accent/10 rounded-lg p-4 focus:border-primary/80 outline-none transition-all text-accent/80 placeholder:text-neutral-500/80";
      const labelClasses = "block text-[10px] font-semibold uppercase tracking-[2px] mb-2.5 text-neutral-400";
+
+     if (cart?.length < 1) {
+          return <Navigate to={'/'} replace></Navigate>
+     }
 
      return (
           <div className="min-h-screen bg-base-100 text-accent p-2.5 mt-20 sm:p-6">
@@ -118,13 +128,14 @@ const Checkout = () => {
                                              <input
                                                   required
                                                   type="tel"
-                                                  placeholder="Phone Number"
+                                                  pattern="^(01)[0-9]{9}$"
+                                                  placeholder="01XXXXXXXXX"
                                                   className={inputClasses} />
                                         </div>
                                    </div>
                               </div>
                               {/* Section 3: Payment demo --- (use stripe card)*/}
-                              <div className="bg-base-200/70 p-4 md:p-8 rounded-xl border border-accent/15">
+                              {/* <div className="bg-base-200/70 p-4 md:p-8 rounded-xl border border-accent/15">
                                    <div className="flex justify-between items-center mb-6 border-b border-accent/5 pb-4">
                                         <h2 className="text-xl font-medium bebas tracking-[2.5px] ">Payment</h2>
                                         <div className="flex items-center gap-2 text-[10px] text-neutral-500 font-bold uppercase tracking-widest">
@@ -152,7 +163,11 @@ const Checkout = () => {
                                              <input type="text" placeholder="Full Name" className={inputClasses} />
                                         </div>
                                    </div>
-                              </div>
+                              </div> */}
+
+                              <p className="text-xs text-neutral-500 mt-3">
+                                   Stripe payment will be enabled shortly
+                              </p>
                          </div>
                          {/* Right side card */}
                          <div className="lg:col-span-4 sticky top-24">
@@ -160,7 +175,13 @@ const Checkout = () => {
                                    <h2 className="text-xl font-medium bebas tracking-[3px] border-b border-accent/5 pb-4">Order Summary</h2>
                                    {/* Scrollable Product List */}
                                    <div className="max-h-[300px] overflow-y-auto space-y-4 pr-2 custom-scrollbar">
-                                        {cart?.map((item) => (
+                                        {
+                                             isCartLoading && <>
+                                                  {cartSkeleton}
+                                                  {cartSkeleton}
+                                             </>
+                                        }
+                                        {!isCartLoading && cart?.map((item) => (
                                              <div key={item._id} className="flex gap-4 items-center">
                                                   <div className="relative w-20 h-24 bg-secondary rounded-sm overflow-hidden flex-shrink-0">
                                                        <img src={item?.product?.images[0]} alt={item?.product?.slug} className="w-full h-full object-cover" />
@@ -179,21 +200,36 @@ const Checkout = () => {
                                    {/* Totals Section */}
                                    <div className="pt-6 border-t border-accent/10 space-y-4">
                                         <div className="flex justify-between text-sm md:text-[15px] text-neutral-400">
+
                                              <span>Subtotal</span>
                                              <span className="font-semibold text-accent">৳{subtotal.toFixed(2)}</span>
                                         </div>
-                                        {/* demo -- letter added feature is shipping cost added based on city  */}
+                                        {/* delivery fee */}
                                         <div className="flex justify-between text-sm md:text-[15px] text-neutral-400">
                                              <span>Shipping</span>
                                              <span className="font-semibold text-accent">+{shipping.toFixed(2)}</span>
                                         </div>
+                                        {/* delivery area  */}
+                                        {selectedCity && (
+                                             <div className="flex justify-between text-sm text-neutral-400">
+                                                  <span>Delivery Area</span>
+                                                  <span className="font-semibold text-emerald-700">{selectedCity}</span>
+                                             </div>
+                                        )}
+
                                         <div className="flex justify-between text-lg font-semibold pt-4 border-t border-accent/5">
                                              <span className="tracking-widest">Total</span>
                                              <span className="text-primary/90 font-bold">৳{total.toFixed(2)}</span>
                                         </div>
                                    </div>
                                    {/* Payment Button */}
-                                   <button className="w-full bg-primary text-accent font-bold py-3 rounded-sm tracking-[1.5px] hover:bg-primary/90 transition-all active:scale-[0.98] shadow-lg shadow-primary/10 cursor-pointer">
+                                   <button
+                                        disabled={isPayDisabled}
+                                        className={`w-full text-accent font-bold py-3 rounded-sm tracking-[1.5px] transition-all active:scale-[0.98]  
+                                   ${isPayDisabled
+                                                  ? "bg-neutral-700 cursor-not-allowed"
+                                                  : "bg-primary hover:bg-primary/90 cursor-pointer"}
+                                   `}>
                                         Pay ৳{total.toFixed(2)}
                                    </button>
                               </div>
