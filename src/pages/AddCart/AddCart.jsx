@@ -6,6 +6,7 @@ import { FaArrowRightLong } from "react-icons/fa6";
 import { Link } from 'react-router-dom';
 import useCart from '../../Hooks/useCart';
 import { MdDeleteForever } from 'react-icons/md';
+import { addCartSkelton } from '../../utils/Skelton';
 
 const AddCart = () => {
      const {
@@ -50,18 +51,9 @@ const AddCart = () => {
                               {/* Left Side: Cart Items */}
                               <div className="lg:col-span-8 space-y-4">
                                    {/* loading skelton */}
-                                   {isCartLoading || clearCartLoading &&
+                                   {isCartLoading &&
                                         Array.from({ length: 3 }).map((_, idx) => (
-                                             <div key={idx} className="animate-pulse h-36 flex gap-5 p-4 bg-accent/5 rounded-md shadow ">
-                                                  <div className="w-28 rounded-sm bg-accent/15 "></div>
-                                                  <div className="w-full flex justify-between gap-3 py-2">
-                                                       <div className='w-full space-y-5'>
-                                                            <div className="h-5 bg-accent/15 rounded w-3/8 "></div>
-                                                            <div className="h-5 bg-accent/15 rounded w-3/12"></div>
-                                                       </div>
-                                                       <span className="h-7 rounded-full bg-accent/15 w-7"></span>
-                                                  </div>
-                                             </div>
+                                             <div key={idx}>{addCartSkelton}</div>
                                         ))}
                                    {/* Item Card */}
                                    {!isCartLoading &&
@@ -127,15 +119,14 @@ const AddCart = () => {
                                                        </div>
                                                   </div>
                                              </motion.div>
-                                        ))
-                                   }
+                                        ))}
                               </div>
                               {/* Right Side: Order Summary */}
                               <div className="lg:col-span-4">
                                    <motion.div
                                         initial={{ opacity: 0, x: 20 }}
                                         animate={{ opacity: 1, x: 0 }}
-                                        transition={{ duration: .25, ease:"easeOut" }}
+                                        transition={{ duration: .25, ease: "easeOut" }}
                                         className="bg-base-200/70 border border-accent/10 rounded-lg p-6"
                                    >
                                         <h2 className="bebas text-2xl mb-6 tracking-wider">ORDER SUMMARY</h2>
@@ -151,9 +142,9 @@ const AddCart = () => {
                                              </div>
                                         </div>
                                         {/* Checkout Button */}
-                                        <Link 
-                                        to={'/checkout'}
-                                        className="bg-primary py-2.5 sm:py-3 w-full mt-8 rounded-xs text-xs sm:text-sm tracking-widest flex font-semibold items-center justify-center gap-2 group">
+                                        <Link
+                                             to={'/checkout'}
+                                             className="bg-primary py-2.5 sm:py-3 w-full mt-8 rounded-xs text-xs sm:text-sm tracking-widest flex font-semibold items-center justify-center gap-2 group">
                                              PROCEED TO CHECKOUT
                                              <span className="group-hover:translate-x-1 transition-transform"><FaArrowRightLong size={15} /></span>
                                         </Link>

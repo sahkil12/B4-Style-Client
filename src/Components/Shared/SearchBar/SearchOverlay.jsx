@@ -4,6 +4,7 @@ import { FiSearch, FiX } from "react-icons/fi";
 import SearchCard from "./SearchCard";
 import useProducts from "../../../Hooks/useProducts";
 import { useQueryClient } from "@tanstack/react-query";
+import { searchSkelton } from './../../../utils/Skelton';
 
 const SearchOverlay = ({ isOpen, onClose }) => {
      const [searchText, setSearchText] = useState('')
@@ -19,15 +20,6 @@ const SearchOverlay = ({ isOpen, onClose }) => {
           setSearchText("")
           onClose()
      }
-     // loading skelton
-     const skelton = <div className="animate-pulse bg-accent/5 rounded-md shadow ">
-          <div className="h-60 bg-accent/15 rounded mb-2"></div>
-          <div className="p-3">
-               <div className="h-4 bg-accent/15 rounded w-3/8 "></div>
-               <div className="h-5  bg-accent/15 w-5/6 rounded my-3"></div>
-               <div className="h-4 bg-accent/15 rounded w-3/5  "></div>
-          </div>
-     </div>
 
      return (
           <AnimatePresence >
@@ -66,7 +58,7 @@ const SearchOverlay = ({ isOpen, onClose }) => {
                                    {isLoading ? (
                                         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
                                              {Array(8).fill(0).map((_, idx) => (
-                                                  <div key={idx}>{skelton}</div>
+                                                  <div key={idx}>{searchSkelton}</div>
                                              ))}
                                         </div>
                                    ) : error ? (

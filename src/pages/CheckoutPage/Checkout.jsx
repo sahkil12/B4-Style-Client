@@ -4,10 +4,11 @@ import { Link } from 'react-router-dom';
 import useCart from '../../Hooks/useCart';
 import UseAuth from '../../Hooks/UseAuth';
 import { useState } from 'react';
+import { cartSkeleton } from '../../utils/Skelton';
 
 const Checkout = () => {
 
-     const BD_CITIES = [
+     const cities = [
           { name: "Chittagong", shipping: 70 },
           { name: "Dhaka", shipping: 120 },
           { name: "Sylhet", shipping: 120 },
@@ -19,7 +20,6 @@ const Checkout = () => {
      ];
      const [selectedCity, setSelectedCity] = useState("");
      const [shipping, setShipping] = useState(0);
-
 
      const { cart, isCartLoading } = useCart()
      const { user } = UseAuth()
@@ -56,7 +56,8 @@ const Checkout = () => {
                                    <div className="space-y-2">
                                         <label className={labelClasses}>Your Email</label>
                                         <input
-                                             readOnly={user?.email}
+                                             readOnly
+                                             defaultValue={user?.email}
                                              type="email"
                                              placeholder="Enter your email"
                                              className={inputClasses} />
@@ -97,15 +98,15 @@ const Checkout = () => {
                                                   value={selectedCity}
                                                   required
                                                   onChange={(e) => {
-                                                       const city = BD_CITIES?.find(c => c.name === e.target.value);
+                                                       const city = cities?.find(c => c.name === e.target.value);
                                                        setSelectedCity(e.target.value);
                                                        setShipping(city?.shipping || 0);
                                                   }}
                                                   className={`select select-xl text-base w-full bg-base-200 border border-accent/10 rounded-lg focus:border-primary/80 outline-none transition-all text-accent/80 `}
                                              >
                                                   <option value="">Select City</option>
-                                                  {BD_CITIES?.map(city => (
-                                                       <option key={city.name} value={city.name}>
+                                                  {cities?.map(city => (
+                                                       <option key={city?.name} value={city.name}>
                                                             {city.name}
                                                        </option>
                                                   ))}
@@ -192,7 +193,7 @@ const Checkout = () => {
                                         </div>
                                    </div>
                                    {/* Payment Button */}
-                                   <button className="w-full bg-primary text-accent font-bold py-3.5 rounded-sm tracking-[1.5px] hover:bg-primary/90 transition-all active:scale-[0.98] shadow-lg shadow-primary/10 cursor-pointer">
+                                   <button className="w-full bg-primary text-accent font-bold py-3 rounded-sm tracking-[1.5px] hover:bg-primary/90 transition-all active:scale-[0.98] shadow-lg shadow-primary/10 cursor-pointer">
                                         Pay ৳{total.toFixed(2)}
                                    </button>
                               </div>
