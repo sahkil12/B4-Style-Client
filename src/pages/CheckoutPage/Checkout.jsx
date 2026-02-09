@@ -3,9 +3,10 @@ import { FiChevronLeft, FiLock, FiCreditCard } from 'react-icons/fi';
 import { Link, Navigate } from 'react-router-dom';
 import useCart from '../../Hooks/useCart';
 import UseAuth from '../../Hooks/UseAuth';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { cartSkeleton } from '../../utils/Skelton';
 import Loader from '../../../src/Components/Shared/Loader'
+import { useForm } from 'react-hook-form';
 
 const Checkout = () => {
 
@@ -19,11 +20,22 @@ const Checkout = () => {
           { name: "Rangpur", shipping: 120 },
           { name: "Mymensingh", shipping: 120 },
      ];
-     const [selectedCity, setSelectedCity] = useState("");
-     const [shipping, setShipping] = useState(0);
-
      const { cart, isCartLoading } = useCart()
      const { user } = UseAuth()
+     const {
+          register,
+          handleSubmit,
+          watch,
+          formState: { errors }
+     } = useForm()
+     
+     const [shipping, setShipping] = useState(0);
+     const city = watch("city")
+
+     useEffect(() => {
+          const found = cities.find(c => c.name === city);
+          setShipping(found?.shipping || 0);
+     }, [city]);
 
      const subtotal = cart?.reduce(
           (sum, item) => sum + item?.product?.price * item?.quantity, 0
@@ -32,12 +44,17 @@ const Checkout = () => {
      const total = subtotal + shipping;
 
      const isPayDisabled =
-          !selectedCity ||
+          // !selectedCity ||
           cart.length === 0 ||
           isCartLoading;
 
+     const onSubmit = (data) => {
+          console.log("All valid data", data);
+          // Stripe next step here
+     };
+
      // Common Input Styling
-     const inputClasses = "w-full bg-base-200 border border-accent/10 rounded-lg p-4 focus:border-primary/80 outline-none transition-all text-accent/80 placeholder:text-neutral-500/80";
+     const inputClasses = "w-full bg-base-200 border border-accent/10 rounded-lg p-3.5 focus:border-primary/80 outline-none transition-all text-accent/80 placeholder:text-neutral-500/80";
      const labelClasses = "block text-[10px] font-semibold uppercase tracking-[2px] mb-2.5 text-neutral-400";
 
      if (cart?.length < 1) {
@@ -62,7 +79,6 @@ const Checkout = () => {
                               {/* Section 1: Contact Information */}
                               <div className="bg-base-200/70 p-4 md:p-8 rounded-xl border border-accent/15">
                                    <h2 className="text-xl border-b border-accent/5 pb-4 font-medium bebas tracking-[2.5px] mb-4">Contact Information</h2>
-
                                    <div className="space-y-2">
                                         <label className={labelClasses}>Your Email</label>
                                         <input
@@ -73,7 +89,6 @@ const Checkout = () => {
                                              className={inputClasses} />
                                    </div>
                               </div>
-
                               {/* Section 2: Shipping Address */}
                               <div className="bg-base-200/70 p-4 md:p-8 rounded-xl border border-accent/15">
                                    <h2 className="text-xl font-medium bebas tracking-[2.5px] mb-6 border-b border-accent/5 pb-4">Delivery Address</h2>
@@ -81,10 +96,17 @@ const Checkout = () => {
                                         <div className="space-y-2">
                                              <label className={labelClasses}>First Name</label>
                                              <input
-                                                  required
-                                                  type="text"
-                                                  placeholder="First Name"
+                                                  {...register("firstName", {
+                                                       required: "First name is required"
+                                                  })}
                                                   className={inputClasses} />
+                                             {
+                                                  errors.firstName && (
+                                                       <p className="text-primary/95 font-medium text-sm">
+                                                            {errors.firstName.message}
+                                                       </p>
+                                                  )
+                                             }
                                         </div>
                                         <div className="space-y-2">
                                              <label className={labelClasses}>Last Name</label>
@@ -96,75 +118,66 @@ const Checkout = () => {
                                         <div className="md:col-span-2 space-y-2">
                                              <label className={labelClasses}>Address</label>
                                              <input
-                                                  required
-                                                  type="text"
-                                                  placeholder="Your Present Address"
+                                                  {...register("Address", {
+                                                       required: "Address is required"
+                                                  })}
                                                   className={inputClasses} />
+                                             {
+                                                  errors.Address && (
+                                                       <p className="text-primary/95 font-medium text-sm">
+                                                            {errors.Address.message}
+                                                       </p>
+                                                  )
+                                             }
                                         </div>
                                         {/* city */}
                                         <div className="space-y-2">
                                              <label className={labelClasses}>City</label>
                                              <select
-                                                  value={selectedCity}
-                                                  required
-                                                  onChange={(e) => {
-                                                       const city = cities?.find(c => c.name === e.target.value);
-                                                       setSelectedCity(e.target.value);
-                                                       setShipping(city?.shipping || 0);
-                                                  }}
+                                                  {...register("city",
+                                                       {
+                                                            required: "City is required"
+                                                       })}
                                                   className={`select select-xl text-base w-full bg-base-200 border border-accent/10 rounded-lg focus:border-primary/80 outline-none transition-all text-accent/80 `}
                                              >
                                                   <option value="">Select City</option>
                                                   {cities?.map(city => (
-                                                       <option key={city?.name} value={city.name}>
-                                                            {city.name}
-                                                       </option>
+                                                       <option key={city.name} value={city?.name}>
+                                                            {city?.name}</option>
                                                   ))}
                                              </select>
+                                             {
+                                                  errors.city && (
+                                                       <p className="text-primary/95 font-medium text-sm">
+                                                            {errors.city.message}
+                                                       </p>
+                                                  )
+                                             }
+
                                         </div>
                                         {/* phone number */}
                                         <div className="space-y-2">
                                              <label className={labelClasses}>Phone Number</label>
                                              <input
-                                                  required
+                                                  {...register("phone", {
+                                                       required: "Enter a valid number",
+                                                       minLength: 11,
+                                                  })}
                                                   type="tel"
                                                   pattern="^(01)[0-9]{9}$"
                                                   placeholder="01XXXXXXXXX"
                                                   className={inputClasses} />
+                                             {
+                                                  errors.phone && (
+                                                       <p className="text-primary/95 font-medium text-sm">
+                                                            {errors.phone.message}
+                                                       </p>
+                                                  )
+                                             }
                                         </div>
                                    </div>
                               </div>
-                              {/* Section 3: Payment demo --- (use stripe card)*/}
-                              {/* <div className="bg-base-200/70 p-4 md:p-8 rounded-xl border border-accent/15">
-                                   <div className="flex justify-between items-center mb-6 border-b border-accent/5 pb-4">
-                                        <h2 className="text-xl font-medium bebas tracking-[2.5px] ">Payment</h2>
-                                        <div className="flex items-center gap-2 text-[10px] text-neutral-500 font-bold uppercase tracking-widest">
-                                             <FiLock className="text-primary" /> Secure Checkout
-                                        </div>
-                                   </div>
-                                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                        <div className="md:col-span-2 space-y-2">
-                                             <label className={labelClasses}>Card Number</label>
-                                             <div className="relative">
-                                                  <input type="text" placeholder="0000 0000 0000 0000" className={`${inputClasses} pl-12`} />
-                                                  <FiCreditCard className="absolute left-4 top-1/2 -translate-y-1/2 text-neutral-500" size={20} />
-                                             </div>
-                                        </div>
-                                        <div className="space-y-2">
-                                             <label className={labelClasses}>MM / YY</label>
-                                             <input type="text" placeholder="MM/YY" className={inputClasses} />
-                                        </div>
-                                        <div className="space-y-2">
-                                             <label className={labelClasses}>CVV</label>
-                                             <input type="text" placeholder="123" className={inputClasses} />
-                                        </div>
-                                        <div className="md:col-span-2 space-y-2">
-                                             <label className={labelClasses}>Name on Card</label>
-                                             <input type="text" placeholder="Full Name" className={inputClasses} />
-                                        </div>
-                                   </div>
-                              </div> */}
-
+                              {/* stripe added soon */}
                               <p className="text-xs text-neutral-500 mt-3">
                                    Stripe payment will be enabled shortly
                               </p>
@@ -210,10 +223,10 @@ const Checkout = () => {
                                              <span className="font-semibold text-accent">+{shipping.toFixed(2)}</span>
                                         </div>
                                         {/* delivery area  */}
-                                        {selectedCity && (
+                                        {city && (
                                              <div className="flex justify-between text-sm text-neutral-400">
                                                   <span>Delivery Area</span>
-                                                  <span className="font-semibold text-emerald-700">{selectedCity}</span>
+                                                  <span className="font-semibold text-emerald-700">{city}</span>
                                              </div>
                                         )}
 
@@ -224,6 +237,7 @@ const Checkout = () => {
                                    </div>
                                    {/* Payment Button */}
                                    <button
+                                        onClick={handleSubmit(onSubmit)}
                                         disabled={isPayDisabled}
                                         className={`w-full text-accent font-bold py-3 rounded-sm tracking-[1.5px] transition-all active:scale-[0.98]  
                                    ${isPayDisabled
@@ -234,7 +248,7 @@ const Checkout = () => {
                                    </button>
                               </div>
                               {/* delivery policy */}
-                              <div className="bg-primary/10 border border-primary/40 mt-5 p-4 rounded-xl flex flex-col gap-5">
+                              <div className="bg-primary/10 border border-primary/30 mt-5 p-4 rounded-xl flex flex-col gap-5">
                                    <div className="flex items-center gap-2 ">
                                         <div className="w-2.5 h-2.5 bg-primary rounded-full animate-pulse"></div>
                                         <span className="text-[12px] text-primary/90 flex flex-wrap items-center gap-2 font-semibold uppercase tracking-widest">Chittagong District <p className='text-primary text-sm'>70৳</p></span>
