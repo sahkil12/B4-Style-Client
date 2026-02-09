@@ -3,24 +3,31 @@ import { FiChevronLeft, FiLock, FiCreditCard } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
 import useCart from '../../Hooks/useCart';
 import UseAuth from '../../Hooks/UseAuth';
+import { useState } from 'react';
 
 const Checkout = () => {
-     // Demo Order Items
-     const orderItems = [
-          { id: 2, title: "Sherpa Lined Jacket", size: "S", price: 4200, qty: 1, image: "/assets/category/winter.webp" },
-          { id: 3, title: "Slim Fit Chinos", size: "28", price: 1400, qty: 1, image: "/assets/category/blue-jeans.webp" },
-          { id: 23, title: "Slim Fit Chinos", size: "28", price: 1400, qty: 1, image: "/assets/category/blue-jeans.webp" },
-          { id: 32, title: "Slim Fit Chinos", size: "28", price: 1400, qty: 1, image: "/assets/category/blue-jeans.webp" },
+
+     const BD_CITIES = [
+          { name: "Chittagong", shipping: 70 },
+          { name: "Dhaka", shipping: 120 },
+          { name: "Sylhet", shipping: 120 },
+          { name: "Khulna", shipping: 120 },
+          { name: "Rajshahi", shipping: 120 },
+          { name: "Barishal", shipping: 120 },
+          { name: "Rangpur", shipping: 120 },
+          { name: "Mymensingh", shipping: 120 },
      ];
+     const [selectedCity, setSelectedCity] = useState("");
+     const [shipping, setShipping] = useState(0);
+
 
      const { cart, isCartLoading } = useCart()
      const { user } = UseAuth()
-     console.log(cart);
+
      const subtotal = cart?.reduce(
           (sum, item) => sum + item?.product?.price * item?.quantity, 0
      )
 
-     const shipping = 0; // Free Shipping
      const total = subtotal + shipping;
 
      // Common Input Styling
@@ -62,23 +69,56 @@ const Checkout = () => {
                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                         <div className="space-y-2">
                                              <label className={labelClasses}>First Name</label>
-                                             <input type="text" placeholder="First Name" className={inputClasses} />
+                                             <input
+                                                  required
+                                                  type="text"
+                                                  placeholder="First Name"
+                                                  className={inputClasses} />
                                         </div>
                                         <div className="space-y-2">
                                              <label className={labelClasses}>Last Name</label>
-                                             <input type="text" placeholder="Last Name" className={inputClasses} />
+                                             <input
+                                                  type="text"
+                                                  placeholder="Last Name"
+                                                  className={inputClasses} />
                                         </div>
                                         <div className="md:col-span-2 space-y-2">
                                              <label className={labelClasses}>Address</label>
-                                             <input type="text" placeholder="Your Present Address" className={inputClasses} />
+                                             <input
+                                                  required
+                                                  type="text"
+                                                  placeholder="Your Present Address"
+                                                  className={inputClasses} />
                                         </div>
+                                        {/* city */}
                                         <div className="space-y-2">
                                              <label className={labelClasses}>City</label>
-                                             <input type="text" placeholder="City" className={inputClasses} />
+                                             <select
+                                                  value={selectedCity}
+                                                  required
+                                                  onChange={(e) => {
+                                                       const city = BD_CITIES?.find(c => c.name === e.target.value);
+                                                       setSelectedCity(e.target.value);
+                                                       setShipping(city?.shipping || 0);
+                                                  }}
+                                                  className={`w-full bg-base-200 border border-accent/10 rounded-lg p-4 focus:border-primary/80 outline-none transition-all text-accent/80 placeholder:text-neutral-500/80 `}
+                                             >
+                                                  <option value="">Select City</option>
+                                                  {BD_CITIES?.map(city => (
+                                                       <option key={city.name} value={city.name}>
+                                                            {city.name}
+                                                       </option>
+                                                  ))}
+                                             </select>
                                         </div>
+                                        {/* phone number */}
                                         <div className="space-y-2">
                                              <label className={labelClasses}>Phone Number</label>
-                                             <input type="tel" placeholder="Phone Number" className={inputClasses} />
+                                             <input
+                                                  required
+                                                  type="tel"
+                                                  placeholder="Phone Number"
+                                                  className={inputClasses} />
                                         </div>
                                    </div>
                               </div>
@@ -144,7 +184,7 @@ const Checkout = () => {
                                         {/* demo -- letter added feature is shipping cost added based on city  */}
                                         <div className="flex justify-between text-sm md:text-[15px] text-neutral-400">
                                              <span>Shipping</span>
-                                             <span className="text-green-500 font-bold uppercase text-[10px] tracking-widest">Free</span>
+                                             <span className="font-semibold text-accent">+{shipping.toFixed(2)}</span>
                                         </div>
                                         <div className="flex justify-between text-lg font-semibold pt-4 border-t border-accent/5">
                                              <span className="tracking-widest">Total</span>

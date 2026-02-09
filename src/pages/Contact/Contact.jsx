@@ -128,7 +128,20 @@ const Contact = () => {
                               </div>
                          </motion.div>
                     </div>
+                    {/* map */}
+                    <div className="mt-12">
+                         <iframe
+                             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3691.137012649114!2d91.86858457602241!3d22.310657442518576!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30ad2127f964562d%3A0xc1ff371d94840689!2sKalarpol%20Bridge!5e0!3m2!1sen!2sbd!4v1770576104405!5m2!1sen!2sbd"
+                              width="100%"
+                              height="400"
+                              allowFullScreen=""
+                              autoFocus
+                              loading="lazy"
+                              className="rounded-xl bg-base-200 p-2 shadow-md"
+                         ></iframe>
+                    </div>
                </section>
+
           </div>
      );
 };
