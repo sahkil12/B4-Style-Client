@@ -56,7 +56,7 @@ const Checkout = () => {
                                    <div className="space-y-2">
                                         <label className={labelClasses}>Your Email</label>
                                         <input
-                                             defaultValue={user?.email}
+                                             readOnly={user?.email}
                                              type="email"
                                              placeholder="Enter your email"
                                              className={inputClasses} />
@@ -101,7 +101,7 @@ const Checkout = () => {
                                                        setSelectedCity(e.target.value);
                                                        setShipping(city?.shipping || 0);
                                                   }}
-                                                  className={`w-full bg-base-200 border border-accent/10 rounded-lg p-4 focus:border-primary/80 outline-none transition-all text-accent/80 placeholder:text-neutral-500/80 `}
+                                                  className={`select select-xl text-base w-full bg-base-200 border border-accent/10 rounded-lg focus:border-primary/80 outline-none transition-all text-accent/80 `}
                                              >
                                                   <option value="">Select City</option>
                                                   {BD_CITIES?.map(city => (
@@ -167,7 +167,7 @@ const Checkout = () => {
                                                             {item?.quantity}
                                                        </span>
                                                   </div>
-                                                  <div className="flex-1 min-w-0 ">
+                                                  <div className="flex-1 min-w-0">
                                                        <h4 className="text-xs font-bold uppercase truncate tracking-wider">{item?.product?.title}</h4>
                                                        <p className="text-[11px] text-neutral-400 mt-1 font-bold">SIZE: {item.size}</p>
                                                        <p className="text-sm font-bold mt-2.5">৳{item?.product?.price.toFixed(2)}</p>
@@ -195,6 +195,17 @@ const Checkout = () => {
                                    <button className="w-full bg-primary text-accent font-bold py-3.5 rounded-sm tracking-[1.5px] hover:bg-primary/90 transition-all active:scale-[0.98] shadow-lg shadow-primary/10 cursor-pointer">
                                         Pay ৳{total.toFixed(2)}
                                    </button>
+                              </div>
+                              {/* delivery policy */}
+                              <div className="bg-primary/10 border border-primary/40 mt-5 p-4 rounded-xl flex flex-col gap-5">
+                                   <div className="flex items-center gap-2 ">
+                                        <div className="w-2.5 h-2.5 bg-primary rounded-full animate-pulse"></div>
+                                        <span className="text-[12px] text-primary/90 flex flex-wrap items-center gap-2 font-semibold uppercase tracking-widest">Chittagong District <p className='text-primary text-sm'>70৳</p></span>
+                                   </div>
+                                   <div className="flex items-center gap-2 ">
+                                        <div className="w-2.5 h-2.5 bg-primary rounded-full animate-pulse"></div>
+                                        <span className="text-[12px] text-primary/90 flex flex-wrap items-center gap-2 font-semibold uppercase tracking-widest">Out Of Chittagong District <p className='text-primary text-sm'>120৳</p></span>
+                                   </div>
                               </div>
                          </div>
                     </div>
