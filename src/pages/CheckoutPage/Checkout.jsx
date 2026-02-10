@@ -5,7 +5,6 @@ import useCart from '../../Hooks/useCart';
 import UseAuth from '../../Hooks/UseAuth';
 import { useEffect, useState } from 'react';
 import { cartSkeleton } from '../../utils/Skelton';
-import Loader from '../../../src/Components/Shared/Loader'
 import { useForm } from 'react-hook-form';
 
 const Checkout = () => {
@@ -95,29 +94,20 @@ const Checkout = () => {
                                    <h2 className="text-xl font-medium bebas tracking-[2.5px] mb-6 border-b border-accent/5 pb-4">Delivery Address</h2>
                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                         {/* first name */}
-                                        <div className="space-y-2">
+                                        <div className="space-y-2 md:col-span-2">
                                              <label className={labelClasses}>First Name</label>
                                              <input
-                                                  {...register("firstName", {
-                                                       required: "First name is required"
+                                                  {...register("name", {
+                                                       required: "Name is required",
                                                   })}
                                                   className={inputClasses} />
                                              {
-                                                  errors.firstName && (
+                                                  errors.name && (
                                                        <p className="text-primary/95 font-medium text-sm">
-                                                            {errors.firstName.message}
+                                                            {errors.name.message}
                                                        </p>
                                                   )
                                              }
-                                        </div>
-                                        {/* last name */}
-                                        <div className="space-y-2">
-                                             <label className={labelClasses}>Last Name</label>
-                                             <input
-                                                  {...register("lastName")}
-                                                  type="text"
-                                                  placeholder="Last Name"
-                                                  className={inputClasses} />
                                         </div>
                                         {/* address */}
                                         <div className="md:col-span-2 space-y-2">
