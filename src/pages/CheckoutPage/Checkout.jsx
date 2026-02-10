@@ -28,7 +28,7 @@ const Checkout = () => {
           watch,
           formState: { errors }
      } = useForm()
-     
+
      const [shipping, setShipping] = useState(0);
      const city = watch("city")
 
@@ -44,7 +44,7 @@ const Checkout = () => {
      const total = subtotal + shipping;
 
      const isPayDisabled =
-          // !selectedCity ||
+          !city ||
           cart.length === 0 ||
           isCartLoading;
 
@@ -84,6 +84,7 @@ const Checkout = () => {
                                         <input
                                              readOnly
                                              defaultValue={user?.email}
+                                             {...register("email")}
                                              type="email"
                                              placeholder="Enter your email"
                                              className={inputClasses} />
@@ -93,6 +94,7 @@ const Checkout = () => {
                               <div className="bg-base-200/70 p-4 md:p-8 rounded-xl border border-accent/15">
                                    <h2 className="text-xl font-medium bebas tracking-[2.5px] mb-6 border-b border-accent/5 pb-4">Delivery Address</h2>
                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                        {/* first name */}
                                         <div className="space-y-2">
                                              <label className={labelClasses}>First Name</label>
                                              <input
@@ -108,24 +110,27 @@ const Checkout = () => {
                                                   )
                                              }
                                         </div>
+                                        {/* last name */}
                                         <div className="space-y-2">
                                              <label className={labelClasses}>Last Name</label>
                                              <input
+                                                  {...register("lastName")}
                                                   type="text"
                                                   placeholder="Last Name"
                                                   className={inputClasses} />
                                         </div>
+                                        {/* address */}
                                         <div className="md:col-span-2 space-y-2">
                                              <label className={labelClasses}>Address</label>
                                              <input
-                                                  {...register("Address", {
+                                                  {...register("address", {
                                                        required: "Address is required"
                                                   })}
                                                   className={inputClasses} />
                                              {
-                                                  errors.Address && (
+                                                  errors.address && (
                                                        <p className="text-primary/95 font-medium text-sm">
-                                                            {errors.Address.message}
+                                                            {errors.address.message}
                                                        </p>
                                                   )
                                              }
@@ -153,18 +158,19 @@ const Checkout = () => {
                                                        </p>
                                                   )
                                              }
-
                                         </div>
                                         {/* phone number */}
                                         <div className="space-y-2">
                                              <label className={labelClasses}>Phone Number</label>
                                              <input
                                                   {...register("phone", {
-                                                       required: "Enter a valid number",
-                                                       minLength: 11,
+                                                       required: "Phone number is required",
+                                                       pattern: {
+                                                            value: /^(01)[0-9]{9}$/,
+                                                            message: "Enter a valid Bangladeshi phone number"
+                                                       }
                                                   })}
                                                   type="tel"
-                                                  pattern="^(01)[0-9]{9}$"
                                                   placeholder="01XXXXXXXXX"
                                                   className={inputClasses} />
                                              {

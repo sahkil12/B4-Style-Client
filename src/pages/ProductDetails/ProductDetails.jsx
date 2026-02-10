@@ -136,7 +136,7 @@ const ProductDetails = () => {
                                    }
                               </div>
                               <h3 className={`text-base font-semibold mb-5 ${outOfStock ? 'text-primary' : 'text-accent'}`}>
-                                  {outOfStock ? 'Out Of Stock' : <span> Only <span className='text-xl text-primary/90'> {product?.stock} </span> items left</span>}
+                                   {outOfStock ? 'Out Of Stock' : <span> Only <span className='text-xl text-primary/90'> {product?.stock} </span> items left</span>}
                               </h3>
                               {/*  */}
                               <p className="text-neutral-400 text-sm leading-relaxed mb-10 max-w-md">
@@ -164,15 +164,23 @@ const ProductDetails = () => {
                                    <div className="flex flex-wrap items-center gap-4">
                                         {/* quantity button */}
                                         <div className="flex rounded-md items-center border border-accent/10 h-14">
-                                             <button onClick={() => handleQuantity('dec')} className="px-5 hover:text-primary transition-colors cursor-pointer"><FiMinus /></button>
+                                             <button
+                                                  onClick={() => handleQuantity('dec')}
+                                                  className="px-5 hover:text-primary transition-colors cursor-pointer">
+                                                  <FiMinus />
+                                             </button>
                                              <span className="w-10 text-center font-bold">{quantity}</span>
-                                             <button onClick={() => handleQuantity('inc')} className="px-5 hover:text-primary transition-colors cursor-pointer"><FiPlus /></button>
+                                             <button
+                                                  onClick={() => handleQuantity('inc')}
+                                                  className="px-5 hover:text-primary transition-colors cursor-pointer">
+                                                  <FiPlus />
+                                             </button>
                                         </div>
                                         {/* add to card button */}
                                         <button
                                              onClick={addToCart}
-                                             disabled={outOfStock || isAddingToCart}
-                                             className="flex-1 min-w-[200px] h-14 bg-primary text-accent font-bold text-sm sm:text-base uppercase tracking-widest flex items-center justify-center gap-3 hover:bg-primary/90 transition-all active:scale-95 rounded-md cursor-pointer">
+                                             disabled={outOfStock || isAddingToCart || quantity > product?.stock}
+                                             className={`flex-1 min-w-[200px] h-14 bg-primary text-accent font-bold text-sm sm:text-base uppercase tracking-widest flex items-center justify-center gap-3 hover:bg-primary/90 transition-all rounded-md  ${quantity > product?.stock ? 'cursor-not-allowed' : 'cursor-pointer active:scale-95'}`}>
                                              <FiShoppingBag size={18} /> {isAddingToCart ? "Adding.." : "Add to Cart"}
                                         </button>
                                         {/* wishlist button */}

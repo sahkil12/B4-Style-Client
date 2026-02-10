@@ -28,7 +28,7 @@ const useCart = () => {
 
           onSuccess: () => {
                queryClient.invalidateQueries(["cart", user?.uid])
-          }
+          },
      })
      // REMOVE SINGLE ITEM
      const removeCartItem = useMutation({
@@ -38,6 +38,10 @@ const useCart = () => {
           onSuccess: (res) => {
                toast.success(res?.data?.message);
                queryClient.invalidateQueries(["cart", user?.uid])
+          },
+          onError: (err) => {
+               const msg = err?.response?.data?.message || "Failed to remove item";
+               toast.error(msg);
           }
      })
      // clear all cart api
@@ -49,6 +53,10 @@ const useCart = () => {
                toast.success(res?.data?.message);
                queryClient.invalidateQueries(["cart", userId])
           },
+          onError: (err) => {
+               const msg = err?.response?.data?.message || "Failed to clear cart";
+               toast.error(msg);
+          }
      })
      // ADD to cart
      const addToCartMutation = useMutation({
@@ -65,8 +73,15 @@ const useCart = () => {
                toast.success(data.message);
                queryClient.invalidateQueries(["cart", variables.userId]);
           },
-          onError: () => {
-               toast.error("Failed to add to cart");
+          onError: (err) => {
+               const status = err?.response?.status;
+               const msg = err?.response?.data?.message;
+
+               if (status === 400) {
+                    toast.error(msg || "Product quantity not available!");
+               } else {
+                    toast.error(msg || "Failed to add to cart");
+               }
           }
      });
 
@@ -80,7 +95,7 @@ const useCart = () => {
           isCartLoading: isPending,
           isAddingToCart: addToCartMutation.isPending,
           updateCartQuantity,
-          updateCartQuantityLoading: updateCartQuantity.isPending ,
+          updateCartQuantityLoading: updateCartQuantity.isPending,
           removeCartItem,
           removeCartLoad: removeCartItem.isPending,
           clearAllCart,

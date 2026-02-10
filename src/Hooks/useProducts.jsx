@@ -6,7 +6,7 @@ const useProducts = (params, enabled = true) => {
           queryKey: ["products", params],
           queryFn: () => fetchProducts(params),
           enabled,
-          keepPreviousData: true
+          keepPreviousData: true,
      })
 };
 
