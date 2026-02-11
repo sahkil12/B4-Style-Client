@@ -1,21 +1,31 @@
 import { motion } from 'framer-motion';
-import { FiChevronLeft, FiLock, FiCreditCard } from 'react-icons/fi';
-import { Link, Navigate } from 'react-router-dom';
+import { FiChevronLeft, FiCreditCard } from 'react-icons/fi';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import useCart from '../../Hooks/useCart';
 import UseAuth from '../../Hooks/UseAuth';
 import { useEffect, useState } from 'react';
 import { cartSkeleton } from '../../utils/Skelton';
 import { useForm } from 'react-hook-form';
+import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
+import axiosPublic from '../../Hooks/axiosPublic';
+import { ImSpinner9 } from 'react-icons/im';
+import toast from 'react-hot-toast';
 
 const Checkout = () => {
      const { cart, isCartLoading } = useCart()
      const { user } = UseAuth()
+     const stripe = useStripe()
+     const elements = useElements()
+     const navigate = useNavigate()
+     // axiosPublic
      const {
           register,
           handleSubmit,
           watch,
           formState: { errors }
      } = useForm()
+     const [clientSecret, setClientSecret] = useState("");
+     const [paymentLoading, setPaymentLoading] = useState(false);
 
      const cities = [
           { name: "Chittagong", shipping: 70 },
@@ -47,9 +57,62 @@ const Checkout = () => {
           cart.length === 0 ||
           isCartLoading;
 
-     const onSubmit = (data) => {
+     const onSubmit = async (data) => {
           console.log("All valid data", data);
           // Stripe next step here
+          try {
+               setPaymentLoading(true)
+
+               const res = await axiosPublic.post("/create-payment-intent", {
+                    userId: user?.uid,
+                    name: data.name,
+                    email: data.email,
+                    phone: data.phone,
+                    address: data.address,
+                    city: data.city
+               })
+
+               console.log(res.data);
+               setClientSecret(res?.data.clientSecret)
+
+          }
+          catch (error) {
+               console.log(error);
+          }
+          finally {
+               setPaymentLoading(false)
+          }
+     };   
+     // confirm payment 
+     const handleCardPayment = async () => {
+
+          if (!stripe || !elements) return;
+
+          setPaymentLoading(true);
+
+          const { paymentIntent, error } =
+               await stripe.confirmCardPayment(clientSecret, {
+                    payment_method: {
+                         card: elements.getElement(CardElement),
+                         billing_details: {
+                              email: user?.email,
+                         },
+                    },
+               });
+          if (error) {
+               setPaymentLoading(false);
+               return;
+          }
+          if (paymentIntent.status === "succeeded") {
+               await axiosPublic.post("/confirm-payment", {
+                    paymentIntentId: paymentIntent.id
+               });
+
+               toast.success("Your payment successful")
+               navigate('/')
+          }
+
+          setPaymentLoading(false);
      };
 
      // Common Input Styling
@@ -174,9 +237,38 @@ const Checkout = () => {
                                    </div>
                               </div>
                               {/* stripe added soon */}
-                              <p className="text-xs text-neutral-500 mt-3">
-                                   Stripe payment will be enabled shortly
-                              </p>
+                              {clientSecret && (
+                                   <div className="mt-6 p-4 md:p-8 bg-base-200/70 rounded-xl border border-accent/15">
+                                        <h3 className="text-lg font-semibold mb-5 flex items-center gap-2">
+                                             <FiCreditCard /> Enter Card Details
+                                        </h3>
+                                        <div className="bg-base-100/80 text-accent/80 p-3 md:p-4 rounded-lg border border-accent/15">
+                                             <CardElement options={{
+                                                  style: {
+                                                       base: {
+                                                            fontSize: "16px",
+                                                            color: '#D7D7D7',
+                                                            '::placeholder': {
+                                                                 color: '#808080',
+                                                            },
+                                                       },
+                                                       invalid: {
+                                                            color: '#C50202',
+                                                       },
+                                                  }
+                                             }} />
+                                        </div>
+                                        <button
+                                             onClick={handleCardPayment}
+                                             disabled={paymentLoading}
+                                             className="mt-5 w-full bg-primary/90 cursor-pointer text-accent py-3 rounded-sm font-bold"
+                                        >
+                                             {paymentLoading ? <span className='animate-spin flex justify-center'><ImSpinner9 size={22} /></span>
+                                                  : <span>Confirm Pay ৳{total.toFixed(2)}</span> }
+                                        </button>
+                                   </div>
+                              )}
+
                          </div>
                          {/* Right side card */}
                          <div className="lg:col-span-4 sticky top-24">
@@ -234,13 +326,13 @@ const Checkout = () => {
                                    {/* Payment Button */}
                                    <button
                                         onClick={handleSubmit(onSubmit)}
-                                        disabled={isPayDisabled}
-                                        className={`w-full text-accent font-bold py-3 rounded-sm tracking-[1.5px] transition-all active:scale-[0.98]  
-                                   ${isPayDisabled
+                                        disabled={isPayDisabled || clientSecret}
+                                        className={`w-full text-accent font-bold py-3 rounded-sm tracking-[1.5px] transition-all active:scale-[0.98]  ${clientSecret ? 'cursor-progress' : ''}
+                                         ${isPayDisabled
                                                   ? "bg-neutral-700 cursor-not-allowed"
                                                   : "bg-primary hover:bg-primary/90 cursor-pointer"}
                                    `}>
-                                        Pay ৳{total.toFixed(2)}
+                                        Process To Pay
                                    </button>
                               </div>
                               {/* delivery policy */}
