@@ -8,6 +8,14 @@ import { cartSkeleton } from '../../utils/Skelton';
 import { useForm } from 'react-hook-form';
 
 const Checkout = () => {
+     const { cart, isCartLoading } = useCart()
+     const { user } = UseAuth()
+     const {
+          register,
+          handleSubmit,
+          watch,
+          formState: { errors }
+     } = useForm()
 
      const cities = [
           { name: "Chittagong", shipping: 70 },
@@ -19,14 +27,6 @@ const Checkout = () => {
           { name: "Rangpur", shipping: 120 },
           { name: "Mymensingh", shipping: 120 },
      ];
-     const { cart, isCartLoading } = useCart()
-     const { user } = UseAuth()
-     const {
-          register,
-          handleSubmit,
-          watch,
-          formState: { errors }
-     } = useForm()
 
      const [shipping, setShipping] = useState(0);
      const city = watch("city")
@@ -183,7 +183,7 @@ const Checkout = () => {
                               <div className="bg-base-200/70 p-4 md:p-8 rounded-xl border border-accent/10 space-y-6">
                                    <h2 className="text-xl font-medium bebas tracking-[3px] border-b border-accent/5 pb-4">Order Summary</h2>
                                    {/* Scrollable Product List */}
-                                   <div className="max-h-[300px] overflow-y-auto space-y-4 pr-2 custom-scrollbar">
+                                   <div className="max-h-75 overflow-y-auto space-y-4 pr-2 custom-scrollbar">
                                         {
                                              isCartLoading && <>
                                                   {cartSkeleton}
@@ -192,7 +192,7 @@ const Checkout = () => {
                                         }
                                         {!isCartLoading && cart?.map((item) => (
                                              <div key={item._id} className="flex gap-4 items-center">
-                                                  <div className="relative w-20 h-24 bg-secondary rounded-sm overflow-hidden flex-shrink-0">
+                                                  <div className="relative w-20 h-24 bg-secondary rounded-sm overflow-hidden shrink-0">
                                                        <img src={item?.product?.images[0]} alt={item?.product?.slug} className="w-full h-full object-cover" />
                                                        <span className="absolute -top-0.5 -right-0.5 bg-primary text-accent text-[10px] font-bold w-5 h-5 flex items-center justify-center rounded-full">
                                                             {item?.quantity}

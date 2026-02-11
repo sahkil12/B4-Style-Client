@@ -35,7 +35,7 @@ const Hero = () => {
                               NEW COLLECTION 2026
                          </motion.p>
                          {/* headline */}
-                         <motion.h1 variants={heroChildVariants} className="text-6xl sm:text-8xl tracking-[0.07em] bebas font-medium leading-20 sm:leading-[100px]">
+                         <motion.h1 variants={heroChildVariants} className="text-6xl sm:text-8xl tracking-[0.07em] bebas font-medium leading-20 sm:leading-25">
                               BORN FOR <br />
                               <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent via-accent to-primary">STYLE</span>
                          </motion.h1>

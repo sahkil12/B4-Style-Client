@@ -57,7 +57,7 @@ const ProductCard = ({ product, animation, bestSellers, open }) => {
                className="group cursor-pointer">
                <Link to={`/product/${product?._id}`}>
                     {/* Image Container */}
-                    <div className="relative aspect-[5/6] overflow-hidden rounded-sm transition-all duration-200 ease-in-out">
+                    <div className="relative aspect-5/6 overflow-hidden rounded-sm transition-all duration-200 ease-in-out">
                          <img
                               src={product?.images[0]}
                               loading='lazy'

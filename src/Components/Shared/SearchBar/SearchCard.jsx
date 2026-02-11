@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 
 const SearchCard = ({ product, onClose }) => {
      const navigate = useNavigate()
-
+     
      return (
           <div
                onClick={() => {
@@ -14,7 +14,7 @@ const SearchCard = ({ product, onClose }) => {
                     src={product?.images[0]}
                     alt={product?.slug}
                     loading="lazy"
-                    className="w-full h-[210px] lg:h-[230px] object-cover"
+                    className="w-full h-52 lg:h-56 object-cover"
                />
                {/* product info */}
                <div className="p-2 lg:p-4 space-y-1">
