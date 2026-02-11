@@ -10,7 +10,7 @@ import { loadStripe } from '@stripe/stripe-js';
 import { Elements } from '@stripe/react-stripe-js';
 
 const queryClient = new QueryClient()
-const stripePromise = loadStripe(import.meta.env.VITE_payment_publish_key)
+const stripePromise = loadStripe(import.meta.env.VITE_PAYMENT_PUBLISH_KEY)
 
 createRoot(document.getElementById('root')).render(
 

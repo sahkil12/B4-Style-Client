@@ -58,8 +58,7 @@ const Checkout = () => {
           isCartLoading;
 
      const onSubmit = async (data) => {
-          console.log("All valid data", data);
-          // Stripe next step here
+          // Stripe step here
           try {
                setPaymentLoading(true)
 
@@ -72,17 +71,15 @@ const Checkout = () => {
                     city: data.city
                })
 
-               console.log(res.data);
                setClientSecret(res?.data.clientSecret)
-
           }
           catch (error) {
-               console.log(error);
+               toast.error("Payment Process failed")
           }
           finally {
                setPaymentLoading(false)
           }
-     };   
+     };
      // confirm payment 
      const handleCardPayment = async () => {
 
@@ -107,9 +104,7 @@ const Checkout = () => {
                await axiosPublic.post("/confirm-payment", {
                     paymentIntentId: paymentIntent.id
                });
-
-               toast.success("Your payment successful")
-               navigate('/')
+               navigate('/payment-success')
           }
 
           setPaymentLoading(false);
@@ -264,7 +259,7 @@ const Checkout = () => {
                                              className="mt-5 w-full bg-primary/90 cursor-pointer text-accent py-3 rounded-sm font-bold"
                                         >
                                              {paymentLoading ? <span className='animate-spin flex justify-center'><ImSpinner9 size={22} /></span>
-                                                  : <span>Confirm Pay ৳{total.toFixed(2)}</span> }
+                                                  : <span>Confirm Pay ৳{total.toFixed(2)}</span>}
                                         </button>
                                    </div>
                               )}
