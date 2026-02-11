@@ -2,17 +2,20 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axiosPublic from "./axiosPublic";
 import toast from "react-hot-toast";
 import useAuth from "./useAuth";
+import useAxiosSecure from "./useAxiosSecure";
 
 const useWishlist = () => {
      const queryClient = useQueryClient();
      const { user } = useAuth()
      const userId = user?.uid
+     const axiosSecure = useAxiosSecure()
+
 
      const { data: wishlist = [], isPending: wishlistLoad } = useQuery({
           queryKey: ["wishlist", userId],
           enabled: !!userId,
           queryFn: async () => {
-               const res = await axiosPublic.get(`/wishlist/${userId}`);
+               const res = await axiosSecure.get(`/wishlist`);
                return res.data
           }
      });
@@ -22,7 +25,7 @@ const useWishlist = () => {
      // add wishlist
      const addWishlistMutation = useMutation({
           mutationFn: async ({ productId }) => {
-               const res = await axiosPublic.post("/wishlist", {
+               const res = await axiosSecure.post("/wishlist", {
                     userId,
                     productId
                });
@@ -39,7 +42,7 @@ const useWishlist = () => {
      // Remove wishlist
      const removeWishlistMutation = useMutation({
           mutationFn: async (productId) => {
-               return axiosPublic.delete("/wishlist", {
+               return axiosSecure.delete("/wishlist", {
                     data: {
                          userId,
                          productId
@@ -57,7 +60,7 @@ const useWishlist = () => {
      // clear all wishlist 
      const clearWishlistMutation = useMutation({
           mutationFn: async () => {
-               return axiosPublic.delete(`/wishlist/clear/${userId}`);
+               return axiosSecure.delete(`/wishlist/clear`);
           },
           onSuccess: (res) => {
                toast.success(res.data.message);

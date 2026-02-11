@@ -2,18 +2,20 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import axiosPublic from "./axiosPublic";
 import useAuth from "./useAuth";
+import useAxiosSecure from "./useAxiosSecure";
 
 const useCart = () => {
      const queryClient = useQueryClient();
      const { user } = useAuth();
      const userId = user?.uid;
+     const axiosSecure = useAxiosSecure()
 
      // GET cart
      const { data: cart = [], isPending } = useQuery({
           queryKey: ["cart", userId],
           enabled: !!userId,
           queryFn: async () => {
-               const res = await axiosPublic.get(`/cart/${userId}`);
+               const res = await axiosSecure.get("/cart");
                return res.data;
           }
      });
@@ -24,7 +26,7 @@ const useCart = () => {
      // UPDATE QUANTITY
      const updateCartQuantity = useMutation({
           mutationFn: ({ cartItemId, type }) =>
-               axiosPublic.patch("/cart/quantity", { cartItemId, type }),
+               axiosSecure.patch("/cart/quantity", { cartItemId, type }),
 
           onSuccess: () => {
                queryClient.invalidateQueries(["cart", user?.uid])
@@ -33,7 +35,7 @@ const useCart = () => {
      // REMOVE SINGLE ITEM
      const removeCartItem = useMutation({
           mutationFn: (cartItemId) =>
-               axiosPublic.delete(`/cart/${cartItemId}`),
+               axiosSecure.delete(`/cart/${cartItemId}`),
 
           onSuccess: (res) => {
                toast.success(res?.data?.message);
@@ -47,7 +49,7 @@ const useCart = () => {
      // clear all cart api
      const clearAllCart = useMutation({
           mutationFn: () =>
-               axiosPublic.delete(`/cart/clear/${userId}`),
+               axiosSecure.delete(`/cart/clear`),
 
           onSuccess: (res) => {
                toast.success(res?.data?.message);
@@ -61,8 +63,7 @@ const useCart = () => {
      // ADD to cart
      const addToCartMutation = useMutation({
           mutationFn: async ({ userId, productId, quantity, size }) => {
-               const res = await axiosPublic.post("/cart", {
-                    userId,
+               const res = await axiosSecure.post("/cart", {
                     productId,
                     quantity,
                     size

@@ -10,6 +10,7 @@ import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
 import axiosPublic from '../../Hooks/axiosPublic';
 import { ImSpinner9 } from 'react-icons/im';
 import toast from 'react-hot-toast';
+import useAxiosSecure from '../../Hooks/useAxiosSecure';
 
 const Checkout = () => {
      const { cart, isCartLoading } = useCart()
@@ -17,7 +18,8 @@ const Checkout = () => {
      const stripe = useStripe()
      const elements = useElements()
      const navigate = useNavigate()
-     // axiosPublic
+     const axiosSecure = useAxiosSecure()
+
      const {
           register,
           handleSubmit,
@@ -62,7 +64,7 @@ const Checkout = () => {
           try {
                setPaymentLoading(true)
 
-               const res = await axiosPublic.post("/create-payment-intent", {
+               const res = await axiosSecure.post("/create-payment-intent", {
                     userId: user?.uid,
                     name: data.name,
                     email: data.email,
@@ -102,7 +104,7 @@ const Checkout = () => {
                return;
           }
           if (paymentIntent.status === "succeeded") {
-               await axiosPublic.post("/confirm-payment", {
+               await axiosSecure.post("/confirm-payment", {
                     paymentIntentId: paymentIntent.id
                });
                navigate('/payment-success')
