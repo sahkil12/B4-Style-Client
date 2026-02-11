@@ -18,6 +18,7 @@ import AuthProtected from "../AuthProtected/AuthProtected";
 import { fetchProductById } from "../../Hooks/products";
 import Loader from "../../Components/Shared/Loader";
 import Checkout from "../../pages/CheckoutPage/Checkout";
+import PaymentSuccess from "../../pages/CheckoutPage/PaymentSuccess";
 
 export const router = createBrowserRouter([
      {
@@ -73,6 +74,10 @@ export const router = createBrowserRouter([
                          <Profile>
                          </Profile>
                     </PrivateRoute>
+               },
+               {
+                    path: "/payment-success",
+                    element: <PaymentSuccess />
                }
           ]
      },
