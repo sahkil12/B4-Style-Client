@@ -1,8 +1,8 @@
 import { motion } from 'framer-motion';
 import { FiUser, FiPackage, FiHeart, FiSettings, FiLogOut } from 'react-icons/fi';
-import useAuth from '../../Hooks/useAuth';
 import useWishlist from './../../Hooks/useWishlist';
 import { useNavigate } from 'react-router-dom';
+import useAuth from '../../Hooks/useAuth';
 
 const Profile = () => {
      const { logOutUser, user } = useAuth()
@@ -62,9 +62,13 @@ const Profile = () => {
                     <div className="space-y-3">
                          {menuItems?.map((item) => (
                               <div
-                                   onClick={()=>{
-                                        item?.logout,
-                                        item?.to & navigate(item?.to)
+                                   onClick={() => {
+                                        if (item?.logout) {
+                                             item.logout();
+                                        }
+                                        if (item?.to) {
+                                             navigate(item.to);
+                                        }
                                    }}
                                    key={item.id}
                                    className={`cursor-pointer p-5 rounded-xl flex items-center gap-5 transition-all duration-300 hover:translate-x-2 border bg-base-200 border-accent/10

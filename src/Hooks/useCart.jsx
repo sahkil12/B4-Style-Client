@@ -38,12 +38,12 @@ const useCart = () => {
                axiosSecure.delete(`/cart/${cartItemId}`),
 
           onSuccess: (res) => {
-               toast.success(res?.data?.message);
+               toast.success(res?.data?.message, { duration: 1000 });
                queryClient.invalidateQueries(["cart", user?.uid])
           },
           onError: (err) => {
                const msg = err?.response?.data?.message || "Failed to remove item";
-               toast.error(msg);
+               toast.error(msg, { duration: 1000 });
           }
      })
      // clear all cart api
@@ -52,17 +52,17 @@ const useCart = () => {
                axiosSecure.delete(`/cart/clear`),
 
           onSuccess: (res) => {
-               toast.success(res?.data?.message);
+               toast.success(res?.data?.message, { duration: 1000 });
                queryClient.invalidateQueries(["cart", userId])
           },
           onError: (err) => {
                const msg = err?.response?.data?.message || "Failed to clear cart";
-               toast.error(msg);
+               toast.error(msg, { duration: 1000 });
           }
      })
      // ADD to cart
      const addToCartMutation = useMutation({
-          mutationFn: async ({ userId, productId, quantity, size }) => {
+          mutationFn: async ({ productId, quantity, size }) => {
                const res = await axiosSecure.post("/cart", {
                     productId,
                     quantity,
@@ -71,7 +71,7 @@ const useCart = () => {
                return res.data;
           },
           onSuccess: (data, variables) => {
-               toast.success(data.message);
+               toast.success(data.message, { duration: 1000 });
                queryClient.invalidateQueries(["cart", variables.userId]);
           },
           onError: (err) => {
@@ -79,9 +79,9 @@ const useCart = () => {
                const msg = err?.response?.data?.message;
 
                if (status === 400) {
-                    toast.error(msg || "Product quantity not available!");
+                    toast.error(msg || "Product quantity not available!", { duration: 1000 });
                } else {
-                    toast.error(msg || "Failed to add to cart");
+                    toast.error(msg || "Failed to add to cart", { duration: 1000 });
                }
           }
      });

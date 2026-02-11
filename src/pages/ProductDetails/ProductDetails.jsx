@@ -46,11 +46,11 @@ const ProductDetails = () => {
 
      const addToCart = () => {
           if (!user) return (
-               toast.error("Please login to Add To Cart"),
+               toast.error("Please login to Add To Cart", { duration: 1000 }),
                navigate("/auth/sign_in")
           )
 
-          if (!selectedSize) return toast.error("Please Select Product Size")
+          if (!selectedSize) return toast.error("Please Select Product Size", { duration: 1000 })
           handleAddToCart({
                userId: userId,
                productId: product?._id,
@@ -61,7 +61,7 @@ const ProductDetails = () => {
      // add wishlist
      const addWishlist = () => {
           if (!user) return (
-               toast.error("Please login to Add wishlist"),
+               toast.error("Please login to Add wishlist", { duration: 1000 }),
                navigate("/auth/sign_in")
           )
 

@@ -40,7 +40,7 @@ const SignUp = () => {
                return;
           }
           if (password.length < 6) {
-               toast.error("Password must be at least 6 characters");
+               toast.error("Password must be at least 6 characters", { duration: 1000 });
                return;
           }
           if (name.length < 5) {

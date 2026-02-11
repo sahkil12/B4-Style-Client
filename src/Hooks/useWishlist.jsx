@@ -32,11 +32,11 @@ const useWishlist = () => {
                return res;
           },
           onSuccess: (res) => {
-               toast.success(res.data.message);
+               toast.success(res.data.message, { duration: 1000 });
                queryClient.invalidateQueries(["wishlist", userId]);
           },
           onError: () => {
-               toast.error("Failed to add to wishlist");
+               toast.error("Failed to add to wishlist", { duration: 1000 });
           }
      });
      // Remove wishlist
@@ -50,11 +50,11 @@ const useWishlist = () => {
                });
           },
           onSuccess: (res) => {
-               toast.success(res.data.message);
+               toast.success(res.data.message, { duration: 1000 });
                queryClient.invalidateQueries(["wishlist", userId]);
           },
           onError: () => {
-               toast.error("Failed to add to wishlist");
+               toast.error("Failed to add to wishlist", { duration: 1000 });
           }
      });
      // clear all wishlist 
@@ -63,11 +63,11 @@ const useWishlist = () => {
                return axiosSecure.delete(`/wishlist/clear`);
           },
           onSuccess: (res) => {
-               toast.success(res.data.message);
+               toast.success(res.data.message, { duration: 1000 });
                queryClient.invalidateQueries(["wishlist", userId]);
           },
           onError: () => {
-               toast.error("Failed to clear wishlist");
+               toast.error("Failed to clear wishlist", { duration: 1000 });
           }
      });
 

@@ -3,11 +3,8 @@ import useAuth from '../../Hooks/useAuth';
 import { Navigate } from 'react-router-dom';
 
 const AuthProtected = ({ children }) => {
-     const { user, loading } = useAuth()
+     const { user } = useAuth()
 
-     if (loading) {
-          return <Loader></Loader>
-     }
      if (user) {
           return <Navigate to={'/'} replace ></Navigate >
      }

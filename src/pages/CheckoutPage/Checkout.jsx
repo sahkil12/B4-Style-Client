@@ -76,7 +76,7 @@ const Checkout = () => {
                setClientSecret(res?.data.clientSecret)
           }
           catch (error) {
-               toast.error("Payment Process failed")
+               toast.error("Payment Process failed", { duration: 1000 })
           }
           finally {
                setPaymentLoading(false)
@@ -100,7 +100,7 @@ const Checkout = () => {
                });
           if (error) {
                setPaymentLoading(false);
-               toast.error(error.message || "Payment failed")
+               toast.error(error.message || "Payment failed", { duration: 1000 })
                return;
           }
           if (paymentIntent.status === "succeeded") {
