@@ -6,7 +6,7 @@ import { motion } from "motion/react"
 import { Link, NavLink } from "react-router-dom";
 import SearchOverlay from "../../Shared/SearchBar/SearchOverlay";
 import logo from '../../../../public/assets/Others/b4-style-logo.webp'
-import UseAuth from "../../../Hooks/UseAuth";
+import useAuth from "../../../Hooks/useAuth";
 import AuthLink from "./AuthLink";
 import DesktopLinks from "./DesktopLinks";
 import { menuVariants, itemVariants, navLinks } from "../../../utils/NavbarLinks";
@@ -17,7 +17,7 @@ const Navbar = () => {
      const [open, setOpen] = useState(false)
      const [scrolled, setScrolled] = useState(false)
      const [isSearchOpen, setIsSearchOpen] = useState(false);
-     const { user } = UseAuth()
+     const { user } = useAuth()
      const { wishlistCount } = useWishlist()
      const { cartQuantity } = useCart()
 

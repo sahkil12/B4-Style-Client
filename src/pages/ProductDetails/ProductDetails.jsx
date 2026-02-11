@@ -8,12 +8,12 @@ import useProducts from '../../Hooks/useProducts';
 import ProductSkeleton from '../../Components/Shared/ProductSkeleton/ProductSkeleton';
 import useCart from '../../Hooks/useCart';
 import useWishlist from '../../Hooks/useWishlist';
-import UseAuth from '../../Hooks/UseAuth';
+import useAuth from '../../Hooks/useAuth';
 import toast from 'react-hot-toast';
 
 const ProductDetails = () => {
      const product = useLoaderData()
-     const { user } = UseAuth()
+     const { user } = useAuth()
      const { handleAddToCart, isAddingToCart } = useCart()
      const { handleAddToWishlist, handleRemoveWishlist, wishlist, isWishlistLoading } = useWishlist()
      const navigate = useNavigate()

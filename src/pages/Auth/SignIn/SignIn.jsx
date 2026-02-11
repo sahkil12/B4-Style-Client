@@ -4,11 +4,11 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { FiMail, FiLock, FiEye, FiEyeOff, FiArrowRight, FiCheckCircle } from 'react-icons/fi';
 import { FcGoogle } from 'react-icons/fc';
 import { ImSpinner9 } from "react-icons/im";
-import UseAuth from '../../../Hooks/UseAuth';
+import useAuth from '../../../Hooks/useAuth';
 import toast from 'react-hot-toast';
 
 const SignIn = () => {
-     const { googleCreate, loginUser } = UseAuth()
+     const { googleCreate, loginUser } = useAuth()
      const [email, setEmail] = useState("");
      const [password, setPassword] = useState("");
      const [showPassword, setShowPassword] = useState(false);

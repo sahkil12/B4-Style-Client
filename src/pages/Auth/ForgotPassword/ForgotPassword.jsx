@@ -4,10 +4,10 @@ import { FiMail, FiArrowRight } from "react-icons/fi";
 import { ImSpinner9 } from "react-icons/im";
 import { Link } from "react-router-dom";
 import toast from "react-hot-toast";
-import UseAuth from "../../../Hooks/UseAuth";
+import useAuth from "../../../Hooks/useAuth";
 
 const ForgotPassword = () => {
-     const { resetPassword } = UseAuth();
+     const { resetPassword } = useAuth();
      const [email, setEmail] = useState("");
      const [loading, setLoading] = useState(false);
      const [error, setError] = useState("");

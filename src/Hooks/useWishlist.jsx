@@ -1,11 +1,11 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axiosPublic from "./axiosPublic";
 import toast from "react-hot-toast";
-import UseAuth from "./UseAuth";
+import useAuth from "./useAuth";
 
 const useWishlist = () => {
      const queryClient = useQueryClient();
-     const { user } = UseAuth()
+     const { user } = useAuth()
      const userId = user?.uid
 
      const { data: wishlist = [], isPending: wishlistLoad } = useQuery({

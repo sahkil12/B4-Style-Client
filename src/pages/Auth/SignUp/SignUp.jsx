@@ -3,12 +3,12 @@ import { motion } from 'framer-motion';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { FiMail, FiLock, FiEye, FiEyeOff, FiArrowRight, FiUser, FiCheckCircle } from 'react-icons/fi';
 import { FcGoogle } from 'react-icons/fc';
-import UseAuth from '../../../Hooks/UseAuth';
+import useAuth from '../../../Hooks/useAuth';
 import { ImSpinner9 } from 'react-icons/im';
 import toast from 'react-hot-toast';
 
 const SignUp = () => {
-     const { createUser, googleCreate, updateUserProfile } = UseAuth()
+     const { createUser, googleCreate, updateUserProfile } = useAuth()
      const [name, setName] = useState("");
      const [email, setEmail] = useState("");
      const [password, setPassword] = useState("");

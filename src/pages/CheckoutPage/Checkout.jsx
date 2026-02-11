@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 import { FiChevronLeft, FiCreditCard } from 'react-icons/fi';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import useCart from '../../Hooks/useCart';
-import UseAuth from '../../Hooks/UseAuth';
+import useAuth from '../../Hooks/useAuth';
 import { useEffect, useState } from 'react';
 import { cartSkeleton } from '../../utils/Skelton';
 import { useForm } from 'react-hook-form';
@@ -13,7 +13,7 @@ import toast from 'react-hot-toast';
 
 const Checkout = () => {
      const { cart, isCartLoading } = useCart()
-     const { user } = UseAuth()
+     const { user } = useAuth()
      const stripe = useStripe()
      const elements = useElements()
      const navigate = useNavigate()
@@ -98,6 +98,7 @@ const Checkout = () => {
                });
           if (error) {
                setPaymentLoading(false);
+               toast.error(error.message || "Payment failed")
                return;
           }
           if (paymentIntent.status === "succeeded") {

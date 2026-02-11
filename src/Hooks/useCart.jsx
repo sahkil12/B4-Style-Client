@@ -1,11 +1,11 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import axiosPublic from "./axiosPublic";
-import UseAuth from "./UseAuth";
+import useAuth from "./useAuth";
 
 const useCart = () => {
      const queryClient = useQueryClient();
-     const { user } = UseAuth();
+     const { user } = useAuth();
      const userId = user?.uid;
 
      // GET cart

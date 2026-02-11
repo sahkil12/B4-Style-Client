@@ -1,11 +1,11 @@
 import { motion } from 'framer-motion';
 import { FiUser, FiPackage, FiHeart, FiSettings, FiLogOut } from 'react-icons/fi';
-import UseAuth from '../../Hooks/UseAuth';
+import useAuth from '../../Hooks/useAuth';
 import useWishlist from './../../Hooks/useWishlist';
 import { useNavigate } from 'react-router-dom';
 
 const Profile = () => {
-     const { logOutUser, user } = UseAuth()
+     const { logOutUser, user } = useAuth()
      const { wishlistCount } = useWishlist()
      const navigate = useNavigate()
 

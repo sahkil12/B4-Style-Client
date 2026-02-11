@@ -1,7 +1,7 @@
 import { motion } from 'motion/react';
 import { FiHeart, FiShoppingBag } from 'react-icons/fi';
 import { Link, useNavigate } from 'react-router-dom';
-import UseAuth from '../Hooks/UseAuth';
+import useAuth from '../Hooks/useAuth';
 import useCart from '../Hooks/useCart';
 import useWishlist from '../Hooks/useWishlist';
 import { FaHeart } from 'react-icons/fa';
@@ -9,7 +9,7 @@ import toast from 'react-hot-toast';
 
 const ProductCard = ({ product, animation, bestSellers, open }) => {
 
-     const { user } = UseAuth()
+     const { user } = useAuth()
      const { handleAddToCart, isAddingToCart } = useCart()
      const { handleAddToWishlist, handleRemoveWishlist, wishlist, isWishlistLoading, wishlistLoad } = useWishlist()
      const navigate = useNavigate()
