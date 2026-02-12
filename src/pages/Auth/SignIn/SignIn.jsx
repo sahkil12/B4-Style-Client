@@ -17,7 +17,7 @@ const SignIn = () => {
      const [error, setError] = useState("");
      const navigate = useNavigate()
      const location = useLocation()
-     const from = location.state?.from?.pathname || "/";
+     const from = location.state?.from?.pathname;
 
      // Simple Email Validation
      const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -40,7 +40,7 @@ const SignIn = () => {
                const result = await loginUser(email, password)
                if (result) {
                     toast.success("Logged in successfully", { duration: 1000 })
-                    navigate(from, { replace: true });
+                    navigate(from || '/');
                     setFormLoading(false)
                }
           }
@@ -55,9 +55,11 @@ const SignIn = () => {
 
           googleCreate()
                .then(res => {
-                    toast.success(`You Are Successfully Login`, { duration: 1000 })
-                    navigate(from, { replace: true });
-                    setGoogleLoading(false);
+                    if (res) {
+                         toast.success(`You Are Successfully Login`, { duration: 1000 })
+                         navigate(from || '/');
+                         setGoogleLoading(false);
+                    }
                })
                .catch(error => {
                     setError("Something is wrong try again!!");

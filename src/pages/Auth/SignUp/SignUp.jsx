@@ -6,6 +6,7 @@ import { FcGoogle } from 'react-icons/fc';
 import useAuth from '../../../Hooks/useAuth';
 import { ImSpinner9 } from 'react-icons/im';
 import toast from 'react-hot-toast';
+import axiosPublic from '../../../Hooks/axiosPublic';
 
 const SignUp = () => {
      const { createUser, googleCreate, updateUserProfile } = useAuth()
@@ -21,10 +22,20 @@ const SignUp = () => {
      const navigate = useNavigate()
      const location = useLocation()
      const from = location.state?.from?.pathname || "/";
-
      // Simple Email Validation
      const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
      const loader = <span className='animate-spin'><ImSpinner9 size={22} /></span>
+
+     const saveUserToDB = async (user) => {
+          try {
+               const res = await axiosPublic.post('/users', user);
+               return res.data,
+                    toast.success("Your Account is Successfully Created");
+               // navigate("/");
+          } catch (err) {
+               setError(err.message)
+          }
+     };
 
      const handleSignUp = async (e) => {
           e.preventDefault()
@@ -62,8 +73,10 @@ const SignUp = () => {
                     await updateUserProfile({
                          displayName: name,
                     })
+                    const res = await saveUserToDB({ name, email })
+                    console.log(res);
                     toast.success(`${name}, your account was created successfully`, { duration: 1000 })
-                    navigate(from, { replace: true });
+                    navigate(from);
                }
           }
           catch (error) {
@@ -82,9 +95,14 @@ const SignUp = () => {
           setGoogleLoading(true);
 
           googleCreate()
-               .then(res => {
+               .then(async (res) => {
+                    console.log(res.user);
+                    const name = res.user?.displayName
+                    const email = res.user?.email
+                    const ress = await saveUserToDB({ name, email })
+                    console.log(ress);
                     toast.success(`Your Account Create Successfully`, { duration: 1000 })
-                    navigate(from, { replace: true });
+                    navigate(from);
                     setGoogleLoading(false);
                })
                .catch(error => {
