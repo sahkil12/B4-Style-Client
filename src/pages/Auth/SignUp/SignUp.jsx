@@ -28,12 +28,10 @@ const SignUp = () => {
 
      const saveUserToDB = async (user) => {
           try {
-               const res = await axiosPublic.post('/users', user);
-               return res.data,
-                    toast.success("Your Account is Successfully Created");
-               // navigate("/");
+               await axiosPublic.post('/users', user);
+               toast.success("Your Account is Successfully Created", { duration: 1000 });
           } catch (err) {
-               setError(err.message)
+               throw (err.message)
           }
      };
 
@@ -73,9 +71,7 @@ const SignUp = () => {
                     await updateUserProfile({
                          displayName: name,
                     })
-                    const res = await saveUserToDB({ name, email })
-                    console.log(res);
-                    toast.success(`${name}, your account was created successfully`, { duration: 1000 })
+                    await saveUserToDB({ name, email })
                     navigate(from);
                }
           }
@@ -96,12 +92,9 @@ const SignUp = () => {
 
           googleCreate()
                .then(async (res) => {
-                    console.log(res.user);
                     const name = res.user?.displayName
                     const email = res.user?.email
-                    const ress = await saveUserToDB({ name, email })
-                    console.log(ress);
-                    toast.success(`Your Account Create Successfully`, { duration: 1000 })
+                    await saveUserToDB({ name, email })
                     navigate(from);
                     setGoogleLoading(false);
                })

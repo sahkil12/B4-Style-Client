@@ -6,6 +6,7 @@ import { FcGoogle } from 'react-icons/fc';
 import { ImSpinner9 } from "react-icons/im";
 import useAuth from '../../../Hooks/useAuth';
 import toast from 'react-hot-toast';
+import axiosPublic from '../../../Hooks/axiosPublic';
 
 const SignIn = () => {
      const { googleCreate, loginUser } = useAuth()
@@ -18,10 +19,18 @@ const SignIn = () => {
      const navigate = useNavigate()
      const location = useLocation()
      const from = location.state?.from?.pathname;
-
      // Simple Email Validation
      const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
      const loader = <span className='animate-spin'><ImSpinner9 size={22} /></span>
+
+     const saveUserToDB = async (user) => {
+          try {
+               await axiosPublic.post('/users', user);
+               toast.success("Your Account is Successfully Created", { duration: 1000 });
+          } catch (err) {
+               throw (err.message)
+          }
+     };
 
      const handleSignIn = async (e) => {
           e.preventDefault()
@@ -54,9 +63,11 @@ const SignIn = () => {
           setGoogleLoading(true);
 
           googleCreate()
-               .then(res => {
+               .then(async (res) => {
                     if (res) {
-                         toast.success(`You Are Successfully Login`, { duration: 1000 })
+                         const name = res.user?.displayName
+                         const email = res.user?.email
+                         await saveUserToDB({ name, email })
                          navigate(from || '/');
                          setGoogleLoading(false);
                     }
