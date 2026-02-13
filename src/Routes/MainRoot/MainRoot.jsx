@@ -98,5 +98,5 @@ export const router = createBrowserRouter([
                     element: <AuthProtected> <ForgotPassword></ForgotPassword> </AuthProtected>
                }
           ]
-     }
+     },
 ]);
