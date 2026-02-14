@@ -19,6 +19,7 @@ import { fetchProductById } from "../../Hooks/products";
 import Loader from "../../Components/Shared/Loader";
 import Checkout from "../../pages/CheckoutPage/Checkout";
 import PaymentSuccess from "../../pages/CheckoutPage/PaymentSuccess";
+import DashboardLayout from "../../layouts/DashboardLayout/DashboardLayout";
 
 export const router = createBrowserRouter([
      {
@@ -99,4 +100,8 @@ export const router = createBrowserRouter([
                }
           ]
      },
+     {
+          path: "/dashboard",
+          element: <DashboardLayout></DashboardLayout>
+     }
 ]);

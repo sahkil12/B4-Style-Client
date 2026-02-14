@@ -1,6 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
-import axiosPublic from "./axiosPublic";
 import useAuth from "./useAuth";
 import useAxiosSecure from "./useAxiosSecure";
 

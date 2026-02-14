@@ -7,7 +7,6 @@ import { useEffect, useState } from 'react';
 import { cartSkeleton } from '../../utils/Skelton';
 import { useForm } from 'react-hook-form';
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
-import axiosPublic from '../../Hooks/axiosPublic';
 import { ImSpinner9 } from 'react-icons/im';
 import toast from 'react-hot-toast';
 import useAxiosSecure from '../../Hooks/useAxiosSecure';

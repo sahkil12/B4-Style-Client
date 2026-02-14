@@ -8,8 +8,8 @@ import useProducts from '../../Hooks/useProducts';
 import ProductSkeleton from '../../Components/Shared/ProductSkeleton/ProductSkeleton';
 import useCart from '../../Hooks/useCart';
 import useWishlist from '../../Hooks/useWishlist';
-import useAuth from '../../Hooks/useAuth';
 import toast from 'react-hot-toast';
+import useAuth from '../../Hooks/useAuth';
 
 const ProductDetails = () => {
      const product = useLoaderData()
