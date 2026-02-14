@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { 
-    FiGrid, FiBox, FiShoppingBag, FiUsers, FiBarChart2, 
-    FiSettings, FiArrowLeft, FiLogOut, FiTrendingUp 
+import {
+    FiGrid, FiBox, FiShoppingBag, FiUsers, FiBarChart2,
+    FiSettings, FiArrowLeft, FiLogOut, FiTrendingUp
 } from 'react-icons/fi';
 
 const AdminDashboard = () => {
@@ -28,7 +28,7 @@ const AdminDashboard = () => {
 
     return (
         <div className="min-h-screen bg-secondary text-accent flex">
-            
+
             {/* --- SIDEBAR --- */}
             <aside className="w-64 bg-[#0a0a0a] border-r border-white/5 flex flex-col fixed h-full z-50">
                 {/* Logo Section */}
@@ -51,8 +51,8 @@ const AdminDashboard = () => {
                             key={item.name}
                             onClick={() => setActiveTab(item.name)}
                             className={`w-full flex items-center gap-4 px-4 py-3 rounded-lg text-sm font-medium transition-all group
-                                ${activeTab === item.name 
-                                    ? 'bg-primary text-accent shadow-lg shadow-primary/20' 
+                                ${activeTab === item.name
+                                    ? 'bg-primary text-accent shadow-lg shadow-primary/20'
                                     : 'text-neutral-500 hover:bg-white/5 hover:text-accent'}`}
                         >
                             <span className={activeTab === item.name ? 'text-accent' : 'text-neutral-500 group-hover:text-primary'}>
@@ -71,7 +71,7 @@ const AdminDashboard = () => {
                     <button className="w-full flex items-center gap-4 px-4 py-3 text-sm font-medium text-primary hover:bg-primary/10 rounded-lg transition-all">
                         <FiLogOut /> Sign Out
                     </button>
-                    
+
                     {/* Admin Profile Mini */}
                     <div className="mt-4 pt-4 border-t border-white/5 px-4">
                         <p className="text-xs font-bold truncate">Shakil</p>
@@ -81,7 +81,7 @@ const AdminDashboard = () => {
             </aside>
             {/* --- MAIN CONTENT AREA --- */}
             <main className="flex-1 ml-64 p-8 md:p-12">
-                
+
                 {/* Header */}
                 <header className="mb-10">
                     <h1 className="text-3xl font-bold uppercase tracking-wider bebas mb-1">Dashboard Overview</h1>
