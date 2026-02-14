@@ -17,7 +17,6 @@ const AdminDashboard = () => {
         { name: 'Analytics', icon: <FiBarChart2 /> },
         { name: 'Settings', icon: <FiSettings /> },
     ];
-
     // Demo Data for Stat Cards
     const stats = [
         { label: 'Total Users', value: '3', change: '+12%', icon: <FiUsers /> },
@@ -28,7 +27,6 @@ const AdminDashboard = () => {
 
     return (
         <div className="min-h-screen bg-secondary text-accent flex">
-
             {/* --- SIDEBAR --- */}
             <aside className="w-64 bg-[#0a0a0a] border-r border-white/5 flex flex-col fixed h-full z-50">
                 {/* Logo Section */}
@@ -43,7 +41,6 @@ const AdminDashboard = () => {
                         Admin
                     </div>
                 </div>
-
                 {/* Navigation Menu */}
                 <nav className="flex-1 px-4 py-6 space-y-2">
                     {menuItems.map((item) => (
@@ -62,7 +59,6 @@ const AdminDashboard = () => {
                         </button>
                     ))}
                 </nav>
-
                 {/* Bottom Sidebar Actions */}
                 <div className="p-4 border-t border-white/5 space-y-1">
                     <button className="w-full flex items-center gap-4 px-4 py-3 text-sm font-medium text-neutral-500 hover:text-accent transition-colors">

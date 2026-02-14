@@ -1,13 +1,17 @@
-import { NavLink, Outlet } from "react-router";
+import { Link, NavLink, Outlet } from "react-router";
 import { RiMenuUnfold2Fill } from "react-icons/ri";
-import { FaHome, FaBox, FaMoneyBillWave, FaSearchLocation, FaUserCheck, FaUserClock, FaUserShield, FaWallet } from "react-icons/fa";
-import { FaMotorcycle } from "react-icons/fa6";
 import useUserRole from "../../Hooks/useUserRole";
 import Loader from "../../Components/Shared/Loader";
+import { RiHome9Line } from "react-icons/ri";
+import {
+     FiGrid, FiBox, FiShoppingBag, FiUsers, FiBarChart2,
+     FiSettings, FiLogOut, FiTrendingUp,
+} from 'react-icons/fi';
+import useAuth from "../../Hooks/useAuth";
 
 const DashboardLayout = () => {
      const { role, isLoading } = useUserRole()
-     console.log(isLoading, role?.role);
+     const { user, logOutUser } = useAuth()
      if (isLoading) {
           <Loader></Loader>
      }
@@ -18,9 +22,9 @@ const DashboardLayout = () => {
 
                <div className="drawer-content flex flex-col">
                     {/* Navbar */}
-                    <div className="navbar bg-gray-200 mb-5 py-4 w-full xl:hidden">
+                    <div className="navbar bg-primary/85 text-accent sticky top-0 py-5 w-full flex gap-2 xl:hidden px-5">
                          <div className="flex-none ">
-                              <label htmlFor="my-drawer-2" aria-label="open sidebar" className="btn btn-square btn-ghost">
+                              <label htmlFor="my-drawer-2" aria-label="open sidebar" className="">
                                    <RiMenuUnfold2Fill size={26}></RiMenuUnfold2Fill>
                               </label>
                          </div>
@@ -33,60 +37,78 @@ const DashboardLayout = () => {
                </div>
                <div className="drawer-side">
                     <label htmlFor="my-drawer-2" aria-label="close sidebar" className="drawer-overlay"></label>
-                    <ul className="menu bg-base-200 text-accent/90 z-1 border-r-2 border-accent/10 font-medium text-lg min-h-full w-80 p-4 overflow-y-hidden space-y-3">
+                    <ul className="menu bg-base-200 text-accent/90 z-1 border-r-2 border-accent/10 font-medium text-lg min-h-full flex flex-col w-72 overflow-y-hidden space-y-3">
                          {/* Sidebar content here */}
-                         <div className="mb-4 flex items-center gap-3">
-                              <img src="/b4-style-logo.webp" className="w-10 h-10 md:w-12 md:h-12" alt="" />
-                              <span className="bebas tracking-widest text-3xl text-accent font-medium">B4 Style</span>
-                         </div>
-                         <span className="uppercase text-sm text-primary font-bold">{role?.role}</span>
-                         <div className="border mb-5 border-neutral-700"></div>
-                         <li>
-                              <NavLink end className={({ isActive }) => isActive ? 'bg-primary/95 ' : ''} to="/dashboard" >
-                                   <span className={`flex items-center gap-4 font-semibold`}>
-                                        <FaHome /> Home
-                                   </span>
-                              </NavLink>
-                         </li>
-                         {/* admin panel */}
-                         <>
+                         <section className="p-3">
+                              <div className="mb-4 flex items-center gap-3">
+                                   <img src="/b4-style-logo.webp" className="w-10 h-10" alt="" />
+                                   <span className="bebas tracking-wider text-xl text-accent font-medium">B4 Style</span>
+                              </div>
+                              <span className="uppercase text-sm bg-primary/15 px-5 py-2 rounded-full text-primary font-bold">{role?.role}</span>
+                         </section>
+                         <div className="border-b mb-5 border-accent/15"></div>
+                         {/* links section */}
+                         <section className="flex-1 space-y-3 text-accent/85 px-1">
                               <li>
-                                   <NavLink className={({ isActive }) => isActive ? 'bg-primary/95' : ''} to="/dashboard/sddf">
-                                        <span className="flex items-center gap-4 font-semibold">
-                                             <FaUserShield /> Manage Admins
+                                   <NavLink end className={({ isActive }) => isActive ? 'bg-primary/95 text-accent py-2.5' : 'py-2.5'} to="/dashboard" >
+                                        <span className={`flex items-center text-sm gap-4 font-semibold`}>
+                                             <FiGrid size={20} /> Overview
                                         </span>
                                    </NavLink>
                               </li>
                               <li>
-                                   <NavLink className={({ isActive }) => isActive ? 'bg-primary/95' : ''} to="/dashboard/sdfsf">
-                                        <span className="flex items-center gap-4 font-semibold">
-                                             <FaUserClock /> Pending Riders
+                                   <NavLink className={({ isActive }) => isActive ? 'bg-primary/95 py-2.5' : 'py-2.5'} to="/dashboard/sddf">
+                                        <span className="flex text-sm items-center gap-4 font-semibold">
+                                             <FiBox size={20} /> Products
                                         </span>
                                    </NavLink>
                               </li>
                               <li>
-                                   <NavLink className={({ isActive }) => isActive ? 'bg-primary/95' : ''} to="/dashboard/cashout-requests">
-                                        <span className="flex items-center gap-4 font-semibold">
-                                             <FaWallet /> Cashout Requests
+                                   <NavLink className={({ isActive }) => isActive ? 'bg-primary/95 py-2.5' : 'py-2.5'} to="/dashboard/sdfsf">
+                                        <span className="flex text-sm items-center gap-4 font-semibold">
+                                             <FiShoppingBag size={20} /> Orders
                                         </span>
                                    </NavLink>
                               </li>
-                         </>
-                         <li>
-                              <NavLink className={({ isActive }) => isActive ? 'bg-primary/95' : ''} to="/dashboard/myParcels">
-                                   <span className="flex items-center gap-4 font-semibold">
-                                        <FaBox /> My Parcels
-                                   </span>
-                              </NavLink>
-                         </li>
-
-                         <li>
-                              <NavLink className={({ isActive }) => isActive ? 'bg-primary/95' : ''} to="/dashboard/payment-history">
-                                   <span className="flex items-center gap-4 font-semibold">
-                                        <FaMoneyBillWave /> Payment History
-                                   </span>
-                              </NavLink>
-                         </li>
+                              <li>
+                                   <NavLink className={({ isActive }) => isActive ? 'bg-primary/95 py-2.5' : 'py-2.5'} to="/dashboard/myParcels">
+                                        <span className="flex text-sm items-center gap-4 font-semibold">
+                                             <FiUsers size={20} /> Users
+                                        </span>
+                                   </NavLink>
+                              </li>
+                              <li>
+                                   <NavLink className={({ isActive }) => isActive ? 'bg-primary/95 py-2.5' : 'py-2.5'} to="/dashboard/myParcels">
+                                        <span className="flex text-sm items-center gap-4 font-semibold">
+                                             <FiBarChart2 size={20} /> Analytics
+                                        </span>
+                                   </NavLink>
+                              </li>
+                              <li>
+                                   <NavLink className={({ isActive }) => isActive ? 'bg-primary/95 py-2.5' : 'py-2.5'} to="/dashboard/myParcels">
+                                        <span className="flex text-sm items-center gap-4 font-semibold">
+                                             <FiSettings size={20} /> Settings
+                                        </span>
+                                   </NavLink>
+                              </li>
+                         </section>
+                         {/* last part */}
+                         <div className="border-t border-accent/15"></div>
+                         <section className="space-y-1.5 py-1.5 pb-3 p-1">
+                              <Link to={'/shop'} className="w-full flex items-center gap-3 px-4 py-3 text-[15px] font-medium text-neutral-400 rounded-lg hover:bg-accent/5 cursor-pointer transition-colors">
+                                   <RiHome9Line size={22} /> Back to Store
+                              </Link>
+                              <button
+                                   onClick={() => logOutUser()}
+                                   className="w-full flex items-center gap-3 px-4 py-3 text-[15px] font-medium text-primary hover:bg-primary/10 cursor-pointer rounded-lg transition-all">
+                                   <FiLogOut size={22} /> Sign Out
+                              </button>
+                              {/* Admin Profile Mini */}
+                              <div className="mt-2 pt-4 border-t border-accent/10 px-4">
+                                   <p className="text-sm mb-1.5 font-semibold truncate">{user?.displayName}</p>
+                                   <p className="text-xs text-neutral-500 truncate">{user?.email}</p>
+                              </div>
+                         </section>
                     </ul>
                </div>
           </div>
