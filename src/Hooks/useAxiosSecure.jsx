@@ -3,12 +3,13 @@ import useAuth from "./useAuth";
 import { useEffect } from "react";
 
 const axiosSecure = axios.create({
-     baseURL: `${import.meta.env.VITE_API_URL}`
+     // baseURL: [`${import.meta.env.VITE_API_URL , import.meta.env.BACKEND_API_URL}`]
+     baseURL: "https://b4-style-backend.onrender.com/"
 })
 
 const useAxiosSecure = () => {
      const { user } = useAuth()
-     
+
      useEffect(() => {
           const requestInterceptor = axiosSecure.interceptors.request.use(
                async (config) => {
