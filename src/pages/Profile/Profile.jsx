@@ -3,6 +3,8 @@ import { FiUser, FiPackage, FiHeart, FiSettings, FiLogOut } from 'react-icons/fi
 import useWishlist from './../../Hooks/useWishlist';
 import { useNavigate } from 'react-router-dom';
 import useAuth from '../../Hooks/useAuth';
+import { LuLayoutDashboard } from "react-icons/lu";
+
 
 const Profile = () => {
      const { logOutUser, user } = useAuth()
@@ -26,9 +28,10 @@ const Profile = () => {
           },
           {
                id: 3,
-               title: "ACCOUNT SETTINGS",
-               subtitle: "Update your profile",
-               icon: <FiSettings size={22} />,
+               title: "Dashboard",
+               subtitle: "Analysis Your Dashboard",
+               icon: <LuLayoutDashboard size={22} />,
+               to: '/dashboard'
           },
           {
                id: 4,

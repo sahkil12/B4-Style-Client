@@ -20,6 +20,7 @@ import Loader from "../../Components/Shared/Loader";
 import Checkout from "../../pages/CheckoutPage/Checkout";
 import PaymentSuccess from "../../pages/CheckoutPage/PaymentSuccess";
 import DashboardLayout from "../../layouts/DashboardLayout/DashboardLayout";
+import DashBoardHome from "../../pages/Dashboard/DashBoardHome/DashBoardHome";
 
 export const router = createBrowserRouter([
      {
@@ -103,5 +104,11 @@ export const router = createBrowserRouter([
      {
           path: "/dashboard",
           element: <PrivateRoute><DashboardLayout></DashboardLayout></PrivateRoute>,
+          children: [
+               {
+                    index: true,
+                    element: <DashBoardHome></DashBoardHome>
+               }
+          ]
      }
 ]);
