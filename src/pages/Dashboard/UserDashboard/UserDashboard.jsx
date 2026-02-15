@@ -2,8 +2,10 @@ import { motion } from 'framer-motion';
 import {
      FiBox, FiShoppingBag, FiUsers, FiTrendingUp
 } from 'react-icons/fi';
+import useAuth from '../../../Hooks/useAuth';
 
 const UserDashboard = () => {
+     const { user } = useAuth()
 
      const stats = [
           { label: 'Total Users', value: '31', change: '+12%', icon: <FiUsers /> },
@@ -17,8 +19,8 @@ const UserDashboard = () => {
                <main className="flex-1 p-8">
                     {/* Header */}
                     <header className="mb-10">
-                         <h1 className="text-3xl font-semibold tracking-wider bebas mb-1">Dashboard Overview</h1>
-                         <p className="text-neutral-500 text-sm">Welcome back, Mustafa! Here's what's happening today.</p>
+                         <h1 className="text-3xl md:text-4xl font-medium tracking-wider bebas mb-1.5">WELCOME, {user?.displayName}!</h1>
+                         <p className="text-neutral-400 text-sm">Here's your account overview</p>
                     </header>
 
                     {/* Stat Cards Grid */}

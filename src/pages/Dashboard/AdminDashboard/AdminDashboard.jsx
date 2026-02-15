@@ -17,8 +17,8 @@ const AdminDashboard = () => {
             <main className="flex-1 p-8">
                 {/* Header */}
                 <header className="mb-10">
-                    <h1 className="text-3xl font-semibold tracking-wider bebas mb-1">Dashboard Overview</h1>
-                    <p className="text-neutral-500 text-sm">Welcome back, Admin! Here's what's happening today.</p>
+                    <h1 className="text-3xl md:text-4xl font-medium tracking-wider bebas mb-1.5">Dashboard Overview</h1>
+                    <p className="text-neutral-400/85 text-sm md:text-base">Welcome back, Admin! Here's what's happening.</p>
                 </header>
 
                 {/* Stat Cards Grid */}
