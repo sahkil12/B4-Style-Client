@@ -73,6 +73,7 @@ const SignIn = () => {
                     }
                })
                .catch(error => {
+                    console.log(error);
                     setError("Something is wrong try again!!");
                     setGoogleLoading(false);
                })

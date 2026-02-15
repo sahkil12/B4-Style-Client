@@ -11,7 +11,7 @@ const ProductCard = ({ product, animation, bestSellers, open }) => {
 
      const { user } = useAuth()
      const { handleAddToCart, isAddingToCart } = useCart()
-     const { handleAddToWishlist, handleRemoveWishlist, wishlist, isWishlistLoading, wishlistLoad } = useWishlist()
+     const { handleAddToWishlist, handleRemoveWishlist, wishlist, isWishlistLoading } = useWishlist()
      const navigate = useNavigate()
      const userId = user?.uid
      // discount price
@@ -99,8 +99,8 @@ const ProductCard = ({ product, animation, bestSellers, open }) => {
                                    e.stopPropagation();
                                    isWishlist ? removeWishlist() : addWishlist();
                               }}
-                              className={`absolute top-4 right-3 p-2 rounded-full transition-all duration-200 cursor-pointer text-accent hover:scale-110 active:scale-110 ${isWishlist || wishlistLoad ? 'opacity-100 bg-primary' : 'group-hover:opacity-100 hover:bg-primary/90 md:opacity-0 active:bg-primary/90 bg-secondary/85'}`}>
-                              {isWishlist || wishlistLoad ? <FaHeart size={18} /> : <FiHeart size={18} />}
+                              className={`absolute top-4 right-3 p-2 rounded-full transition-all duration-200 cursor-pointer text-accent hover:scale-110 active:scale-110 ${isWishlist ? 'opacity-100 bg-primary' : 'group-hover:opacity-100 hover:bg-primary/90 md:opacity-0 active:bg-primary/90 bg-secondary/85'}`}>
+                              {isWishlist ? <FaHeart size={18} /> : <FiHeart size={18} />}
                          </button>
                          {/* Quick Add Button */}
                          <div className={`${open ? 'translate-y-0' : 'sm:translate-y-full'} absolute bottom-0 left-0 w-full p-2.5 sm:p-3 group-hover:translate-y-0 transition-transform duration-600 ease-out`}>
