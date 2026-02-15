@@ -2,7 +2,7 @@ import useUserRole from '../../../Hooks/useUserRole';
 import Loader from '../../../Components/Shared/Loader';
 import AdminDashboard from '../AdminDashboard/AdminDashboard';
 import NotFound from '../../../Components/Shared/NotFound';
-import UserDashboard from '../userDashboard/userDashboard';
+import UserDashboard from '../UserDashboard/UserDashboard';
 
 const DashBoardHome = () => {
      const { role, isLoading } = useUserRole()
