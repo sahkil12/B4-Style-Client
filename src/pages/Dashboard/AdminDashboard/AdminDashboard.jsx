@@ -5,17 +5,6 @@ import {
 } from 'react-icons/fi';
 
 const AdminDashboard = () => {
-
-    // Sidebar Menu Items
-    // const menuItems = [
-    //     { name: 'Overview', icon: <FiGrid /> },
-    //     { name: 'Products', icon: <FiBox /> },
-    //     { name: 'Orders', icon: <FiShoppingBag /> },
-    //     { name: 'Users', icon: <FiUsers /> },
-    //     { name: 'Analytics', icon: <FiBarChart2 /> },
-    //     { name: 'Settings', icon: <FiSettings /> },
-    // ];
-    // Demo Data for Stat Cards
     const stats = [
         { label: 'Total Users', value: '3', change: '+12%', icon: <FiUsers /> },
         { label: 'Total Products', value: '8', change: '+3', icon: <FiBox /> },

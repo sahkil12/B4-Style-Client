@@ -3,18 +3,18 @@ import { RiMenuUnfold2Fill } from "react-icons/ri";
 import useUserRole from "../../Hooks/useUserRole";
 import Loader from "../../Components/Shared/Loader";
 import { RiHome9Line } from "react-icons/ri";
-import {
-     FiGrid, FiBox, FiShoppingBag, FiUsers, FiBarChart2,
-     FiSettings, FiLogOut, FiTrendingUp,
-} from 'react-icons/fi';
+import { FiLogOut } from 'react-icons/fi';
 import useAuth from "../../Hooks/useAuth";
+import { adminLinks, userLinks } from "../../utils/DashboardLinks";
 
 const DashboardLayout = () => {
      const { role, isLoading } = useUserRole()
      const { user, logOutUser } = useAuth()
+     // loader
      if (isLoading) {
-          <Loader></Loader>
+          return <Loader></Loader>
      }
+     const links = role?.role === "admin" ? adminLinks : userLinks;
 
      return (
           <div className="drawer xl:drawer-open">
@@ -22,10 +22,10 @@ const DashboardLayout = () => {
 
                <div className="drawer-content flex flex-col">
                     {/* Navbar */}
-                    <div className="navbar bg-primary/85 text-accent sticky top-0 py-5 w-full flex gap-2 xl:hidden px-5">
-                         <div className="flex-none ">
+                    <div className="navbar bg-primary text-accent sticky top-0 shadow-md py-5 w-full flex gap-2 xl:hidden px-5">
+                         <div className="flex-none">
                               <label htmlFor="my-drawer-2" aria-label="open sidebar" className="">
-                                   <RiMenuUnfold2Fill size={26}></RiMenuUnfold2Fill>
+                                   <RiMenuUnfold2Fill className="cursor-pointer" size={26}></RiMenuUnfold2Fill>
                               </label>
                          </div>
                          <div className="mx-2 flex-1 px-2 text-xl sm:text-2xl font-semibold">Dashboard</div>
@@ -47,54 +47,33 @@ const DashboardLayout = () => {
                               </div>
                               <span className="uppercase text-sm bg-primary/15 px-5 py-2 rounded-full text-primary font-bold">{role?.role}</span>
                          </section>
-                         <div className="border-b mb-5 border-accent/15"></div>
+                         <div className="border-b mb-5 border-accent/10"></div>
                          {/* links section */}
-                         <section className="flex-1 space-y-3 text-accent/85 px-1">
-                              <li>
-                                   <NavLink end className={({ isActive }) => isActive ? 'bg-primary/95 text-accent py-2.5' : 'py-2.5'} to="/dashboard" >
-                                        <span className={`flex items-center text-sm gap-4 font-semibold`}>
-                                             <FiGrid size={20} /> Overview
-                                        </span>
-                                   </NavLink>
-                              </li>
-                              <li>
-                                   <NavLink className={({ isActive }) => isActive ? 'bg-primary/95 py-2.5' : 'py-2.5'} to="/dashboard/sddf">
-                                        <span className="flex text-sm items-center gap-4 font-semibold">
-                                             <FiBox size={20} /> Products
-                                        </span>
-                                   </NavLink>
-                              </li>
-                              <li>
-                                   <NavLink className={({ isActive }) => isActive ? 'bg-primary/95 py-2.5' : 'py-2.5'} to="/dashboard/sdfsf">
-                                        <span className="flex text-sm items-center gap-4 font-semibold">
-                                             <FiShoppingBag size={20} /> Orders
-                                        </span>
-                                   </NavLink>
-                              </li>
-                              <li>
-                                   <NavLink className={({ isActive }) => isActive ? 'bg-primary/95 py-2.5' : 'py-2.5'} to="/dashboard/myParcels">
-                                        <span className="flex text-sm items-center gap-4 font-semibold">
-                                             <FiUsers size={20} /> Users
-                                        </span>
-                                   </NavLink>
-                              </li>
-                              <li>
-                                   <NavLink className={({ isActive }) => isActive ? 'bg-primary/95 py-2.5' : 'py-2.5'} to="/dashboard/myParcels">
-                                        <span className="flex text-sm items-center gap-4 font-semibold">
-                                             <FiBarChart2 size={20} /> Analytics
-                                        </span>
-                                   </NavLink>
-                              </li>
-                              <li>
-                                   <NavLink className={({ isActive }) => isActive ? 'bg-primary/95 py-2.5' : 'py-2.5'} to="/dashboard/myParcels">
-                                        <span className="flex text-sm items-center gap-4 font-semibold">
-                                             <FiSettings size={20} /> Settings
-                                        </span>
-                                   </NavLink>
-                              </li>
+                         <section className="flex-1 space-y-2.5 text-accent/85 px-1">
+                              {links?.map((link) => {
+                                   const Icon = link.icon;
+                                   return (
+                                        <li key={link.name}>
+                                             <NavLink
+                                                  end={link.path === "/dashboard"}
+                                                  to={link.path}
+                                                  className={({ isActive }) =>
+                                                       `flex items-center gap-3 px-5 py-2.5 rounded-lg text-sm font-semibold transition-colors
+                                                          ${isActive
+                                                            ? "bg-primary text-accent"
+                                                            : "text-accent/85 hover:bg-accent/5    active:bg-accent/5"
+                                                       }`
+                                                  }
+                                             >
+                                                  <Icon size={21} />
+                                                  {link.name}
+                                             </NavLink>
+                                        </li>
+                                   );
+                              })}
                          </section>
                          {/* last part */}
-                         <div className="border-t border-accent/15"></div>
+                         <div className="border-t border-accent/10"></div>
                          <section className="space-y-1.5 py-1.5 pb-3 p-1">
                               <Link to={'/shop'} className="w-full flex items-center gap-3 px-4 py-3 text-[15px] font-medium text-neutral-400 rounded-lg hover:bg-accent/5 cursor-pointer transition-colors">
                                    <RiHome9Line size={22} /> Back to Store
