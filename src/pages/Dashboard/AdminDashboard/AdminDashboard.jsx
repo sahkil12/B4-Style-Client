@@ -1,7 +1,5 @@
-import { motion } from 'framer-motion';
 import {
-    FiGrid, FiBox, FiShoppingBag, FiUsers, FiBarChart2,
-    FiSettings, FiArrowLeft, FiLogOut, FiTrendingUp
+    FiBox, FiShoppingBag, FiUsers, FiTrendingUp
 } from 'react-icons/fi';
 
 const AdminDashboard = () => {

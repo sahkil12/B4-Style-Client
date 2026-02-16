@@ -1,4 +1,3 @@
-import { motion } from 'framer-motion';
 import {
      FiBox, FiShoppingBag, FiUsers, FiTrendingUp
 } from 'react-icons/fi';
