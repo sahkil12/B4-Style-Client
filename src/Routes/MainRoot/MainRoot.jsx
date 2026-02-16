@@ -21,6 +21,13 @@ import Checkout from "../../pages/CheckoutPage/Checkout";
 import PaymentSuccess from "../../pages/CheckoutPage/PaymentSuccess";
 import DashboardLayout from "../../layouts/DashboardLayout/DashboardLayout";
 import DashBoardHome from "../../pages/Dashboard/DashBoardHome/DashBoardHome";
+import Products from "../../pages/Dashboard/AdminPages/Products";
+import Orders from './../../pages/Dashboard/AdminPages/Orders';
+import Users from './../../pages/Dashboard/AdminPages/Users';
+import Analytics from './../../pages/Dashboard/AdminPages/Analytics';
+import Settings from "../../pages/Dashboard/AdminPages/Settings";
+import MyOrders from './../../pages/Dashboard/UserPages/MyOrders';
+import UserProfile from "../../pages/Dashboard/UserPages/UserProfile";
 
 export const router = createBrowserRouter([
      {
@@ -108,7 +115,39 @@ export const router = createBrowserRouter([
                {
                     index: true,
                     element: <DashBoardHome></DashBoardHome>
-               }
+               },
+               {
+                    path: "/products",
+                    element: <Products></Products>
+               },
+               {
+                    path: "/orders",
+                    element: <Orders></Orders>
+               },
+               {
+                    path: "/users",
+                    element: <Users></Users>
+               },
+               {
+                    path: "/analytics",
+                    element: <Analytics></Analytics>
+               },
+               {
+                    path: "/orders",
+                    element: <Orders></Orders>
+               },
+               {
+                    path: "/settings",
+                    element: <Settings></Settings>
+               },
+               {
+                    path: "/my-orders",
+                    element: <MyOrders></MyOrders>
+               },
+               {
+                    path: "/user-profile",
+                    element: <UserProfile></UserProfile>
+               },
           ]
      }
 ]);

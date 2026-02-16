@@ -58,7 +58,7 @@ export const userLinks = [
   },
   {
     name: "Profile",
-    path: "/dashboard/profile",
+    path: "/dashboard/user-profile",
     icon: FiUser,
   },
   {
