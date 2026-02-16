@@ -6,6 +6,8 @@ import { RiHome9Line } from "react-icons/ri";
 import { FiLogOut } from 'react-icons/fi';
 import useAuth from "../../Hooks/useAuth";
 import { adminLinks, userLinks } from "../../utils/DashboardLinks";
+import { MdAdminPanelSettings } from "react-icons/md";
+import { FaUser } from "react-icons/fa6";
 
 const DashboardLayout = () => {
      const { role, isLoading } = useUserRole()
@@ -41,11 +43,13 @@ const DashboardLayout = () => {
                     <ul className="menu bg-base-200 text-accent/90 z-1 border-r-2 border-accent/10 font-medium text-lg min-h-full flex flex-col w-72 overflow-y-hidden space-y-3">
                          {/* Sidebar content here */}
                          <section className="p-3">
-                              <div className="mb-4 flex items-center gap-3">
-                                   <img src="/b4-style-logo.webp" className="w-10 h-10" alt="" />
+                              <div className="mb-4 flex items-center gap-3 ">
+                                   <Link to={'/'}>
+                                        <img src="/b4-style-logo.webp" className="w-10 h-10" alt="" />
+                                   </Link>
                                    <span className="bebas tracking-wider text-xl text-accent font-medium">B4 Style</span>
                               </div>
-                              <span className="uppercase text-sm bg-primary/15 px-5 py-2 rounded-full text-primary font-bold">{role?.role}</span>
+                              <span className="uppercase text-sm bg-primary/15 flex w-fit gap-1.5 items-center px-5 py-2 rounded-full text-primary font-bold"> {role?.role === "admin"? <MdAdminPanelSettings size={20}/> : <FaUser  size={14}/> } {role?.role}</span>
                          </section>
                          <div className="border-b mb-5 border-accent/10"></div>
                          {/* links section */}
@@ -61,7 +65,7 @@ const DashboardLayout = () => {
                                                        `flex items-center gap-3 px-5 py-2.5 rounded-lg text-sm font-semibold transition-colors
                                                           ${isActive
                                                             ? "bg-primary text-accent"
-                                                            : "text-accent/85 hover:bg-accent/5    active:bg-accent/5"
+                                                            : "text-accent/85 hover:bg-accent/5 active:bg-accent/5"
                                                        }`
                                                   }
                                              >
@@ -75,12 +79,12 @@ const DashboardLayout = () => {
                          {/* last part */}
                          <div className="border-t border-accent/10"></div>
                          <section className="space-y-1.5 py-1.5 pb-3 p-1">
-                              <Link to={'/shop'} className="w-full flex items-center gap-3 px-4 py-3 text-[15px] font-medium text-neutral-400 rounded-lg hover:bg-accent/5 cursor-pointer transition-colors">
+                              <Link to={'/shop'} className="w-full flex items-center gap-2.5 px-4 py-3 text-sm font-medium text-neutral-400 rounded-lg hover:bg-accent/5 active:bg-accent/5 cursor-pointer transition-colors">
                                    <RiHome9Line size={22} /> Back to Store
                               </Link>
                               <button
                                    onClick={() => logOutUser()}
-                                   className="w-full flex items-center gap-3 px-4 py-3 text-[15px] font-medium text-primary hover:bg-primary/10 cursor-pointer rounded-lg transition-all">
+                                   className="w-full flex items-center gap-2.5 px-4 py-3 text-[15px] font-medium text-primary hover:bg-primary/10 active:bg-primary/10 cursor-pointer rounded-lg transition-all">
                                    <FiLogOut size={22} /> Sign Out
                               </button>
                               {/* Admin Profile Mini */}

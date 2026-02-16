@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { FiMail, FiLock, FiEye, FiEyeOff, FiArrowRight, FiUser, FiCheckCircle } from 'react-icons/fi';
+import { MdCall } from "react-icons/md";
 import { FcGoogle } from 'react-icons/fc';
 import useAuth from '../../../Hooks/useAuth';
 import { ImSpinner9 } from 'react-icons/im';
@@ -12,6 +13,7 @@ const SignUp = () => {
      const { createUser, googleCreate, updateUserProfile } = useAuth()
      const [name, setName] = useState("");
      const [email, setEmail] = useState("");
+     const [number, setNumber] = useState("");
      const [password, setPassword] = useState("");
      const [accepted, setAccepted] = useState(false);
      const [error, setError] = useState("");
@@ -116,7 +118,6 @@ const SignUp = () => {
                >
                     {/* Header */}
                     <div className="text-center mb-10">
-                         {/* Replace with your actual Logo component or IMG tag */}
                          <div className="mb-6 flex justify-center">
                               <img src="/b4-style-logo.webp" loading="lazy" className='h-14' alt="B4 Style Logo" />
                          </div>
@@ -155,6 +156,22 @@ const SignUp = () => {
                                              placeholder="your@email.com"
                                              className={inputStyle}
                                              onChange={(e) => setEmail(e.target.value)}
+                                        />
+                                        {isEmailValid && (
+                                             <FiCheckCircle className="absolute right-4 text-green-500" size={20} />
+                                        )}
+                                   </div>
+                              </div>
+                              {/* Phone Number Field */}
+                              <div className="space-y-2">
+                                   <label className="block text-sm font-semibold tracking-wider">Phone Number</label>
+                                   <div className="relative flex items-center text-neutral-500 focus-within:text-primary transition-colors">
+                                        <MdCall className="absolute left-4" size={22} />
+                                        <input
+                                             type="tel"
+                                             placeholder="01XXXXXXXXX"
+                                             className={inputStyle}
+                                             onChange={(e) => setNumber(e.target.value)}
                                         />
                                         {isEmailValid && (
                                              <FiCheckCircle className="absolute right-4 text-green-500" size={20} />
