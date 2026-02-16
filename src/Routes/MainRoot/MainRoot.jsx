@@ -21,13 +21,13 @@ import Checkout from "../../pages/CheckoutPage/Checkout";
 import PaymentSuccess from "../../pages/CheckoutPage/PaymentSuccess";
 import DashboardLayout from "../../layouts/DashboardLayout/DashboardLayout";
 import DashBoardHome from "../../pages/Dashboard/DashBoardHome/DashBoardHome";
-import Products from "../../pages/Dashboard/AdminPages/Products";
 import Orders from './../../pages/Dashboard/AdminPages/Orders';
 import Users from './../../pages/Dashboard/AdminPages/Users';
 import Analytics from './../../pages/Dashboard/AdminPages/Analytics';
 import Settings from "../../pages/Dashboard/AdminPages/Settings";
 import MyOrders from './../../pages/Dashboard/UserPages/MyOrders';
 import UserProfile from "../../pages/Dashboard/UserPages/UserProfile";
+import AllProducts from "../../pages/Dashboard/AdminPages/AllProducts";
 
 export const router = createBrowserRouter([
      {
@@ -117,35 +117,35 @@ export const router = createBrowserRouter([
                     element: <DashBoardHome></DashBoardHome>
                },
                {
-                    path: "/products",
-                    element: <Products></Products>
+                    path: "all-products",
+                    element: <AllProducts></AllProducts>
                },
                {
-                    path: "/orders",
+                    path: "orders",
                     element: <Orders></Orders>
                },
                {
-                    path: "/users",
+                    path: "users",
                     element: <Users></Users>
                },
                {
-                    path: "/analytics",
+                    path: "analytics",
                     element: <Analytics></Analytics>
                },
                {
-                    path: "/orders",
+                    path: "orders",
                     element: <Orders></Orders>
                },
                {
-                    path: "/settings",
+                    path: "settings",
                     element: <Settings></Settings>
                },
                {
-                    path: "/my-orders",
+                    path: "my-orders",
                     element: <MyOrders></MyOrders>
                },
                {
-                    path: "/user-profile",
+                    path: "user-profile",
                     element: <UserProfile></UserProfile>
                },
           ]

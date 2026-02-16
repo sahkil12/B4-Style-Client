@@ -18,7 +18,7 @@ export const adminLinks = [
   },
   {
     name: "Products",
-    path: "/dashboard/products",
+    path: "/dashboard/all-products",
     icon: FiBox,
   },
   {
