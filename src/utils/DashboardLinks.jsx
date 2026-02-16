@@ -42,7 +42,7 @@ export const adminLinks = [
     icon: FiSettings,
   },
 ];
-
+// Profile.jsx
 
 // User Navigation
 export const userLinks = [
