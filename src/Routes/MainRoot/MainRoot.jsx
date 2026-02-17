@@ -28,6 +28,8 @@ import Settings from "../../pages/Dashboard/AdminPages/Settings";
 import MyOrders from './../../pages/Dashboard/UserPages/MyOrders';
 import UserProfile from "../../pages/Dashboard/UserPages/UserProfile";
 import AllProducts from "../../pages/Dashboard/AdminPages/AllProducts";
+import Forbidden from "../../Components/Shared/Forbidden";
+import AdminRoute from "../AdminRoute/AdminRoute";
 
 export const router = createBrowserRouter([
      {
@@ -118,23 +120,27 @@ export const router = createBrowserRouter([
                },
                {
                     path: "all-products",
-                    element: <AllProducts></AllProducts>
+                    element: <AdminRoute>
+                         <AllProducts />
+                    </AdminRoute>
                },
                {
                     path: "orders",
-                    element: <Orders></Orders>
+                    element: <AdminRoute>
+                         <Orders />
+                    </AdminRoute>
                },
                {
                     path: "users",
-                    element: <Users></Users>
+                    element: <AdminRoute>
+                         <Users />
+                    </AdminRoute>
                },
                {
                     path: "analytics",
-                    element: <Analytics></Analytics>
-               },
-               {
-                    path: "orders",
-                    element: <Orders></Orders>
+                    element: <AdminRoute>
+                         <Analytics />
+                    </AdminRoute>
                },
                {
                     path: "settings",
@@ -149,5 +155,9 @@ export const router = createBrowserRouter([
                     element: <UserProfile></UserProfile>
                },
           ]
+     },
+     {
+          path: "/forbidden",
+          element: <Forbidden />
      }
 ]);
