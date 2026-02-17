@@ -13,7 +13,8 @@
   --color-base-100: #000000;
   --color-base-200: #161616;
 }
-html{
+
+html {
   scroll-behavior: smooth;
 }
 
@@ -21,6 +22,35 @@ body {
   font-family: "Inter", sans-serif;
 }
 
-.bebas{
+.bebas {
   font-family: "Bebas Neue", sans-serif;
+}
+/* Firefox */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-primary) transparent;
+}
+/* Chrome, Edge, Brave */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-primary);
+  border-radius: 10px;
+}
+
+/* Chrome, Edge, Brave */
+::selection {
+  background: #ff1111b8;
+  color: white;
+}
+/* Firefox */
+::-moz-selection {
+  background: #ff1111b8;
+  color: white;
 }
