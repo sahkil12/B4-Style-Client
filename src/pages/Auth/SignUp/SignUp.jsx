@@ -26,6 +26,7 @@ const SignUp = () => {
      const from = location.state?.from?.pathname || "/";
      // Simple Email Validation
      const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+     const isPhoneValid = /^(?:\+8801|8801|01)[3-9]\d{8}$/.test(number);
      const loader = <span className='animate-spin'><ImSpinner9 size={22} /></span>
 
      const saveUserToDB = async (user) => {
@@ -48,6 +49,10 @@ const SignUp = () => {
 
           if (!isEmailValid) {
                toast.error("Invalid email address", { duration: 1000 });
+               return;
+          }
+          if (!isPhoneValid) {
+               toast.error("Please enter a valid Bangladeshi phone number", { duration: 1000 });
                return;
           }
           if (password.length < 6) {
@@ -73,7 +78,7 @@ const SignUp = () => {
                     await updateUserProfile({
                          displayName: name,
                     })
-                    await saveUserToDB({ name, email })
+                    await saveUserToDB({ name, email, number })
                     navigate(from);
                }
           }
@@ -168,12 +173,13 @@ const SignUp = () => {
                                    <div className="relative flex items-center text-neutral-500 focus-within:text-primary transition-colors">
                                         <MdCall className="absolute left-4" size={22} />
                                         <input
+                                             required
                                              type="tel"
                                              placeholder="01XXXXXXXXX"
                                              className={inputStyle}
-                                             onChange={(e) => setNumber(e.target.value)}
+                                             onChange={(e) => setNumber(e.target.value.trim())}
                                         />
-                                        {isEmailValid && (
+                                        {isPhoneValid && (
                                              <FiCheckCircle className="absolute right-4 text-green-500" size={20} />
                                         )}
                                    </div>
