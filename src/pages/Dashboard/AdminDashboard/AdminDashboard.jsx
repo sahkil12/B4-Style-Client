@@ -22,7 +22,7 @@ const AdminDashboard = () => {
                 {/* Stat Cards Grid */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
                     {stats?.map((stat, index) => (
-                        <div key={index} className="bg-[#1a1a1a] p-6 rounded-xl border border-white/5 relative overflow-hidden group hover:border-primary/30 transition-all">
+                        <div key={index} className="bg-base-200/80 p-6 rounded-xl border border-white/5 relative overflow-hidden group hover:border-primary/30 transition-all">
                             <div className="flex justify-between items-start mb-4">
                                 <div className="p-3 bg-neutral-800 rounded-lg text-primary group-hover:bg-primary group-hover:text-accent transition-all">
                                     {stat.icon}
