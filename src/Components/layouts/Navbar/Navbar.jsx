@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { FiSearch, FiHeart, FiShoppingBag } from "react-icons/fi";
+import { LuLayoutDashboard } from "react-icons/lu";
 import { RiMenuFill } from "react-icons/ri";
 import { RxCross2 } from "react-icons/rx";
 import { motion } from "motion/react"
@@ -57,7 +58,7 @@ const Navbar = () => {
                          <button
                               aria-label="Search"
                               onClick={() => setIsSearchOpen(true)}
-                              className="hover:text-primary transition-colors"
+                              className="hover:text-primary transition-colors cursor-pointer"
                          >
                               <FiSearch size={22} />
                          </button>
@@ -99,6 +100,17 @@ const Navbar = () => {
                                    </motion.span>
                               )}
                          </div>
+                         {
+                              user && (
+                                   <Link
+                                        to={'/dashboard'}
+                                        aria-label="Search"
+                                        className="hover:text-primary transition-colors cursor-pointer"
+                                   >
+                                        <LuLayoutDashboard size={22} />
+                                   </Link>
+                              )
+                         }
                          {/* reuseable desktop auth link*/}
                          <AuthLink user={user} className="hover:text-primary active:text-primary hidden lg:flex items-center gap-2"></AuthLink>
                          {/* menu open close button */}
