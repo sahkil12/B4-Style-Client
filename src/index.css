@@ -32,18 +32,17 @@ html {
 }
 /* Chrome, Edge, Brave */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 10px;
 }
 
 ::-webkit-scrollbar-track {
   background: transparent;
 }
-
+/* scroll bar color */
 ::-webkit-scrollbar-thumb {
   background: var(--color-primary);
   border-radius: 10px;
 }
-
 /* Chrome, Edge, Brave */
 ::selection {
   background: #ff1111b8;
