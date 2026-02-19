@@ -21,11 +21,12 @@ const AdminDashboard = () => {
     if (isLoading) {
         return <Spinner></Spinner>
     }
+    console.log(adminStats?.latestOrders);
 
     const stats = [
-        { label: 'Total Admin', value: adminStats?.totalAdmins, icon: <MdAdminPanelSettings /> },
-        { label: 'Total Users', value: adminStats?.totalUsers, change: '+12%', icon: <FiUsers /> },
-        { label: 'Total Products', value: adminStats?.totalProducts, change: '+3', icon: <FiBox /> },
+        { label: 'Total Admin', value: adminStats?.totalAdmins, icon: <MdAdminPanelSettings size={18} /> },
+        { label: 'Total Users', value: adminStats?.totalUsers, icon: <FiUsers /> },
+        { label: 'Total Products', value: adminStats?.totalProducts, icon: <FiBox /> },
         { label: 'Total Orders', value: adminStats?.totalOrders, change: '+18%', icon: <FiShoppingBag /> },
         { label: 'Revenue', value: `৳ ${adminStats?.totalRevenue}`, change: '+24%', icon: <span className="font-bold">৳</span> },
     ];
@@ -60,6 +61,47 @@ const AdminDashboard = () => {
                         </div>
                     ))}
                 </div>
+                {/* Latest Orders */}
+                <div className="bg-base-200/80 p-6 rounded-xl border border-accent/5">
+                    <h2 className="text-lg font-bold mb-4">Latest Orders</h2>
+
+                    <div className="overflow-x-auto">
+                        <table className="table">
+                            <thead>
+                                <tr>
+                                    <th>Customer</th>
+                                    <th>Amount</th>
+                                    <th>Status</th>
+                                    <th>Date</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                {adminStats?.latestOrders?.map(order => (
+                                    console.log(order),
+                                    <tr key={order._id}>
+                                        <td>
+                                            {order.shippingAddress?.name}
+                                        </td>
+                                        <td>
+                                            ৳ {order.totalAmount}
+                                        </td>
+                                        <td>
+                                            <span className="badge badge-success font-semibold">
+                                                {order?.paymentStatus}
+                                            </span>
+                                        </td>
+                                        <td>
+                                            {new Date(order.createdAt)
+                                                .toLocaleDateString()}
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
             </main>
         </div>
     );
