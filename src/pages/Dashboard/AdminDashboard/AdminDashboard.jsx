@@ -5,6 +5,8 @@ import { MdAdminPanelSettings } from "react-icons/md";
 import {
     FiBox, FiShoppingBag, FiUsers, FiTrendingUp
 } from 'react-icons/fi';
+import WeeklyRevenueChart from './WeeklyRevenueChart';
+import WeeklyOrdersChart from './WeeklyOrdersChart';
 
 const AdminDashboard = () => {
     const axiosSecure = useAxiosSecure()
@@ -16,12 +18,18 @@ const AdminDashboard = () => {
             return res
         }
     })
+    const { data: weeklyStats = [] } = useQuery({
+        queryKey: ["weekly-stats"],
+        queryFn: async () => {
+            const res = await axiosSecure.get("/admin/weekly-stats");
+            return res.data;
+        }
+    });
     const adminStats = data?.data
     // loading handle
     if (isLoading) {
         return <Spinner></Spinner>
     }
-    console.log(adminStats?.latestOrders);
 
     const stats = [
         { label: 'Total Admin', value: adminStats?.totalAdmins, icon: <MdAdminPanelSettings size={18} /> },
@@ -32,8 +40,8 @@ const AdminDashboard = () => {
     ];
 
     return (
-        <div className="min-h-screen bg-secondary text-accent flex">
-            <main className="flex-1 p-4 md:p-8">
+        <div className="min-h-screen bg-secondary text-accent ">
+            <main className="flex-1 p-4 md:p-8 w-full max-w-full overflow-x-hidden">
                 {/* Header */}
                 <header className="mb-10">
                     <h1 className="text-3xl md:text-4xl font-medium tracking-wider bebas mb-1.5">Dashboard Overview</h1>
@@ -61,9 +69,15 @@ const AdminDashboard = () => {
                         </div>
                     ))}
                 </div>
+                {/* chart data */}
+                <div className="grid lg:grid-cols-2 gap-6 mb-10 w-full">
+                    <WeeklyRevenueChart data={weeklyStats} />
+
+                    <WeeklyOrdersChart data={weeklyStats} />
+                </div>
                 {/* Latest Orders */}
-                <div className="bg-base-200/80 p-6 rounded-xl border border-accent/5">
-                    <h2 className="text-lg font-bold mb-4">Latest Orders</h2>
+                <div className="bg-base-200/80 p-6 rounded-xl border border-accent/5 mb-5">
+                    <h2 className="text-lg font-bold ">Latest Orders</h2>
 
                     <div className="overflow-x-auto">
                         <table className="table">
@@ -78,7 +92,6 @@ const AdminDashboard = () => {
 
                             <tbody>
                                 {adminStats?.latestOrders?.map(order => (
-                                    console.log(order),
                                     <tr key={order._id}>
                                         <td>
                                             {order.shippingAddress?.name}

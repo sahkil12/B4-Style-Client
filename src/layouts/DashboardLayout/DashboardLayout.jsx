@@ -22,9 +22,9 @@ const DashboardLayout = () => {
           <div className="drawer xl:drawer-open">
                <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
 
-               <div className="drawer-content flex flex-col">
+               <div className="drawer-content flex flex-col overflow-x-hidden">
                     {/* Navbar */}
-                    <div className="navbar bg-primary text-accent sticky z-50 top-0 shadow-md py-5 w-full flex gap-2 xl:hidden px-5">
+                    <div className="navbar bg-primary text-accent shadow-md py-5 w-full flex gap-2 xl:hidden px-5">
                          <div className="flex-none">
                               <label htmlFor="my-drawer-2" aria-label="open sidebar" className="">
                                    <RiMenuUnfold2Fill className="cursor-pointer" size={26}></RiMenuUnfold2Fill>
