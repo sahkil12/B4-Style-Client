@@ -47,7 +47,6 @@ const AdminDashboard = () => {
                     <h1 className="text-3xl md:text-4xl font-medium tracking-wider bebas mb-1.5">Dashboard Overview</h1>
                     <p className="text-neutral-400/85 text-sm md:text-base">Welcome back, Admin! Here's what's happening.</p>
                 </header>
-
                 {/* Stat Cards Grid */}
                 <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-5 mb-10">
                     {stats?.map((stat, index) => (
@@ -77,11 +76,11 @@ const AdminDashboard = () => {
                 </div>
                 {/* Latest Orders */}
                 <div className="bg-base-200/80 p-6 rounded-xl border border-accent/5 mb-5">
-                    <h2 className="text-lg font-bold ">Latest Orders</h2>
+                    <h2 className="text-lg font-bold mb-5">Latest Orders</h2>
 
                     <div className="overflow-x-auto">
                         <table className="table">
-                            <thead>
+                            <thead className='text-accent text-base'>
                                 <tr>
                                     <th>Customer</th>
                                     <th>Amount</th>
