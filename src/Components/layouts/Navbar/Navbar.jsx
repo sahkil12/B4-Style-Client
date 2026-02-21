@@ -22,7 +22,6 @@ const Navbar = () => {
      const { wishlistCount } = useWishlist()
      const { cartQuantity } = useCart()
 
-
      useEffect(() => {
           const handleScrolled = () => {
                setScrolled(window.scrollY > 50);
