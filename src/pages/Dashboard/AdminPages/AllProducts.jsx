@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
-import { FiSearch, FiPlus, FiEdit2, FiTrash2, FiChevronDown } from 'react-icons/fi';
+import { FiSearch, FiPlus, FiEdit2, FiTrash2 } from 'react-icons/fi';
 import Spinner from "../../../Components/Shared/Spinner";
 
 const AllProducts = () => {
@@ -40,14 +40,13 @@ const AllProducts = () => {
                               className="w-full bg-[#1a1a1a] border border-white/5 rounded-lg py-3 pl-12 pr-4 outline-none focus:border-primary/50 transition-all text-sm"
                          />
                     </div>
-                    <div className="relative">
-                         <select className=" select appearance-none bg-[#1a1a1a] border border-white/5 rounded-lg py-3 pl-6 pr-12 text-sm outline-none cursor-pointer hover:border-white/20 transition-all">
+                    <div >
+                         <select className="select select-lg w-40 bg-base-200 border border-accent/5 rounded-lg py-3 pl-6 pr-12 text-sm outline-none cursor-pointer focus:border-primary/70 transition-all ">
                               <option>All</option>
                               <option>T-Shirts</option>
                               <option>Hoodies</option>
                               <option>Pants</option>
                          </select>
-                         {/* <FiChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 text-neutral-500 pointer-events-none" /> */}
                     </div>
                </div>
 
@@ -107,10 +106,9 @@ const AllProducts = () => {
                                                             Trending
                                                        </span>
                                                   )}
-                                                  
+
                                              </div>
                                         </td>
-
                                         {/* Action Buttons */}
                                         <td className="px-6 py-4 rounded-r-xl text-right">
                                              <div className="flex justify-end gap-2">
