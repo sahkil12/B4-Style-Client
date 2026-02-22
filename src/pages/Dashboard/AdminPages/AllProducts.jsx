@@ -4,6 +4,7 @@ import { FiSearch, FiPlus, FiEdit2, FiTrash2 } from 'react-icons/fi';
 import Spinner from "../../../Components/Shared/Spinner";
 import { useState } from "react";
 import Swal from "sweetalert2";
+import AddProductModal from "./ProductModal/AddProductModal";
 
 const AllProducts = () => {
      const axiosSecure = useAxiosSecure();
@@ -43,7 +44,6 @@ const AllProducts = () => {
           return <Spinner></Spinner>
      }
 
-     console.log(products);
      return (
           <div className="flex-1 p-4 lg:p-8  min-h-screen text-accent">
                {/* Header Section */}
@@ -165,6 +165,11 @@ const AllProducts = () => {
                          </tbody>
                     </table>
                </div>
+               {isAddOpen && (
+                    <AddProductModal
+                         close={() => setIsAddOpen(false)}
+                    />
+               )}
           </div>
      );
 };
