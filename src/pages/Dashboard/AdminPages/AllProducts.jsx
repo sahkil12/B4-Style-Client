@@ -1,10 +1,15 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import { FiSearch, FiPlus, FiEdit2, FiTrash2 } from 'react-icons/fi';
 import Spinner from "../../../Components/Shared/Spinner";
+import { useState } from "react";
+import Swal from "sweetalert2";
 
 const AllProducts = () => {
      const axiosSecure = useAxiosSecure();
+     const queryClient = useQueryClient();
+     const [isAddOpen, setIsAddOpen] = useState(false);
+     const [editProduct, setEditProduct] = useState(null);
 
      const { data: products = [], isLoading } = useQuery({
           queryKey: ["products"],
@@ -14,9 +19,31 @@ const AllProducts = () => {
           }
      });
 
+     const handleDelete = async (id) => {
+
+          const confirm = await Swal.fire({
+               title: "Delete Product?",
+               text: "This cannot be undone",
+               icon: "warning",
+               showCancelButton: true,
+               confirmButtonColor: "#ef4444",
+               confirmButtonText: "Delete"
+          });
+          if (!confirm.isConfirmed) return;
+          // delete api call
+          await axiosSecure.delete(`/products/${id}`);
+          // refetch the data
+          queryClient.invalidateQueries(["products"]);
+          // success message
+          Swal.fire("Deleted!", "", "success");
+
+     }
+
      if (isLoading) {
           return <Spinner></Spinner>
      }
+
+     console.log(products);
      return (
           <div className="flex-1 p-4 lg:p-8  min-h-screen text-accent">
                {/* Header Section */}
@@ -25,7 +52,9 @@ const AllProducts = () => {
                          <h1 className="text-3xl font-semibold uppercase tracking-wider bebas mb-1">Products</h1>
                          <p className="text-neutral-500 text-sm">{products?.length} total products</p>
                     </div>
-                    <button className="bg-primary text-accent px-6 py-3.5 rounded-md flex items-center gap-2 font-bold text-xs uppercase tracking-widest hover:bg-primary/90 transition-all cursor-pointer">
+                    <button
+                         onClick={() => setIsAddOpen(true)}
+                         className="bg-primary text-accent px-5 py-3 rounded-md flex items-center gap-2 font-bold text-xs uppercase tracking-widest hover:bg-primary/90 transition-all cursor-pointer">
                          <FiPlus size={18} /> Add Product
                     </button>
                </div>
@@ -109,18 +138,24 @@ const AllProducts = () => {
                                                   )}
                                              </div>
                                         </td>
-                                          <td className="text-center">
-                                             <span className="text-primary text-sm font-bold">
+                                        <td className="text-center">
+                                             <span className="text-accent text-sm font-bold">
                                                   {item.stock}
                                              </span>
                                         </td>
                                         {/* Action Buttons */}
                                         <td className="px-6 py-4 rounded-r-xl text-right">
                                              <div className="flex justify-end gap-2">
-                                                  <button className="p-2.5 bg-accent/5 border border-accent/5 hover:bg-accent/80 hover:text-primary rounded-md transition-all cursor-pointer">
+                                                  {/* when click edit button modal will open with existing product data */}
+                                                  <button
+                                                       onClick={() => setEditProduct(item)}
+                                                       className="p-2.5 bg-accent/5 border border-accent/5 hover:bg-accent/80 hover:text-primary rounded-md transition-all cursor-pointer">
                                                        <FiEdit2 size={14} />
                                                   </button>
-                                                  <button className="p-2.5 bg-base-100/30 border border-accent/10 hover:bg-primary text-primary hover:text-accent cursor-pointer rounded-md transition-all">
+                                                  {/* delete button */}
+                                                  <button
+                                                       onClick={() => handleDelete(item._id)}
+                                                       className="p-2.5 bg-base-100/30 border border-accent/10 hover:bg-primary text-primary hover:text-accent cursor-pointer rounded-md transition-all">
                                                        <FiTrash2 size={16} />
                                                   </button>
                                              </div>
