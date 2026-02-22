@@ -18,7 +18,7 @@ const AllProducts = () => {
           return <Spinner></Spinner>
      }
      return (
-          <div className="flex-1 p-4 md:p-12 bg-secondary min-h-screen text-accent">
+          <div className="flex-1 p-4 lg:p-8 bg-secondary min-h-screen text-accent">
                {/* Header Section */}
                <div className="flex flex-wrap justify-between items-center gap-4 mb-10">
                     <div>
@@ -32,55 +32,57 @@ const AllProducts = () => {
 
                {/* Filter & Search Bar */}
                <div className="flex flex-wrap items-center gap-4 mb-8">
-                    <div className="relative flex-1 min-w-[300px]">
+                    <div className="relative flex-1 min-w-72">
                          <FiSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-neutral-500" />
                          <input
                               type="text"
                               placeholder="Search products..."
-                              className="w-full bg-[#1a1a1a] border border-white/5 rounded-lg py-3 pl-12 pr-4 outline-none focus:border-primary/50 transition-all text-sm"
+                              className="w-full bg-base-200 border border-accent/5 rounded-lg py-3 pl-12 pr-4 outline-none focus:border-primary/50 transition-all text-sm"
                          />
                     </div>
                     <div >
-                         <select className="select select-lg w-40 bg-base-200 border border-accent/5 rounded-lg py-3 pl-6 pr-12 text-sm outline-none cursor-pointer focus:border-primary/70 transition-all ">
-                              <option>All</option>
-                              <option>T-Shirts</option>
-                              <option>Hoodies</option>
-                              <option>Pants</option>
+                         <select className="select select-lg w-48 bg-base-200 border border-accent/5 rounded-lg py-3 pl-6 pr-12 text-sm outline-none cursor-pointer focus:border-primary/70 transition-all">
+                              <option className="hover:bg-primary">All</option>
+                              <option className="hover:bg-primary">T-Shirts</option>
+                              <option className="hover:bg-primary">Hoodies</option>
+                              <option className="hover:bg-primary">Pants</option>
+                              <option className="hover:bg-primary">Shirts</option>
+                              <option className="hover:bg-primary">Winter Wear</option>
                          </select>
                     </div>
                </div>
-
                {/* Products Table */}
-               <div className="overflow-x-auto">
-                    <table className="w-full text-left border-separate border-spacing-y-3">
-                         <thead>
-                              <tr className="text-neutral-500 text-[10px] uppercase tracking-[2px] font-bold">
+               <div className="overflow-x-auto border rounded-t-2xl border-accent/10">
+                    <table className="w-full text-left">
+                         <thead className="h-14">
+                              <tr className="text-neutral-400/85 text-xs bg-secondary uppercase tracking-[2px] font-bold">
                                    <th className="px-6 pb-2">Product</th>
                                    <th className="px-6 pb-2 text-center">Category</th>
                                    <th className="px-6 pb-2 text-center">Price</th>
                                    <th className="px-6 pb-2 text-center">Status</th>
+                                   <th className="px-6 pb-2 text-center">Stock</th>
                                    <th className="px-6 pb-2 text-right">Actions</th>
                               </tr>
                          </thead>
                          <tbody>
                               {products?.map((item) => (
-                                   <tr key={item._id} className="bg-[#1a1a1a] hover:bg-[#222] transition-colors group">
+                                   <tr key={item._id} className="bg-base-200/90 hover:bg-base-200/95 border-b border-accent/10 transition-colors group">
                                         {/* Product Info */}
-                                        <td className="px-6 py-4 rounded-l-xl">
+                                        <td className="px-5 py-4">
                                              <div className="flex items-center gap-4">
-                                                  <div className="w-12 h-14 bg-neutral-800 rounded-lg overflow-hidden flex-shrink-0 border border-white/5">
-                                                       <img src={item.images[0]} alt="" className="w-full h-full object-cover" />
+                                                  <div className="w-14 h-16 bg-accent/5 rounded-lg overflow-hidden flex-shrink-0 border border-accent/5">
+                                                       <img src={item.images[0]} alt={item.slug} className="w-full h-full object-cover" />
                                                   </div>
                                                   <div className="min-w-0">
-                                                       <h4 className="text-sm font-bold truncate 
-                                                       max-w-[250px]">{item?.title}</h4>
-                                                       <p className="text-[11px] text-neutral-500 font-bold uppercase mt-1">Sizes: {item.sizes}</p>
+                                                       <h4 className="text-sm font-semibold truncate 
+                                                       max-w-64">{item?.title}</h4>
+                                                       <p className="text-[11px] text-neutral-500 font-bold uppercase flex gap-1 mt-2">Sizes: {item.sizes?.map((s, idx) => <span key={idx}>{s},</span>)}</p>
                                                   </div>
                                              </div>
                                         </td>
                                         {/* Category */}
                                         <td className="px-6 py-4 text-center">
-                                             <span className="bg-neutral-800 text-neutral-400 px-3 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider">
+                                             <span className="bg-accent/5 text-accent/60 px-3 py-1.5 rounded-md text-[10px] font-bold uppercase tracking-wider">
                                                   {item.category}
                                              </span>
                                         </td>
@@ -109,14 +111,19 @@ const AllProducts = () => {
 
                                              </div>
                                         </td>
+                                          <td className="text-center">
+                                             <span className="text-primary text-sm font-bold">
+                                                  {item.stock}
+                                             </span>
+                                        </td>
                                         {/* Action Buttons */}
                                         <td className="px-6 py-4 rounded-r-xl text-right">
                                              <div className="flex justify-end gap-2">
-                                                  <button className="p-2 bg-neutral-800 hover:bg-white hover:text-black rounded-lg transition-all">
-                                                       <FiEdit2 size={14} />
+                                                  <button className="p-2.5 bg-accent/5 hover:bg-accent/80 hover:text-primary rounded-md transition-all cursor-pointer">
+                                                       <FiEdit2 size={16} />
                                                   </button>
-                                                  <button className="p-2 bg-neutral-800 hover:bg-primary text-neutral-400 hover:text-accent rounded-lg transition-all">
-                                                       <FiTrash2 size={14} />
+                                                  <button className="p-2.5 bg-base-100/30 border border-accent/10 hover:bg-primary text-primary hover:text-accent cursor-pointer rounded-md transition-all">
+                                                       <FiTrash2 size={16} />
                                                   </button>
                                              </div>
                                         </td>
