@@ -24,7 +24,7 @@ const DashboardLayout = () => {
 
                <div className="drawer-content flex flex-col overflow-x-hidden">
                     {/* Navbar */}
-                    <div className="navbar bg-primary text-accent shadow-md py-5 w-full flex gap-2 xl:hidden px-5">
+                    <div className="navbar bg-primary/80 text-accent shadow-md py-5 w-full flex gap-2 xl:hidden px-5">
                          <div className="flex-none">
                               <label htmlFor="my-drawer-2" aria-label="open sidebar" className="">
                                    <RiMenuUnfold2Fill className="cursor-pointer" size={26}></RiMenuUnfold2Fill>
@@ -33,7 +33,7 @@ const DashboardLayout = () => {
                          <div className="mx-2 flex-1 px-2 text-xl sm:text-2xl font-semibold">Dashboard</div>
                     </div>
                     {/* Page content here */}
-                    <div className="min-h-screen bg-secondary">
+                    <div className="min-h-screen bg-secondary/95">
                          <Outlet></Outlet>
                     </div>
                </div>

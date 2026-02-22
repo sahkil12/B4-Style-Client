@@ -40,7 +40,7 @@ const AdminDashboard = () => {
     ];
 
     return (
-        <div className="min-h-screen bg-secondary text-accent ">
+        <div className="min-h-screen text-accent ">
             <main className="flex-1 p-4 lg:p-8 w-full max-w-full overflow-x-hidden">
                 {/* Header */}
                 <header className="mb-10">

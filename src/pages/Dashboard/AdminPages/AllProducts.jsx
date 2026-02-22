@@ -18,18 +18,17 @@ const AllProducts = () => {
           return <Spinner></Spinner>
      }
      return (
-          <div className="flex-1 p-4 lg:p-8 bg-secondary min-h-screen text-accent">
+          <div className="flex-1 p-4 lg:p-8  min-h-screen text-accent">
                {/* Header Section */}
                <div className="flex flex-wrap justify-between items-center gap-4 mb-10">
                     <div>
-                         <h1 className="text-3xl font-bold uppercase tracking-wider bebas mb-1">Products</h1>
+                         <h1 className="text-3xl font-semibold uppercase tracking-wider bebas mb-1">Products</h1>
                          <p className="text-neutral-500 text-sm">{products?.length} total products</p>
                     </div>
-                    <button className="bg-primary text-accent px-6 py-3 rounded-md flex items-center gap-2 font-bold text-xs uppercase tracking-widest hover:bg-primary/90 transition-all shadow-lg shadow-primary/20">
+                    <button className="bg-primary text-accent px-6 py-3.5 rounded-md flex items-center gap-2 font-bold text-xs uppercase tracking-widest hover:bg-primary/90 transition-all cursor-pointer">
                          <FiPlus size={18} /> Add Product
                     </button>
                </div>
-
                {/* Filter & Search Bar */}
                <div className="flex flex-wrap items-center gap-4 mb-8">
                     <div className="relative flex-1 min-w-72">
@@ -99,16 +98,15 @@ const AllProducts = () => {
                                         <td className="px-6 py-4">
                                              <div className="flex justify-center gap-2">
                                                   {item.isNew && (
-                                                       <span className="bg-primary/10 text-primary/95 border border-primary/20 px-2 py-1 rounded text-[11px] font-bold tracking-widest">
+                                                       <span className="bg-primary/5 text-primary/95 border border-primary/20 px-2 py-1.5 rounded text-[11px] font-bold tracking-widest">
                                                             New
                                                        </span>
                                                   )}
                                                   {item.isBestSeller && (
-                                                       <span className="bg-primary/10 text-primary/95 border border-primary/20 px-2 py-1 rounded text-[11px] font-black tracking-widest">
+                                                       <span className="bg-primary/5 text-primary/95 border border-primary/20 px-2 py-1.5 rounded text-[11px] font-black tracking-widest">
                                                             Trending
                                                        </span>
                                                   )}
-
                                              </div>
                                         </td>
                                           <td className="text-center">
@@ -119,8 +117,8 @@ const AllProducts = () => {
                                         {/* Action Buttons */}
                                         <td className="px-6 py-4 rounded-r-xl text-right">
                                              <div className="flex justify-end gap-2">
-                                                  <button className="p-2.5 bg-accent/5 hover:bg-accent/80 hover:text-primary rounded-md transition-all cursor-pointer">
-                                                       <FiEdit2 size={16} />
+                                                  <button className="p-2.5 bg-accent/5 border border-accent/5 hover:bg-accent/80 hover:text-primary rounded-md transition-all cursor-pointer">
+                                                       <FiEdit2 size={14} />
                                                   </button>
                                                   <button className="p-2.5 bg-base-100/30 border border-accent/10 hover:bg-primary text-primary hover:text-accent cursor-pointer rounded-md transition-all">
                                                        <FiTrash2 size={16} />
