@@ -89,23 +89,28 @@ const AddProductModal = ({ close }) => {
                     {/* form */}
                     <form onSubmit={handleSubmit(onSubmit)} className="p-5 md:p-8 space-y-5 max-h-[80vh] overflow-y-auto custom-scrollbar">
                          {/* Image Section */}
-                         <div className="flex items-center gap-6">
+                         {/* <div className="flex items-center gap-6">
                               <div className="w-20 h-20 bg-base-200 rounded-lg flex items-center justify-center border border-dashed border-accent/10 text-accent/50">
                                    <FiImage size={30} />
                               </div>
+
+                         </div> */}
+
+                         {/* name & image row */}
+                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                               <div className="flex-1 space-y-2">
                                    <label className={labelStyle}>Select Image</label>
                                    <input
                                         type='file'
                                         {...register("imageUrl")}
-                                        className={inputStyle}
+                                        className="border-2 w-full py-3 px-4 rounded-md bg-base-200/85 border-accent/10 focus:border-primary/35 border-dashed text-sm text-accent/80 outline-none"
                                    />
                               </div>
-                         </div>
-                         {/* name */}
-                         <div className="space-y-2">
-                              <label className={labelStyle}>Product Name *</label>
-                              <input {...register("title")} required placeholder="Enter product name" className={inputStyle} />
+                              <div className="space-y-2">
+                                   <label className={labelStyle}>Product Name *</label>
+                                   <input {...register("title")} required placeholder="Enter product name" className={inputStyle} />
+                              </div>
+
                          </div>
                          {/* stock & Category Row */}
                          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -182,15 +187,16 @@ const AddProductModal = ({ close }) => {
                                    <input
                                         type="checkbox"
                                         {...register("isNew")}
-                                        className="toggle bg-base-100 toggle-primary toggle-sm"
+                                        className="toggle bg-secondary border border-primary/50 toggle-primary toggle-sm"
                                    />
                                    <span className="text-[11px] font-black uppercase tracking-widest text-accent/60 group-hover:text-accent/90 transition-colors">New Arrival</span>
                               </label>
+                              {/* best seller */}
                               <label className="flex items-center gap-3 cursor-pointer group">
                                    <input
                                         type="checkbox"
                                         {...register("isBestSeller")}
-                                        className="toggle bg-base-100 toggle-primary toggle-sm"
+                                        className="toggle bg-secondary border border-primary/50 toggle-primary toggle-sm"
                                    />
                                    <span className="text-[11px] font-black uppercase tracking-widest text-accent/60 group-hover:text-accent/90 transition-colors">Trending</span>
                               </label>
