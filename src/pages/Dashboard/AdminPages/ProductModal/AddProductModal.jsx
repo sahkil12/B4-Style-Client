@@ -8,7 +8,7 @@ import { motion } from 'framer-motion';
 const AddProductModal = ({ close }) => {
      const axiosSecure = useAxiosSecure();
      const queryClient = useQueryClient();
-     const { register, handleSubmit, setValue, watch } = useForm({
+     const { register, handleSubmit } = useForm({
           defaultValues: {
                isNew: false,
                isBestSeller: false
@@ -20,6 +20,7 @@ const AddProductModal = ({ close }) => {
      const allSizes = ['XS', 'S', 'M', 'L', 'XL', 'XXL', '30', '32', '34', '36', '38', '40']
 
      const [selectedSizes, setSelectedSizes] = useState([]);
+     const [selectedImages, setSelectedImages] = useState([]);
      const [category, setCategory] = useState("");
 
      let sizes = []
@@ -32,6 +33,22 @@ const AddProductModal = ({ close }) => {
      }
      else {
           sizes = clothSizes
+     }
+
+     const handleImageChange = (e) => {
+
+          const files = Array.from(e.target.files)
+          const imageObjects = files.map(file => ({
+               file,
+               preview: URL.createObjectURL(file)
+          }));
+          setSelectedImages(prev => [...prev, ...imageObjects]);
+     }
+
+     const removeImage = (index) => {
+
+          const updated = selectedImages.filter((_, i) => i !== index)
+          setSelectedImages(updated)
      }
 
      const toggleSize = (size) => {
@@ -91,7 +108,7 @@ const AddProductModal = ({ close }) => {
                          {/* Image Section */}
                          {/* <div className="flex items-center gap-6">
                               <div className="w-20 h-20 bg-base-200 rounded-lg flex items-center justify-center border border-dashed border-accent/10 text-accent/50">
-                                   <FiImage size={30} />
+                                   <FiImage size={30} /> (i want show image preview like what images i select all selected image show in this type box or size )
                               </div>
 
                          </div> */}
@@ -102,7 +119,10 @@ const AddProductModal = ({ close }) => {
                                    <label className={labelStyle}>Select Image</label>
                                    <input
                                         type='file'
-                                        {...register("imageUrl")}
+                                        multiple
+                                        accept='image/*'
+                                        onChange={handleImageChange}
+                                        // {...register("imageUrl")}
                                         className="border-2 w-full py-3 px-4 rounded-md bg-base-200/85 border-accent/10 focus:border-primary/35 border-dashed text-sm text-accent/80 outline-none"
                                    />
                               </div>
