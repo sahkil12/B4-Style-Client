@@ -51,7 +51,7 @@ const Shop = () => {
                     filters?.sort === "Price: High to Low" ? "priceHigh"
                          : "newest"
      })
-
+     
      return (
           <div className="min-h-screen text-accent pb-20">
                <div className="">

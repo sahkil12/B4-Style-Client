@@ -36,8 +36,8 @@ const AddProductModal = ({ close }) => {
           sizes = clothSizes
      }
 
+     // handle images changes function
      const handleImageChange = (e) => {
-
           const files = Array.from(e.target.files)
           const imageObjects = files.map(file => ({
                file,
@@ -45,9 +45,8 @@ const AddProductModal = ({ close }) => {
           }));
           setSelectedImages(prev => [...prev, ...imageObjects]);
      }
-
+     // remove image function
      const removeImage = (index) => {
-
           const updated = selectedImages.filter((_, i) => i !== index)
           setSelectedImages(updated)
      }
@@ -63,7 +62,7 @@ const AddProductModal = ({ close }) => {
      const onSubmit = async (data) => {
 
           if (selectedImages.length === 0) {
-               toast.error("Please select image");
+               toast.error("Please select image", { duration: 1000 });
                return;
           }
 
@@ -82,8 +81,6 @@ const AddProductModal = ({ close }) => {
                createdAt: new Date()
           };
 
-          console.log(product);
-
           try {
                await axiosSecure.post("/products", product);
                queryClient.invalidateQueries(["products"]);
@@ -92,7 +89,7 @@ const AddProductModal = ({ close }) => {
                console.error("Error adding product:", error);
           }
      };
-     console.log(selectedImages);
+
      // Shared Tailwind Classes
      const labelStyle = "block text-[10px] font-bold uppercase tracking-widest mb-2 text-accent/70";
      const inputStyle = "w-full bg-base-200/85 border border-white/5 rounded-md py-3.5 px-4 focus:border-primary/50 outline-none transition-all text-sm text-accent placeholder:text-neutral-500";
@@ -102,6 +99,7 @@ const AddProductModal = ({ close }) => {
                <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: .4 }}
                     className="bg-secondary w-full max-w-2xl rounded-xl border-2 border-accent/10 overflow-hidden"
                >
                     {/* Header */}
@@ -120,7 +118,7 @@ const AddProductModal = ({ close }) => {
                                         <FiImage size={30} />
                                    </div>
                               )}
-                              {selectedImages?.map((img, index) => (
+                              {selectedImages.length > 0 && selectedImages?.map((img, index) => (
 
                                    <div key={index} className="relative">
                                         <img
@@ -140,10 +138,9 @@ const AddProductModal = ({ close }) => {
                          {/* name & image row */}
                          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                               <div className="flex-1 space-y-2">
-                                   <label className={labelStyle}>Select Image</label>
+                                   <label className={labelStyle}>Select Image *</label>
                                    <input
                                         type='file'
-                                        required
                                         multiple
                                         accept='image/*'
                                         onChange={handleImageChange}
@@ -163,6 +160,7 @@ const AddProductModal = ({ close }) => {
                                    <select
                                         onChange={(e) => setCategory(e.target.value)}
                                         {...register("category")}
+                                        required
                                         className={`w-full bg-base-200 border border-accent/5 rounded-md px-4 focus:border-primary/50 outline-none transition-all text-sm text-accent cursor-pointer select select-lg`}>
                                         <option value="">Select Category</option>
                                         <option className="hover:bg-primary">T-Shirts</option>
@@ -203,7 +201,7 @@ const AddProductModal = ({ close }) => {
                          </div>
                          {/* Description */}
                          <div className="space-y-2">
-                              <label className={labelStyle}>Description</label>
+                              <label className={labelStyle}>Description *</label>
                               <textarea
                                    {...register("description")}
                                    rows="3"
@@ -221,7 +219,7 @@ const AddProductModal = ({ close }) => {
                                              key={size}
                                              type="button"
                                              onClick={() => toggleSize(size)}
-                                             className={`w-10 h-10 rounded-md text-[10px] font-bold transition-all border ${selectedSizes.includes(size)
+                                             className={`w-10 h-10 rounded-md text-[10px] font-bold cursor-pointer transition-all border ${selectedSizes.includes(size)
                                                   ? 'bg-primary border-primary text-accent'
                                                   : 'bg-base-100/35 border-accent/10 text-accent/70 hover:border-accent/20'
                                                   }`}
