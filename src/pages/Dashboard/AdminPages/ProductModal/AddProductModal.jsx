@@ -4,6 +4,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import useAxiosSecure from "../../../../Hooks/useAxiosSecure";
 import { FiX, FiPlus, FiImage } from 'react-icons/fi';
 import { motion } from 'framer-motion';
+import toast from 'react-hot-toast';
 
 const AddProductModal = ({ close }) => {
      const axiosSecure = useAxiosSecure();
@@ -60,16 +61,22 @@ const AddProductModal = ({ close }) => {
      };
 
      const onSubmit = async (data) => {
+
+          if (selectedImages.length === 0) {
+               toast.error("Please select image");
+               return;
+          }
+
           const product = {
                title: data.title,
-               slug: data.title,
+               slug: data.title.toLowerCase().replaceAll(" ", "-"),
                category: data.category,
                price: Number(data.price),
                discount: Number(data.discount),
                stock: Number(data.stock),
                description: data.description,
                sizes: selectedSizes,
-               images: [data.imageUrl],
+               images: selectedImages,
                isNew: data.isNew,
                isBestSeller: data.isBestSeller,
                createdAt: new Date()
@@ -85,6 +92,7 @@ const AddProductModal = ({ close }) => {
                console.error("Error adding product:", error);
           }
      };
+     console.log(selectedImages);
      // Shared Tailwind Classes
      const labelStyle = "block text-[10px] font-bold uppercase tracking-widest mb-2 text-accent/70";
      const inputStyle = "w-full bg-base-200/85 border border-white/5 rounded-md py-3.5 px-4 focus:border-primary/50 outline-none transition-all text-sm text-accent placeholder:text-neutral-500";
@@ -105,25 +113,41 @@ const AddProductModal = ({ close }) => {
                     </div>
                     {/* form */}
                     <form onSubmit={handleSubmit(onSubmit)} className="p-5 md:p-8 space-y-5 max-h-[80vh] overflow-y-auto custom-scrollbar">
-                         {/* Image Section */}
-                         {/* <div className="flex items-center gap-6">
-                              <div className="w-20 h-20 bg-base-200 rounded-lg flex items-center justify-center border border-dashed border-accent/10 text-accent/50">
-                                   <FiImage size={30} /> (i want show image preview like what images i select all selected image show in this type box or size )
-                              </div>
+                         {/* Image Section preview*/}
+                         <div className="flex flex-wrap gap-4">
+                              {selectedImages.length === 0 && (
+                                   <div className="w-20 h-20 bg-base-200 rounded-lg flex items-center justify-center border border-dashed border-accent/10 text-accent/50">
+                                        <FiImage size={30} />
+                                   </div>
+                              )}
+                              {selectedImages?.map((img, index) => (
 
-                         </div> */}
-
+                                   <div key={index} className="relative">
+                                        <img
+                                             src={img.preview}
+                                             className="w-20 h-20 object-cover rounded-lg"
+                                        />
+                                        <button
+                                             type="button"
+                                             onClick={() => removeImage(index)}
+                                             className="absolute -top-2 cursor-pointer -right-2 bg-primary text-accent rounded-full p-1"
+                                        >
+                                             <FiX size={14} />
+                                        </button>
+                                   </div>
+                              ))}
+                         </div>
                          {/* name & image row */}
                          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                               <div className="flex-1 space-y-2">
                                    <label className={labelStyle}>Select Image</label>
                                    <input
                                         type='file'
+                                        required
                                         multiple
                                         accept='image/*'
                                         onChange={handleImageChange}
-                                        // {...register("imageUrl")}
-                                        className="border-2 w-full py-3 px-4 rounded-md bg-base-200/85 border-accent/10 focus:border-primary/35 border-dashed text-sm text-accent/80 outline-none"
+                                        className="border-2 w-full py-3 px-4 rounded-md bg-base-200/85 border-accent/10 focus:border-primary/35 border-dashed text-sm text-accent/80 outline-none cursor-pointer"
                                    />
                               </div>
                               <div className="space-y-2">
@@ -137,8 +161,9 @@ const AddProductModal = ({ close }) => {
                               <div className="space-y-2">
                                    <label className={labelStyle}>Category *</label>
                                    <select
-                                        onClick={(e) => setCategory(e.target.value)}
-                                        {...register("category")} className={`w-full bg-base-200 border border-accent/5 rounded-md px-4 focus:border-primary/50 outline-none transition-all text-sm text-accent cursor-pointer select select-lg`}>
+                                        onChange={(e) => setCategory(e.target.value)}
+                                        {...register("category")}
+                                        className={`w-full bg-base-200 border border-accent/5 rounded-md px-4 focus:border-primary/50 outline-none transition-all text-sm text-accent cursor-pointer select select-lg`}>
                                         <option value="">Select Category</option>
                                         <option className="hover:bg-primary">T-Shirts</option>
                                         <option className="hover:bg-primary">Hoodies</option>
@@ -149,7 +174,11 @@ const AddProductModal = ({ close }) => {
                               </div>
                               <div className="space-y-2">
                                    <label className={labelStyle}>Stock *</label>
-                                   <input {...register("stock")} required placeholder="Products Stock" className={inputStyle} />
+                                   <input {...register("stock")}
+                                        type='number'
+                                        required
+                                        placeholder="Products Stock"
+                                        className={inputStyle} />
                               </div>
                          </div>
                          {/* Price Row */}
@@ -178,6 +207,7 @@ const AddProductModal = ({ close }) => {
                               <textarea
                                    {...register("description")}
                                    rows="3"
+                                   required
                                    placeholder="Describe your product..."
                                    className={`${inputStyle} resize-none`}
                               ></textarea>
