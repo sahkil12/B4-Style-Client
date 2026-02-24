@@ -6,6 +6,7 @@ import { useMemo, useState } from "react";
 import Swal from "sweetalert2";
 import AddProductModal from "./ProductModal/AddProductModal";
 import useProducts from './../../../Hooks/useProducts';
+import EditProductModal from "./ProductModal/EditProductModal";
 
 const categories = [
      { label: "All Products", value: "" },
@@ -45,8 +46,10 @@ const AllProducts = () => {
                text: "This cannot be undone",
                icon: "warning",
                showCancelButton: true,
-               confirmButtonColor: "#ef4444",
-               confirmButtonText: "Delete"
+               confirmButtonColor: "#E60000",
+               cancelButtonColor: "#000000",
+               confirmButtonText: "Delete",
+               cancelButtonText: "Cancel"
           });
           if (!confirm.isConfirmed) return;
           // delete api call
@@ -67,7 +70,7 @@ const AllProducts = () => {
                <div className="flex flex-wrap justify-between items-center gap-4 mb-10">
                     <div>
                          <h1 className="text-3xl font-semibold uppercase tracking-wider bebas mb-1">Products</h1>
-                         <p className="text-neutral-500 text-sm">{filteredProducts?.length} total products</p>
+                         <p className="text-accent/40 text-sm">{filteredProducts?.length} total products</p>
                     </div>
                     <button
                          onClick={() => setIsAddOpen(true)}
@@ -78,7 +81,7 @@ const AllProducts = () => {
                {/* Filter & Search Bar */}
                <div className="flex flex-wrap items-center gap-4 mb-8">
                     <div className="relative flex-1 min-w-72">
-                         <FiSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-neutral-500" />
+                         <FiSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-accent/40" />
                          <input
                               type="text"
                               placeholder="Search products..."
@@ -110,7 +113,7 @@ const AllProducts = () => {
                     {filteredProducts.length > 0 ?
                          <table className="w-full text-left">
                               <thead className="h-14">
-                                   <tr className="text-neutral-400/85 text-xs bg-secondary uppercase tracking-[2px] font-bold">
+                                   <tr className="text-accent/55 text-xs bg-secondary uppercase tracking-[2px] font-bold">
                                         <th className="px-6 pb-2">Product</th>
                                         <th className="px-6 pb-2 text-center">Category</th>
                                         <th className="px-6 pb-2 text-center">Price</th>
@@ -131,7 +134,7 @@ const AllProducts = () => {
                                                        <div className="min-w-0">
                                                             <h4 className="text-sm font-semibold truncate 
                                                        max-w-64">{item?.title}</h4>
-                                                            <p className="text-[11px] text-neutral-500 font-bold uppercase flex gap-1 mt-2">Sizes: {item.sizes?.map((s, idx) => <span key={idx}>{s},</span>)}</p>
+                                                            <p className="text-[11px] text-accent/40 font-bold uppercase flex gap-1 mt-2">Sizes: {item.sizes?.map((s, idx) => <span key={idx}>{s},</span>)}</p>
                                                        </div>
                                                   </div>
                                              </td>
@@ -173,7 +176,6 @@ const AllProducts = () => {
                                              {/* Action Buttons */}
                                              <td className="px-6 py-4 rounded-r-xl text-right">
                                                   <div className="flex justify-end gap-2">
-                                                       {/* when click edit button modal will open with existing product data */}
                                                        <button
                                                             onClick={() => setEditProduct(item)}
                                                             className="p-2.5 bg-accent/5 border border-accent/5 hover:bg-accent/80 hover:text-primary rounded-md transition-all cursor-pointer">
@@ -206,6 +208,11 @@ const AllProducts = () => {
                     <AddProductModal
                          close={() => setIsAddOpen(false)}
                     />
+               )}
+               {editProduct && (
+                    <EditProductModal 
+                    prevData={editProduct}
+                    close={() => setEditProduct(null)} />
                )}
           </div>
      );
