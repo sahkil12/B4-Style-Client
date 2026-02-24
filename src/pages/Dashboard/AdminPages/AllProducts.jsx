@@ -2,10 +2,10 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import { FiSearch, FiPlus, FiEdit2, FiTrash2 } from 'react-icons/fi';
 import Spinner from "../../../Components/Shared/Spinner";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import Swal from "sweetalert2";
 import AddProductModal from "./ProductModal/AddProductModal";
-import useProducts from "../../../Hooks/useProducts";
+import useProducts from './../../../Hooks/useProducts';
 
 const categories = [
      { label: "All Products", value: "" },
@@ -24,10 +24,19 @@ const AllProducts = () => {
      const [searchTexts, setSearchTexts] = useState("");
      const [selectedCategory, setSelectedCategory] = useState("");
 
-     const { data: products = [], isLoading, isFetching } = useProducts({
-          category: selectedCategory,
-          search: searchTexts,
-     })
+     const { data: products = [], isLoading } = useProducts();
+
+     // filter search and category based data 
+     const filteredProducts = useMemo(() => {
+
+          return products.filter(product => {
+               const matchSearch =
+                    product.title.toLowerCase().includes(searchTexts.toLowerCase());
+
+               const matchCategory = selectedCategory === "" || product.category === selectedCategory
+               return matchSearch && matchCategory
+          })
+     }, [products, searchTexts, selectedCategory])
 
      const handleDelete = async (id) => {
 
@@ -58,7 +67,7 @@ const AllProducts = () => {
                <div className="flex flex-wrap justify-between items-center gap-4 mb-10">
                     <div>
                          <h1 className="text-3xl font-semibold uppercase tracking-wider bebas mb-1">Products</h1>
-                         <p className="text-neutral-500 text-sm">{products?.length} total products</p>
+                         <p className="text-neutral-500 text-sm">{filteredProducts?.length} total products</p>
                     </div>
                     <button
                          onClick={() => setIsAddOpen(true)}
@@ -98,13 +107,7 @@ const AllProducts = () => {
                </div>
                {/* Products Table */}
                <div className="overflow-x-auto border rounded-t-2xl border-accent/10 relative">
-
-                    {isFetching ?
-                         <div className="py-20 flex justify-center ">
-                              <span className="loading loading-spinner text-primary loading-lg"></span>
-                         </div>
-                         :
-
+                    {filteredProducts.length > 0 ?
                          <table className="w-full text-left">
                               <thead className="h-14">
                                    <tr className="text-neutral-400/85 text-xs bg-secondary uppercase tracking-[2px] font-bold">
@@ -117,7 +120,7 @@ const AllProducts = () => {
                                    </tr>
                               </thead>
                               <tbody>
-                                   {products?.map((item) => (
+                                   {filteredProducts?.map((item) => (
                                         <tr key={item._id} className="bg-base-200/90 hover:bg-base-200/95 border-b border-accent/10 transition-colors group">
                                              {/* Product Info */}
                                              <td className="px-5 py-4">
@@ -188,7 +191,16 @@ const AllProducts = () => {
                                    ))}
                               </tbody>
                          </table>
-                    }
+                         :
+                         <div className="flex justify-center items-center gap-2 text-center py-16">
+                              <p className="text-xl font-semibold text-accent "> No Products Found</p>
+                              <span
+                                   onClick={() => {
+                                        setSearchTexts("")
+                                        setSelectedCategory("")
+                                   }}
+                                   className="text-primary/90 cursor-pointer text-sm underline font-semibold">Clear Filter</span>
+                         </div>}
                </div>
                {isAddOpen && (
                     <AddProductModal
