@@ -53,12 +53,18 @@ const AllProducts = () => {
                color: "#0E0E0E"
           });
           if (!confirm.isConfirmed) return;
-          // delete api call
-          await axiosSecure.delete(`/products/${id}`);
-          // refetch the data
-          queryClient.invalidateQueries(["products"]);
-          // success message
-          Swal.fire("Deleted!", "", "success");
+          try {
+               // delete api call
+               await axiosSecure.delete(`/products/${id}`);
+               queryClient.invalidateQueries({
+                    queryKey: ["products"]
+               });
+               Swal.fire("Deleted!", "", "success");
+          }
+          catch {
+               Swal.fire("Failed!", "", "error")
+          }
+
      }
 
      if (isLoading) {
