@@ -12,7 +12,8 @@ const categories = [
      { label: "Hoodies", value: "HOODIES" },
      { label: "Pants", value: "PANTS" },
      { label: "Shirts", value: "SHIRTS" },
-     { label: "Winter Wear", value: "WINTER WEAR" }
+     { label: "Winter Wear", value: "WINTER WEAR" },
+     { label: "Panjabi", value: "PANJABI" }
 ];
 const clothSizes = ["S", "M", "L", "XL", "XXL"];
 const pantsSizes = [32, 34, 36, 38];
@@ -31,13 +32,13 @@ const Shop = () => {
 
      let sizes = []
 
-     if(filters?.category === ""){
+     if (filters?.category === "") {
           sizes = allSizes
      }
-     else if(filters?.category === "PANTS"){
+     else if (filters?.category === "PANTS") {
           sizes = pantsSizes
      }
-     else{
+     else {
           sizes = clothSizes
      }
 
@@ -51,7 +52,7 @@ const Shop = () => {
                     filters?.sort === "Price: High to Low" ? "priceHigh"
                          : "newest"
      })
-     
+
      return (
           <div className="min-h-screen text-accent pb-20">
                <div className="">

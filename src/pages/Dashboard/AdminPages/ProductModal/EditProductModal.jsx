@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from "react-hook-form";
 import { useQueryClient } from "@tanstack/react-query";
 import useAxiosSecure from "../../../../Hooks/useAxiosSecure";
@@ -7,31 +7,67 @@ import { PiFileArrowUpDuotone } from "react-icons/pi";
 import { motion } from 'framer-motion';
 import toast from 'react-hot-toast';
 
+const categories = [
+     { label: "Select Category", value: "" },
+     { label: "T-Shirts", value: "T-SHIRTS" },
+     { label: "Hoodies", value: "HOODIES" },
+     { label: "Pants", value: "PANTS" },
+     { label: "Shirts", value: "SHIRTS" },
+     { label: "Winter Wear", value: "WINTER WEAR" }
+];
+
 const EditProductModal = ({ close, prevData }) => {
      console.log(prevData);
      const axiosSecure = useAxiosSecure();
      const queryClient = useQueryClient();
      const { register, handleSubmit, reset } = useForm();
 
+
      const clothSizes = ['XS', 'S', 'M', 'L', 'XL', 'XXL',];
-     const pantsSizes = [30, 32, 34, 36, 38, 40];
-     const allSizes = ['XS', 'S', 'M', 'L', 'XL', 'XXL', '30', '32', '34', '36', '38', '40']
+     const pantsSizes = ['30', '32', '34', '36', '38', '40'];
+     const allSizes = [...clothSizes, ...pantsSizes];
 
      const [selectedSizes, setSelectedSizes] = useState([]);
      const [selectedImages, setSelectedImages] = useState([]);
      const [category, setCategory] = useState("");
 
      let sizes = []
+     console.log(category);
 
      if (category === "") {
           sizes = allSizes
      }
-     else if (category === "Pants") {
+     else if (category === "PANTS") {
           sizes = pantsSizes
      }
      else {
           sizes = clothSizes
      }
+
+     useEffect(() => {
+          console.log(prevData);
+          if (prevData) {
+               reset({
+                    title: prevData.title,
+                    category: prevData.category,
+                    stock: prevData.stock,
+                    price: prevData.price,
+                    discount: prevData.discount,
+                    description: prevData.description,
+                    isNew: prevData.isNew,
+                    isBestSeller: prevData.isBestSeller
+               });
+               setSelectedSizes(prevData.sizes || []);
+
+               setSelectedImages(
+                    prevData.images.map(img => ({
+                         preview: img,
+                         isExisting: true
+                    }))
+               );
+               setCategory(prevData.category);
+          }
+     }, [prevData, reset]);
 
      // handle images changes function
      const handleImageChange = (e) => {
@@ -146,7 +182,10 @@ const EditProductModal = ({ close, prevData }) => {
                               </div>
                               <div className="space-y-2">
                                    <label className={labelStyle}>Product Name *</label>
-                                   <input {...register("title")} required placeholder="Enter product name" className={inputStyle} />
+                                   <input {...register("title")}
+                                        required
+                                        placeholder="Enter product name"
+                                        className={inputStyle} />
                               </div>
 
                          </div>
@@ -159,12 +198,13 @@ const EditProductModal = ({ close, prevData }) => {
                                         {...register("category")}
                                         required
                                         className={`w-full bg-base-200 border border-accent/5 rounded-md px-4 focus:border-primary/50 outline-none transition-all text-sm text-accent cursor-pointer select select-lg`}>
-                                        <option value="">Select Category</option>
-                                        <option className="hover:bg-primary">T-Shirts</option>
-                                        <option className="hover:bg-primary">Hoodies</option>
-                                        <option className="hover:bg-primary">Pants</option>
-                                        <option className="hover:bg-primary">Shirts</option>
-                                        <option className="hover:bg-primary">Winter Wear</option>
+                                        {categories?.map(cat => (
+                                             <option
+                                                  key={cat.label}
+                                                  value={cat.value}>
+                                                  {cat.label}
+                                             </option>
+                                        ))}
                                    </select>
                               </div>
                               <div className="space-y-2">
@@ -259,7 +299,7 @@ const EditProductModal = ({ close, prevData }) => {
                                    type="submit"
                                    className="bg-primary text-accent py-3 md:py-3.5 px-5 md:px-7 rounded-md flex items-center justify-center gap-2 text-[10px] md:text-[11px] cursor-pointer font-bold uppercase tracking-widest transition-all"
                               >
-                                   <PiFileArrowUpDuotone /> Update Product
+                                   <PiFileArrowUpDuotone size={20} /> Update Product
                               </button>
                          </div>
                     </form>

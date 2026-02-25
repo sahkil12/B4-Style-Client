@@ -1,4 +1,4 @@
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQueryClient } from "@tanstack/react-query";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import { FiSearch, FiPlus, FiEdit2, FiTrash2 } from 'react-icons/fi';
 import Spinner from "../../../Components/Shared/Spinner";
@@ -49,7 +49,8 @@ const AllProducts = () => {
                confirmButtonColor: "#E60000",
                cancelButtonColor: "#000000",
                confirmButtonText: "Delete",
-               cancelButtonText: "Cancel"
+               cancelButtonText: "Cancel",
+               color: "#0E0E0E"
           });
           if (!confirm.isConfirmed) return;
           // delete api call
@@ -194,14 +195,8 @@ const AllProducts = () => {
                               </tbody>
                          </table>
                          :
-                         <div className="flex justify-center items-center gap-2 text-center py-16">
+                         <div className="flex justify-center text-center py-20">
                               <p className="text-xl font-semibold text-accent "> No Products Found</p>
-                              <span
-                                   onClick={() => {
-                                        setSearchTexts("")
-                                        setSelectedCategory("")
-                                   }}
-                                   className="text-primary/90 cursor-pointer text-sm underline font-semibold">Clear Filter</span>
                          </div>}
                </div>
                {isAddOpen && (
@@ -210,9 +205,9 @@ const AllProducts = () => {
                     />
                )}
                {editProduct && (
-                    <EditProductModal 
-                    prevData={editProduct}
-                    close={() => setEditProduct(null)} />
+                    <EditProductModal
+                         prevData={editProduct}
+                         close={() => setEditProduct(null)} />
                )}
           </div>
      );

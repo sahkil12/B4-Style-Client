@@ -5,6 +5,7 @@ import useAxiosSecure from "../../../../Hooks/useAxiosSecure";
 import { FiX, FiPlus, FiImage } from 'react-icons/fi';
 import { motion } from 'framer-motion';
 import toast from 'react-hot-toast';
+import { ImSpinner9 } from 'react-icons/im';
 
 const AddProductModal = ({ close }) => {
      const axiosSecure = useAxiosSecure();
@@ -17,19 +18,19 @@ const AddProductModal = ({ close }) => {
      });
 
      const clothSizes = ['XS', 'S', 'M', 'L', 'XL', 'XXL',];
-     const pantsSizes = [30, 32, 34, 36, 38, 40];
-     const allSizes = ['XS', 'S', 'M', 'L', 'XL', 'XXL', '30', '32', '34', '36', '38', '40']
+     const pantsSizes = ['30', '32', '34', '36', '38', '40'];
+     const allSizes = [...clothSizes, ...pantsSizes];
 
      const [selectedSizes, setSelectedSizes] = useState([]);
      const [selectedImages, setSelectedImages] = useState([]);
+     const [loading, setLoading] = useState(false);
      const [category, setCategory] = useState("");
-
      let sizes = []
 
      if (category === "") {
           sizes = allSizes
      }
-     else if (category === "Pants") {
+     else if (category === "PANTS") {
           sizes = pantsSizes
      }
      else {
@@ -39,6 +40,7 @@ const AddProductModal = ({ close }) => {
      // handle images changes function
      const handleImageChange = (e) => {
           const files = Array.from(e.target.files)
+          console.log(files);
           const imageObjects = files.map(file => ({
                file,
                preview: URL.createObjectURL(file)
@@ -50,6 +52,25 @@ const AddProductModal = ({ close }) => {
           const updated = selectedImages.filter((_, i) => i !== index)
           setSelectedImages(updated)
      }
+
+     const uploadImage = async (file) => {
+
+          const formData = new FormData();
+          formData.append("file", file);
+          formData.append(
+               "upload_preset",
+               import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET
+          );
+          const res = await fetch(
+               `https://api.cloudinary.com/v1_1/${import.meta.env.VITE_CLOUDINARY_CLOUD_NAME}/image/upload`,
+               {
+                    method: "POST",
+                    body: formData,
+               }
+          );
+          const data = await res.json();
+          return data.secure_url;
+     };
 
      const toggleSize = (size) => {
           if (selectedSizes.includes(size)) {
@@ -65,31 +86,40 @@ const AddProductModal = ({ close }) => {
                toast.error("Please select image", { duration: 1000 });
                return;
           }
-
-          const product = {
-               title: data.title,
-               slug: data.title.toLowerCase().replaceAll(" ", "-"),
-               category: data.category,
-               price: Number(data.price),
-               discount: Number(data.discount),
-               stock: Number(data.stock),
-               description: data.description,
-               sizes: selectedSizes,
-               images: selectedImages,
-               isNew: data.isNew,
-               isBestSeller: data.isBestSeller,
-               createdAt: new Date()
-          };
-
+          setLoading(true)
           try {
+               const imageUrls = [];
+               for (const img of selectedImages) {
+                    const url = await uploadImage(img.file);
+                    imageUrls.push(url);
+               }
+               const product = {
+                    title: data.title,
+                    slug: data.title.toLowerCase().replaceAll(" ", "-"),
+                    category: data.category,
+                    price: Number(data.price),
+                    discount: Number(data.discount),
+                    stock: Number(data.stock),
+                    description: data.description,
+                    sizes: selectedSizes,
+                    images: imageUrls,
+                    isNew: data.isNew,
+                    isBestSeller: data.isBestSeller,
+                    createdAt: new Date()
+               };
                await axiosSecure.post("/products", product);
                queryClient.invalidateQueries(["products"]);
+               toast.success("Product Added");
                close();
-          } catch (error) {
-               console.error("Error adding product:", error);
+          }
+          catch (error) {
+               console.log(error);
+               toast.error("Upload Failed");
+          }
+          finally {
+               setLoading(false)
           }
      };
-
      // Shared Tailwind Classes
      const labelStyle = "block text-[10px] font-bold uppercase tracking-widest mb-2 text-accent/70";
      const inputStyle = "w-full bg-base-200/85 border border-white/5 rounded-md py-3.5 px-4 focus:border-primary/50 outline-none transition-all text-sm text-accent placeholder:text-neutral-500";
@@ -151,23 +181,26 @@ const AddProductModal = ({ close }) => {
                                    <label className={labelStyle}>Product Name *</label>
                                    <input {...register("title")} required placeholder="Enter product name" className={inputStyle} />
                               </div>
-
                          </div>
                          {/* stock & Category Row */}
                          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                               <div className="space-y-2">
                                    <label className={labelStyle}>Category *</label>
                                    <select
-                                        onChange={(e) => setCategory(e.target.value)}
+                                        // value={category}
                                         {...register("category")}
+                                        onChange={(e) => {
+                                             setCategory(e.target.value)
+                                        }}
                                         required
                                         className={`w-full bg-base-200 border border-accent/5 rounded-md px-4 focus:border-primary/50 outline-none transition-all text-sm text-accent cursor-pointer select select-lg`}>
                                         <option value="">Select Category</option>
-                                        <option className="hover:bg-primary">T-Shirts</option>
-                                        <option className="hover:bg-primary">Hoodies</option>
-                                        <option className="hover:bg-primary">Pants</option>
-                                        <option className="hover:bg-primary">Shirts</option>
-                                        <option className="hover:bg-primary">Winter Wear</option>
+                                        <option value="T-SHIRTS">T-Shirts</option>
+                                        <option value="HOODIES">Hoodies</option>
+                                        <option value="PANTS">Pants</option>
+                                        <option value="SHIRTS">Shirts</option>
+                                        <option value="PANJABI">Panjabi</option>
+                                        <option value="WINTER WEAR">Winter Wear</option>
                                    </select>
                               </div>
                               <div className="space-y-2">
@@ -259,10 +292,12 @@ const AddProductModal = ({ close }) => {
                                    Cancel
                               </button>
                               <button
+                                   disabled={loading}
                                    type="submit"
-                                   className="bg-primary text-accent py-3 md:py-3.5 px-5 md:px-7 rounded-md flex items-center justify-center gap-2 text-[10px] md:text-[11px] cursor-pointer font-bold uppercase tracking-widest transition-all"
+                                   className="bg-primary text-accent py-3 md:py-3.5 px-5 md:px-7 rounded-md flex items-center justify-center gap-2 text-[10px] md:text-[11px] cursor-pointer font-bold uppercase tracking-widest transition-all w-fit"
                               >
-                                   <FiPlus /> Add Product
+                                   {loading ? <span className='animate-spin w-full flex justify-center'><ImSpinner9 size={20} /></span> : <> <FiPlus /> Add Product</>}
+
                               </button>
                          </div>
                     </form>
