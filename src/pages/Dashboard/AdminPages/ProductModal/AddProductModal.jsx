@@ -187,7 +187,6 @@ const AddProductModal = ({ close }) => {
                               <div className="space-y-2">
                                    <label className={labelStyle}>Category *</label>
                                    <select
-                                        // value={category}
                                         {...register("category")}
                                         onChange={(e) => {
                                              setCategory(e.target.value)

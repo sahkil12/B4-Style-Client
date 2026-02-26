@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useForm } from "react-hook-form";
 import { useQueryClient } from "@tanstack/react-query";
 import useAxiosSecure from "../../../../Hooks/useAxiosSecure";
@@ -7,21 +7,10 @@ import { PiFileArrowUpDuotone } from "react-icons/pi";
 import { motion } from 'framer-motion';
 import toast from 'react-hot-toast';
 
-const categories = [
-     { label: "Select Category", value: "" },
-     { label: "T-Shirts", value: "T-SHIRTS" },
-     { label: "Hoodies", value: "HOODIES" },
-     { label: "Pants", value: "PANTS" },
-     { label: "Shirts", value: "SHIRTS" },
-     { label: "Winter Wear", value: "WINTER WEAR" }
-];
-
 const EditProductModal = ({ close, prevData }) => {
-     console.log(prevData);
      const axiosSecure = useAxiosSecure();
      const queryClient = useQueryClient();
-     const { register, handleSubmit, reset } = useForm();
-
+     const { register, handleSubmit } = useForm();
 
      const clothSizes = ['XS', 'S', 'M', 'L', 'XL', 'XXL',];
      const pantsSizes = ['30', '32', '34', '36', '38', '40'];
@@ -32,7 +21,6 @@ const EditProductModal = ({ close, prevData }) => {
      const [category, setCategory] = useState("");
 
      let sizes = []
-     console.log(category);
 
      if (category === "") {
           sizes = allSizes
@@ -43,32 +31,6 @@ const EditProductModal = ({ close, prevData }) => {
      else {
           sizes = clothSizes
      }
-
-     useEffect(() => {
-          console.log(prevData);
-          if (prevData) {
-               reset({
-                    title: prevData.title,
-                    category: prevData.category,
-                    stock: prevData.stock,
-                    price: prevData.price,
-                    discount: prevData.discount,
-                    description: prevData.description,
-                    isNew: prevData.isNew,
-                    isBestSeller: prevData.isBestSeller
-               });
-               setSelectedSizes(prevData.sizes || []);
-
-               setSelectedImages(
-                    prevData.images.map(img => ({
-                         preview: img,
-                         isExisting: true
-                    }))
-               );
-               setCategory(prevData.category);
-          }
-     }, [prevData, reset]);
-
      // handle images changes function
      const handleImageChange = (e) => {
           const files = Array.from(e.target.files)
@@ -122,7 +84,6 @@ const EditProductModal = ({ close, prevData }) => {
                console.error("Error updating product:", error);
           }
      };
-
      // Shared Tailwind Classes
      const labelStyle = "block text-[10px] font-bold uppercase tracking-widest mb-2 text-accent/70";
      const inputStyle = "w-full bg-base-200/85 border border-white/5 rounded-md py-3.5 px-4 focus:border-primary/50 outline-none transition-all text-sm text-accent placeholder:text-neutral-500";
@@ -187,24 +148,23 @@ const EditProductModal = ({ close, prevData }) => {
                                         placeholder="Enter product name"
                                         className={inputStyle} />
                               </div>
-
                          </div>
                          {/* stock & Category Row */}
                          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                               <div className="space-y-2">
                                    <label className={labelStyle}>Category *</label>
                                    <select
-                                        onChange={(e) => setCategory(e.target.value)}
                                         {...register("category")}
+                                        onChange={(e) => setCategory(e.target.value)}
                                         required
                                         className={`w-full bg-base-200 border border-accent/5 rounded-md px-4 focus:border-primary/50 outline-none transition-all text-sm text-accent cursor-pointer select select-lg`}>
-                                        {categories?.map(cat => (
-                                             <option
-                                                  key={cat.label}
-                                                  value={cat.value}>
-                                                  {cat.label}
-                                             </option>
-                                        ))}
+                                        <option value="">Select Category</option>
+                                        <option value="T-SHIRTS">T-Shirts</option>
+                                        <option value="HOODIES">Hoodies</option>
+                                        <option value="PANTS">Pants</option>
+                                        <option value="SHIRTS">Shirts</option>
+                                        <option value="PANJABI">Panjabi</option>
+                                        <option value="WINTER WEAR">Winter Wear</option>
                                    </select>
                               </div>
                               <div className="space-y-2">
