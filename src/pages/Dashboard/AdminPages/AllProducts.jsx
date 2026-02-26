@@ -76,8 +76,8 @@ const AllProducts = () => {
                {/* Header Section */}
                <div className="flex flex-wrap justify-between items-center gap-4 mb-10">
                     <div>
-                         <h1 className="text-3xl font-semibold uppercase tracking-wider bebas mb-1">Products</h1>
-                         <p className="text-accent/40 text-sm">{filteredProducts?.length} total products</p>
+                         <h1 className="text-3xl lg:text-4xl font-medium uppercase tracking-wider bebas mb-1">Products</h1>
+                         <p className="text-accent/60 text-sm lg:text-base">{filteredProducts?.length} total products</p>
                     </div>
                     <button
                          onClick={() => setIsAddOpen(true)}
