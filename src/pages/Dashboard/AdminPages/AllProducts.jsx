@@ -14,6 +14,7 @@ const categories = [
      { label: "Hoodies", value: "HOODIES" },
      { label: "Pants", value: "PANTS" },
      { label: "Shirts", value: "SHIRTS" },
+     { label: "Panjabi", value: "PANJABI" },
      { label: "Winter Wear", value: "WINTER WEAR" }
 ];
 
