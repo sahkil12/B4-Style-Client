@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from "react-hook-form";
 import { useQueryClient } from "@tanstack/react-query";
 import useAxiosSecure from "../../../../Hooks/useAxiosSecure";
@@ -10,7 +10,7 @@ import toast from 'react-hot-toast';
 const EditProductModal = ({ close, prevData }) => {
      const axiosSecure = useAxiosSecure();
      const queryClient = useQueryClient();
-     const { register, handleSubmit } = useForm();
+     const { register, handleSubmit, reset } = useForm();
 
      const clothSizes = ['XS', 'S', 'M', 'L', 'XL', 'XXL',];
      const pantsSizes = ['30', '32', '34', '36', '38', '40'];
@@ -19,6 +19,29 @@ const EditProductModal = ({ close, prevData }) => {
      const [selectedSizes, setSelectedSizes] = useState([]);
      const [selectedImages, setSelectedImages] = useState([]);
      const [category, setCategory] = useState("");
+
+     useEffect(() => {
+          if (prevData) {
+               reset({
+                    title: prevData.title,
+                    category: prevData.category,
+                    stock: prevData.stock,
+                    price: prevData.price,
+                    discount: prevData.discount,
+                    description: prevData.description,
+                    isNew: prevData.isNew,
+                    isBestSeller: prevData.isBestSeller,
+               });
+               setSelectedSizes(prevData.sizes || []);
+               setSelectedImages(
+                    prevData.images.map(url => ({
+                         preview: url,
+                         isExisting: true
+                    }))
+               );
+               setCategory(prevData.category);
+          }
+     }, [prevData, reset]);
 
      let sizes = []
 
@@ -31,6 +54,28 @@ const EditProductModal = ({ close, prevData }) => {
      else {
           sizes = clothSizes
      }
+     // upload image
+     const uploadImage = async (file) => {
+
+          const formData = new FormData();
+          formData.append("file", file);
+          formData.append(
+               "upload_preset",
+               import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET
+          );
+          const res = await fetch(
+               `https://api.cloudinary.com/v1_1/${import.meta.env.VITE_CLOUDINARY_CLOUD_NAME}/image/upload`,
+
+               {
+                    method: "POST",
+                    body: formData
+               }
+          );
+          const data = await res.json();
+
+          return data.secure_url;
+     };
+
      // handle images changes function
      const handleImageChange = (e) => {
           const files = Array.from(e.target.files)
@@ -60,28 +105,42 @@ const EditProductModal = ({ close, prevData }) => {
                toast.error("Please select image", { duration: 1000 });
                return;
           }
-
-          const product = {
-               title: data.title,
-               slug: data.title.toLowerCase().replaceAll(" ", "-"),
-               category: data.category,
-               price: Number(data.price),
-               discount: Number(data.discount),
-               stock: Number(data.stock),
-               description: data.description,
-               sizes: selectedSizes,
-               images: selectedImages,
-               isNew: data.isNew,
-               isBestSeller: data.isBestSeller,
-               createdAt: new Date()
-          };
-
           try {
+               let imageUrls = []
+
+               for (const img of selectedImages) {
+
+                    if (img.isExisting) {
+                         imageUrls.push(img.preview);
+                    }
+                    else {
+                         const url = await uploadImage(img.file);
+                         imageUrls.push(url);
+                    }
+               }
+
+               const product = {
+                    title: data.title,
+                    slug: data.title.toLowerCase().replaceAll(" ", "-"),
+                    category: data.category,
+                    price: Number(data.price),
+                    discount: Number(data.discount),
+                    stock: Number(data.stock),
+                    description: data.description,
+                    sizes: selectedSizes,
+                    images: imageUrls,
+                    isNew: data.isNew,
+                    isBestSeller: data.isBestSeller,
+                    updatedAt: new Date()
+               };
+
                await axiosSecure.patch(`/products/${prevData._id}`, product);
                queryClient.invalidateQueries(["products"]);
+               toast.success("Product Updated");
                close();
-          } catch (error) {
-               console.error("Error updating product:", error);
+          }
+          catch {
+               toast.error("Update Failed");
           }
      };
      // Shared Tailwind Classes
