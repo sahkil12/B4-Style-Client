@@ -40,7 +40,6 @@ const AddProductModal = ({ close }) => {
      // handle images changes function
      const handleImageChange = (e) => {
           const files = Array.from(e.target.files)
-          console.log(files);
           const imageObjects = files.map(file => ({
                file,
                preview: URL.createObjectURL(file)

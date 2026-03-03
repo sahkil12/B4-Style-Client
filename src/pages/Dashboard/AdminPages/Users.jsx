@@ -1,8 +1,19 @@
 
+import { useQuery } from '@tanstack/react-query';
 import React, { useState } from 'react';
 import { FiSearch, FiTrash2, FiShield, FiUserCheck, FiUserMinus } from 'react-icons/fi';
+import useAxiosSecure from '../../../Hooks/useAxiosSecure';
 
 const Users = () => {
+     const axiosSecure = useAxiosSecure();
+
+     const {data: allUsers, isLoading } = useQuery({
+          queryKey: ["users"],
+          queryFn: async () => await axiosSecure.get('/users')
+     })
+
+     console.log(allUsers);
+
      // Demo Users Data
      const [users, setUsers] = useState([
           { id: 1, name: 'sdfdfds', email: 'jahev94027@ixunbo.com', role: 'USER', joined: '3/3/2026', status: 'Active', avatarColor: 'bg-neutral-800' },
@@ -27,21 +38,21 @@ const Users = () => {
                     />
                </div>
                {/* Responsive Table Container */}
-               <div className="overflow-x-auto w-full rounded-xl border border-accent/5 ">
-                    <table className="table w-full">
+               <div className="overflow-x-auto w-full rounded-t-2xl border border-accent/10 relative">
+                    <table className="w-full text-left">
                          {/* head */}
-                         <thead className='bg-secondary/80 border border-accent'>
-                              <tr className="text-accent/60 text-[11px] uppercase tracking-[2px] font-black border-b border-white/85">
+                         <thead className=''>
+                              <tr className="text-accent/65 text-xs bg-secondary uppercase tracking-[2px] font-semibold">
                                    <th className="bg-transparent py-6 px-6">User</th>
                                    <th className="bg-transparent py-6 text-center">Role</th>
                                    <th className="bg-transparent py-6 text-center">Joined</th>
                                    <th className="bg-transparent py-6 text-center">Status</th>
-                                   <th className="bg-transparent py-6 text-right">Actions</th>
+                                   <th className="bg-transparent py-6 pr-3 text-right">Actions</th>
                               </tr>
                          </thead>
                          <tbody>
                               {users.map((user) => (
-                                   <tr key={user.id} className="bg-base-200/90 hover:bg-accent/5 transition-colors border-b border-accent/5 last:border-none">
+                                   <tr key={user.id} className="bg-base-200/90 hover:bg-base-200 transition-colors border-b border-accent/10">
                                         {/* User Info */}
                                         <td className="px-6 py-5">
                                              <div className="flex items-center gap-4">
@@ -90,18 +101,13 @@ const Users = () => {
                                                   <div className="tooltip tooltip-left" data-tip={user.role === 'ADMIN' ? 'Remove Admin' : 'Make Admin'}>
                                                        <button
                                                             className={`p-2 rounded-lg border border-white/5 transition-all flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest
-                                                ${user.role === 'ADMIN'
+                                                            ${user.role === 'ADMIN'
                                                                       ? 'bg-yellow-500/10 text-yellow-500 hover:bg-yellow-500 hover:text-black'
                                                                       : 'bg-primary/10 text-primary hover:bg-primary hover:text-white'}`}
                                                        >
                                                             {user.role === 'ADMIN' ? <FiUserMinus size={16} /> : <FiUserCheck size={16} />}
                                                        </button>
                                                   </div>
-
-                                                  {/* Delete Button */}
-                                                  <button className="p-2 bg-neutral-800 hover:bg-primary text-neutral-500 hover:text-white rounded-lg border border-white/5 transition-all">
-                                                       <FiTrash2 size={16} />
-                                                  </button>
                                              </div>
                                         </td>
                                    </tr>

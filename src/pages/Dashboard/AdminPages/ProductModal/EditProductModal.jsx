@@ -19,6 +19,7 @@ const EditProductModal = ({ close, prevData }) => {
      const [selectedSizes, setSelectedSizes] = useState([]);
      const [selectedImages, setSelectedImages] = useState([]);
      const [category, setCategory] = useState("");
+     const [loading, setLoading] = useState(false);
 
      useEffect(() => {
           if (prevData) {
@@ -41,7 +42,7 @@ const EditProductModal = ({ close, prevData }) => {
                );
                setCategory(prevData.category);
           }
-     }, [prevData, reset]);
+     }, [prevData, reset, category]);
 
      let sizes = []
 
@@ -105,6 +106,7 @@ const EditProductModal = ({ close, prevData }) => {
                toast.error("Please select image", { duration: 1000 });
                return;
           }
+          setLoading(true)
           try {
                let imageUrls = []
 
@@ -141,6 +143,9 @@ const EditProductModal = ({ close, prevData }) => {
           }
           catch {
                toast.error("Update Failed");
+          }
+          finally {
+               setLoading(false)
           }
      };
      // Shared Tailwind Classes
@@ -315,10 +320,11 @@ const EditProductModal = ({ close, prevData }) => {
                                    Cancel
                               </button>
                               <button
+                                   disabled={loading}
                                    type="submit"
                                    className="bg-primary text-accent py-3 md:py-3.5 px-5 md:px-7 rounded-md flex items-center justify-center gap-2 text-[10px] md:text-[11px] cursor-pointer font-bold uppercase tracking-widest transition-all"
                               >
-                                   <PiFileArrowUpDuotone size={20} /> Update Product
+                                   {loading ? <span className='animate-spin w-full flex justify-center'><ImSpinner9 size={20} /></span> : <>   <PiFileArrowUpDuotone size={20} /> Update Product</>}
                               </button>
                          </div>
                     </form>
