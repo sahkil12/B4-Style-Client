@@ -11,30 +11,27 @@ const Users = () => {
      ]);
 
      return (
-          <div className="flex-1 p-8 md:p-12 min-h-screen text-accent font-['Inter']">
-
+          <div className="flex-1 p-4 lg:p-8 w-full min-h-screen text-accent">
                {/* Header Section */}
-               <div className="mb-10">
-                    <h1 className="text-4xl font-bold uppercase tracking-wider bebas mb-1">Users</h1>
-                    <p className="text-neutral-500 text-sm font-bold">{users.length} registered users</p>
+               <div className="mb-7">
+                    <h1 className="text-4xl font-medium tracking-wider bebas mb-2">Users</h1>
+                    <p className="text-accent/60 text-sm font-medium">{users.length} registered users</p>
                </div>
-
                {/* Search Bar */}
                <div className="relative mb-8 max-w-md">
-                    <FiSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-neutral-500" />
+                    <FiSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-accent/60" />
                     <input
                          type="text"
                          placeholder="Search users..."
-                         className="w-full bg-base-200 border border-white/5 rounded-lg py-3 pl-12 pr-4 outline-none focus:border-primary/50 transition-all text-sm"
+                         className="w-full bg-base-200/60 border border-accent/10 rounded-lg py-3.5 pl-12 pr-4 outline-none focus:border-primary/50 transition-all text-sm"
                     />
                </div>
-
                {/* Responsive Table Container */}
-               <div className="overflow-x-auto w-full rounded-xl border border-white/5 bg-base-200">
-                    <table className="table w-full border-separate border-spacing-y-0">
+               <div className="overflow-x-auto w-full rounded-xl border border-accent/5 ">
+                    <table className="table w-full">
                          {/* head */}
-                         <thead>
-                              <tr className="text-neutral-500 text-[10px] uppercase tracking-[2px] font-black border-b border-white/5">
+                         <thead className='bg-secondary/80 border border-accent'>
+                              <tr className="text-accent/60 text-[11px] uppercase tracking-[2px] font-black border-b border-white/85">
                                    <th className="bg-transparent py-6 px-6">User</th>
                                    <th className="bg-transparent py-6 text-center">Role</th>
                                    <th className="bg-transparent py-6 text-center">Joined</th>
@@ -44,7 +41,7 @@ const Users = () => {
                          </thead>
                          <tbody>
                               {users.map((user) => (
-                                   <tr key={user.id} className="hover:bg-white/5 transition-colors border-b border-white/5 last:border-none">
+                                   <tr key={user.id} className="bg-base-200/90 hover:bg-accent/5 transition-colors border-b border-accent/5 last:border-none">
                                         {/* User Info */}
                                         <td className="px-6 py-5">
                                              <div className="flex items-center gap-4">
