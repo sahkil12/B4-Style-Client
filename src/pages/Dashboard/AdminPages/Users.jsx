@@ -1,32 +1,44 @@
-
-import { useQuery } from '@tanstack/react-query';
-import React, { useState } from 'react';
-import { FiSearch, FiTrash2, FiShield, FiUserCheck, FiUserMinus } from 'react-icons/fi';
+import { QueryClient, useQuery } from '@tanstack/react-query';
+import { FiSearch, FiUserCheck, FiUserMinus } from 'react-icons/fi';
 import useAxiosSecure from '../../../Hooks/useAxiosSecure';
+import Spinner from '../../../Components/Shared/Spinner';
+import { FaUser } from 'react-icons/fa6';
+import { MdAdminPanelSettings } from 'react-icons/md';
+import useAuth from '../../../Hooks/useAuth';
 
 const Users = () => {
      const axiosSecure = useAxiosSecure();
+     const { user: loginUser } = useAuth()
 
-     const {data: allUsers, isLoading } = useQuery({
+     const { data: allUsers, isLoading } = useQuery({
           queryKey: ["users"],
-          queryFn: async () => await axiosSecure.get('/users')
+          queryFn: async () => {
+               const res = await axiosSecure.get('/users')
+               return res.data
+          }
      })
 
-     console.log(allUsers);
+     // admin remove/make
+     const handleToggleAdmin = async (user) => {
+          try {
+               await axiosSecure.patch(`/users/admin/${user._id}`);
+               QueryClient.invalidateQueries(["users"]);
+          }
+          catch {
+               console.log("Failed");
+          }
+     };
 
-     // Demo Users Data
-     const [users, setUsers] = useState([
-          { id: 1, name: 'sdfdfds', email: 'jahev94027@ixunbo.com', role: 'USER', joined: '3/3/2026', status: 'Active', avatarColor: 'bg-neutral-800' },
-          { id: 2, name: 'Shakil', email: 'jahewv94027@ixunbo.com', role: 'USER', joined: '3/3/2026', status: 'Active', avatarColor: 'bg-neutral-800' },
-          { id: 3, name: 'Shakil (You)', email: 'tazwershakilshakil@gmail.com', role: 'ADMIN', joined: '2/13/2026', status: 'Active', avatarColor: 'bg-primary/20' },
-     ]);
+     if (isLoading) {
+          return <Spinner></Spinner>
+     }
 
      return (
           <div className="flex-1 p-4 lg:p-8 w-full min-h-screen text-accent">
                {/* Header Section */}
                <div className="mb-7">
                     <h1 className="text-4xl font-medium tracking-wider bebas mb-2">Users</h1>
-                    <p className="text-accent/60 text-sm font-medium">{users.length} registered users</p>
+                    <p className="text-accent/60 text-sm font-medium">{allUsers.length || 0} registered users</p>
                </div>
                {/* Search Bar */}
                <div className="relative mb-8 max-w-md">
@@ -46,66 +58,59 @@ const Users = () => {
                                    <th className="bg-transparent py-6 px-6">User</th>
                                    <th className="bg-transparent py-6 text-center">Role</th>
                                    <th className="bg-transparent py-6 text-center">Joined</th>
-                                   <th className="bg-transparent py-6 text-center">Status</th>
-                                   <th className="bg-transparent py-6 pr-3 text-right">Actions</th>
+                                   <th className="bg-transparent py-6 pr-6 text-right">Actions</th>
                               </tr>
                          </thead>
                          <tbody>
-                              {users.map((user) => (
-                                   <tr key={user.id} className="bg-base-200/90 hover:bg-base-200 transition-colors border-b border-accent/10">
+                              {allUsers?.map((user) => (
+                                   <tr key={user._id} className="bg-base-200/90 hover:bg-base-200 transition-colors border-b border-accent/10">
                                         {/* User Info */}
                                         <td className="px-6 py-5">
                                              <div className="flex items-center gap-4">
-                                                  <div className={`w-10 h-10 ${user.avatarColor} rounded-lg flex items-center justify-center border border-white/5`}>
-                                                       {user.role === 'ADMIN' ? (
-                                                            <FiShield className="text-primary" size={20} />
+                                                  <div className={`w-10 h-10 rounded-lg flex items-center justify-center border border-accent/5`}>
+                                                       {user.role === 'admin' ? (
+                                                            <MdAdminPanelSettings className="text-primary" size={20} />
                                                        ) : (
-                                                            <div className="text-neutral-500 font-bold text-xs">U</div>
+                                                            <div className="text-neutral-500 font-bold text-xs"><FaUser size={15} /></div>
                                                        )}
                                                   </div>
                                                   <div className="min-w-0">
-                                                       <h4 className={`text-sm font-bold ${user.name.includes('(You)') ? 'text-primary' : 'text-accent'}`}>
+                                                       <h4 className={`text-sm font-bold ${user.role === "admin" ? 'text-primary' : 'text-accent'}`}>
                                                             {user.name}
                                                        </h4>
-                                                       <p className="text-[11px] text-neutral-500 font-medium truncate">{user.email}</p>
+                                                       <p className="text-xs text-accent/60 mt-1 font-medium truncate">{user.email}</p>
                                                   </div>
                                              </div>
                                         </td>
-
                                         {/* Role Badge */}
                                         <td className="text-center">
-                                             <span className={`px-3 py-1 rounded-md text-[9px] font-black tracking-widest uppercase border ${user.role === 'ADMIN'
+                                             <span className={`px-3 py-1.5 rounded-md text-[10px] font-semibold tracking-widest uppercase border ${user.role === 'admin'
                                                   ? 'bg-primary/10 border-primary/20 text-primary'
-                                                  : 'bg-neutral-800 border-white/10 text-neutral-400'
+                                                  : 'bg-accent/5 border-accent/10 text-accent/70'
                                                   }`}>
                                                   {user.role}
                                              </span>
                                         </td>
-
                                         {/* Joined Date */}
                                         <td className="text-center">
-                                             <span className="text-xs font-bold text-neutral-400">{user.joined}</span>
+                                             <span className="text-xs font-bold text-neutral-400">
+                                                  {new Date(user.createAt).toLocaleDateString()}</span>
                                         </td>
-
-                                        {/* Status Badge */}
-                                        <td className="text-center">
-                                             <span className="bg-green-500/10 text-green-500 px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-wider">
-                                                  {user.status}
-                                             </span>
-                                        </td>
-
                                         {/* Actions */}
                                         <td className="px-6 py-5">
                                              <div className="flex justify-end gap-3">
                                                   {/* Toggle Admin Role Button */}
-                                                  <div className="tooltip tooltip-left" data-tip={user.role === 'ADMIN' ? 'Remove Admin' : 'Make Admin'}>
+                                                  <div className="tooltip tooltip-left"
+                                                       data-tip={user.role === 'admin' ? 'Remove Admin' : 'Make Admin'}>
                                                        <button
-                                                            className={`p-2 rounded-lg border border-white/5 transition-all flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest
-                                                            ${user.role === 'ADMIN'
-                                                                      ? 'bg-yellow-500/10 text-yellow-500 hover:bg-yellow-500 hover:text-black'
-                                                                      : 'bg-primary/10 text-primary hover:bg-primary hover:text-white'}`}
+                                                            onClick={() => handleToggleAdmin(user)}
+                                                            disabled={loginUser?.email === user?.email}
+                                                            className={`py-2 px-3 rounded-lg border border-accent/5 transition-all flex items-center gap-2 cursor-pointer text-[10px] md:text-[11px] font-bold uppercase tracking-widest
+                                                            ${user.role === 'admin'
+                                                                      ? 'bg-yellow-500/10 text-yellow-500 hover:bg-yellow-500 hover:text-base-100'
+                                                                      : 'bg-primary/10 text-primary/90 hover:bg-primary hover:text-accent/90'}`}
                                                        >
-                                                            {user.role === 'ADMIN' ? <FiUserMinus size={16} /> : <FiUserCheck size={16} />}
+                                                            {user.role === 'admin' ? <> <FiUserMinus size={16} /> Remove Admin</> : <> <FiUserCheck size={16} /> Make Admin</>}
                                                        </button>
                                                   </div>
                                              </div>
