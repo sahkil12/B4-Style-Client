@@ -6,11 +6,13 @@ import { FaUser } from 'react-icons/fa6';
 import { MdAdminPanelSettings } from 'react-icons/md';
 import useAuth from '../../../Hooks/useAuth';
 import Swal from 'sweetalert2';
+import { useState } from 'react';
 
 const Users = () => {
      const axiosSecure = useAxiosSecure();
      const { user: loginUser } = useAuth()
      const queryClient = useQueryClient()
+     const [search, setSearch] = useState("")
 
      const { data: allUsers, isLoading } = useQuery({
           queryKey: ["users"],
@@ -19,6 +21,11 @@ const Users = () => {
                return res.data
           }
      })
+
+     const filteredUsers =
+          allUsers?.filter(user =>
+               user.email.toLowerCase().includes(search.toLowerCase())
+          )
      // make admin
      const handleMakeAdmin = async (id) => {
 
@@ -60,7 +67,7 @@ const Users = () => {
                     icon: "error",
                     title: "You cannot remove your own admin role",
                     showConfirmButton: false,
-                    timer: 1500
+                    timer: 1500,
                })
                return
           }
@@ -74,7 +81,7 @@ const Users = () => {
                cancelButtonColor: "#000000",
                confirmButtonText: "Yes, Continue",
                cancelButtonText: "Cancel",
-               color: "#0E0E0E"
+               color: "#0E0E0E",
           });
           if (!confirm.isConfirmed) return;
           try {
@@ -112,6 +119,7 @@ const Users = () => {
                <div className="relative mb-8 max-w-md">
                     <FiSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-accent/60" />
                     <input
+                         onChange={(e) => setSearch(e.target.value)}
                          type="text"
                          placeholder="Search users..."
                          className="w-full bg-base-200/60 border border-accent/10 rounded-lg py-3.5 pl-12 pr-4 outline-none focus:border-primary/50 transition-all text-sm"
@@ -119,76 +127,85 @@ const Users = () => {
                </div>
                {/* Responsive Table Container */}
                <div className="overflow-x-auto w-full rounded-t-2xl border border-accent/10 relative">
-                    <table className="w-full text-left">
-                         {/* head */}
-                         <thead className=''>
-                              <tr className="text-accent/65 text-xs bg-secondary uppercase tracking-[2px] font-semibold">
-                                   <th className="bg-transparent py-6 px-6">User</th>
-                                   <th className="bg-transparent py-6 text-center">Role</th>
-                                   <th className="bg-transparent py-6 text-center">Joined</th>
-                                   <th className="bg-transparent py-6 pr-6 text-right">Actions</th>
-                              </tr>
-                         </thead>
-                         <tbody>
-                              {allUsers?.map((user) => (
-                                   <tr key={user._id} className="bg-base-200/90 hover:bg-base-200 transition-colors border-b border-accent/10">
-                                        {/* User Info */}
-                                        <td className="px-6 py-5">
-                                             <div className="flex items-center gap-4">
-                                                  <div className={`w-10 h-10 rounded-lg flex items-center justify-center border border-accent/5`}>
-                                                       {user.role === 'admin' ? (
-                                                            <MdAdminPanelSettings className="text-primary" size={20} />
-                                                       ) : (
-                                                            <div className="text-neutral-500 font-bold text-xs"><FaUser size={15} /></div>
-                                                       )}
-                                                  </div>
-                                                  <div className="min-w-0">
-                                                       <h4 className={`text-sm font-bold ${user.role === "admin" ? 'text-primary' : 'text-accent'}`}>
-                                                            {user.name}
-                                                       </h4>
-                                                       <p className="text-xs text-accent/60 mt-1 font-medium truncate">{user.email}</p>
-                                                  </div>
-                                             </div>
-                                        </td>
-                                        {/* Role Badge */}
-                                        <td className="text-center">
-                                             <span className={`px-3 py-1.5 rounded-md text-[10px] font-semibold tracking-widest uppercase border ${user.role === 'admin'
-                                                  ? 'bg-primary/10 border-primary/20 text-primary'
-                                                  : 'bg-accent/5 border-accent/10 text-accent/70'
-                                                  }`}>
-                                                  {user.role}
-                                             </span>
-                                        </td>
-                                        {/* Joined Date */}
-                                        <td className="text-center">
-                                             <span className="text-xs font-bold text-neutral-400">
-                                                  {new Date(user.createAt).toLocaleDateString()}</span>
-                                        </td>
-                                        {/* Actions */}
-                                        <td className="px-6 py-5">
-                                             <div className="flex justify-end gap-3">
-                                                  <div>
-                                                       {user.role === 'admin' ? <button
-                                                            onClick={() => handleRemoveAdmin(user)}
-                                                            className={`py-2 px-3 rounded-lg border border-accent/5 transition-all flex items-center gap-2 cursor-pointer text-[10px] md:text-[11px] font-bold uppercase tracking-widest bg-yellow-500/10 text-yellow-500 hover:bg-yellow-500 hover:text-base-100`}
-                                                       >
-                                                            <FiUserMinus size={16} /> Remove Admin
-                                                       </button>
-                                                            :
-                                                            <button
-                                                                 onClick={() => handleMakeAdmin(user?._id)}
-                                                                 className={`py-2 px-3 rounded-lg border border-accent/5 transition-all flex items-center gap-2 cursor-pointer text-[10px] md:text-[11px] font-bold uppercase tracking-widest bg-primary/10 text-primary/90 hover:bg-primary hover:text-accent/90`}
-                                                            >
-                                                                 <FiUserCheck size={16} /> Make Admin
-                                                            </button>
-                                                       }
-                                                  </div>
-                                             </div>
-                                        </td>
-                                   </tr>
-                              ))}
-                         </tbody>
-                    </table>
+                    {
+                         filteredUsers.length > 0 ?
+                              <table className="w-full text-left">
+                                   {/* head */}
+                                   <thead className=''>
+                                        <tr className="text-accent/65 text-xs bg-secondary uppercase tracking-[2px] font-semibold">
+                                             <th className="bg-transparent py-6 px-6">User</th>
+                                             <th className="bg-transparent py-6 text-center">Role</th>
+                                             <th className="bg-transparent py-6 text-center">Joined</th>
+                                             <th className="bg-transparent py-6 pr-6 text-right">Actions</th>
+                                        </tr>
+                                   </thead>
+                                   <tbody>
+                                        {filteredUsers?.slice(0, 15).map((user) => (
+                                             <tr key={user._id} className="bg-base-200/90 hover:bg-base-200 transition-colors border-b border-accent/10">
+                                                  {/* User Info */}
+                                                  <td className="px-6 py-5">
+                                                       <div className="flex items-center gap-4">
+                                                            <div className={`w-10 h-10 rounded-lg flex items-center justify-center border border-accent/5`}>
+                                                                 {user.role === 'admin' ? (
+                                                                      <MdAdminPanelSettings className="text-primary" size={20} />
+                                                                 ) : (
+                                                                      <div className="text-neutral-500 font-bold text-xs"><FaUser size={15} /></div>
+                                                                 )}
+                                                            </div>
+                                                            <div className="min-w-0">
+                                                                 <h4 className={`text-sm font-bold ${loginUser?.email === user.email ? 'text-primary flex gap-2 items-center' : 'text-accent/95'}`}>
+                                                                      {user.name}
+                                                                      <span className='text-[15px]'>{loginUser?.email === user.email ? '(You)' : ''}</span>
+                                                                 </h4>
+                                                                 <p className="text-xs text-accent/60 mt-1 font-medium truncate">{user.email}</p>
+                                                            </div>
+                                                       </div>
+                                                  </td>
+                                                  {/* Role Badge */}
+                                                  <td className="text-center">
+                                                       <span className={`px-3 py-1.5 rounded-md text-[10px] font-semibold tracking-widest uppercase border ${user.role === 'admin'
+                                                            ? 'bg-primary/10 border-primary/20 text-primary'
+                                                            : 'bg-accent/5 border-accent/10 text-accent/70'
+                                                            }`}>
+                                                            {user.role}
+                                                       </span>
+                                                  </td>
+                                                  {/* Joined Date */}
+                                                  <td className="text-center">
+                                                       <span className="text-xs font-bold text-neutral-400">
+                                                            {new Date(user.createAt).toLocaleDateString()}</span>
+                                                  </td>
+                                                  {/* Actions */}
+                                                  <td className="px-6 py-5">
+                                                       <div className="flex justify-end gap-3">
+                                                            <div>
+                                                                 {user.role === 'admin' ? <button
+                                                                      onClick={() => handleRemoveAdmin(user)}
+                                                                      className={`py-2 px-3 rounded-lg border border-accent/5 transition-all flex items-center gap-2 cursor-pointer text-[10px] md:text-[11px] font-bold uppercase tracking-widest bg-yellow-500/10 text-yellow-500 hover:bg-yellow-500 hover:text-base-100`}
+                                                                 >
+                                                                      <FiUserMinus size={16} /> Remove Admin
+                                                                 </button>
+                                                                      :
+                                                                      <button
+                                                                           onClick={() => handleMakeAdmin(user?._id)}
+                                                                           className={`py-2 px-3 rounded-lg border border-accent/5 transition-all flex items-center gap-2 cursor-pointer text-[10px] md:text-[11px] font-bold uppercase tracking-widest bg-primary/10 text-primary/90 hover:bg-primary hover:text-accent/90`}
+                                                                      >
+                                                                           <FiUserCheck size={16} /> Make Admin
+                                                                      </button>
+                                                                 }
+                                                            </div>
+                                                       </div>
+                                                  </td>
+                                             </tr>
+                                        ))}
+                                   </tbody>
+
+                              </table>
+                              :
+                              <div className="flex justify-center text-center py-20">
+                                   <p className="text-xl font-semibold text-accent "> No User Found</p>
+                              </div>
+                    }
                </div>
           </div>
      );

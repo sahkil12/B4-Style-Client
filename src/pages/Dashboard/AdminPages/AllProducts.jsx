@@ -60,12 +60,21 @@ const AllProducts = () => {
                queryClient.invalidateQueries({
                     queryKey: ["products"]
                });
-               Swal.fire("Deleted!", "", "success");
+                Swal.fire({
+                    icon: "success",
+                    title: "Deleted!",
+                    showConfirmButton: false,
+                    timer: 1500,
+               })
           }
           catch {
-               Swal.fire("Failed!", "", "error")
+               Swal.fire({
+                    icon: "error",
+                    title: "Failed!",
+                    showConfirmButton: false,
+                    timer: 1500,
+               })
           }
-
      }
 
      if (isLoading) {
