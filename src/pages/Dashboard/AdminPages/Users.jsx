@@ -6,7 +6,6 @@ import { FaUser } from 'react-icons/fa6';
 import { MdAdminPanelSettings } from 'react-icons/md';
 import useAuth from '../../../Hooks/useAuth';
 import Swal from 'sweetalert2';
-import toast from 'react-hot-toast';
 
 const Users = () => {
      const axiosSecure = useAxiosSecure();
@@ -20,8 +19,7 @@ const Users = () => {
                return res.data
           }
      })
-     // admin remove/make
-
+     // make admin
      const handleMakeAdmin = async (id) => {
 
           const confirm = await Swal.fire({
@@ -39,14 +37,34 @@ const Users = () => {
           try {
                await axiosSecure.patch(`/users/make-admin/${id}`)
                queryClient.invalidateQueries(["users"])
-               Swal.fire("User is now admin", "", "success");
-               // toast.success("User is now admin")
+               Swal.fire({
+                    icon: "success",
+                    title: "User is now admin",
+                    showConfirmButton: false,
+                    timer: 1500
+               });
           }
           catch {
-               Swal.fire("Failed!", "", "error")
+               Swal.fire({
+                    icon: "error",
+                    title: "Failed!",
+                    showConfirmButton: false,
+                    timer: 1500
+               });
           }
      }
-     const handleRemoveAdmin = async (id) => {
+     // remove admin
+     const handleRemoveAdmin = async (user) => {
+          if (loginUser?.email === user?.email) {
+               Swal.fire({
+                    icon: "error",
+                    title: "You cannot remove your own admin role",
+                    showConfirmButton: false,
+                    timer: 1500
+               })
+               return
+          }
+
           const confirm = await Swal.fire({
                title: "Are you sure?",
                text: "Do you want to Remove this admin?",
@@ -60,12 +78,22 @@ const Users = () => {
           });
           if (!confirm.isConfirmed) return;
           try {
-               await axiosSecure.patch(`/users/remove-admin/${id}`)
+               await axiosSecure.patch(`/users/remove-admin/${user._id}`)
                queryClient.invalidateQueries(["users"])
-               Swal.fire("Admin removed", "", "success");
+               Swal.fire({
+                    icon: "success",
+                    title: "Admin Removed",
+                    showConfirmButton: false,
+                    timer: 1500
+               });
           }
           catch {
-               Swal.fire("Failed!", "", "error")
+               Swal.fire({
+                    icon: "error",
+                    title: "Failed!",
+                    showConfirmButton: false,
+                    timer: 1500
+               });
           }
      }
 
@@ -141,7 +169,7 @@ const Users = () => {
                                              <div className="flex justify-end gap-3">
                                                   <div>
                                                        {user.role === 'admin' ? <button
-                                                            onClick={() => handleRemoveAdmin(user?._id)}
+                                                            onClick={() => handleRemoveAdmin(user)}
                                                             className={`py-2 px-3 rounded-lg border border-accent/5 transition-all flex items-center gap-2 cursor-pointer text-[10px] md:text-[11px] font-bold uppercase tracking-widest bg-yellow-500/10 text-yellow-500 hover:bg-yellow-500 hover:text-base-100`}
                                                        >
                                                             <FiUserMinus size={16} /> Remove Admin
