@@ -1,14 +1,17 @@
-import { QueryClient, useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { FiSearch, FiUserCheck, FiUserMinus } from 'react-icons/fi';
 import useAxiosSecure from '../../../Hooks/useAxiosSecure';
 import Spinner from '../../../Components/Shared/Spinner';
 import { FaUser } from 'react-icons/fa6';
 import { MdAdminPanelSettings } from 'react-icons/md';
 import useAuth from '../../../Hooks/useAuth';
+import Swal from 'sweetalert2';
+import toast from 'react-hot-toast';
 
 const Users = () => {
      const axiosSecure = useAxiosSecure();
      const { user: loginUser } = useAuth()
+     const queryClient = useQueryClient()
 
      const { data: allUsers, isLoading } = useQuery({
           queryKey: ["users"],
@@ -17,17 +20,54 @@ const Users = () => {
                return res.data
           }
      })
-
      // admin remove/make
-     const handleToggleAdmin = async (user) => {
+
+     const handleMakeAdmin = async (id) => {
+
+          const confirm = await Swal.fire({
+               title: "Are you sure?",
+               text: "Do you want to make this user admin?",
+               icon: "warning",
+               showCancelButton: true,
+               confirmButtonColor: "#E60000",
+               cancelButtonColor: "#000000",
+               confirmButtonText: "Yes, Continue",
+               cancelButtonText: "Cancel",
+               color: "#0E0E0E"
+          });
+          if (!confirm.isConfirmed) return;
           try {
-               await axiosSecure.patch(`/users/admin/${user._id}`);
-               QueryClient.invalidateQueries(["users"]);
+               await axiosSecure.patch(`/users/make-admin/${id}`)
+               queryClient.invalidateQueries(["users"])
+               Swal.fire("User is now admin", "", "success");
+               // toast.success("User is now admin")
           }
           catch {
-               console.log("Failed");
+               Swal.fire("Failed!", "", "error")
           }
-     };
+     }
+     const handleRemoveAdmin = async (id) => {
+          const confirm = await Swal.fire({
+               title: "Are you sure?",
+               text: "Do you want to Remove this admin?",
+               icon: "warning",
+               showCancelButton: true,
+               confirmButtonColor: "#E60000",
+               cancelButtonColor: "#000000",
+               confirmButtonText: "Yes, Continue",
+               cancelButtonText: "Cancel",
+               color: "#0E0E0E"
+          });
+          if (!confirm.isConfirmed) return;
+          try {
+               await axiosSecure.patch(`/users/remove-admin/${id}`)
+               queryClient.invalidateQueries(["users"])
+               Swal.fire("Admin removed", "", "success");
+          }
+          catch {
+               Swal.fire("Failed!", "", "error")
+          }
+     }
 
      if (isLoading) {
           return <Spinner></Spinner>
@@ -99,19 +139,21 @@ const Users = () => {
                                         {/* Actions */}
                                         <td className="px-6 py-5">
                                              <div className="flex justify-end gap-3">
-                                                  {/* Toggle Admin Role Button */}
-                                                  <div className="tooltip tooltip-left"
-                                                       data-tip={user.role === 'admin' ? 'Remove Admin' : 'Make Admin'}>
-                                                       <button
-                                                            onClick={() => handleToggleAdmin(user)}
-                                                            disabled={loginUser?.email === user?.email}
-                                                            className={`py-2 px-3 rounded-lg border border-accent/5 transition-all flex items-center gap-2 cursor-pointer text-[10px] md:text-[11px] font-bold uppercase tracking-widest
-                                                            ${user.role === 'admin'
-                                                                      ? 'bg-yellow-500/10 text-yellow-500 hover:bg-yellow-500 hover:text-base-100'
-                                                                      : 'bg-primary/10 text-primary/90 hover:bg-primary hover:text-accent/90'}`}
+                                                  <div>
+                                                       {user.role === 'admin' ? <button
+                                                            onClick={() => handleRemoveAdmin(user?._id)}
+                                                            className={`py-2 px-3 rounded-lg border border-accent/5 transition-all flex items-center gap-2 cursor-pointer text-[10px] md:text-[11px] font-bold uppercase tracking-widest bg-yellow-500/10 text-yellow-500 hover:bg-yellow-500 hover:text-base-100`}
                                                        >
-                                                            {user.role === 'admin' ? <> <FiUserMinus size={16} /> Remove Admin</> : <> <FiUserCheck size={16} /> Make Admin</>}
+                                                            <FiUserMinus size={16} /> Remove Admin
                                                        </button>
+                                                            :
+                                                            <button
+                                                                 onClick={() => handleMakeAdmin(user?._id)}
+                                                                 className={`py-2 px-3 rounded-lg border border-accent/5 transition-all flex items-center gap-2 cursor-pointer text-[10px] md:text-[11px] font-bold uppercase tracking-widest bg-primary/10 text-primary/90 hover:bg-primary hover:text-accent/90`}
+                                                            >
+                                                                 <FiUserCheck size={16} /> Make Admin
+                                                            </button>
+                                                       }
                                                   </div>
                                              </div>
                                         </td>
