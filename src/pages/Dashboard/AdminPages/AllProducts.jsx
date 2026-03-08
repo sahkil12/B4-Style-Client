@@ -39,7 +39,6 @@ const AllProducts = () => {
                return matchSearch && matchCategory
           })
      }, [products, searchTexts, selectedCategory])
-
      const handleDelete = async (id) => {
 
           const confirm = await Swal.fire({
@@ -186,8 +185,8 @@ const AllProducts = () => {
                                                   </div>
                                              </td>
                                              <td className="text-center">
-                                                  <span className="text-accent text-sm font-bold">
-                                                       {item.stock}
+                                                  <span className="text-accent/80 text-sm font-bold">
+                                                       {item?.isStock === true ? 'Available' : "Stock Out" }
                                                   </span>
                                              </td>
                                              {/* Action Buttons */}

@@ -6,12 +6,13 @@ import { FiX, FiImage } from 'react-icons/fi';
 import { PiFileArrowUpDuotone } from "react-icons/pi";
 import { motion } from 'framer-motion';
 import toast from 'react-hot-toast';
+import { ImSpinner9 } from 'react-icons/im';
 
 const EditProductModal = ({ close, prevData }) => {
      const axiosSecure = useAxiosSecure();
      const queryClient = useQueryClient();
      const { register, handleSubmit, reset } = useForm();
-
+     console.log(prevData);
      const clothSizes = ['XS', 'S', 'M', 'L', 'XL', 'XXL',];
      const pantsSizes = ['30', '32', '34', '36', '38', '40'];
      const allSizes = [...clothSizes, ...pantsSizes];
@@ -32,6 +33,7 @@ const EditProductModal = ({ close, prevData }) => {
                     description: prevData.description,
                     isNew: prevData.isNew,
                     isBestSeller: prevData.isBestSeller,
+                    isStock: prevData.isStock
                });
                setSelectedSizes(prevData.sizes || []);
                setSelectedImages(
@@ -133,6 +135,7 @@ const EditProductModal = ({ close, prevData }) => {
                     images: imageUrls,
                     isNew: data.isNew,
                     isBestSeller: data.isBestSeller,
+                    isStock: data.isStock,
                     updatedAt: new Date()
                };
 
@@ -205,17 +208,8 @@ const EditProductModal = ({ close, prevData }) => {
                                         className="border-2 w-full py-3 px-4 rounded-md bg-base-200/85 border-accent/10 focus:border-primary/35 border-dashed text-sm text-accent/80 outline-none cursor-pointer"
                                    />
                               </div>
-                              <div className="space-y-2">
-                                   <label className={labelStyle}>Product Name *</label>
-                                   <input {...register("title")}
-                                        required
-                                        placeholder="Enter product name"
-                                        className={inputStyle} />
-                              </div>
-                         </div>
-                         {/* stock & Category Row */}
-                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                              <div className="space-y-2">
+                              {/* category */}
+                                <div className="space-y-2">
                                    <label className={labelStyle}>Category *</label>
                                    <select
                                         {...register("category")}
@@ -231,14 +225,25 @@ const EditProductModal = ({ close, prevData }) => {
                                         <option value="WINTER WEAR">Winter Wear</option>
                                    </select>
                               </div>
+
+                         </div>
+                         {/* stock & name*/}
+                         <div className="">
                               <div className="space-y-2">
+                                   <label className={labelStyle}>Product Name *</label>
+                                   <input {...register("title")}
+                                        required
+                                        placeholder="Enter product name"
+                                        className={inputStyle} />
+                              </div>
+                              {/* <div className="space-y-2">
                                    <label className={labelStyle}>Stock *</label>
                                    <input {...register("stock")}
                                         type='number'
                                         required
                                         placeholder="Products Stock"
                                         className={inputStyle} />
-                              </div>
+                              </div> */}
                          </div>
                          {/* Price Row */}
                          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -308,6 +313,15 @@ const EditProductModal = ({ close, prevData }) => {
                                         className="toggle bg-secondary border border-primary/50 toggle-primary toggle-sm"
                                    />
                                    <span className="text-[11px] font-black uppercase tracking-widest text-accent/60 group-hover:text-accent/90 transition-colors">Trending</span>
+                              </label>
+                              {/* is stock  */}
+                              <label className="flex items-center gap-3 cursor-pointer group">
+                                   <input
+                                        type="checkbox"
+                                        {...register("isStock")}
+                                        className="toggle bg-secondary border border-primary/50 toggle-primary toggle-sm"
+                                   />
+                                   <span className="text-[11px] font-black uppercase tracking-widest text-accent/60 group-hover:text-accent/90 transition-colors">Stock</span>
                               </label>
                          </div>
                          {/* Action Buttons */}

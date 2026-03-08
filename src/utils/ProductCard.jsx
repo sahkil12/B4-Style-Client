@@ -49,7 +49,7 @@ const ProductCard = ({ product, animation, bestSellers, open }) => {
      }
      // wishlist check 
      const isWishlist = wishlist?.some(p => p.productId === product?._id)
-     const outOfStock = product?.stock === 0;
+     const outOfStock = product?.isStock === false;
 
      return (
           <motion.div
@@ -71,7 +71,7 @@ const ProductCard = ({ product, animation, bestSellers, open }) => {
                                         New
                                    </span>
                               )}
-                              {product?.discount && (
+                              {product?.discount > 0 && (
                                    <span className="bg-primary text-accent text-[10px] rounded-sm font-bold px-3 py-1.5">
                                         -{product.discount}%
                                    </span>
@@ -131,13 +131,13 @@ const ProductCard = ({ product, animation, bestSellers, open }) => {
                                    <span className="text-lg font-semibold">
                                         ৳{discountedPrice}
                                    </span>
-                                   {product.discount && (
+                                   {product.discount > 0 && (
                                         <span className="text-neutral-500 line-through text-sm">
                                              ৳{product?.price}
                                         </span>
                                    )}
                               </div>
-                              <span className='text-primary/90 text-sm font-semibold'>{outOfStock ? "Stock Out" : <p>Stock - {product.stock}</p>}</span>
+                              <span className='text-primary/90 text-sm font-semibold'>{outOfStock ? "Stock Out" : "Available"}</span>
                          </div>
                     </div>
                </Link>

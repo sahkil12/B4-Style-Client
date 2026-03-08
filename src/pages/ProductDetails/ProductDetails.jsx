@@ -77,8 +77,8 @@ const ProductDetails = () => {
      }
      // wishlist check 
      const isWishlist = wishlist?.some(p => p.productId === product?._id)
-     const outOfStock = product?.stock === 0;
-
+     const outOfStock = product?.isStock === false;
+     console.log(product.isStock);
      return (
           <div className="min-h-screen text-accent pt-20 pb-20">
 
@@ -125,18 +125,21 @@ const ProductDetails = () => {
                               <div className="flex items-center gap-4 mb-5">
                                    <span className="text-3xl font-bold text-accent">৳ {discountedPrice.toFixed(2)}</span>
                                    {
-                                        product?.oldPrice && (
+                                        product?.price && (
                                              <span className="text-neutral-500 line-through text-xl font-medium">৳{product?.price}</span>
                                         )
                                    }
                                    {
-                                        product?.discount && (
+                                        product?.discount > 0 && (
                                              <span className="bg-primary/15 text-primary text-sm font-bold px-4 py-2 rounded-full">-{product?.discount}%</span>
                                         )
                                    }
                               </div>
-                              <h3 className={`text-base font-semibold mb-5 ${outOfStock ? 'text-primary' : 'text-accent'}`}>
+                              {/* <h3 className={`text-base font-semibold mb-5 ${outOfStock ? 'text-primary' : 'text-accent'}`}>
                                    {outOfStock ? 'Out Of Stock' : <span> Only <span className='text-xl text-primary/90'> {product?.stock} </span> items left</span>}
+                              </h3> */}
+                              <h3 className={`text-base font-semibold mb-5 text-primary/95`}>
+                              {outOfStock? "Out Of Stock" : "Available in Stock" }
                               </h3>
                               {/*  */}
                               <p className="text-neutral-400 text-sm leading-relaxed mb-10 max-w-md">
@@ -180,7 +183,7 @@ const ProductDetails = () => {
                                         <button
                                              onClick={addToCart}
                                              disabled={outOfStock || isAddingToCart || quantity > product?.stock}
-                                             className={`flex-1 min-w-52 h-14 bg-primary text-accent font-bold text-sm sm:text-base uppercase tracking-widest flex items-center justify-center gap-3 hover:bg-primary/90 transition-all rounded-md  ${quantity > product?.stock ? 'cursor-not-allowed' : 'cursor-pointer active:scale-95'}`}>
+                                             className={`flex-1 min-w-52 h-14 bg-primary text-accent font-bold text-sm sm:text-base uppercase tracking-widest flex items-center justify-center gap-3 hover:bg-primary/90 transition-all rounded-md  ${outOfStock ? 'cursor-not-allowed' : 'cursor-pointer active:scale-95'}`}>
                                              <FiShoppingBag size={18} /> {isAddingToCart ? "Adding.." : "Add to Cart"}
                                         </button>
                                         {/* wishlist button */}

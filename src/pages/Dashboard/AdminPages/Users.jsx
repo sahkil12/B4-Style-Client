@@ -21,7 +21,7 @@ const Users = () => {
                return res.data
           }
      })
-
+     // filter users
      const filteredUsers =
           allUsers?.filter(user =>
                user.email.toLowerCase().includes(search.toLowerCase())
@@ -125,7 +125,7 @@ const Users = () => {
                          className="w-full bg-base-200/60 border border-accent/10 rounded-lg py-3.5 pl-12 pr-4 outline-none focus:border-primary/50 transition-all text-sm"
                     />
                </div>
-               {/* Responsive Table Container */}
+               {/* Responsive Table */}
                <div className="overflow-x-auto w-full rounded-t-2xl border border-accent/10 relative">
                     {
                          filteredUsers.length > 0 ?
@@ -140,7 +140,7 @@ const Users = () => {
                                         </tr>
                                    </thead>
                                    <tbody>
-                                        {filteredUsers?.slice(0, 15).map((user) => (
+                                        {filteredUsers?.slice(0, 20).map((user) => (
                                              <tr key={user._id} className="bg-base-200/90 hover:bg-base-200 transition-colors border-b border-accent/10">
                                                   {/* User Info */}
                                                   <td className="px-6 py-5">
@@ -162,7 +162,7 @@ const Users = () => {
                                                        </div>
                                                   </td>
                                                   {/* Role Badge */}
-                                                  <td className="text-center">
+                                                  <td className="text-center px-5">
                                                        <span className={`px-3 py-1.5 rounded-md text-[10px] font-semibold tracking-widest uppercase border ${user.role === 'admin'
                                                             ? 'bg-primary/10 border-primary/20 text-primary'
                                                             : 'bg-accent/5 border-accent/10 text-accent/70'
@@ -181,7 +181,9 @@ const Users = () => {
                                                             <div>
                                                                  {user.role === 'admin' ? <button
                                                                       onClick={() => handleRemoveAdmin(user)}
-                                                                      className={`py-2 px-3 rounded-lg border border-accent/5 transition-all flex items-center gap-2 cursor-pointer text-[10px] md:text-[11px] font-bold uppercase tracking-widest bg-yellow-500/10 text-yellow-500 hover:bg-yellow-500 hover:text-base-100`}
+                                                                      className={`py-2 px-3 rounded-lg border border-accent/5 transition-all flex items-center gap-2 cursor-pointer text-[10px] md:text-[11px] font-bold uppercase tracking-widest bg-yellow-500/10 text-yellow-500 hover:bg-yellow-50 hover:text-base-100
+                                                                          
+                                                                           `}
                                                                  >
                                                                       <FiUserMinus size={16} /> Remove Admin
                                                                  </button>
@@ -204,8 +206,7 @@ const Users = () => {
                               :
                               <div className="flex justify-center text-center py-20">
                                    <p className="text-xl font-semibold text-accent "> No User Found</p>
-                              </div>
-                    }
+                              </div> }
                </div>
           </div>
      );

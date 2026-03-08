@@ -13,7 +13,8 @@ const AddProductModal = ({ close }) => {
      const { register, handleSubmit } = useForm({
           defaultValues: {
                isNew: false,
-               isBestSeller: false
+               isBestSeller: false,
+               isStock: false
           }
      });
 
@@ -104,6 +105,7 @@ const AddProductModal = ({ close }) => {
                     images: imageUrls,
                     isNew: data.isNew,
                     isBestSeller: data.isBestSeller,
+                    isStock: data.isStock,
                     createdAt: new Date()
                };
                await axiosSecure.post("/products", product);
@@ -176,13 +178,7 @@ const AddProductModal = ({ close }) => {
                                         className="border-2 w-full py-3 px-4 rounded-md bg-base-200/85 border-accent/10 focus:border-primary/35 border-dashed text-sm text-accent/80 outline-none cursor-pointer"
                                    />
                               </div>
-                              <div className="space-y-2">
-                                   <label className={labelStyle}>Product Name *</label>
-                                   <input {...register("title")} required placeholder="Enter product name" className={inputStyle} />
-                              </div>
-                         </div>
-                         {/* stock & Category Row */}
-                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                              {/* Category */}
                               <div className="space-y-2">
                                    <label className={labelStyle}>Category *</label>
                                    <select
@@ -201,14 +197,21 @@ const AddProductModal = ({ close }) => {
                                         <option value="WINTER WEAR">Winter Wear</option>
                                    </select>
                               </div>
+                         </div>
+                         {/* stock & name Row */}
+                         <div className="">
                               <div className="space-y-2">
+                                   <label className={labelStyle}>Product Name *</label>
+                                   <input {...register("title")} required placeholder="Enter product name" className={inputStyle} />
+                              </div>
+                              {/* <div className="space-y-2">
                                    <label className={labelStyle}>Stock *</label>
                                    <input {...register("stock")}
                                         type='number'
                                         required
                                         placeholder="Products Stock"
                                         className={inputStyle} />
-                              </div>
+                              </div> */}
                          </div>
                          {/* Price Row */}
                          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -278,6 +281,15 @@ const AddProductModal = ({ close }) => {
                                         className="toggle bg-secondary border border-primary/50 toggle-primary toggle-sm"
                                    />
                                    <span className="text-[11px] font-black uppercase tracking-widest text-accent/60 group-hover:text-accent/90 transition-colors">Trending</span>
+                              </label>
+                              {/* is stock  */}
+                              <label className="flex items-center gap-3 cursor-pointer group">
+                                   <input
+                                        type="checkbox"
+                                        {...register("isStock")}
+                                        className="toggle bg-secondary border border-primary/50 toggle-primary toggle-sm"
+                                   />
+                                   <span className="text-[11px] font-black uppercase tracking-widest text-accent/60 group-hover:text-accent/90 transition-colors">Stock</span>
                               </label>
                          </div>
                          {/* Action Buttons */}
