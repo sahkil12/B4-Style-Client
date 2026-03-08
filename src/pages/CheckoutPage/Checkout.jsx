@@ -42,6 +42,13 @@ const Checkout = () => {
      const [shipping, setShipping] = useState(0);
      const city = watch("city")
 
+     const generateOrderId = () => {
+          const prefix = "ORD-B4";
+          const date = new Date().toISOString().slice(2, 10).replace(/-/g, "");
+          const random = Math.floor(1000 + Math.random() * 9000);
+          return `${prefix}-${date}-${random}`;
+     };
+
      useEffect(() => {
           const found = cities.find(c => c.name === city);
           setShipping(found?.shipping || 0);
@@ -62,14 +69,14 @@ const Checkout = () => {
           // Stripe step here
           try {
                setPaymentLoading(true)
-
+               const orderId = generateOrderId();
                const res = await axiosSecure.post("/create-payment-intent", {
-                    userId: user?.uid,
                     name: data.name,
                     email: data.email,
                     phone: data.phone,
                     address: data.address,
-                    city: data.city
+                    city: data.city,
+                    orderId: orderId
                })
 
                setClientSecret(res?.data.clientSecret)

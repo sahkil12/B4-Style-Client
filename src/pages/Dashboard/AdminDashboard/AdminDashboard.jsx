@@ -30,6 +30,7 @@ const AdminDashboard = () => {
     if (isLoading) {
         return <Spinner></Spinner>
     }
+    console.log(adminStats);
 
     const stats = [
         { label: 'Total Admin', value: adminStats?.totalAdmins, icon: <MdAdminPanelSettings size={18} /> },
@@ -92,8 +93,9 @@ const AdminDashboard = () => {
                             <tbody>
                                 {adminStats?.latestOrders?.map(order => (
                                     <tr key={order._id}>
-                                        <td>
+                                        <td className='flex flex-col'>
                                             {order.shippingAddress?.name}
+                                            <span className='text-accent/60 text-sm'>{order.shippingAddress?.city}</span>
                                         </td>
                                         <td>
                                             ৳ {order.totalAmount}

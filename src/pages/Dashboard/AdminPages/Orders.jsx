@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { FiSearch, FiEye, FiTrash2, FiChevronDown } from 'react-icons/fi';
+import { useState } from 'react';
+import { FiSearch, FiEye, FiTrash2 } from 'react-icons/fi';
 
 const Orders = () => {
     // Demo Orders Data based on your screenshots
@@ -23,7 +23,7 @@ const Orders = () => {
     };
 
     return (
-        <div className="flex-1 p-8 md:p-12 bg-base-100 min-h-screen text-accent font-['Inter']">
+        <div className="flex-1 p-4 lg:p-8 w-full bg-base-100 min-h-screen text-accent font-['Inter']">
 
             {/* Header Section */}
             <div className="mb-10">
@@ -49,52 +49,52 @@ const Orders = () => {
                         <option className='hover:bg-primary text-accent hover:text-accent font-medium'>Delivered</option>
                         <option className='hover:bg-primary text-accent hover:text-accent font-medium'>Cancelled</option>
                     </select>
-
                 </div>
             </div>
 
             {/* Orders Table */}
-            <div className="overflow-x-auto rounded-xl border border-white/5 bg-base-200">
-                <table className="table w-full">
-                    <thead className='bg-secondary'>
-                        <tr className="text-accent/60 text-[12px] uppercase tracking-[2px] font-bold border-b border-white/5">
+            <div className="overflow-x-auto rounded-xl border border-accent/5 bg-base-200">
+                <table className="w-full text-left">
+                    {/* head */}
+                    <thead className=''>
+                        <tr className="text-accent/65 text-xs bg-secondary uppercase tracking-[2px] font-semibold">
                             <th className="bg-transparent py-6 px-6">Order ID</th>
-                            <th className="bg-transparent py-6">Customer</th>
+                            <th className="bg-transparent py-6 text-left">Customer</th>
                             <th className="bg-transparent py-6 text-center">Items</th>
-                            <th className="bg-transparent py-6 text-center">Total</th>
+                            <th className="bg-transparent py-6 text-right">Total</th>
                             <th className="bg-transparent py-6 text-center">Status</th>
                             <th className="bg-transparent py-6 text-center">Date</th>
-                            <th className="bg-transparent py-6 text-right pr-8">Actions</th>
+                            <th className="bg-transparent py-6 pr-6 text-right">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {orders.map((order) => (
-                            <tr key={order.id} className="hover:bg-accent/5 transition-colors border-b border-accent/5 last:border-none">
+                        {orders?.map((order) => (
+                            <tr key={order.id} className="bg-base-100/5 hover:bg-base-100/10 transition-colors border-b border-accent/10 ">
                                 {/* Order ID */}
                                 <td className="px-6 py-5 font-bold text-sm tracking-tight text-accent">
                                     {order.id}
                                 </td>
-                                {/* Customer Info */}
+                                {/* user info */}
                                 <td className="py-5">
                                     <div>
                                         <h4 className="text-sm font-bold text-accent">{order.customer}</h4>
                                         <p className="text-[11px] text-neutral-500 font-medium">{order.phone}</p>
                                     </div>
                                 </td>
-                                {/* Items Count */}
+                                {/* item */}
                                 <td className="text-center font-bold text-sm">
                                     {order.items}
                                 </td>
-                                {/* Total Price */}
-                                <td className="text-center font-bold text-sm">
+                                {/*  total taka*/}
+                                <td className="text-right font-bold text-sm">
                                     <span className="text-lg">৳</span>{order.total}
                                 </td>
-                                {/* Status Dropdown Style */}
+                                {/* order status */}
                                 <td className="text-center">
                                     <div className="relative inline-block">
                                         <select
                                             value={order.status}
-                                            className={`px-4 py-1.5 w-36 space-y-2 rounded-md text-[11px] font-bold tracking-widest uppercase border cursor-pointer outline-none transition-all select bg-secondary
+                                            className={`px-4 py-1.5 mx-5 w-36 space-y-2 rounded-md text-[11px] font-bold tracking-widest uppercase border cursor-pointer outline-none transition-all select bg-secondary
                                             ${getStatusStyles(order.status)}`}
                                             onChange={(e) => {
                                                 const newOrders = orders.map(o => o.id === order.id ? { ...o, status: e.target.value } : o);
@@ -122,12 +122,10 @@ const Orders = () => {
                                                 Cancelled
                                             </option>
                                         </select>
-                                        {/* Minimal arrow for the status dropdown like in screenshot */}
-                                        {/* <FiChevronDown className="absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none opacity-50" size={12} /> */}
                                     </div>
                                 </td>
-                                {/* Date */}
-                                <td className="text-center text-xs font-bold text-neutral-400">
+                                {/* date */}
+                                <td className="text-center text-xs font-bold text-accent/75 px-2">
                                     {order.date}
                                 </td>
                                 {/* Action Buttons */}
@@ -136,7 +134,7 @@ const Orders = () => {
                                         <button className="p-3 bg-base-100/40 cursor-pointer hover:bg-primary hover:text-accent rounded-md border border-accent/10 transition-all text-accent/70">
                                             <FiEye size={16} />
                                         </button>
-                                        <button className="p-3 bg-base-100/40 hover:bg-primary text-accent/75 hover:text-accent rounded-md border border-accent/10 cursor-pointer transition-all">
+                                        <button className="p-3 bg-base-100/40 hover:bg-primary text-primary/80 hover:text-accent rounded-md border border-accent/10 cursor-pointer transition-all">
                                             <FiTrash2 size={16} />
                                         </button>
                                     </div>
