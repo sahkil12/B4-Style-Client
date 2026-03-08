@@ -27,7 +27,7 @@ const PaymentSuccess = () => {
           </Link>
 
           <Link
-            to="/"
+            to="/dashboard"
             className="border border-primary text-primary py-3.5 rounded-lg font-semibold"
           >
             Go To Dashboard
