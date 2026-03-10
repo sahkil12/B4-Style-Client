@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { FiSearch, FiEye, FiTrash2 } from 'react-icons/fi';
+import { FiSearch, FiEye, FiTrash2, FiX } from 'react-icons/fi';
 import useAxiosSecure from '../../../Hooks/useAxiosSecure';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import Spinner from '../../../Components/Shared/Spinner';
@@ -11,6 +11,7 @@ const Orders = () => {
     const axiosSecure = useAxiosSecure();
     const queryClient = useQueryClient()
     const [search, setSearch] = useState("")
+    const [modalOpen, setModalOpen] = useState(null)
     const [page, setPage] = useState(1);
     const [statusFilter, setStatusFilter] = useState("all")
 
@@ -29,9 +30,8 @@ const Orders = () => {
             })
             refetch()
             toast.success("Delivery Status Update")
-        } catch (err) {
+        } catch {
             toast.error("Failed to update status")
-            console.log(err);
         }
     }
     const filteredOrders = orders?.orders.filter(order =>
@@ -42,6 +42,7 @@ const Orders = () => {
 
     const totalPages = Math.ceil((orders?.total || 0) / 25)
     const pages = Array.from({ length: totalPages }, (_, i) => i + 0)
+    console.log(modalOpen);
     // delete order
     const handleDelete = async (id) => {
 
@@ -97,7 +98,7 @@ const Orders = () => {
             {/* Header Section */}
             <div className="mb-10">
                 <h1 className="text-4xl font-bold uppercase tracking-wider bebas mb-1">Orders</h1>
-                <p className="text-neutral-500 text-sm font-bold">{orders?.orders?.length} total orders</p>
+                <p className="text-neutral-500 text-sm font-bold">{orders?.total } total orders</p>
             </div>
             {/* Search & Global Filter Row */}
             <div className="flex flex-wrap items-center gap-4 mb-8">
@@ -196,7 +197,9 @@ const Orders = () => {
                                     {/* Action Buttons */}
                                     <td className="px-6 py-5 text-right">
                                         <div className="flex justify-end gap-2">
-                                            <button className="p-3 bg-base-100/40 cursor-pointer hover:bg-primary hover:text-accent rounded-md border border-accent/10 transition-all text-accent/70">
+                                            <button
+                                            onClick={()=> setModalOpen(order)}
+                                            className="p-3 bg-base-100/40 cursor-pointer hover:bg-primary hover:text-accent rounded-md border border-accent/10 transition-all text-accent/70">
                                                 <FiEye size={16} />
                                             </button>
                                             {/* delete button */}
@@ -216,6 +219,61 @@ const Orders = () => {
                     </div>
                 }
             </div>
+            {/* modal */}
+            {modalOpen && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-base-100/80 backdrop-blur-sm transition-opacity">
+                    <div className="relative w-full max-w-xl bg-[#0E0E0E] border border-accent/10 rounded-2xl p-8 shadow-2xl animate-in zoom-in-95 duration-200">
+                        {/* Close Button */}
+                        <button 
+                            onClick={() => setModalOpen(null)}
+                            className="absolute top-6 cursor-pointer right-6 p-2 text-accent/70 hover:text-primary transition-colors"
+                        >
+                            <FiX size={24} />
+                        </button>
+                        {/* Modal Header */}
+                        <h2 className="text-2xl font-medium tracking-wider mb-8 text-accent bebas">
+                            {modalOpen?.orderId}
+                        </h2>
+                        {/* Modal Body - Grid Layout */}
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-y-6 gap-x-12">
+                            <div>
+                                <p className="text-neutral-500 text-[11px] uppercase tracking-widest font-bold mb-1">Customer</p>
+                                <p className="text-accent/80 text-sm font-medium">{modalOpen?.shippingAddress?.name}</p>
+                            </div>
+                            <div>
+                                <p className="text-neutral-500 text-[11px] uppercase tracking-widest font-bold mb-1">Email</p>
+                                <p className="text-accent/80 font-medium text-sm">{modalOpen?.shippingAddress?.email || "N/A"}</p>
+                            </div>
+                            <div>
+                                <p className="text-neutral-500 text-[11px] uppercase tracking-widest font-bold mb-1">Phone</p>
+                                <p className="text-accent/80 text-sm font-medium">{modalOpen?.shippingAddress?.phone}</p>
+                            </div>
+                            <div>
+                                <p className="text-neutral-500 text-[11px] uppercase tracking-widest font-bold mb-1">Address</p>
+                                <p className="text-accent/80 text-sm font-medium">{modalOpen?.shippingAddress?.address || "Patiya, Chittagong"}</p>
+                            </div>
+                            <div>
+                                <p className="text-neutral-500 text-[11px] uppercase tracking-widest font-bold mb-1">Items</p>
+                                <p className="text-accent/80 text-sm font-medium">{modalOpen?.items?.reduce((sum, item) => sum + item.quantity, 0)}</p>
+                            </div>
+                            <div>
+                                <p className="text-neutral-500 text-[11px] uppercase tracking-widest font-bold mb-1">Total</p>
+                                <p className="text-accent/90 font-semibold text-base">৳{modalOpen?.totalAmount}</p>
+                            </div>
+                            <div>
+                                <p className="text-neutral-500 text-[11px] uppercase tracking-widest font-bold mb-1">Date</p>
+                                <p className="text-accent/80 text-sm font-medium">{new Date(modalOpen?.createdAt).toLocaleDateString()}</p>
+                            </div>
+                            <div>
+                                <p className="text-neutral-500 text-[11px] uppercase tracking-widest font-bold mb-1">Status</p>
+                                <span className={`inline-block px-3 bg-accent/5 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider ${getStatusStyles(modalOpen?.orderStatus)}`}>
+                                    {modalOpen?.orderStatus}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
             {
                 totalPages > 1 && (
                     <div className='flex justify-center gap-5 items-center mt-6 mb-8'>
