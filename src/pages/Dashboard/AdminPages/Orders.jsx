@@ -1,14 +1,17 @@
 import { useState } from 'react';
 import { FiSearch, FiEye, FiTrash2 } from 'react-icons/fi';
 import useAxiosSecure from '../../../Hooks/useAxiosSecure';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import useAuth from '../../../Hooks/useAuth';
 import Spinner from '../../../Components/Shared/Spinner';
+import toast from 'react-hot-toast';
+import Swal from 'sweetalert2';
 
 const Orders = () => {
 
     const { user } = useAuth()
     const axiosSecure = useAxiosSecure();
+    const queryClient = useQueryClient()
     const [search, setSearch] = useState("")
     const [statusFilter, setStatusFilter] = useState("all")
 
@@ -21,11 +24,15 @@ const Orders = () => {
     })
     // status change
     const handleStatusChange = async (id, status) => {
-
-        await axiosSecure.patch(`/orders/${id}`, {
-            orderStatus: status
-        })
-        refetch()
+        try {
+            await axiosSecure.patch(`/orders/${id}`, {
+                orderStatus: status
+            })
+            refetch()
+            toast.success("Delivery Status Update")
+        } catch (err) {
+            console.log(err);
+        }
     }
     const filteredOrders = orders?.filter(order =>
         order.orderId.toLowerCase().includes(search.toLowerCase())
@@ -33,13 +40,50 @@ const Orders = () => {
         statusFilter === "all" || order.orderStatus.toLowerCase() === statusFilter.toLowerCase()
     )
 
+    // delete order
+    const handleDelete = async (id) => {
+
+        const confirm = await Swal.fire({
+            title: "Delete Order?",
+            text: "This cannot be undone",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#E60000",
+            cancelButtonColor: "#000000",
+            confirmButtonText: "Delete",
+            cancelButtonText: "Cancel",
+            color: "#0E0E0E"
+        });
+        if (!confirm.isConfirmed) return;
+        try {
+            // delete api call
+            await axiosSecure.delete(`/orders/delete/${id}`);
+            queryClient.invalidateQueries({
+                queryKey: ["orders"]
+            });
+            Swal.fire({
+                icon: "success",
+                title: "Deleted!",
+                showConfirmButton: false,
+                timer: 1500,
+            })
+        }
+        catch {
+            Swal.fire({
+                icon: "error",
+                title: "Failed!",
+                showConfirmButton: false,
+                timer: 1500,
+            })
+        }
+    }
+
     // Status Color Mapping Logic
     const getStatusStyles = (status) => {
         switch (status) {
-            case 'Pending': return 'text-yellow-500 border-yellow-500/30';
-            case 'Processing': return 'text-blue-500 border-blue-500/30';
-            case 'Delivered': return 'text-green-500 border-green-500/30';
-            case 'Cancelled': return 'text-red-500 border-red-500/30';
+            case 'processing': return 'text-blue-500 border-blue-500/30';
+            case 'delivered': return 'text-green-500 border-green-500/30';
+            case 'cancelled': return 'text-red-500 border-red-500/30';
             default: return 'bg-neutral-800 text-neutral-400 border-white/5';
         }
     };
@@ -72,14 +116,12 @@ const Orders = () => {
                         onChange={(e) => setStatusFilter(e.target.value)}
                         className="min-w-44 bg-base-200 border border-accent/5 rounded-lg pl-6 pr-12 text-sm outline-none cursor-pointer focus:border-primary/80 transition-all font-semibold select select-lg">
                         <option value="all" className='hover:bg-primary text-accent hover:text-accent font-medium'>All Status</option>
-                        <option className='hover:bg-primary text-accent hover:text-accent font-medium'>Pending</option>
                         <option className='hover:bg-primary text-accent hover:text-accent font-medium'>Processing</option>
                         <option className='hover:bg-primary text-accent hover:text-accent font-medium'>Delivered</option>
                         <option className='hover:bg-primary text-accent hover:text-accent font-medium'>Cancelled</option>
                     </select>
                 </div>
             </div>
-
             {/* Orders Table */}
             <div className="overflow-x-auto rounded-xl border border-accent/5 bg-base-200">
                 {filteredOrders.length > 0 ?
@@ -112,7 +154,7 @@ const Orders = () => {
                                     </td>
                                     {/* item */}
                                     <td className="text-center font-bold text-sm">
-                                        {order?.items?.length}
+                                        {order.items.reduce((sum, item) => sum + item.quantity, 0)}
                                     </td>
                                     {/*  total taka*/}
                                     <td className="text-right font-bold text-sm">
@@ -124,29 +166,24 @@ const Orders = () => {
                                             <select
                                                 value={order.orderStatus}
                                                 className={`px-4 py-1.5 mx-5 w-36 space-y-2 rounded-md text-[11px] font-bold tracking-widest uppercase border cursor-pointer outline-none transition-all select bg-secondary
-                                            ${getStatusStyles(order.orderStatus)}`}
+                                                ${getStatusStyles(order.orderStatus)}`}
                                                 onChange={(e) => {
                                                     handleStatusChange(order._id, e.target.value)
                                                 }}
 
                                             >
                                                 <option
-                                                    value="Pending"
-                                                    className='hover:bg-primary text-accent hover:text-accent'>
-                                                    Pending
-                                                </option>
-                                                <option
-                                                    value="Processing"
+                                                    value="processing"
                                                     className='hover:bg-primary text-accent hover:text-accent'>
                                                     Processing
                                                 </option>
                                                 <option
-                                                    value="Delivered"
+                                                    value="delivered"
                                                     className='hover:bg-primary text-accent hover:text-accent'>
                                                     Delivered
                                                 </option>
                                                 <option
-                                                    value="Cancelled"
+                                                    value="cancelled"
                                                     className='hover:bg-primary text-accent hover:text-accent'>
                                                     Cancelled
                                                 </option>
@@ -163,7 +200,9 @@ const Orders = () => {
                                             <button className="p-3 bg-base-100/40 cursor-pointer hover:bg-primary hover:text-accent rounded-md border border-accent/10 transition-all text-accent/70">
                                                 <FiEye size={16} />
                                             </button>
-                                            <button className="p-3 bg-base-100/40 hover:bg-primary text-primary/80 hover:text-accent rounded-md border border-accent/10 cursor-pointer transition-all">
+                                            <button
+                                                onClick={() => handleDelete(order._id)}
+                                                className="p-3 bg-base-100/40 hover:bg-primary text-primary/80 hover:text-accent rounded-md border border-accent/10 cursor-pointer transition-all">
                                                 <FiTrash2 size={16} />
                                             </button>
                                         </div>
