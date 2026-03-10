@@ -31,6 +31,7 @@ const Orders = () => {
             refetch()
             toast.success("Delivery Status Update")
         } catch (err) {
+            toast.error("Failed to update status")
             console.log(err);
         }
     }
@@ -39,7 +40,6 @@ const Orders = () => {
     )?.filter(order =>
         statusFilter === "all" || order.orderStatus.toLowerCase() === statusFilter.toLowerCase()
     )
-
     // delete order
     const handleDelete = async (id) => {
 
@@ -63,7 +63,7 @@ const Orders = () => {
             });
             Swal.fire({
                 icon: "success",
-                title: "Deleted!",
+                title: "Order Deleted!",
                 showConfirmButton: false,
                 timer: 1500,
             })
@@ -77,7 +77,6 @@ const Orders = () => {
             })
         }
     }
-
     // Status Color Mapping Logic
     const getStatusStyles = (status) => {
         switch (status) {
@@ -93,7 +92,6 @@ const Orders = () => {
 
     return (
         <div className="flex-1 p-4 lg:p-8 w-full bg-base-100 min-h-screen text-accent font-['Inter']">
-
             {/* Header Section */}
             <div className="mb-10">
                 <h1 className="text-4xl font-bold uppercase tracking-wider bebas mb-1">Orders</h1>
@@ -170,7 +168,6 @@ const Orders = () => {
                                                 onChange={(e) => {
                                                     handleStatusChange(order._id, e.target.value)
                                                 }}
-
                                             >
                                                 <option
                                                     value="processing"
@@ -200,6 +197,7 @@ const Orders = () => {
                                             <button className="p-3 bg-base-100/40 cursor-pointer hover:bg-primary hover:text-accent rounded-md border border-accent/10 transition-all text-accent/70">
                                                 <FiEye size={16} />
                                             </button>
+                                            {/* delete button */}
                                             <button
                                                 onClick={() => handleDelete(order._id)}
                                                 className="p-3 bg-base-100/40 hover:bg-primary text-primary/80 hover:text-accent rounded-md border border-accent/10 cursor-pointer transition-all">
