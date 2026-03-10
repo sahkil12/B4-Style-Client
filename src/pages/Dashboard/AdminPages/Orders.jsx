@@ -2,23 +2,22 @@ import { useState } from 'react';
 import { FiSearch, FiEye, FiTrash2 } from 'react-icons/fi';
 import useAxiosSecure from '../../../Hooks/useAxiosSecure';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-import useAuth from '../../../Hooks/useAuth';
 import Spinner from '../../../Components/Shared/Spinner';
 import toast from 'react-hot-toast';
 import Swal from 'sweetalert2';
 
 const Orders = () => {
 
-    const { user } = useAuth()
     const axiosSecure = useAxiosSecure();
     const queryClient = useQueryClient()
     const [search, setSearch] = useState("")
+    const [page, setPage] = useState(1);
     const [statusFilter, setStatusFilter] = useState("all")
 
     const { data: orders, isLoading, refetch } = useQuery({
-        queryKey: ["orders", user?.email],
+        queryKey: ["orders", page],
         queryFn: async () => {
-            const res = await axiosSecure.get('/orders')
+            const res = await axiosSecure.get(`/orders?page=${page}&limit=25`)
             return res.data
         }
     })
@@ -35,11 +34,14 @@ const Orders = () => {
             console.log(err);
         }
     }
-    const filteredOrders = orders?.filter(order =>
+    const filteredOrders = orders?.orders.filter(order =>
         order.orderId.toLowerCase().includes(search.toLowerCase())
     )?.filter(order =>
         statusFilter === "all" || order.orderStatus.toLowerCase() === statusFilter.toLowerCase()
     )
+
+    const totalPages = Math.ceil((orders?.total || 0) / 25)
+    const pages = Array.from({ length: totalPages }, (_, i) => i + 0)
     // delete order
     const handleDelete = async (id) => {
 
@@ -95,7 +97,7 @@ const Orders = () => {
             {/* Header Section */}
             <div className="mb-10">
                 <h1 className="text-4xl font-bold uppercase tracking-wider bebas mb-1">Orders</h1>
-                <p className="text-neutral-500 text-sm font-bold">{orders?.length} total orders</p>
+                <p className="text-neutral-500 text-sm font-bold">{orders?.orders?.length} total orders</p>
             </div>
             {/* Search & Global Filter Row */}
             <div className="flex flex-wrap items-center gap-4 mb-8">
@@ -214,6 +216,37 @@ const Orders = () => {
                     </div>
                 }
             </div>
+            {
+                totalPages > 1 && (
+                    <div className='flex justify-center gap-5 items-center mt-6 mb-8'>
+                        {/* prev button */}
+                        <button
+                            disabled={page === 1}
+                            className={`px-7 py-1.5 rounded-sm font-semibold transition ${page === 1 ? 'bg-accent/15 cursor-not-allowed text-accent/80' : 'cursor-pointer bg-accent text-base-100 hover:bg-primary hover:text-accent'}`}
+                            onClick={() => setPage(page - 1)}>Prev</button>
+
+                        <div className='flex gap-2 items-center justify-center'>
+                            {
+                                pages?.map(p => (
+                                    <button
+                                        key={p}
+                                        onClick={() => setPage(p + 1)}
+                                        className={`px-4 py-2 rounded cursor-pointer
+                            ${page === p + 1 ? "bg-primary text-accent" : "bg-base-200"}`}
+                                    >
+                                        {p + 1}
+                                    </button>
+                                ))
+                            }
+                        </div>
+                        {/* next button */}
+                        <button
+                            disabled={page === totalPages}
+                            className={`px-7 py-1.5 rounded-sm font-semibold transition ${page === totalPages ? 'bg-accent/15 cursor-not-allowed text-accent/80' : 'cursor-pointer bg-accent text-base-100 hover:bg-primary hover:text-accent'}`}
+                            onClick={() => setPage(page + 1)}>Next</button>
+                    </div>
+                )
+            }
         </div >
     );
 };
