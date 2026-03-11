@@ -19,6 +19,7 @@ const ProductDetails = () => {
      const navigate = useNavigate()
      const userId = user?.uid
      const [selectedImage, setSelectedImage] = useState(product?.images?.[0]);
+     const [zoomStyle, setZoomStyle] = useState({});
 
      // State for interactions
      const [selectedSize, setSelectedSize] = useState('');
@@ -76,6 +77,24 @@ const ProductDetails = () => {
                productId: product?._id
           })
      }
+     const handleMouseMove = (e) => {
+          const { left, top, width, height } = e.currentTarget.getBoundingClientRect();
+
+          const x = ((e.clientX - left) / width) * 100;
+          const y = ((e.clientY - top) / height) * 100;
+
+          setZoomStyle({
+               transformOrigin: `${x}% ${y}%`,
+               transform: "scale(2)"
+          });
+     };
+
+     const handleMouseLeave = () => {
+          setZoomStyle({
+               transform: "scale(1)",
+               transformOrigin: "center"
+          });
+     };
      // wishlist check 
      const isWishlist = wishlist?.some(p => p.productId === product?._id)
      const outOfStock = product?.isStock === false;
@@ -96,6 +115,9 @@ const ProductDetails = () => {
                               <motion.div
                                    initial={{ opacity: 0, x: -30 }}
                                    animate={{ opacity: 1, x: 0 }}
+                                   onMouseMove={handleMouseMove}
+                                   onTap={handleMouseMove}
+                                   onMouseLeave={handleMouseLeave}
                                    className="relative bg-secondary rounded-sm overflow-hidden aspect-3/4"
                               >
                                    <img
@@ -104,10 +126,11 @@ const ProductDetails = () => {
                                         loading='lazy'
                                         width="600"
                                         height="800"
-                                        className="w-full h-full hover:scale-105 active:scale-105 transition-all duration-300 object-cover"
+                                        style={zoomStyle}
+                                        className="w-full cursor-zoom-in h-full hover:scale-105 active:scale-105 transition-all duration-300 object-cover"
                                    />
 
-                                   <div className="absolute top-6 left-6 flex flex-col gap-3">
+                                   <div className="absolute top-4 left-4 flex flex-col gap-3">
                                         {product?.isNew && (
                                              <span className="bg-primary text-accent text-[11px] font-bold px-4 py-2 uppercase tracking-widest">New</span>
                                         )}
