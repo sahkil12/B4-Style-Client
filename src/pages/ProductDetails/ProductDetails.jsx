@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { FiHeart, FiShoppingBag, FiMinus, FiPlus, FiChevronLeft, FiTruck, FiShield, FiRotateCcw } from 'react-icons/fi';
 import { FaHeart } from "react-icons/fa";
 import ProductCard from '../../utils/ProductCard';
-import { Link, Navigate, useLoaderData, useNavigate } from 'react-router-dom';
+import { Link, useLoaderData, useNavigate } from 'react-router-dom';
 import useProducts from '../../Hooks/useProducts';
 import ProductSkeleton from '../../Components/Shared/ProductSkeleton/ProductSkeleton';
 import useCart from '../../Hooks/useCart';
@@ -18,6 +18,7 @@ const ProductDetails = () => {
      const { handleAddToWishlist, handleRemoveWishlist, wishlist, isWishlistLoading } = useWishlist()
      const navigate = useNavigate()
      const userId = user?.uid
+     const [selectedImage, setSelectedImage] = useState(product?.images?.[0]);
 
      // State for interactions
      const [selectedSize, setSelectedSize] = useState('');
@@ -78,7 +79,7 @@ const ProductDetails = () => {
      // wishlist check 
      const isWishlist = wishlist?.some(p => p.productId === product?._id)
      const outOfStock = product?.isStock === false;
-     console.log(product.isStock);
+
      return (
           <div className="min-h-screen text-accent pt-20 pb-20">
 
@@ -91,28 +92,47 @@ const ProductDetails = () => {
                     {/* Main Product Section */}
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
                          {/* Left Side: Image */}
-                         <motion.div
-                              initial={{ opacity: 0, x: -30 }}
-                              animate={{ opacity: 1, x: 0 }}
-                              className="relative bg-[#1a1a1a] rounded-sm overflow-hidden aspect-3/4"
-                         >
-                              <img
-                                   src={product?.images[0]}
-                                   alt={product?.slug}
-                                   loading='lazy'
-                                   width="600"
-                                   height="800"
-                                   className="w-full h-full hover:scale-105 active:scale-105 transition-all duration-300 object-cover"
-                              />
-                              <div className="absolute top-6 left-6 flex flex-col gap-3">
-                                   {product?.isNew && (
-                                        <span className="bg-primary text-accent text-[11px] font-bold px-4 py-2 uppercase tracking-widest">New</span>
-                                   )}
-                                   {product?.discount && (
-                                        <span className="bg-accent text-base-100 text-xs font-bold px-4 py-2 uppercase tracking-widest">-{product?.discount}%</span>
-                                   )}
+                         <div className='flex flex-col xl:flex-row-reverse gap-4'>
+                              <motion.div
+                                   initial={{ opacity: 0, x: -30 }}
+                                   animate={{ opacity: 1, x: 0 }}
+                                   className="relative bg-secondary rounded-sm overflow-hidden aspect-3/4"
+                              >
+                                   <img
+                                        src={selectedImage}
+                                        alt={product?.slug}
+                                        loading='lazy'
+                                        width="600"
+                                        height="800"
+                                        className="w-full h-full hover:scale-105 active:scale-105 transition-all duration-300 object-cover"
+                                   />
+
+                                   <div className="absolute top-6 left-6 flex flex-col gap-3">
+                                        {product?.isNew && (
+                                             <span className="bg-primary text-accent text-[11px] font-bold px-4 py-2 uppercase tracking-widest">New</span>
+                                        )}
+                                        {product?.discount > 0 && (
+                                             <span className="bg-accent text-base-100 text-xs font-bold px-4 py-2 uppercase tracking-widest">-{product?.discount}%</span>
+                                        )}
+                                   </div>
+                              </motion.div>
+                              {/* Thumbnail Images */}
+                              <div className="flex gap-3 mt-4 xl:mt-0 xl:flex-col">
+                                   {product?.images?.map((img, index) => (
+                                        <button
+                                             key={index}
+                                             onClick={() => setSelectedImage(img)}
+                                             className={`w-24 h-28 lg:w-28 lg:h-32 border-2 rounded-md overflow-hidden cursor-pointer transition 
+                                                    ${selectedImage === img ? "border-primary" : "border-accent/30"}`}>
+                                             <img
+                                                  src={img}
+                                                  alt="product"
+                                                  className="w-full h-full object-cover hover:scale-105 transition duration-300"
+                                             />
+                                        </button>
+                                   ))}
                               </div>
-                         </motion.div>
+                         </div>
                          {/* Right Side: Details */}
                          <motion.div
                               initial={{ opacity: 0, x: 30 }}
@@ -139,7 +159,7 @@ const ProductDetails = () => {
                                    {outOfStock ? 'Out Of Stock' : <span> Only <span className='text-xl text-primary/90'> {product?.stock} </span> items left</span>}
                               </h3> */}
                               <h3 className={`text-base font-semibold mb-5 text-primary/95`}>
-                              {outOfStock? "Out Of Stock" : "Available in Stock" }
+                                   {outOfStock ? "Out Of Stock" : "Available in Stock"}
                               </h3>
                               {/*  */}
                               <p className="text-neutral-400 text-sm leading-relaxed mb-10 max-w-md">
@@ -208,6 +228,7 @@ const ProductDetails = () => {
                               </div>
                          </motion.div>
                     </div>
+
                     {/* You May Also Like Section */}
                     <section className="mt-32">
                          <div className="flex flex-col gap-4 mb-12">
