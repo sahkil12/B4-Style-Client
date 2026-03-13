@@ -31,11 +31,11 @@ export const adminLinks = [
     path: "/dashboard/users",
     icon: FiUsers,
   },
-  {
-    name: "Analytics",
-    path: "/dashboard/analytics",
-    icon: FiBarChart2,
-  },
+  // {
+  //   name: "Analytics",
+  //   path: "/dashboard/analytics",
+  //   icon: FiBarChart2,
+  // },
   {
     name: "Settings",
     path: "/dashboard/settings",

@@ -94,11 +94,13 @@ const Orders = () => {
     }
 
     return (
-        <div className="flex-1 p-4 lg:p-8 w-full bg-base-100 min-h-screen text-accent font-['Inter']">
+        <div className="flex-1 p-4 lg:p-8 w-full min-h-screen text-accent">
             {/* Header Section */}
             <div className="mb-10">
-                <h1 className="text-4xl font-bold uppercase tracking-wider bebas mb-1">Orders</h1>
-                <p className="text-neutral-500 text-sm font-bold">{orders?.total } total orders</p>
+                {/* <h1 className="text-4xl font-bold uppercase tracking-wider bebas mb-2"></h1>
+                <p className="text-neutral-500 text-sm font-bold"></p> */}
+                <h1 className="text-4xl font-medium tracking-wider bebas mb-2">Orders</h1>
+                    <p className="text-accent/60 text-sm font-medium">{orders?.total } total orders</p>
             </div>
             {/* Search & Global Filter Row */}
             <div className="flex flex-wrap items-center gap-4 mb-8">
