@@ -1,9 +1,13 @@
 import { FiUser, FiSave } from 'react-icons/fi';
 import useAuth from '../../../Hooks/useAuth';
 import { useState } from 'react';
+import useAxiosSecure from '../../../Hooks/useAxiosSecure';
+import { ImSpinner9 } from 'react-icons/im';
+import toast from 'react-hot-toast';
 
 const Settings = () => {
      const { user, updateUserProfile } = useAuth()
+     const axiosSecure = useAxiosSecure();
      const [loading, setLoading] = useState(false)
 
      // Shared styles for consistency
@@ -11,16 +15,31 @@ const Settings = () => {
      const inputStyle = "w-full bg-secondary/80 border border-accent/5 rounded-md py-3.5 px-4 focus:border-primary/50 outline-none transition-all text-sm text-accent placeholder:text-neutral-600 disabled:opacity-50 disabled:cursor-not-allowed";
 
      const handleData = async (e) => {
-          e.preventDefault()
+          e.preventDefault();
+          setLoading(true);
+          const email = e.target.email.value;
+          const name = e.target.name.value;
+          const number = e.target.number.value;
 
+          const bdPhoneRegex = /^(?:\+88|88)?(01[3-9]\d{8})$/;
 
-          const name = e.target.name.value
-          const number = e.target.number.value
+          if (!bdPhoneRegex.test(number)) {
+               setLoading(false);
+               return toast.error("Please provide a valid Bangladeshi number");
+          }
 
-          await updateUserProfile({
-               displayName: name,
-          })
+          try {
+               await updateUserProfile({ displayName: name });
 
+               const res = await axiosSecure.patch('/users', { email, name, number });
+               if (res.data.success) {
+                    toast.success("Updated Successfully");
+               }
+          } catch (err) {
+               console.error(err);
+          } finally {
+               setLoading(false);
+          }
      }
 
      return (
@@ -50,6 +69,7 @@ const Settings = () => {
                                    <label className={labelStyle}>Email</label>
                                    <input
                                         type="email"
+                                        name='email'
                                         disabled
                                         defaultValue={user?.email}
                                         className={inputStyle}
@@ -63,6 +83,7 @@ const Settings = () => {
                                    <label className={labelStyle}>Full Name</label>
                                    <input
                                         type="text"
+                                        required
                                         name='name'
                                         placeholder="Your full name"
                                         className={inputStyle}
@@ -73,8 +94,9 @@ const Settings = () => {
                                    <label className={labelStyle}>Phone Number</label>
                                    <input
                                         type="number"
+                                        required
                                         name='number'
-                                        placeholder="Enter your phone number"
+                                        placeholder="01XXXXXXXXX"
                                         className={inputStyle}
                                    />
                               </div>
@@ -83,7 +105,10 @@ const Settings = () => {
                                    <button
                                         className="bg-primary text-accent px-8 py-3.5 rounded-md flex items-center justify-center gap-2 text-[11px] font-bold uppercase tracking-widest hover:bg-primary/90 transition-all shadow-lg shadow-primary/20 cursor-pointer"
                                    >
-                                        <FiSave size={16} /> Save Changes
+                                        {loading ?
+                                             <span className='animate-spin'><ImSpinner9 size={20} /></span>
+                                             :
+                                             <> <FiSave size={16} /> Save Changes</>}
                                    </button>
                               </div>
                          </form>
