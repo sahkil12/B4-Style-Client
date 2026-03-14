@@ -6,20 +6,19 @@ import { MdOutlineShoppingCart } from 'react-icons/md';
 import useAxiosSecure from '../../../Hooks/useAxiosSecure';
 import { useQuery } from '@tanstack/react-query';
 import Spinner from '../../../Components/Shared/Spinner';
+import { Link } from 'react-router-dom';
 
 const UserDashboard = () => {
      const { user } = useAuth()
      const axiosSecure = useAxiosSecure();
 
      const { data: userStats, isLoading } = useQuery({
-          queryKey: ["user-stats"],
+          queryKey: ["user-stats", user?.uid],
           queryFn: async () => {
                const res = await axiosSecure.get("/user/stats");
                return res.data;
           }
      });
-
-     console.log(userStats);
 
      if (isLoading) {
           return <Spinner></Spinner>
@@ -38,18 +37,24 @@ const UserDashboard = () => {
           },
           {
                label: "Total Amount Spent",
-               value: `৳ ${userStats?.totalSpent || 0}`,
+               value: `৳ ${userStats?.totalSpent?.toLocaleString() || 0}`,
                icon: <span className="font-bold">৳</span>
           }
      ];
 
+     const statusColor = {
+          processing: "bg-yellow-500/10 text-yellow-500",
+          delivered: "bg-green-500/10 text-green-500",
+          cancelled: "bg-primary/10 text-primary"
+     }
+
      return (
-          <div className="min-h-screen bg-secondary text-accent flex">
-               <main className="flex-1 p-8">
+          <div className="min-h-screen text-accent ">
+               <main className="flex-1 p-4 lg:p-8 w-full max-w-full overflow-x-hidden mb-12">
                     {/* Header */}
                     <header className="mb-10">
                          <h1 className="text-3xl md:text-4xl font-medium tracking-wider bebas mb-1.5">WELCOME, {user?.displayName}!</h1>
-                         <p className="text-neutral-400 text-sm">Here's your account overview</p>
+                         <p className="text-accent/50 text-sm md:text-base">Here's your account overview</p>
                     </header>
 
                     {/* Stat Cards Grid */}
@@ -67,68 +72,80 @@ const UserDashboard = () => {
                          ))}
                     </div>
 
-                    <h1 className='text-3xl bebas mb-5 tracking-wider font-medium'>Recent Orders</h1>
+                    <div className="flex items-center justify-between mb-5">
+                         <h1 className="text-3xl bebas tracking-wider font-medium">
+                              Recent Orders
+                         </h1>
+                         <Link
+                              to="/dashboard/my-orders"
+                              className="text-sm text-primary font-bold"
+                         >
+                              View All
+                         </Link>
+                    </div>
                     <div className="overflow-x-auto border rounded-t-2xl border-accent/10 relative">
                          <table className="w-full text-left">
                               <thead className="h-14">
-                                   <tr className="text-accent/55 text-xs bg-secondary uppercase tracking-[2px] font-bold">
+                                   <tr className="text-accent/55 text-xs bg-secondary uppercase tracking-[2px] font-bold h-16">
                                         <th className="px-6 pb-2">Order ID</th>
                                         <th className="px-6 pb-2 text-center">Payment Status</th>
                                         <th className="px-6 pb-2 text-center">Total Price</th>
                                         <th className="px-6 pb-2 text-center">Delivery Status</th>
                                         <th className="px-6 pb-2 text-center">Order At</th>
-                                        <th className="px-6 pb-2 text-right">Actions</th>
                                    </tr>
                               </thead>
-                              <tbody>
-                                   {userStats?.latestOrders?.map(order => (
-                                        <tr key={order._id} className="bg-base-200/90 hover:bg-base-200/95 border-b border-accent/10 transition-colors group">
-                                             {/* Product Info */}
-                                             <td className="px-5 py-4">
-                                                  <div className="flex items-center gap-4">
-                                                       {order.orderId}
-                                                  </div>
+                              {
+                                   userStats?.latestOrders?.length > 0 ?
+                                        <tbody className=''>
+                                             {userStats?.latestOrders?.map(order => (
+                                                  <tr key={order._id} className="bg-base-200/90 hover:bg-base-200/95 border-b border-accent/10 transition-colors group max-w-72 h-20 truncate">
+                                                       {/* Product Info */}
+                                                       <td className="px-5 py-4 text-sm font-semibold">
+                                                            {order.orderId}
+                                                       </td>
+                                                       {/* Category */}
+                                                       <td className="px-6 py-4 text-center">
+                                                            <span className="bg-accent/5 text-accent/60 px-3 py-1.5 rounded-md text-[11px] font-bold uppercase tracking-wider">
+                                                                 {order.paymentStatus}
+                                                            </span>
+                                                       </td>
+                                                       {/* Price */}
+                                                       <td className="px-6 py-4 text-center">
+                                                            <span className="font-bold text-accent/75">৳{order.totalAmount}</span>
+                                                       </td>
+                                                       {/* Status Badges */}
+                                                       <td className="px-6 py-4">
+                                                            <div className="flex justify-center gap-2">
+                                                                 <span className={`px-4 py-1.5 rounded-full text-xs font-bold tracking-widest ${statusColor[order.orderStatus]}`}>
+                                                                      {order.orderStatus}
+                                                                 </span>
+                                                            </div>
+                                                       </td>
+                                                       <td className="px-6 py-4 text-center">
+                                                            {new Date(order.createdAt).toLocaleDateString()}
+                                                       </td>
+                                                  </tr>
+                                             ))}
+                                        </tbody>
+                                        :
+                                        <tr>
+                                             <td colSpan="5" className="py-20 text-center">
+                                                  <h2 className="text-xl font-semibold mb-2">
+                                                       No Orders Yet
+                                                  </h2>
+                                                  <p className="text-accent/60 text-sm mb-3">
+                                                       Start shopping to see your orders here
+                                                  </p>
+                                                  <Link
+                                                       to="/shop"
+                                                       className="btn btn-primary btn-sm"
+                                                  >
+                                                       Shop Now
+                                                  </Link>
                                              </td>
-                                             {/* Category */}
-                                             <td className="px-6 py-4 text-center">
-                                                  <span className="bg-accent/5 text-accent/60 px-3 py-1.5 rounded-md text-[10px] font-bold uppercase tracking-wider">
-                                                       {order.paymentStatus}
-                                                  </span>
-                                             </td>
-                                             {/* Price */}
-                                             <td className="px-6 py-4 text-center">
-                                                  <div className="flex flex-col gap-2 items-center">
-                                                       <span className="font-bold text-sm">৳{order.totalAmount}</span>
-                                                  </div>
-                                             </td>
-                                             {/* Status Badges */}
-                                             <td className="px-6 py-4">
-                                                  <div className="flex justify-center gap-2">
-                                                       <span className="bg-primary/5 text-primary/95 border border-primary/20 px-2 py-1.5 rounded text-[11px] font-bold tracking-widest">
-                                                            {order.orderStatus}
-                                                       </span>
-                                                  </div>
-                                             </td>
-                                             <td className="px-6 py-4">
-                                                  {new Date(order.createdAt).toLocaleDateString()}
-                                             </td>
-                                             {/* Action Buttons */}
-                                             <td className="px-6 py-4 rounded-r-xl text-right">
-                                                  <div className="flex justify-end gap-2">
-                                                       <button
-                                                            className="p-2.5 bg-accent/5 border border-accent/5 hover:bg-accent/80 hover:text-primary rounded-md transition-all cursor-pointer">
-                                                            {/* <FiEdit2 size={14} /> */}
-                                                            Track Order
-                                                       </button>
-                                                  </div>
-                                             </td>
-                                        </tr>
-                                   ))}
-                              </tbody>
+                                        </tr>}
                          </table>
-
                     </div>
-
                </main>
           </div>
      );
