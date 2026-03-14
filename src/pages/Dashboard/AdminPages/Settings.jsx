@@ -4,10 +4,12 @@ import { useState } from 'react';
 import useAxiosSecure from '../../../Hooks/useAxiosSecure';
 import { ImSpinner9 } from 'react-icons/im';
 import toast from 'react-hot-toast';
+import { useQueryClient } from '@tanstack/react-query';
 
 const Settings = () => {
      const { user, updateUserProfile } = useAuth()
      const axiosSecure = useAxiosSecure();
+     const queryClient = useQueryClient();
      const [loading, setLoading] = useState(false)
 
      // Shared styles for consistency
@@ -35,8 +37,9 @@ const Settings = () => {
                if (res.data.success) {
                     toast.success("Updated Successfully");
                }
+               queryClient.invalidateQueries({ queryKey: ['users', user?.email] });
           } catch (err) {
-               console.error(err);
+               toast.error("Something is Wrong!!")
           } finally {
                setLoading(false);
           }
@@ -44,7 +47,6 @@ const Settings = () => {
 
      return (
           <div className="flex-1 p-4 lg:p-8 w-full min-h-screen text-accent">
-
                {/* Header Section */}
                <div className="mb-10">
                     <h1 className="text-4xl font-medium tracking-wider bebas mb-2">SETTINGS</h1>
@@ -63,7 +65,7 @@ const Settings = () => {
                          {/* Settings Form */}
                          <form
                               onSubmit={handleData}
-                              className="p-8 space-y-6">
+                              className="p-4 md:p-8 space-y-6">
                               {/* Email Field */}
                               <div className="space-y-2">
                                    <label className={labelStyle}>Email</label>

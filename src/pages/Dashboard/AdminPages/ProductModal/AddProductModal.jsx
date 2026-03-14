@@ -114,7 +114,6 @@ const AddProductModal = ({ close }) => {
                close();
           }
           catch {
-               // console.log(error);
                toast.error("Upload Failed");
           }
           finally {

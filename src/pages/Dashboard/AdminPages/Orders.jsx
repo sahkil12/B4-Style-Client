@@ -42,7 +42,6 @@ const Orders = () => {
 
     const totalPages = Math.ceil((orders?.total || 0) / 25)
     const pages = Array.from({ length: totalPages }, (_, i) => i + 0)
-    console.log(modalOpen);
     // delete order
     const handleDelete = async (id) => {
 

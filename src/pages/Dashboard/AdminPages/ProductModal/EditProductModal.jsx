@@ -12,7 +12,6 @@ const EditProductModal = ({ close, prevData }) => {
      const axiosSecure = useAxiosSecure();
      const queryClient = useQueryClient();
      const { register, handleSubmit, reset } = useForm();
-     console.log(prevData);
      const clothSizes = ['XS', 'S', 'M', 'L', 'XL', 'XXL',];
      const pantsSizes = ['30', '32', '34', '36', '38', '40'];
      const allSizes = [...clothSizes, ...pantsSizes];
