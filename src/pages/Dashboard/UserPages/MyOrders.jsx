@@ -8,7 +8,7 @@ import useAuth from "../../../Hooks/useAuth";
 
 const MyOrders = () => {
      const axiosSecure = useAxiosSecure();
-     const {user} = useAuth();
+     const { user } = useAuth();
 
      const { data: orders, isLoading, error } = useQuery({
           queryKey: ["user-orders", user?.email],
@@ -17,7 +17,7 @@ const MyOrders = () => {
                return res.data;
           }
      });
-
+     console.log(orders);
      if (isLoading) {
           return <Spinner></Spinner>
      }
@@ -35,7 +35,7 @@ const MyOrders = () => {
                          <p className="text-accent/60 text-sm font-medium">View All Orders</p>
                     </header>
                     {
-                         orders?.length < 0 ? (
+                         orders?.length <= 0 ? (
                               <div className="text-center my-24">
                                    <BsBoxSeam className="text-5xl text-accent/40 mx-auto mb-5" />
                                    <p className="text-accent/50 text-lg">You haven't placed any orders yet.</p>
@@ -65,7 +65,7 @@ const MyOrders = () => {
                                                        </h3>
                                                        <p className="text-xs text-accent/50 flex gap-1.5 mt-1.5">
                                                             <span>{order.items.length} items</span>
-                                                            - 
+                                                            -
                                                             <span>{new Date(order.createdAt).toLocaleDateString("en-BD", {
                                                                  day: "numeric",
                                                                  month: "short",
@@ -93,7 +93,6 @@ const MyOrders = () => {
                                    ))}
                               </div>
                          )
-
                     }
                </main>
           </div>

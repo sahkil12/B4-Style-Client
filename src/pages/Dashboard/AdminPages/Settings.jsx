@@ -29,7 +29,6 @@ const Settings = () => {
                setLoading(false);
                return toast.error("Please provide a valid Bangladeshi number");
           }
-
           try {
                await updateUserProfile({ displayName: name });
 

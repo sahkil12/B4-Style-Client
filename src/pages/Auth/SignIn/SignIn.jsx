@@ -26,7 +26,7 @@ const SignIn = () => {
      const saveUserToDB = async (user) => {
           try {
                await axiosPublic.post('/users', user);
-               toast.success("Your Account is Successfully Created", { duration: 1000 });
+               toast.success("Welcome To Your Account", { duration: 1000 });
           } catch (err) {
                throw (err.message)
           }
@@ -44,6 +44,23 @@ const SignIn = () => {
                toast.error("Invalid email address", { duration: 1000 });
                return;
           }
+          try {
+               setFormLoading(true)
+               const result = await loginUser(email, password)
+               if (result) {
+                    toast.success("Logged in successfully", { duration: 1000 })
+                    navigate(from || '/');
+                    setFormLoading(false)
+               }
+          }
+          catch (error) {
+               setError("Invalid email or password");
+               setFormLoading(false);
+          }
+     }
+     const adminLogin = async () => {
+          const email = "b4admin@gmail.com"
+          const password = "b4admintest"
           try {
                setFormLoading(true)
                const result = await loginUser(email, password)
@@ -171,6 +188,13 @@ const SignIn = () => {
                                         className={`w-full ${formLoading && "opacity-80 cursor-not-allowed"} bg-primary text-accent font-bold py-3 text-xs sm:text-sm rounded-sm flex items-center justify-center gap-2 hover:bg-primary/90 active:scale-[0.98] transition-all cursor-pointer uppercase tracking-widest group`}
                                    >
                                         {formLoading ? loader : <> Sign in <FiArrowRight size={18} className="group-hover:translate-x-1 transition-transform duration-300" /></>}
+                                   </button>
+                                   <button
+                                        onClick={adminLogin}
+                                        type='button'
+                                        className="mt-4 inline-flex w-full justify-center items-center gap-2 hover:text-primary cursor-pointer transition-colors group">
+                                        Login as a Admin
+                                        <FiArrowRight className="group-hover:translate-x-1 transition-transform" />
                                    </button>
                               </div>
                          </form>
