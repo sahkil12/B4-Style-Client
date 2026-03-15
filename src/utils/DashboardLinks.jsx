@@ -5,7 +5,6 @@ import {
   FiUsers,
   FiBarChart2,
   FiSettings,
-  FiUser,
 } from "react-icons/fi";
 import { MdOutlineShoppingCart } from "react-icons/md";
 
@@ -56,11 +55,11 @@ export const userLinks = [
     path: "/dashboard/my-orders",
     icon: MdOutlineShoppingCart,
   },
-  {
-    name: "Profile",
-    path: "/dashboard/user-profile",
-    icon: FiUser,
-  },
+  // {
+  //   name: "Profile",
+  //   path: "/dashboard/user-profile",
+  //   icon: FiUser,
+  // },
   {
     name: "Settings",
     path: "/dashboard/settings",

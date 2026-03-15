@@ -26,10 +26,10 @@ import Users from './../../pages/Dashboard/AdminPages/Users';
 import Analytics from './../../pages/Dashboard/AdminPages/Analytics';
 import Settings from "../../pages/Dashboard/AdminPages/Settings";
 import MyOrders from './../../pages/Dashboard/UserPages/MyOrders';
-import UserProfile from "../../pages/Dashboard/UserPages/UserProfile";
 import AllProducts from "../../pages/Dashboard/AdminPages/AllProducts";
 import Forbidden from "../../Components/Shared/Forbidden";
 import AdminRoute from "../AdminRoute/AdminRoute";
+import TrackOrder from "../../pages/Dashboard/UserPages/TrackOrder";
 
 export const router = createBrowserRouter([
      {
@@ -151,9 +151,9 @@ export const router = createBrowserRouter([
                     element: <MyOrders></MyOrders>
                },
                {
-                    path: "user-profile",
-                    element: <UserProfile></UserProfile>
-               },
+                    path: "track-order/:id",
+                    element: <TrackOrder />
+               }
           ]
      },
      {
