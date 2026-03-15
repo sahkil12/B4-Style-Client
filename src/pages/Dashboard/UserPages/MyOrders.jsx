@@ -6,20 +6,22 @@ import { SiTicktick } from "react-icons/si";
 import Spinner from './../../../Components/Shared/Spinner';
 
 const MyOrders = () => {
-
      const axiosSecure = useAxiosSecure();
 
-     const { data: orders, isLoading } = useQuery({
+     const { data: orders, isLoading, error } = useQuery({
           queryKey: ["user-orders"],
           queryFn: async () => {
                const res = await axiosSecure.get("/user/orders");
                return res.data;
           }
-     })
-     console.log(orders);
+     });
 
      if (isLoading) {
           return <Spinner></Spinner>
+     }
+
+     if(error) {
+          return <p className="text-accent text-center my-14">Failed to load orders. Please try again later.</p>
      }
 
      return (
@@ -35,10 +37,10 @@ const MyOrders = () => {
                          {orders?.map(order => (
                               <div
                                    key={order._id}
-                                   className="flex items-center justify-between bg-base-200 border border-accent/10 rounded-xl px-6 py-5"
+                                   className="flex items-center justify-between bg-base-200 border border-accent/10 rounded-xl px-6 py-8 overflow-x-scroll md:overflow-hidden"
                               >
                                    {/* left */}
-                                   <div className="flex items-center gap-4">
+                                   <div className="flex items-center gap-5 min-w-72">
                                         {order.orderStatus === "delivered" ? (
                                              <div className="w-11 h-11 flex items-center justify-center bg-green-600/15 rounded-lg">
                                                   <SiTicktick className="text-green-500 font-bold" size={18} />    
@@ -48,28 +50,27 @@ const MyOrders = () => {
                                                   <BsBoxSeam className="text-blue-500 font-bold" size={18} />
                                              </div>
                                         )}
-
                                         <div>
                                              <h3 className="font-bold">
                                                   {order.orderId}
                                              </h3>
-                                             <p className="text-xs text-accent/50">
-                                                  {order.items.length} items •
+                                             <p className="text-xs text-accent/50 mt-1.5">
+                                                  {order.items.length} items • 
                                                   {new Date(order.createdAt).toLocaleDateString()}
                                              </p>
                                         </div>
                                    </div>
                                    {/* right */}
                                    <div className="flex items-center gap-6">
-                                        <span className="px-3 py-1 rounded-full text-xs font-bold bg-primary/10 text-primary">
-                                             {order.orderStatus}
+                                        <span className={`px-3.5 py-1.5 rounded-full text-xs font-bold ${order.orderStatus === "delivered" ? "text-green-500 bg-green-300/5" : "text-blue-500 bg-blue-300/5"}`}>
+                                             {order.orderStatus === "delivered" ? "Delivered" : "Processing"}
                                         </span>
                                         <span className="font-bold">
                                              ৳{order.totalAmount}
                                         </span>
                                         <Link
                                              to={`/dashboard/track-order/${order._id}`}
-                                             className="text-primary text-sm font-bold"
+                                             className="text-accent px-5 rounded-xs py-1.5 bg-primary text-sm font-bold"
                                         >
                                              Track
                                         </Link>

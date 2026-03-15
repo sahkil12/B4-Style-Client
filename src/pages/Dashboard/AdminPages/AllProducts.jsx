@@ -26,7 +26,7 @@ const AllProducts = () => {
      const [searchTexts, setSearchTexts] = useState("");
      const [selectedCategory, setSelectedCategory] = useState("");
 
-     const { data: products = [], isLoading } = useProducts();
+     const { data: products = [], isLoading, error } = useProducts();
 
      // filter search and category based data 
      const filteredProducts = useMemo(() => {
@@ -59,7 +59,7 @@ const AllProducts = () => {
                queryClient.invalidateQueries({
                     queryKey: ["products"]
                });
-                Swal.fire({
+               Swal.fire({
                     icon: "success",
                     title: "Deleted!",
                     showConfirmButton: false,
@@ -78,6 +78,10 @@ const AllProducts = () => {
 
      if (isLoading) {
           return <Spinner></Spinner>
+     }
+
+     if (error) {
+          return <p className="text-accent text-center my-14">Failed to load products. Please try again later.</p>
      }
 
      return (
@@ -186,7 +190,7 @@ const AllProducts = () => {
                                              </td>
                                              <td className="text-center">
                                                   <span className="text-accent/80 text-sm font-bold">
-                                                       {item?.isStock === true ? 'Available' : "Stock Out" }
+                                                       {item?.isStock === true ? 'Available' : "Stock Out"}
                                                   </span>
                                              </td>
                                              {/* Action Buttons */}

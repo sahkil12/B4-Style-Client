@@ -14,7 +14,7 @@ const Users = () => {
      const queryClient = useQueryClient()
      const [search, setSearch] = useState("")
 
-     const { data: allUsers, isLoading } = useQuery({
+     const { data: allUsers, isLoading, error } = useQuery({
           queryKey: ["users"],
           queryFn: async () => {
                const res = await axiosSecure.get('/users')
@@ -106,6 +106,10 @@ const Users = () => {
 
      if (isLoading) {
           return <Spinner></Spinner>
+     }
+
+     if (error) {
+          return <p className="text-accent text-center my-14">Failed to load products. Please try again later.</p>
      }
 
      return (
@@ -206,7 +210,7 @@ const Users = () => {
                               :
                               <div className="flex justify-center text-center py-20">
                                    <p className="text-xl font-semibold text-accent "> No User Found</p>
-                              </div> }
+                              </div>}
                </div>
           </div>
      );

@@ -15,7 +15,7 @@ const Orders = () => {
     const [page, setPage] = useState(1);
     const [statusFilter, setStatusFilter] = useState("all")
 
-    const { data: orders, isLoading, refetch } = useQuery({
+    const { data: orders, isLoading, refetch, error } = useQuery({
         queryKey: ["orders", page],
         queryFn: async () => {
             const res = await axiosSecure.get(`/orders?page=${page}&limit=25`)
@@ -92,12 +92,16 @@ const Orders = () => {
         return <Spinner></Spinner>
     }
 
+    if (error) {
+        return <p className="text-accent text-center my-14">Failed to load orders. Please try again later.</p>
+    }
+
     return (
         <div className="flex-1 p-4 lg:p-8 w-full min-h-screen text-accent">
             {/* Header Section */}
             <div className="mb-10">
                 <h1 className="text-4xl font-medium tracking-wider bebas mb-2">Orders</h1>
-                    <p className="text-accent/60 text-sm font-medium">{orders?.total } total orders</p>
+                <p className="text-accent/60 text-sm font-medium">{orders?.total} total orders</p>
             </div>
             {/* Search & Global Filter Row */}
             <div className="flex flex-wrap items-center gap-4 mb-8">
@@ -197,8 +201,8 @@ const Orders = () => {
                                     <td className="px-6 py-5 text-right">
                                         <div className="flex justify-end gap-2">
                                             <button
-                                            onClick={()=> setModalOpen(order)}
-                                            className="p-3 bg-base-100/40 cursor-pointer hover:bg-primary hover:text-accent rounded-md border border-accent/10 transition-all text-accent/70">
+                                                onClick={() => setModalOpen(order)}
+                                                className="p-3 bg-base-100/40 cursor-pointer hover:bg-primary hover:text-accent rounded-md border border-accent/10 transition-all text-accent/70">
                                                 <FiEye size={16} />
                                             </button>
                                             {/* delete button */}
@@ -223,7 +227,7 @@ const Orders = () => {
                 <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-base-100/80 backdrop-blur-sm transition-opacity">
                     <div className="relative w-full max-w-xl bg-[#0E0E0E] border border-accent/10 rounded-2xl p-8 shadow-2xl animate-in zoom-in-95 duration-200">
                         {/* Close Button */}
-                        <button 
+                        <button
                             onClick={() => setModalOpen(null)}
                             className="absolute top-6 cursor-pointer right-6 p-2 text-accent/70 hover:text-primary transition-colors"
                         >
