@@ -7,6 +7,7 @@ import {
 } from 'react-icons/fi';
 import WeeklyRevenueChart from './WeeklyRevenueChart';
 import WeeklyOrdersChart from './WeeklyOrdersChart';
+import SEO from '../../../Components/Shared/SEO';
 
 const AdminDashboard = () => {
     const axiosSecure = useAxiosSecure()
@@ -40,77 +41,85 @@ const AdminDashboard = () => {
     ];
 
     return (
-        <div className="min-h-screen text-accent ">
-            <main className="flex-1 p-4 lg:p-8 w-full max-w-full overflow-x-hidden">
-                {/* Header */}
-                <header className="mb-10">
-                    <h1 className="text-3xl md:text-4xl font-medium tracking-wider bebas mb-1.5">Dashboard Overview</h1>
-                    <p className="text-accent/50 text-sm md:text-base">Welcome back, Admin! Here's what's happening.</p>
-                </header>
-                {/* Stat Cards Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-5 mb-10">
-                    {stats?.map((stat, index) => (
-                        <div key={index} className="bg-base-200/80 p-6 rounded-xl border border-accent/5 relative overflow-hidden group hover:border-primary/30 transition-all">
-                            <div className="flex justify-between items-start mb-4">
-                                <div className="p-3 bg-accent/5 rounded-lg text-primary group-hover:bg-primary group-hover:text-accent transition-all">
-                                    {stat.icon}
+        <>
+            <SEO
+                title="Admin Dashboard"
+                description="Manage orders, users, products, website growth, and account activities from the B4 Style dashboard."
+                keywords="dashboard, manage orders, manage users, manage products, B4 Style dashboard"
+            />
+
+            <div className="min-h-screen text-accent ">
+                <main className="flex-1 p-4 lg:p-8 w-full max-w-full overflow-x-hidden">
+                    {/* Header */}
+                    <header className="mb-10">
+                        <h1 className="text-3xl md:text-4xl font-medium tracking-wider bebas mb-1.5">Dashboard Overview</h1>
+                        <p className="text-accent/50 text-sm md:text-base">Welcome back, Admin! Here's what's happening.</p>
+                    </header>
+                    {/* Stat Cards Grid */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-5 mb-10">
+                        {stats?.map((stat, index) => (
+                            <div key={index} className="bg-base-200/80 p-6 rounded-xl border border-accent/5 relative overflow-hidden group hover:border-primary/30 transition-all">
+                                <div className="flex justify-between items-start mb-4">
+                                    <div className="p-3 bg-accent/5 rounded-lg text-primary group-hover:bg-primary group-hover:text-accent transition-all">
+                                        {stat.icon}
+                                    </div>
+
                                 </div>
-
+                                <h3 className="text-3xl font-bold mb- tracking-tight">{stat.value}</h3>
+                                <p className="text-neutral-500/95 text-xs font-bold uppercase tracking-widest">{stat.label}</p>
                             </div>
-                            <h3 className="text-3xl font-bold mb- tracking-tight">{stat.value}</h3>
-                            <p className="text-neutral-500/95 text-xs font-bold uppercase tracking-widest">{stat.label}</p>
-                        </div>
-                    ))}
-                </div>
-                {/* chart data */}
-                <div className="grid lg:grid-cols-2 gap-6 mb-10 w-full">
-                    <WeeklyRevenueChart data={weeklyStats} />
-
-                    <WeeklyOrdersChart data={weeklyStats} />
-                </div>
-                {/* Latest Orders */}
-                <div className="bg-base-200/80 p-6 rounded-xl border border-accent/5 mb-5">
-                    <h2 className="text-lg font-bold mb-5">Latest Orders</h2>
-
-                    <div className="overflow-x-auto">
-                        <table className="table">
-                            <thead className='text-accent text-base'>
-                                <tr>
-                                    <th>Customer</th>
-                                    <th>Amount</th>
-                                    <th>Status</th>
-                                    <th>Date</th>
-                                </tr>
-                            </thead>
-
-                            <tbody>
-                                {adminStats?.latestOrders?.map(order => (
-                                    <tr key={order._id}>
-                                        <td className='flex flex-col'>
-                                            {order.shippingAddress?.name}
-                                            <span className='text-accent/60 text-sm'>{order.shippingAddress?.city}</span>
-                                        </td>
-                                        <td>
-                                            ৳ {order.totalAmount}
-                                        </td>
-                                        <td>
-                                            <span className="badge badge-success font-semibold">
-                                                {order?.paymentStatus}
-                                            </span>
-                                        </td>
-                                        <td>
-                                            {new Date(order.createdAt)
-                                                .toLocaleDateString()}
-                                        </td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
+                        ))}
                     </div>
-                </div>
+                    {/* chart data */}
+                    <div className="grid lg:grid-cols-2 gap-6 mb-10 w-full">
+                        <WeeklyRevenueChart data={weeklyStats} />
 
-            </main>
-        </div>
+                        <WeeklyOrdersChart data={weeklyStats} />
+                    </div>
+                    {/* Latest Orders */}
+                    <div className="bg-base-200/80 p-6 rounded-xl border border-accent/5 mb-5">
+                        <h2 className="text-lg font-bold mb-5">Latest Orders</h2>
+
+                        <div className="overflow-x-auto">
+                            <table className="table">
+                                <thead className='text-accent text-base'>
+                                    <tr>
+                                        <th>Customer</th>
+                                        <th>Amount</th>
+                                        <th>Status</th>
+                                        <th>Date</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    {adminStats?.latestOrders?.map(order => (
+                                        <tr key={order._id}>
+                                            <td className='flex flex-col'>
+                                                {order.shippingAddress?.name}
+                                                <span className='text-accent/60 text-sm'>{order.shippingAddress?.city}</span>
+                                            </td>
+                                            <td>
+                                                ৳ {order.totalAmount}
+                                            </td>
+                                            <td>
+                                                <span className="badge badge-success font-semibold">
+                                                    {order?.paymentStatus}
+                                                </span>
+                                            </td>
+                                            <td>
+                                                {new Date(order.createdAt)
+                                                    .toLocaleDateString()}
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </main>
+            </div>
+        </>
     );
 };
 

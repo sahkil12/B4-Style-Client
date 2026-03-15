@@ -2,6 +2,7 @@ import React from 'react';
 import { FiSend, FiMapPin, FiPhone, FiMail } from "react-icons/fi";
 import { motion } from 'motion/react';
 import { socials } from '../../utils/AllLinks';
+import SEO from '../../Components/Shared/SEO';
 
 const inputStyles = "w-full bg-accent/10 border border-neutral-700 p-3 md:p-4 rounded-lg focus:outline-none focus:border-primary transition-colors"
 
@@ -13,136 +14,144 @@ const contactInfo = [
 
 const Contact = () => {
      return (
-          <div className="bg-base-100 text-accent min-h-screen overflow-x-hidden">
-               {/* 1. Header Section */}
-               <section className="pb-12 bg-secondary mt-[81px] text-center">
-                    <motion.section
-                         initial={{ opacity: 0, y: 40 }}
-                         whileInView={{ opacity: 1, y: 0 }}
-                         transition={{ duration: .6, ease: "easeOut" }}
-                         viewport={{ once: true }}
-                         className='py-14'>
-                         <h4 className="text-primary text-xs md:text-[15px] font-semibold tracking-[0.35em] uppercase mb-5">
-                              Get In Touch
-                         </h4>
-                         <h2 className="text-5xl md:text-6xl font-medium tracking-wider bebas mb-5">
-                              Contact Us
-                         </h2>
-                         <p className="text-neutral-400 text-sm md:text-base max-w-2xl px-6 mx-auto leading-relaxed">
-                              Have a question or feedback? We'd love to hear from you. Our team is here
-                              to help customers across Bangladesh.
-                         </p>
-                    </motion.section>
-               </section>
-               {/* 2. Main Content Section (Form & Info) */}
-               <section className="max-w-7xl mx-auto px-3 md:px-12 py-16">
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
-                         {/* Left Side: Contact Form */}
-                         <motion.div
-                              initial={{ opacity: 0, x: -75 }}
-                              whileInView={{ opacity: 1, x: 0 }}
-                              transition={{ duration: .9 }}
+          <>
+               <SEO
+                    title="Contact Us"
+                    description="Get in touch with B4 Style for any questions, support, or business inquiries. We are always happy to help."
+                    keywords="contact B4 Style, customer support, fashion store contact"
+               />
+
+               <div className="bg-base-100 text-accent min-h-screen overflow-x-hidden">
+                    {/* 1. Header Section */}
+                    <section className="pb-12 bg-secondary mt-[81px] text-center">
+                         <motion.section
+                              initial={{ opacity: 0, y: 40 }}
+                              whileInView={{ opacity: 1, y: 0 }}
+                              transition={{ duration: .6, ease: "easeOut" }}
                               viewport={{ once: true }}
-                              className="space-y-8">
-                              <div>
-                                   <h3 className="text-3xl font-normal bebas tracking-wider mb-2">Send Us A Message</h3>
-                                   <p className="text-neutral-400">Fill out the form below and we'll get back to you as soon as possible.</p>
-                              </div>
-                              {/* contact form */}
-                              <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
-                                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                              className='py-14'>
+                              <h4 className="text-primary text-xs md:text-[15px] font-semibold tracking-[0.35em] uppercase mb-5">
+                                   Get In Touch
+                              </h4>
+                              <h2 className="text-5xl md:text-6xl font-medium tracking-wider bebas mb-5">
+                                   Contact Us
+                              </h2>
+                              <p className="text-neutral-400 text-sm md:text-base max-w-2xl px-6 mx-auto leading-relaxed">
+                                   Have a question or feedback? We'd love to hear from you. Our team is here
+                                   to help customers across Bangladesh.
+                              </p>
+                         </motion.section>
+                    </section>
+                    {/* 2. Main Content Section (Form & Info) */}
+                    <section className="max-w-7xl mx-auto px-3 md:px-12 py-16">
+                         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
+                              {/* Left Side: Contact Form */}
+                              <motion.div
+                                   initial={{ opacity: 0, x: -75 }}
+                                   whileInView={{ opacity: 1, x: 0 }}
+                                   transition={{ duration: .9 }}
+                                   viewport={{ once: true }}
+                                   className="space-y-8">
+                                   <div>
+                                        <h3 className="text-3xl font-normal bebas tracking-wider mb-2">Send Us A Message</h3>
+                                        <p className="text-neutral-400">Fill out the form below and we'll get back to you as soon as possible.</p>
+                                   </div>
+                                   {/* contact form */}
+                                   <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
+                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                             <input
+                                                  type="text"
+                                                  placeholder="Your Name"
+                                                  className={inputStyles}
+                                             />
+                                             <input
+                                                  type="email"
+                                                  placeholder="Your Email"
+                                                  className={inputStyles}
+                                             />
+                                        </div>
                                         <input
                                              type="text"
-                                             placeholder="Your Name"
+                                             placeholder="Subject"
                                              className={inputStyles}
                                         />
-                                        <input
-                                             type="email"
-                                             placeholder="Your Email"
-                                             className={inputStyles}
-                                        />
+                                        <textarea
+                                             placeholder="Your Message"
+                                             rows="6"
+                                             className={`${inputStyles} resize-none`}
+                                        ></textarea>
+                                        {/* button */}
+                                        <button className="bg-primary hover:bg-primary/85 text-accent font-semibold py-4 px-10 rounded-sm flex items-center gap-3 uppercase tracking-widest text-sm transition-all duration-300">
+                                             Send Message <FiSend size={16} />
+                                        </button>
+                                   </form>
+                              </motion.div>
+                              {/* Right Side: Contact Info Cards */}
+                              <motion.div
+                                   initial={{ opacity: 0, x: 75 }}
+                                   whileInView={{ opacity: 1, x: 0 }}
+                                   transition={{ duration: .9 }}
+                                   viewport={{ once: true }}
+                                   className="space-y-8">
+                                   <div>
+                                        <h3 className="text-3xl font-normal bebas tracking-wider mb-2">Contact Information</h3>
+                                        <p className="text-neutral-400">Reach out to us through any of the following channels. We serve all 64 districts of Bangladesh!</p>
                                    </div>
-                                   <input
-                                        type="text"
-                                        placeholder="Subject"
-                                        className={inputStyles}
-                                   />
-                                   <textarea
-                                        placeholder="Your Message"
-                                        rows="6"
-                                        className={`${inputStyles} resize-none`}
-                                   ></textarea>
-                                   {/* button */}
-                                   <button className="bg-primary hover:bg-primary/85 text-accent font-semibold py-4 px-10 rounded-sm flex items-center gap-3 uppercase tracking-widest text-sm transition-all duration-300">
-                                        Send Message <FiSend size={16} />
-                                   </button>
-                              </form>
-                         </motion.div>
-                         {/* Right Side: Contact Info Cards */}
-                         <motion.div
-                              initial={{ opacity: 0, x: 75 }}
-                              whileInView={{ opacity: 1, x: 0 }}
-                              transition={{ duration: .9 }}
-                              viewport={{ once: true }}
-                              className="space-y-8">
-                              <div>
-                                   <h3 className="text-3xl font-normal bebas tracking-wider mb-2">Contact Information</h3>
-                                   <p className="text-neutral-400">Reach out to us through any of the following channels. We serve all 64 districts of Bangladesh!</p>
-                              </div>
 
-                              <div className="space-y-4">
-                                   {
-                                        contactInfo?.map((info, ind) => (
-                                             <div key={ind} className="flex items-start gap-5 bg-base-200/50 border border-accent/10 p-5 md:p-7 rounded-xl hover:border-accent/15 transition-all duration-300 hover:translate-x-2 active:translate-x-2 group">
-                                                  <div className="p-3.5 bg-primary/10 rounded-lg text-primary group-hover:scale-115 transition-all duration-300 group-active:scale-110">
-                                                       {info.icon}
-                                                  </div>
-                                                  <div>
-                                                       <h4 className="font-medium bebas text-base tracking-[2px] mb-1 group-hover:text-primary active:text-primary transition-all duration-200">{info.title}</h4>
-                                                       <p className="text-neutral-400 text-sm">{info.info}</p>
-                                                  </div>
-                                             </div>
-                                        ))
-                                   }
-                              </div>
-                              {/* Delivery Alert Banner */}
-                              <div className="bg-primary/10 border border-primary/35 p-6 rounded-xl flex flex-col gap-2.5">
-                                   <div className="flex items-center gap-2 text-primary">
-                                        <div className="w-3.5 h-3.5 bg-primary rounded-full animate-pulse"></div>
-                                        <span className="text-[11px] font-bold uppercase tracking-widest">Delivery Available</span>
-                                   </div>
-                                   <p className="text-accent/60 text-xs">We deliver across all 64 districts of Bangladesh. Cash on Delivery available!</p>
-                              </div>
-                              {/* Follow Us link*/}
-                              <div className="space-y-6">
-                                   <h4 className="text-xl font-medium bebas tracking-[0.15em]">Follow Us</h4>
-                                   <div className="flex gap-4">
+                                   <div className="space-y-4">
                                         {
-                                             socials?.map((social, ind) => (
-                                                  <a key={ind} target='_blank' href={social.link} className="p-3 bg-secondary border border-accent/10 rounded-lg hover:bg-primary active:bg-primary transition-all duration-300 hover:-translate-y-1.5 hover:scale-105 active:-translate-y-1.5 active:scale-105">
-                                                       {social.icon}
-                                                  </a>
+                                             contactInfo?.map((info, ind) => (
+                                                  <div key={ind} className="flex items-start gap-5 bg-base-200/50 border border-accent/10 p-5 md:p-7 rounded-xl hover:border-accent/15 transition-all duration-300 hover:translate-x-2 active:translate-x-2 group">
+                                                       <div className="p-3.5 bg-primary/10 rounded-lg text-primary group-hover:scale-115 transition-all duration-300 group-active:scale-110">
+                                                            {info.icon}
+                                                       </div>
+                                                       <div>
+                                                            <h4 className="font-medium bebas text-base tracking-[2px] mb-1 group-hover:text-primary active:text-primary transition-all duration-200">{info.title}</h4>
+                                                            <p className="text-neutral-400 text-sm">{info.info}</p>
+                                                       </div>
+                                                  </div>
                                              ))
                                         }
                                    </div>
-                              </div>
-                         </motion.div>
-                    </div>
-                    {/* map */}
-                    <div className="mt-12">
-                         <iframe
-                             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3691.137012649114!2d91.86858457602241!3d22.310657442518576!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30ad2127f964562d%3A0xc1ff371d94840689!2sKalarpol%20Bridge!5e0!3m2!1sen!2sbd!4v1770576104405!5m2!1sen!2sbd"
-                              width="100%"
-                              height="400"
-                              allowFullScreen=""
-                              autoFocus
-                              loading="lazy"
-                              className="rounded-xl bg-base-200 p-2 shadow-md"
-                         ></iframe>
-                    </div>
-               </section>
+                                   {/* Delivery Alert Banner */}
+                                   <div className="bg-primary/10 border border-primary/35 p-6 rounded-xl flex flex-col gap-2.5">
+                                        <div className="flex items-center gap-2 text-primary">
+                                             <div className="w-3.5 h-3.5 bg-primary rounded-full animate-pulse"></div>
+                                             <span className="text-[11px] font-bold uppercase tracking-widest">Delivery Available</span>
+                                        </div>
+                                        <p className="text-accent/60 text-xs">We deliver across all 64 districts of Bangladesh. Cash on Delivery available!</p>
+                                   </div>
+                                   {/* Follow Us link*/}
+                                   <div className="space-y-6">
+                                        <h4 className="text-xl font-medium bebas tracking-[0.15em]">Follow Us</h4>
+                                        <div className="flex gap-4">
+                                             {
+                                                  socials?.map((social, ind) => (
+                                                       <a key={ind} target='_blank' href={social.link} className="p-3 bg-secondary border border-accent/10 rounded-lg hover:bg-primary active:bg-primary transition-all duration-300 hover:-translate-y-1.5 hover:scale-105 active:-translate-y-1.5 active:scale-105">
+                                                            {social.icon}
+                                                       </a>
+                                                  ))
+                                             }
+                                        </div>
+                                   </div>
+                              </motion.div>
+                         </div>
+                         {/* map */}
+                         <div className="mt-12">
+                              <iframe
+                                   src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3691.137012649114!2d91.86858457602241!3d22.310657442518576!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30ad2127f964562d%3A0xc1ff371d94840689!2sKalarpol%20Bridge!5e0!3m2!1sen!2sbd!4v1770576104405!5m2!1sen!2sbd"
+                                   width="100%"
+                                   height="400"
+                                   allowFullScreen=""
+                                   autoFocus
+                                   loading="lazy"
+                                   className="rounded-xl bg-base-200 p-2 shadow-md"
+                              ></iframe>
+                         </div>
+                    </section>
 
-          </div>
+               </div>
+          </>
      );
 };
 
