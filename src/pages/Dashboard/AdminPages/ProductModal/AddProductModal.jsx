@@ -99,7 +99,7 @@ const AddProductModal = ({ close }) => {
                     category: data.category,
                     price: Number(data.price),
                     discount: Number(data.discount),
-                    stock: Number(data.stock),
+                    // stock: (data.stock),
                     description: data.description,
                     sizes: selectedSizes,
                     images: imageUrls,

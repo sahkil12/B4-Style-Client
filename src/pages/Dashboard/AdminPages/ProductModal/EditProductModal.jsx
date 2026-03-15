@@ -26,7 +26,7 @@ const EditProductModal = ({ close, prevData }) => {
                reset({
                     title: prevData.title,
                     category: prevData.category,
-                    stock: prevData.stock,
+                    // stock: prevData.stock,
                     price: prevData.price,
                     discount: prevData.discount,
                     description: prevData.description,
@@ -128,7 +128,7 @@ const EditProductModal = ({ close, prevData }) => {
                     category: data.category,
                     price: Number(data.price),
                     discount: Number(data.discount),
-                    stock: Number(data.stock),
+                    // stock: (data.stock),
                     description: data.description,
                     sizes: selectedSizes,
                     images: imageUrls,

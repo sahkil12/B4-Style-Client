@@ -233,7 +233,7 @@ const ProductDetails = () => {
                                              {/* add to card button */}
                                              <button
                                                   onClick={addToCart}
-                                                  disabled={outOfStock || isAddingToCart || quantity > product?.stock}
+                                                  disabled={outOfStock || isAddingToCart }
                                                   className={`flex-1 min-w-52 h-14 bg-primary text-accent font-bold text-sm sm:text-base uppercase tracking-widest flex items-center justify-center gap-3 hover:bg-primary/90 transition-all rounded-md  ${outOfStock ? 'cursor-not-allowed' : 'cursor-pointer active:scale-95'}`}>
                                                   <FiShoppingBag size={18} /> {isAddingToCart ? "Adding.." : "Add to Cart"}
                                              </button>

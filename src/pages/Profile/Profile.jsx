@@ -14,9 +14,8 @@ const Profile = () => {
      const { role } = useUserRole()
      const navigate = useNavigate()
 
-     const userRole = role?.role === "user"
 
-     const slices = userRole ? 0 : 1
+     const slices = role?.role === "user" ? 0 : 1
 
      const menuItems = [
           {

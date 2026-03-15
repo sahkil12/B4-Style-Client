@@ -113,12 +113,12 @@ const AddCart = () => {
                                                                       </button>
                                                                       <span className="px-4 py-1 text-sm font-bold">{item?.quantity}</span>
                                                                       <button
-                                                                           disabled={updateCartQuantityLoading || item?.quantity >= item?.product?.stock}
+                                                                           disabled={updateCartQuantityLoading }
                                                                            onClick={() =>
                                                                                 updateCartQuantity.mutate(
                                                                                      { cartItemId: item?._id, type: "inc" }
                                                                                 )}
-                                                                           className={`p-2 transition-colors ${item?.quantity >= item?.product?.stock ? ' bg-primary/80 cursor-not-allowed' : 'hover:bg-accent/10 active:bg-accent/10 cursor-pointer'}`}>
+                                                                           className={`p-2 transition-colors hover:bg-accent/10 active:bg-accent/10 cursor-pointer`}>
                                                                            <HiPlus size={14} />
                                                                       </button>
                                                                  </div>
