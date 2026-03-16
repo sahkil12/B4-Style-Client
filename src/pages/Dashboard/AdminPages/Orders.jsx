@@ -136,7 +136,7 @@ const Orders = () => {
                                 <th className="bg-transparent py-6 px-6">Order ID</th>
                                 <th className="bg-transparent py-6 text-left">Customer</th>
                                 <th className="bg-transparent py-6 text-center">Items</th>
-                                <th className="bg-transparent py-6 text-right">Total</th>
+                                <th className="bg-transparent py-6 text-left">Total</th>
                                 <th className="bg-transparent py-6 text-center">Status</th>
                                 <th className="bg-transparent py-6 text-center">Date</th>
                                 <th className="bg-transparent py-6 pr-6 text-right">Actions</th>
@@ -146,22 +146,22 @@ const Orders = () => {
                             {filteredOrders?.map((order) => (
                                 <tr key={order._id} className="bg-base-100/5 hover:bg-base-100/10 transition-colors border-b border-accent/10 ">
                                     {/* Order ID */}
-                                    <td className="px-6 py-5 font-bold text-sm tracking-tight text-accent">
+                                    <td className="px-6 truncate py-5 font-bold text-sm tracking-tight text-accent">
                                         {order.orderId}
                                     </td>
                                     {/* user info */}
-                                    <td className="py-5">
+                                    <td className="py-5 truncate">
                                         <div>
                                             <h4 className="text-sm font-bold text-accent">{order.shippingAddress?.name}</h4>
                                             <p className="text-[11px] text-accent/60 mt-1 font-medium">{order.shippingAddress?.phone}</p>
                                         </div>
                                     </td>
                                     {/* item */}
-                                    <td className="text-center font-bold text-sm">
+                                    <td className="text-center font-bold text-sm px-16 lg:px-6">
                                         {order.items.reduce((sum, item) => sum + item.quantity, 0)}
                                     </td>
                                     {/*  total taka*/}
-                                    <td className="text-right font-bold text-sm">
+                                    <td className="text-right font-bold text-sm pr-14 lg:pr-6">
                                         <span className="text-lg">৳</span>{order.totalAmount}
                                     </td>
                                     {/* order status */}

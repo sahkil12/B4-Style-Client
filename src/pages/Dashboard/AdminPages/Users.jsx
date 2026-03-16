@@ -175,12 +175,12 @@ const Users = () => {
                                                        </span>
                                                   </td>
                                                   {/* Joined Date */}
-                                                  <td className="text-center">
+                                                  <td className="text-center px-10 lg:px-5">
                                                        <span className="text-xs font-bold text-neutral-400">
                                                             {new Date(user.createAt).toLocaleDateString()}</span>
                                                   </td>
                                                   {/* Actions */}
-                                                  <td className="px-6 py-5">
+                                                  <td className="px-6 py-5 truncate">
                                                        <div className="flex justify-end gap-3">
                                                             <div>
                                                                  {user.role === 'admin' ? <button

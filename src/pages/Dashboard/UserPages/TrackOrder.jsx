@@ -45,11 +45,11 @@ const TrackOrder = () => {
                          </p>
                     </header>
                     {/* Order Card */}
-                    <div className="bg-base-200 border border-accent/10 rounded-xl px-6 py-7 mb-10">
+                    <div className="bg-base-200 border-accent/10 rounded-xl px-4 md:px-6 py-7 mb-10">
 
-                         <div className="flex justify-between items-center">
+                         <div className="flex justify-between items-start">
                               <div>
-                                   <h3 className="font-bold text-lg">{order.orderId}</h3>
+                                   <h3 className="font-bold ext-sm md:text-lg">{order.orderId}</h3>
                                    <p className="text-sm text-accent/60 mt-2">
                                         {new Date(order.createdAt).toLocaleDateString("en-BD", {
                                              day: "numeric",
@@ -58,14 +58,13 @@ const TrackOrder = () => {
                                         })}
                                    </p>
                               </div>
-
-                              <span className="text-lg font-bold">
+                              <span className="md:text-lg font-bold">
                                    ৳{order.totalAmount.toLocaleString()}
                               </span>
                          </div>
                     </div>
                     {/* Timeline */}
-                    <div className="bg-base-200 border border-accent/10 rounded-xl p-8 md:p-10">
+                    <div className="bg-base-200 border border-accent/10 rounded-xl px-2 py-6 md:px-10 md:py-10">
 
                          <div className="flex items-center justify-between relative">
                               {statusSteps?.map((step, index) => {
@@ -91,7 +90,7 @@ const TrackOrder = () => {
                                              </div>
                                              {/* Label */}
                                              <p
-                                                  className={`mt-4 text-sm capitalize font-medium
+                                                  className={`mt-4 text-xs md:text-sm truncate capitalize font-medium
                                                   ${active ? "text-green-500" : "text-accent/40"}`}
                                              >
                                                   {step.label}

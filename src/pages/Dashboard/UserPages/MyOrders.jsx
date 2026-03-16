@@ -83,7 +83,7 @@ const MyOrders = () => {
                                                   </span>
                                                   <Link
                                                        to={`/dashboard/track-order/${order._id}`}
-                                                       className="text-accent px-5 rounded-xs py-1.5 bg-primary text-sm font-bold"
+                                                       className="text-accent truncate px-5 rounded-xs py-1.5 bg-primary text-sm font-bold"
                                                   >
                                                        Track Order
                                                   </Link>

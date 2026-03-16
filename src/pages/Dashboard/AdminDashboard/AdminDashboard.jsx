@@ -94,7 +94,7 @@ const AdminDashboard = () => {
                                 <tbody>
                                     {adminStats?.latestOrders?.map(order => (
                                         <tr key={order._id}>
-                                            <td className='flex flex-col'>
+                                            <td className='flex flex-col truncate'>
                                                 {order.shippingAddress?.name}
                                                 <span className='text-accent/60 text-sm'>{order.shippingAddress?.city}</span>
                                             </td>
