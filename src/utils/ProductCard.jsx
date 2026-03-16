@@ -111,7 +111,9 @@ const ProductCard = ({ product, animation, bestSellers, open }) => {
                                         addToCart();
                                    }}
                                    disabled={isAddingToCart || outOfStock}
-                                   className="w-full bg-primary hover:bg-primary/90 active:bg-primary/90 cursor-pointer text-accent font-semibold py-2.5 flex items-center justify-center gap-2 text-xs uppercase tracking-widest transition-all">
+                                   className={`w-full bg-primary hover:bg-primary/90 active:bg-primary/90 text-accent font-semibold py-2.5 flex items-center justify-center gap-2 text-xs uppercase tracking-widest transition-all
+                                   ${outOfStock ? "cursor-not-allowed" : "cursor-pointer"}
+                                   `}>
                                    <FiShoppingBag /> {isAddingToCart ? "Adding.." : "Quick Add"}
                               </button>
                          </div>

@@ -109,7 +109,6 @@ const ProductDetails = () => {
                />
 
                <div className="min-h-screen text-accent pt-20 pb-20">
-
                     <div className="xl:max-w-[75%] pt-8 mx-auto px-5">
                          {/* Back Button */}
                          <Link to={'/shop'} className="flex items-center gap-2 text-neutral-400 hover:text-accent transition-colors mb-8 group active:text-center">
@@ -117,7 +116,7 @@ const ProductDetails = () => {
                               <span className="text-sm font-medium">Back to Shop</span>
                          </Link>
                          {/* Main Product Section */}
-                         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
+                         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
                               {/* Left Side: Image */}
                               <div className='flex flex-col xl:flex-row-reverse gap-4'>
                                    <motion.div
