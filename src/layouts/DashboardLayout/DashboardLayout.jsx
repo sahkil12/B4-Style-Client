@@ -18,6 +18,10 @@ const DashboardLayout = () => {
      }
      const links = role?.role === "admin" ? adminLinks : userLinks;
 
+     const closeDrawer = () => {
+          const drawer = document.getElementById("my-drawer-2");
+          if (drawer) drawer.checked = false;
+     };
      return (
           <div className="drawer xl:drawer-open">
                <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
@@ -49,7 +53,7 @@ const DashboardLayout = () => {
                                    </Link>
                                    <span className="bebas tracking-wider text-xl text-accent font-medium">B4 Style</span>
                               </div>
-                              <span className="uppercase text-sm bg-primary/15 flex w-fit gap-1.5 items-center px-5 py-2 rounded-full text-primary font-bold"> {role?.role === "admin"? <MdAdminPanelSettings size={20}/> : <FaUser  size={14}/> } {role?.role}</span>
+                              <span className="uppercase text-sm bg-primary/15 flex w-fit gap-1.5 items-center px-5 py-2 rounded-full text-primary font-bold"> {role?.role === "admin" ? <MdAdminPanelSettings size={20} /> : <FaUser size={14} />} {role?.role}</span>
                          </section>
                          <div className="border-b mb-5 border-accent/10"></div>
                          {/* links section */}
@@ -59,6 +63,7 @@ const DashboardLayout = () => {
                                    return (
                                         <li key={link.name}>
                                              <NavLink
+                                                  onClick={closeDrawer}
                                                   end={link.path === "/dashboard"}
                                                   to={link.path}
                                                   className={({ isActive }) =>
@@ -78,7 +83,9 @@ const DashboardLayout = () => {
                          </section>
                          {/* last part */}
                          <div className="border-t border-accent/10"></div>
-                         <section className="space-y-1.5 py-1.5 pb-3 p-1">
+                         <section
+                              onClick={closeDrawer}
+                              className="space-y-1.5 py-1.5 pb-3 p-1">
                               <Link to={'/shop'} className="w-full flex items-center gap-2.5 px-4 py-3 text-sm font-medium text-neutral-400 rounded-lg hover:bg-accent/5 active:bg-accent/5 cursor-pointer transition-colors">
                                    <RiHome9Line size={22} /> Back to Store
                               </Link>

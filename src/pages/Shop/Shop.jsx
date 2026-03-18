@@ -154,7 +154,7 @@ const Shop = () => {
                                                   <FiFilter /> Filter
                                              </button>
                                              {/* sort by */}
-                                             <div className="relative flex-1 md:flex-none">
+                                             <div className="relative flex-2 md:flex-none">
                                                   <select
                                                        value={filters?.sort}
                                                        onChange={(e) =>
