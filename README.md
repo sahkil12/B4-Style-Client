@@ -41,6 +41,9 @@ B4 Style Client is the customer-facing frontend of the **B4 Style** fashion bran
 ### Search bar
 ![Search bar](/public/assets/for%20readme/searchbar.png)
 
+### Product Details Page
+![Product Details Page](/public/assets/for%20readme/product%20details%20page.png)
+
 ### Wishlist Page
 ![Wishlist Page](/public/assets/for%20readme/wishlist%20page.png)
 
