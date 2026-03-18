@@ -22,6 +22,7 @@ B4 Style Client is the customer-facing frontend of the **B4 Style** fashion bran
 - **SEO support** using reusable meta tag handling.
 - **Responsive design** optimized for mobile, tablet, and desktop.
 
+
 ---
 
 ## 🖼️ Screenshots
