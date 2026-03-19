@@ -8,7 +8,7 @@ The application delivers a modern shopping experience with product browsing, fil
 
 ## Overview
 
-B4 Style Client is the customer-facing frontend of the **B4 Style** fashion brand. It focuses on a polished storefront experience with animated landing sections, product discovery tools, authentication flows, protected routes, and dashboard views for both customers and admins.
+B4 Style is the customer facing frontend of the **B4 Style** fashion brand. It focuses on a polished storefront experience with animated landing sections, product discovery tools, authentication flows, protected routes, and dashboard views for both customers and admins.
 
 ## Key Features
 
@@ -21,7 +21,6 @@ B4 Style Client is the customer-facing frontend of the **B4 Style** fashion bran
 - **Role-based dashboard** for users and admins, including orders, analytics, users, settings, and product management.
 - **SEO support** using reusable meta tag handling.
 - **Responsive design** optimized for mobile, tablet, and desktop.
-
 
 ---
 
@@ -70,7 +69,7 @@ B4 Style Client is the customer-facing frontend of the **B4 Style** fashion bran
 ![Register Page](/public/assets/for%20readme/sign%20up%20pagepng.png)
 
 ### 📱 Mobile View 
-![Mobile View](./src/assets/images/mobile-view.png)
+![Mobile View](/public/assets/for%20readme/mobile-view.png)
 
 ## Tech Stack
 
@@ -131,6 +130,7 @@ src/
 - Track Order
 
 ### Admin Pages
+- Dashboard overview
 - All Products
 - Orders
 - Users
@@ -227,7 +227,6 @@ npm run preview
 ```
 
 This project is intended for the B4 Style website. Add a license section here if you want to make the repository publicly reusable.
-
 
 ## 👨‍💻 Developer
 
