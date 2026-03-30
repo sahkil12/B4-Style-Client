@@ -177,7 +177,7 @@ const Users = () => {
                                                   {/* Joined Date */}
                                                   <td className="text-center px-10 lg:px-5">
                                                        <span className="text-xs font-bold text-neutral-400">
-                                                            {new Date(user.createAt).toLocaleDateString()}</span>
+                                                            {new Date(user.createdAt).toLocaleDateString()}</span>
                                                   </td>
                                                   {/* Actions */}
                                                   <td className="px-6 py-5 truncate">
