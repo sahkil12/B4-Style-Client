@@ -21,16 +21,11 @@ const Users = () => {
                return res.data
           }
      })
-
-
-     // const adminEmail = myEmail[0]?.email;
-
      // filter users
      const filteredUsers =
           allUsers?.filter(user =>
                user.email.toLowerCase().includes(search.toLowerCase())
           )
-
      // make admin
      const handleMakeAdmin = async (id) => {
 
@@ -112,9 +107,9 @@ const Users = () => {
      if (isLoading) {
           return <Spinner></Spinner>
      }
-     const myEmail = allUsers?.filter(user => user.email === 'tazwershakilshakil@gmail.com')
+     const myEmail = allUsers?.filter(user => user?.email === 'tazwershakilshakil@gmail.com')
      const adminEmail = myEmail[0]?.email;
-     console.log(adminEmail);
+
      if (error) {
           return <p className="text-accent text-center my-14">Failed to load products. Please try again later.</p>
      }
