@@ -49,12 +49,10 @@ const WhyB4Style = () => {
                          <motion.div
                               key={index}
                               variants={cardVariants}
-                              className="bg-secondary p-8 rounded-2xl flex flex-col items-center text-center gap-4 cursor-pointer transition-all duration-300 
-                              drop-shadow-xl drop-shadow-primary/5 hover:drop-shadow-primary/30 active:drop-shadow-primary/30 hover:-translate-y-2 active:-translate-y-2
-                              "
+                              className="bg-secondary p-8 rounded-2xl flex flex-col items-center text-center gap-4 cursor-pointer transition-all duration-400 group drop-shadow-2xl drop-shadow-primary/5 hover:drop-shadow-primary/20 active:drop-shadow-primary/20 hover:-translate-y-1.5 active:-translate-y-1.5"
                          >
                               <span className="p-4 rounded-lg bg-primary/10">{feature.icon}</span>
-                              <h3 className="font-semibold text-xl">{feature.title}</h3>
+                              <h3 className="font-semibold text-xl group-hover:text-primary transition-colors group-active:text-primary">{feature.title}</h3>
                               <p className="text-sm text-neutral-500">{feature.desc}</p>
                          </motion.div>
                     ))}
